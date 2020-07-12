@@ -24,3 +24,20 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+
+@import "../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+@import "../node_modules/ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+@import "assets/bootstrap/css/bootstrap.min.css";
+@import "assets/css/style.min.css";
+
+.ag-theme-alpine {
+    @include ag-theme-alpine();
+}
+
+
+ion-content{
+    --background: linear-gradient(270deg, rgb(205, 222, 245) 10%, rgb(220, 222, 238) 100%);
+    
+}

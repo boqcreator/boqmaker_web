@@ -1,0 +1,255 @@
+<ion-header color="primary" >
+  <ion-toolbar color="primary" >
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Project</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="font-size: small;" >
+  <ion-grid>
+    <ion-row>
+       <ion-col size="2">
+        <div>
+          <!-- List of Text Items
+             
+          <ul class="b">
+            <li  *ngFor="let p of appPages"> <ion-icon src="assets/icon/company.svg" [style.color]="p.color" style="font-size: 24px;" ></ion-icon> {{ p.name }}
+              <ul>
+                <li *ngFor="let s of p.floor" >
+                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="s.color" style="font-size: 24px;" ></ion-icon>{{s.name}}
+                  <ul>
+                    <li *ngFor="let a of s.area" >
+                      <ion-icon src="assets/icon/radar.svg" [style.color]="a.color" style="font-size: 24px;" ></ion-icon>
+                      {{ a.aname }}</li> 
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+            -->
+
+
+            <div style="margin-top: 50px;">
+              <div *ngFor="let item of PBdata ">
+                <!-- <div *ngFor="let val of group.values | slice:0:(group.expanded? group.values.length :3)">{{val}}</div> -->
+                <ul *ngIf="!item.expanded">
+                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="item.color" style="font-size: 24px;" ></ion-icon> 
+                <span (click)="item.expanded=true" > {{ item.name }}   </span>   <ion-icon color="primary" (click)="toaddFloor(item)" size="small" slot="icon-only" name="add-circle"></ion-icon>
+                  
+                </ul>
+
+                <ul *ngIf="item.expanded" >
+                 <li  >
+                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="item.color" style="font-size: 24px;" ></ion-icon> 
+               <span (click)="item.expanded=false" > {{ item.name }}  </span>    
+                <ion-icon color="primary" (click)="toaddFloor(item)" size="small" slot="icon-only" name="add-circle"></ion-icon>
+                 </li> 
+                  <span *ngIf="item.floors" >
+                    <li *ngFor="let floor of item.floors">
+                      <ion-icon src="assets/icon/company.svg" [style.color]="floor.color" style="font-size: 24px;" ></ion-icon>  {{ floor.name }}
+                  </li>
+                  </span>
+               
+                </ul>
+              </div>      
+            </div>
+        </div>
+      </ion-col> 
+
+
+      <ion-col>
+        <div>
+
+<!-- Default Segment -->
+<ion-segment [(ngModel)]="segment" >
+  <ion-segment-button value="project">
+    <ion-label>Project Details</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="building">
+    <ion-label>Buildings Details</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="floor">
+    <ion-label>Floors</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="projection">
+    <ion-label>Projection Details</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<div [ngSwitch]="segment">     
+  <div style="margin-top : 5px;" *ngSwitchCase="'project'">
+
+  <!-- List of Sliding Items -->
+  <ion-card style="font-size: xx-small;" >
+    <ion-card-header>
+      <ion-card-title>Project</ion-card-title>
+    </ion-card-header>
+    <ion-list class="ion-text-nowrap">
+      <ion-row>
+        <ion-col>
+         <ion-item>
+           <ion-label position="floating" color="primary">Project name</ion-label>
+           <ion-input readonly [value]="name" placeholder="Text Input"></ion-input>
+         </ion-item>
+        </ion-col>
+     
+         <ion-col>
+           <ion-item  >
+             <ion-label position="floating" color="primary" fixed>Project ID</ion-label>
+             <ion-input readonly disabled="true" [value]="id" type="tel" ></ion-input>
+           </ion-item>
+         
+         </ion-col>
+      
+      </ion-row>
+
+
+<ion-row>
+  <ion-col>
+    <ion-item>
+      <ion-label position="floating">Project Number</ion-label>
+      <ion-input type="text" [(ngModel)]="no" name="no"></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col>
+    <ion-item>
+      <ion-label position="floating">Client</ion-label>
+      <ion-input type="text" [(ngModel)]="client" name="client"></ion-input>
+    </ion-item>
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col>
+    <ion-item>
+      <ion-label position="floating">Consultant</ion-label>
+      <ion-input type="text" [(ngModel)]="con" name="con"></ion-input>
+    </ion-item>
+  </ion-col>
+</ion-row>
+
+<ion-row>
+  <ion-col>
+    <ion-item>
+      <ion-label position="floating">Starting date</ion-label>
+      <ion-datetime [(ngModel)]="start" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
+    </ion-item>
+  </ion-col>
+  <ion-col>
+    <ion-item>
+      <ion-label position="floating">Completion date</ion-label>
+      <ion-datetime [(ngModel)]="end" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
+    </ion-item>
+  </ion-col>
+</ion-row>
+   </ion-list>
+   </ion-card>
+    </div>
+
+
+    <div style="margin-top : 5px; background: white; padding: 10px;" *ngSwitchCase="'building'">
+
+        <ion-card-header>
+          <ion-card-title>Add Building</ion-card-title>
+        </ion-card-header>
+          <ion-row>
+            <ion-col>
+             <ion-item>
+               <ion-label position="floating" color="primary">Building name</ion-label>
+               <ion-input [(ngModel)]="bname" placeholder="Enter name here.."></ion-input>
+             </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Description</ion-label>
+                <ion-textarea type="text" placeholder="Enter Description here.." [(ngModel)]="bdes"></ion-textarea>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+    
+          <ion-row>
+            <ion-label>Color</ion-label>
+            <input [(colorPicker)]="bcolor" [(ngModel)]="bcolor"  [style.background]="bcolor"/>
+          </ion-row>
+          <br/><br/>
+          <ion-button expand="full"  (click)="addBuilding()" >Add</ion-button>
+          
+    </div>
+
+    <div style="margin-top : 5px; background: white; padding: 10px;" *ngSwitchCase="'floor'">
+    
+      <ion-card-header>
+        <ion-card-title>Add Floor</ion-card-title>
+      </ion-card-header>
+
+      <ion-row>
+        <ion-select (ionChange)="toaddFloor(SelectedBuilding)" [(ngModel)]="SelectedBuilding" okText="Okay" cancelText="Dismiss" interface="action-sheet" >
+          <ion-select-option *ngFor="let item of PBdata" [value]="item">                  
+                  <ion-label>  {{ item.name }}  </ion-label>
+          </ion-select-option>
+        </ion-select>
+      </ion-row>
+        <ion-row>
+          <ion-col>
+           <ion-item>
+             <ion-label position="floating" color="primary">Floor name</ion-label>
+             <ion-input [(ngModel)]="fname" placeholder="Enter name here.."></ion-input>
+           </ion-item>
+          </ion-col>
+
+        </ion-row>
+  
+        <ion-row>
+          <ion-label>Color</ion-label>
+          <input [(colorPicker)]="fcolor" [(ngModel)]="fcolor"  [style.background]="fcolor"/>
+        </ion-row>
+        <br/><br/>
+        <ion-button expand="full"  (click)="addFloor()" >Add</ion-button>
+    
+    </div>
+
+
+
+    </div>
+
+       
+        </div>
+      </ion-col>
+
+
+      <ion-col size="2">
+        <div>
+          <!-- List of Input Items -->
+<!--           
+            <span  *ngFor="let p of appPages">
+              
+                <span *ngFor="let s of p.floor" >
+
+                 <ul>
+                    <li *ngFor="let a of s.area" >
+                          <ion-icon src="assets/icon/under-construction.svg" [style.color]="a.color" style="font-size: 24px;" ></ion-icon>{{a.acat}}
+                      <ul>
+                        <li *ngFor="let i of a.items" >
+                          <ion-icon src="assets/icon/fix.svg" [style.color]="i.color" style="font-size: 24px;" ></ion-icon>
+                          {{ i.cat }}</li> 
+                      </ul>
+                    </li>
+                    </ul>
+
+                      </span> 
+                </span>
+              -->
+          
+         
+
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+</ion-content>

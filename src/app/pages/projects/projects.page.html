@@ -1,0 +1,41 @@
+<ion-header color="primary" >
+  <ion-toolbar color="primary" >
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Projects</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row class="ion-padding">
+    <ion-button (click)="addProj()" color="primary">
+      <ion-icon name="add" ></ion-icon>
+      Add Project</ion-button>
+  </ion-row>
+  <!-- Searchbar with a cancel button and custom cancel button text -->
+<ion-searchbar [(ngModel)]="term" showCancelButton="focus" cancelButtonText="Custom Cancel"></ion-searchbar>
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Starting date</th>
+      <th>Ending date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of projectsList | filter:term" >
+      <td> <ion-button (click)="gotoproj(item)" >View</ion-button> </td>
+      <td>{{ item.payload.doc.data().id }}</td>
+      <td>{{ item.payload.doc.data().name }}</td>
+      <td>{{ item.payload.doc.data().no }}</td>
+      <td>{{ item.payload.doc.data().start | date }}</td>
+      <td>{{ item.payload.doc.data().end | date }}</td>
+    </tr>
+</table>
+
+
+</ion-content>

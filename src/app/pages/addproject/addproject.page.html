@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-toolbar color="primary" >
+    <ion-title>Add Project form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+    <ion-card>
+      <div class="title_box" id="bill_to">
+        <div id="title"> Project Information</div>
+        <div id="contents">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Project ID</ion-label>
+            <ion-input type="text" [(ngModel)]="id" name="id"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Project Name</ion-label>
+            <ion-input type="text" [(ngModel)]="name" name="name"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Project Number</ion-label>
+            <ion-input type="text" [(ngModel)]="no" name="no"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Client</ion-label>
+            <ion-input type="text" [(ngModel)]="client" name="client"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Consultant</ion-label>
+            <ion-input type="text" [(ngModel)]="con" name="con"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Access Code</ion-label>
+            <ion-input type="password" [(ngModel)]="access" name="access"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Starting date</ion-label>
+            <ion-datetime [(ngModel)]="start" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Completion date</ion-label>
+            <ion-datetime [(ngModel)]="end" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+        </div>
+      </div>
+    </ion-card>
+
+    <ion-card> 
+      <div class="title_box" id="bill_to">
+        <div id="title"> Project Location</div>
+        <div id="contents">
+      <div class="form-group">
+        <input type="text"  (keydown.enter)="$event.preventDefault()"
+          placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+          #search>
+      </div>
+
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+        <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+          (dragEnd)="markerDragEnd($event)"></agm-marker>
+      </agm-map>
+
+    </div>
+  </div>
+    </ion-card>
+    
+
+    <ion-card> 
+      <div class="title_box" id="bill_to">
+        <div id="title"> Contractor Info</div>
+        <div id="contents">
+  
+      <ion-row>
+        <ion-col>
+          <ion-label> Contractor </ion-label>
+          <ion-select (ionChange)="getCat(cont)" [(ngModel)]="cont" okText="Okay" cancelText="Dismiss" interface="action-sheet" placeholder="Select Contractor" >
+            <ion-select-option *ngFor="let item of contList" [value]="item">                  
+                    <ion-label>  {{ item.name }}  </ion-label>
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+  
+        <ion-col>
+          <ion-label> Catogery </ion-label>
+          <ion-select [(ngModel)]="catogery" okText="Okay" cancelText="Dismiss" interface="action-sheet" placeholder="Select Catogery" >
+            <ion-select-option *ngFor="let item of cat" [value]="item.payload.doc">                  
+                    <ion-label>  {{ item.payload.doc.data().name }}  </ion-label>
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+       <!-- Textarea in an item with a floating label -->
+  <ion-item>
+    <ion-label  position="floating">Notes</ion-label>
+    <ion-textarea [(ngModel)]="des" ></ion-textarea>
+  </ion-item>
+    
+  </div>
+  </div>
+    </ion-card>
+  
+
+
+</ion-content>
+
+<!-- Footer without a border -->
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button (click)="addProj()" expand="full" >Add</ion-button>
+  </ion-toolbar>
+</ion-footer>

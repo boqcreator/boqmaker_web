@@ -1,0 +1,30 @@
+<ion-header color="primary" >
+  <ion-toolbar color="primary">
+    <ion-title>Constractor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-row>
+  <ion-button (click)="addcont()" color="primary">Add Contractor</ion-button>
+  <ion-button (click)="addcat()" color="primary">Add Category</ion-button>
+  <ion-button color="primary">Add Sub-category</ion-button>
+</ion-row>
+  <!-- Searchbar with a cancel button and custom cancel button text -->
+  <ion-searchbar [(ngModel)]="term" showCancelButton="focus" cancelButtonText="Custom Cancel"></ion-searchbar>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of contractorList | filter:term" >
+        <td>{{ item.payload.doc.data().name }}</td>
+        <td>{{ item.payload.doc.data().email }}</td>
+      </tr>
+  </table>
+
+
+</ion-content>

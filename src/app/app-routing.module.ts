@@ -1,15 +1,49 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthService } from './auth.service';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'folder/Inbox',
-    pathMatch: 'full'
+    redirectTo: 'home',
+    pathMatch: 'full',
+    canActivate: [AuthService]
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+    canActivate: [AuthService]
+  },
+  {
+    path: 'projects',
+    loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule),
+    canActivate: [AuthService]
+  },
+  {
+    path: 'items',
+    loadChildren: () => import('./pages/items/items.module').then( m => m.ItemsPageModule)
+  },
+  {
+    path: 'proj-details/:id',
+    loadChildren: () => import('./pages/projects/proj-details/proj-details.module').then( m => m.ProjDetailsPageModule)
+  },
+  {
+    path: 'constractor',
+    loadChildren: () => import('./pages/constractor/constractor.module').then( m => m.ConstractorPageModule),
+    canActivate: [AuthService]
+  },
+  {
+    path: 'add-contractor',
+    loadChildren: () => import('./pages/add-contractor/add-contractor.module').then( m => m.AddContractorPageModule),
+    canActivate: [AuthService]
+  },
+  {
+    path: 'addproject',
+    loadChildren: () => import('./pages/addproject/addproject.module').then( m => m.AddprojectPageModule)
   }
 ];
 

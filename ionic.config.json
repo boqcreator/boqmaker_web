@@ -1,5 +1,7 @@
 {
   "name": "boqmaker",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
