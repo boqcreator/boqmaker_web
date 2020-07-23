@@ -10,10 +10,18 @@ import { LoadingController, ModalController } from '@ionic/angular';
 export class ContractorCatPage implements OnInit {
 items;
 contractor;
-name;
+name = "";
+email = "";
+address = "";
+tel = "";
+mob = "";
   constructor(private afs :AngularFirestore, 
     public loadingController: LoadingController,
-    private modal : ModalController) { }
+    private modal : ModalController) { 
+      this.afs.collection(`boq/boq/contractors`).get().subscribe(value =>{
+        this.items = value.docs
+      })
+    }
 
   ngOnInit() {
   }
@@ -24,8 +32,12 @@ name;
       duration: 20000
     });
     await loading.present();
-    this.afs.collection(`boq/boq/contractors/${this.contractor.id}/cat`).add({
-   name : this.name
+    this.afs.collection(`boq/boq/contractors/${this.contractor.ref.id}/items`).add({
+   name : this.name,
+   email : this.email,
+    address : this.address,
+    tel :  this.tel,
+    mob :  this.mob,
     }).then(()=>{
       this.loadingController.dismiss();
       alert("Successfully Added!")

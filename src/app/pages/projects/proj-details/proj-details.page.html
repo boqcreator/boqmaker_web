@@ -3,182 +3,276 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Project</ion-title>
+    <ion-title>{{ name }} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content style="font-size: small;" >
   <ion-grid>
     <ion-row>
-       <ion-col size="2">
-        <div>
-          <!-- List of Text Items
-             
-          <ul class="b">
-            <li  *ngFor="let p of appPages"> <ion-icon src="assets/icon/company.svg" [style.color]="p.color" style="font-size: 24px;" ></ion-icon> {{ p.name }}
-              <ul>
-                <li *ngFor="let s of p.floor" >
-                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="s.color" style="font-size: 24px;" ></ion-icon>{{s.name}}
-                  <ul>
-                    <li *ngFor="let a of s.area" >
-                      <ion-icon src="assets/icon/radar.svg" [style.color]="a.color" style="font-size: 24px;" ></ion-icon>
-                      {{ a.aname }}</li> 
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-            -->
+       <ion-col size="3">
+        <div style="margin-top: 60px;">
+ 
+          <ion-card style="margin: 0px;padding: 0px;">
+     
+
+            <!-- MY BUILDING SELECTION -->
+           <ion-item class="leftsideitems">
+             <ion-button (click)="segmentBuilding()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+               <ion-icon slot="icon-only" name="add"></ion-icon>
+             </ion-button>
+             <ion-label>Buildings</ion-label>
+             <ion-select (ionChange)="getFloors()" interface="popover" [(ngModel)]="myBuildingID" placeholder="Select Building" >
+               <ion-select-option *ngFor="let item of myBuildingList" [value]="item.id" > {{ item.name }} </ion-select-option>
+             </ion-select>
+           </ion-item>
+
+     
+             <ion-item  class="leftsideitems">
+               <ion-button (click)="segmentFloor()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+                 <ion-icon slot="icon-only" name="add"></ion-icon>
+               </ion-button>
+               <ion-icon color="primary" size="small" slot="icon-only" name="add-circle"></ion-icon>
+               <ion-label>Floors</ion-label>
+               <ion-select (ionChange)="getCats()"[(ngModel)]="myFloorID"  interface="popover"  placeholder="Select Floor">
+                 <ion-select-option *ngFor="let fitem of myFloorList" [value]="fitem.id" > {{ fitem.name }} </ion-select-option>
+               </ion-select>
+             </ion-item>
 
 
-            <div style="margin-top: 50px;">
-              <div *ngFor="let item of PBdata ">
-                <!-- <div *ngFor="let val of group.values | slice:0:(group.expanded? group.values.length :3)">{{val}}</div> -->
-                <ul *ngIf="!item.expanded">
-                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="item.color" style="font-size: 24px;" ></ion-icon> 
-                <span (click)="item.expanded=true" > {{ item.name }}   </span>   <ion-icon color="primary" (click)="toaddFloor(item)" size="small" slot="icon-only" name="add-circle"></ion-icon>
-                  
-                </ul>
 
-                <ul *ngIf="item.expanded" >
-                 <li  >
-                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="item.color" style="font-size: 24px;" ></ion-icon> 
-               <span (click)="item.expanded=false" > {{ item.name }}  </span>    
-                <ion-icon color="primary" (click)="toaddFloor(item)" size="small" slot="icon-only" name="add-circle"></ion-icon>
-                 </li> 
-                  <span *ngIf="item.floors" >
-                    <li *ngFor="let floor of item.floors">
-                      <ion-icon src="assets/icon/company.svg" [style.color]="floor.color" style="font-size: 24px;" ></ion-icon>  {{ floor.name }}
-                  </li>
-                  </span>
-               
-                </ul>
-              </div>      
-            </div>
-        </div>
+             <ion-item  class="leftsideitems">
+               <ion-button (click)="segmentarea()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+                 <ion-icon slot="icon-only" name="add"></ion-icon>
+               </ion-button>
+               <ion-label>Category</ion-label>
+               <ion-select (ionChange)="getSubcats()"[(ngModel)]="myCatID"  interface="popover" placeholder="Select Category">
+                 <ion-select-option *ngFor="let citem of myCatList" [value]="citem.id" > {{ citem.name }}</ion-select-option>
+               </ion-select>
+             </ion-item>
+             <ion-item  class="leftsideitems">
+               <ion-button (click)="segmentarea()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+                 <ion-icon slot="icon-only" name="add"></ion-icon>
+               </ion-button>
+               <ion-label>Subcategory</ion-label>
+               <ion-select (ionChange)="getSubsubcats()"[(ngModel)]="mySubcatID"  interface="popover" placeholder="Select Subcategory">
+                 <ion-select-option *ngFor="let subitem of mySubcatList" [value]="subitem.id" > {{ subitem.name }}</ion-select-option>
+               </ion-select>
+             </ion-item>
+             <ion-item class="leftsideitems">
+               <ion-button (click)="segmentarea()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+                 <ion-icon slot="icon-only" name="add"></ion-icon>
+               </ion-button>
+               <ion-label>Sub-subcategory</ion-label>
+               <ion-select (ionChange)="getArea()"[(ngModel)]="mySubsubcatID" interface="popover" placeholder="Select Sub-subcategory">
+                 <ion-select-option *ngFor="let subsubitem of mySubsubcatList" [value]="subsubitem.id" > {{ subsubitem.name }}</ion-select-option>
+               </ion-select>
+             </ion-item>
+             <ion-item class="leftsideitems">
+               <ion-button (click)="segmentarea()"  style="--padding-start : 0px" class="addbtn" fill="clear" >
+                 <ion-icon slot="icon-only" name="add"></ion-icon>
+               </ion-button>
+               <ion-label>Areas</ion-label>
+               <ion-select (ionChange)="myAreaSeelcted()" [(ngModel)]="myAreaID" interface="popover" placeholder="Select Area">
+                 <ion-select-option *ngFor="let aitem of myAreaList" [value]="aitem.id" > {{ aitem.name }} </ion-select-option>
+               </ion-select>
+             </ion-item>
+            
+          </ion-card>
+             </div>
       </ion-col> 
 
 
       <ion-col>
-        <div>
 
-<!-- Default Segment -->
-<ion-segment [(ngModel)]="segment" >
-  <ion-segment-button value="project">
-    <ion-label>Project Details</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="building">
-    <ion-label>Buildings Details</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="floor">
-    <ion-label>Floors</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="projection">
-    <ion-label>Projection Details</ion-label>
-  </ion-segment-button>
-</ion-segment>
+        <ion-segment [(ngModel)]="segment" >
+          <ion-segment-button value="project">
+            <ion-label>Project Details</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="building">
+            <ion-label>Buildings Details</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="floor">
+            <ion-label>Floors</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="area">
+            <ion-label>Areas</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
-<div [ngSwitch]="segment">     
-  <div style="margin-top : 5px;" *ngSwitchCase="'project'">
+        <div [ngSwitch]="segment">  
+          <div style="margin-top : 5px;" *ngSwitchCase="'project'">
 
-  <!-- List of Sliding Items -->
-  <ion-card style="font-size: xx-small;" >
-    <ion-card-header>
-      <ion-card-title>Project</ion-card-title>
-    </ion-card-header>
-    <ion-list class="ion-text-nowrap">
-      <ion-row>
-        <ion-col>
-         <ion-item>
-           <ion-label position="floating" color="primary">Project name</ion-label>
-           <ion-input readonly [value]="name" placeholder="Text Input"></ion-input>
-         </ion-item>
-        </ion-col>
-     
-         <ion-col>
-           <ion-item  >
-             <ion-label position="floating" color="primary" fixed>Project ID</ion-label>
-             <ion-input readonly disabled="true" [value]="id" type="tel" ></ion-input>
-           </ion-item>
-         
-         </ion-col>
-      
-      </ion-row>
-
-
-<ion-row>
-  <ion-col>
-    <ion-item>
-      <ion-label position="floating">Project Number</ion-label>
-      <ion-input type="text" [(ngModel)]="no" name="no"></ion-input>
-    </ion-item>
-  </ion-col>
-  <ion-col>
-    <ion-item>
-      <ion-label position="floating">Client</ion-label>
-      <ion-input type="text" [(ngModel)]="client" name="client"></ion-input>
-    </ion-item>
-  </ion-col>
-</ion-row>
-
-<ion-row>
-  <ion-col>
-    <ion-item>
-      <ion-label position="floating">Consultant</ion-label>
-      <ion-input type="text" [(ngModel)]="con" name="con"></ion-input>
-    </ion-item>
-  </ion-col>
-</ion-row>
-
-<ion-row>
-  <ion-col>
-    <ion-item>
-      <ion-label position="floating">Starting date</ion-label>
-      <ion-datetime [(ngModel)]="start" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
-    </ion-item>
-  </ion-col>
-  <ion-col>
-    <ion-item>
-      <ion-label position="floating">Completion date</ion-label>
-      <ion-datetime [(ngModel)]="end" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
-    </ion-item>
-  </ion-col>
-</ion-row>
-   </ion-list>
-   </ion-card>
-    </div>
-
-
-    <div style="margin-top : 5px; background: white; padding: 10px;" *ngSwitchCase="'building'">
-
-        <ion-card-header>
-          <ion-card-title>Add Building</ion-card-title>
-        </ion-card-header>
+            <ion-card style="font-size: xx-small;" >
+              <ion-card-header>
+                <ion-card-title>Project</ion-card-title>
+              </ion-card-header>
+              <ion-list class="ion-text-nowrap">
+                <ion-row>
+                    <ion-col>
+                     <ion-item  >
+                       <ion-label position="floating" color="primary" fixed>Project ID</ion-label>
+                       <ion-input readonly disabled="true" [value]="id" type="tel" ></ion-input>
+                     </ion-item>
+                   </ion-col>
+          
+                  <ion-col>
+                   <ion-item>
+                     <ion-label position="floating" color="primary">Project name</ion-label>
+                     <ion-input [value]="name" placeholder="Text Input"></ion-input>
+                   </ion-item>
+                  </ion-col>
+               
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Project Number</ion-label>
+                      <ion-input type="text" [(ngModel)]="no" name="no"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                
+                </ion-row>
+          
+          
           <ion-row>
             <ion-col>
-             <ion-item>
-               <ion-label position="floating" color="primary">Building name</ion-label>
-               <ion-input [(ngModel)]="bname" placeholder="Enter name here.."></ion-input>
-             </ion-item>
+              <ion-item>
+                <ion-label position="floating">Consultant</ion-label>
+                <ion-input type="text" [(ngModel)]="con" name="con"></ion-input>
+              </ion-item>
+            </ion-col>
+          
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Starting date</ion-label>
+                <ion-datetime [(ngModel)]="start" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
+              </ion-item>
             </ion-col>
             <ion-col>
               <ion-item>
-                <ion-label position="floating">Description</ion-label>
-                <ion-textarea type="text" placeholder="Enter Description here.." [(ngModel)]="bdes"></ion-textarea>
+                <ion-label position="floating">Completion date</ion-label>
+                <ion-datetime [(ngModel)]="end" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
               </ion-item>
             </ion-col>
+          </ion-row>
 
-          </ion-row>
-    
-          <ion-row>
-            <ion-label>Color</ion-label>
-            <input [(colorPicker)]="bcolor" [(ngModel)]="bcolor"  [style.background]="bcolor"/>
-          </ion-row>
-          <br/><br/>
-          <ion-button expand="full"  (click)="addBuilding()" >Add</ion-button>
+          <ion-card> 
+            <div class="title_box" id="bill_to">
+              <div id="title"> Project Location</div>
+              <div id="contents">
+            <div class="form-group">
+              <input type="text"  (keydown.enter)="$event.preventDefault()"
+                placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+                #search>
+            </div>
           
-    </div>
+            <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+              <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+                (dragEnd)="markerDragEnd($event)"></agm-marker>
+            </agm-map>
+          
+          </div>
+          </div>
+          </ion-card>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Client</ion-label>
+                <ion-input type="text" [(ngModel)]="client" name="client"></ion-input>
+              </ion-item>
+            </ion-col>
+          
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Client Email</ion-label>
+                <ion-input type="text" [(ngModel)]="clientemail" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Client Address</ion-label>
+                <ion-input type="text" [(ngModel)]="clientaddress" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Client Contact</ion-label>
+                <ion-input type="text" [(ngModel)]="clientohoneno" ></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Contractor Name</ion-label>
+                <ion-input type="text" [(ngModel)]="contname" ></ion-input>
+              </ion-item>
+            </ion-col>
+          
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Contractor Email</ion-label>
+                <ion-input type="text" [(ngModel)]="contEmail" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Contractor Address</ion-label>
+                <ion-input type="text" [(ngModel)]="contaddress" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Contractor Contact</ion-label>
+                <ion-input type="text" [(ngModel)]="contmob" ></ion-input>
+              </ion-item>
+            </ion-col>
+          
+           
+          </ion-row>
+             </ion-list>
+             <ion-button (click)="updateproj()" expand="block">
+               Update
+             </ion-button>
+             </ion-card>
+          
+          </div>
 
+
+          <div style="margin-top : 5px; background: white; padding: 10px;" *ngSwitchCase="'building'">
+
+            <ion-card-header>
+              <ion-card-title>Add Building</ion-card-title>
+            </ion-card-header>
+              <ion-row>
+                <ion-col>
+                 <ion-item>
+                   <ion-label position="floating" color="primary">Building name</ion-label>
+                   <ion-input [(ngModel)]="bname" placeholder="Enter name here.."></ion-input>
+                 </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Description</ion-label>
+                    <ion-textarea type="text" placeholder="Enter Description here.." [(ngModel)]="bdes"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+        
+              <ion-row>
+                <ion-label>Color</ion-label>
+                <input [(colorPicker)]="bcolor" [style.background]="bcolor"/>
+              </ion-row>
+              <br/><br/>
+              <ion-button expand="full"  (click)="addBuilding()" >Add</ion-button>
+              
+        </div>
+
+
+        <!-- FLOORS -->
     <div style="margin-top : 5px; background: white; padding: 10px;" *ngSwitchCase="'floor'">
     
       <ion-card-header>
@@ -186,11 +280,16 @@
       </ion-card-header>
 
       <ion-row>
-        <ion-select (ionChange)="toaddFloor(SelectedBuilding)" [(ngModel)]="SelectedBuilding" okText="Okay" cancelText="Dismiss" interface="action-sheet" >
-          <ion-select-option *ngFor="let item of PBdata" [value]="item">                  
+        <ion-col>
+          <ion-item>
+                    <ion-select [(ngModel)]="myBuildingID"  cancelText="Dismiss" interface="action-sheet" >
+          <ion-select-option *ngFor="let item of myBuildingList" [value]="item.id">                  
                   <ion-label>  {{ item.name }}  </ion-label>
           </ion-select-option>
         </ion-select>
+          </ion-item>
+
+        </ion-col>
       </ion-row>
         <ion-row>
           <ion-col>
@@ -204,52 +303,1371 @@
   
         <ion-row>
           <ion-label>Color</ion-label>
-          <input [(colorPicker)]="fcolor" [(ngModel)]="fcolor"  [style.background]="fcolor"/>
+          <input [(colorPicker)]="fcolor" [style.background]="fcolor"/>
         </ion-row>
         <br/><br/>
         <ion-button expand="full"  (click)="addFloor()" >Add</ion-button>
     
-    </div>
+      </div>
+
+
+      <!-- AREA -->
+    <div style="margin-top : 5px; background: white; padding: 10px; border-radius: 10px;" *ngSwitchCase="'area'">
+      <ion-row>
+        <ion-col>
+          <ion-label>Buildings</ion-label>
+          <ion-select (ionChange)="getFloors()" interface="popover" [(ngModel)]="myBuildingID" placeholder="Select Building" >
+            <ion-select-option *ngFor="let item of myBuildingList" [value]="item.id" > {{ item.name }} </ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-label>Floors</ion-label>
+          <ion-select [(ngModel)]="myFloorID"  interface="popover"  placeholder="Select Floor">
+            <ion-select-option *ngFor="let fitem of myFloorList" [value]="fitem.id" > {{ fitem.name }} </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
 
 
 
-    </div>
+      <ion-row>
+        <ion-col>
+          <ion-select (ionChange)="getGsubcat()" [(ngModel)]="GloblecatID"  placeholder="Select Category"  okText="Okay" cancelText="Dismiss" interface="popover" >
+            <ion-select-option *ngFor="let s of GloblecatList" [value]="s.id">                  
+                    <ion-label>  {{ s.name }}  </ion-label>
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+
+        <ion-col>
+          <ion-select (ionChange)="getGsubsubcat()" [(ngModel)]="GloblesubcatID" placeholder="Select Subcategory"   okText="Okay" cancelText="Dismiss" interface="popover" >
+            <ion-select-option *ngFor="let ss of GloblesubcatList" [value]="ss.id">                  
+                    <ion-label>  {{ ss.name }}  </ion-label>
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-select (ionChange)="getGlobleareas()" [(ngModel)]="GloblesubsubcatID"  okText="Okay" cancelText="Dismiss"  placeholder="Select Sub subcategory" interface="popover" >
+            <ion-select-option *ngFor="let sss of GloblesubsubcatList" [value]="sss.id">                  
+                    <ion-label>  {{ sss.name }}  </ion-label>
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-select (ionChange)="assigning()"  [(ngModel)]="GlobleareaID"  okText="Okay" cancelText="Dismiss"  placeholder="Select Area" interface="popover" >
+            <ion-select-option *ngFor="let a of GlobleareaList" [value]="a.id">                  
+                    <ion-label>  {{ a.name }}  </ion-label>
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+
+       <!-- AREA MEASUREMENTS -->
+       <ion-segment [(ngModel)]="Areasegment" >
+        <ion-segment-button value="am">
+          <ion-label>Area Measurements</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="aa">
+          <ion-label>Area axis</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="eq">
+          <ion-label>Extra quantities</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="c1">
+          <ion-label>Choice 1</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="c2">
+          <ion-label>Choice 2</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="c3">
+          <ion-label>Choice 3</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+ 
+        <div [ngSwitch]="Areasegment">     
+          <div style="margin-top : 5px;" *ngSwitchCase="'am'">
+  
+          
+              <ion-row>
+                <ion-col size="3">
+                  <ion-item  >
+                    <ion-label position="floating">Area Width</ion-label>
+                    <ion-input [(ngModel)]="Unit_width" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size=3 >
+                <ion-item >
+                    <ion-label position="floating">Area length</ion-label>
+                    <ion-input [(ngModel)]="Unit_length" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size=3 >
+                <ion-item  >
+                    <ion-label position="floating">Area height/depth</ion-label>
+                    <ion-input [(ngModel)]="Unit_height" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size=3 >
+                <ion-item  >
+                    <ion-label position="floating">No of areas</ion-label>
+                    <ion-input [(ngModel)]="No_of_units" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+  
+              <ion-row>
+            <ion-col size="3">
+              <table>
+                <tr>
+                  <th>
+                    Width
+                  </th>
+                  <th>
+                    Length
+                  </th>
+                </tr>
+                  <tr>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_width_1"  type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_length_1"  type="number"></ion-input>
+                        </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_width_2"  type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_length_2"  type="number"></ion-input>
+                        </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_width_3" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_length_3" type="number"></ion-input>
+                        </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_width_4" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input [(ngModel)]="Floor_length_4" type="number"></ion-input>
+                        </td>
+                  </tr>
+              </table>
+            </ion-col>
+  
+            <ion-col size="3">
+                 <ion-list>
+                   <ion-list-header>
+                     <h4>Round area</h4>
+                   </ion-list-header>
+                   <ion-item>
+                   <ion-label>Radius</ion-label>
+                     <ion-input [(ngModel)]="R" type="number" ></ion-input>
+                   </ion-item>
+                   <ion-item>
+                   <ion-label>%</ion-label>
+                    <ion-input [(ngModel)]="RO" type="number" ></ion-input>
+                  </ion-item>
+                 </ion-list>
+            </ion-col>
+  
+            <ion-col size="6">
+  
+              <table>
+                <tr>
+                  <th>
+                   Area wall lengths
+                  </th>
+                  <th>
+                   % wall
+                  </th>
+                  <th>
+                    % skirting
+                   </th>
+                   <th>
+                    % cornice
+                   </th>
+                </tr>
+                  <tr>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="L1" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthA" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthA" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="PCLA" type="number"></ion-input>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="L2" type="number"></ion-input>
+                        </td>
+                        <td>
+                        <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthB" type="number"></ion-input>
+                         </td>
+                         <td>
+                         <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthB" type="number"></ion-input>
+                         </td>
+                         <td>
+                         <ion-input class="areatabelinput" [(ngModel)]="PCLB" type="number"></ion-input>
+                         </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="L3" type="number"></ion-input>
+                        </td>
+                        <td>
+                        <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthC" type="number"></ion-input>
+                         </td>
+                         <td>
+                         <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthC" type="number"></ion-input>
+                         </td>
+                         <td>
+                         <ion-input class="areatabelinput" [(ngModel)]="PCLC" type="number"></ion-input>
+                         </td>
+                  </tr>
+                  <tr>
+                    <td>             
+                    <ion-input class="areatabelinput" [(ngModel)]="L4" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthD" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthD" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="PCLD" type="number"></ion-input>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td>             
+                    <ion-input class="areatabelinput" [(ngModel)]="L5" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthE" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthE" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="PCLE" type="number"></ion-input>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td>             
+                    <ion-input class="areatabelinput" [(ngModel)]="L6" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthF" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthF" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="PCLF" type="number"></ion-input>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td>             
+                    <ion-input class="areatabelinput" [(ngModel)]="L7" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthG" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthG" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="PCLG" type="number"></ion-input>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td>             
+                    <ion-input class="areatabelinput" [(ngModel)]="L8" type="number"></ion-input>
+                    </td>
+                    <td>
+                    <ion-input class="areatabelinput" [(ngModel)]="Wall_per_lengthH" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="skirting_per_lengthH" type="number"></ion-input>
+                     </td>
+                     <td>
+                     <ion-input class="areatabelinput" [(ngModel)]="PCLH" type="number"></ion-input>
+                     </td>
+                  </tr>
+              </table>
+              
+            </ion-col>
+  
+              </ion-row>
+        
+  
+      </div>
+  <!-- AREA AXIS -->
+      <div style="margin-top : 5px;" *ngSwitchCase="'aa'">
+        <ion-grid style="height: 100%">
+          <ion-row justify-content-center align-items-center style="height: 100%">
+            <ion-col>
+          <ion-item>
+              <ion-label>Area id on drawing</ion-label>
+                 <ion-input  [(ngModel)]="Val_Axis" type="number"></ion-input>
+              </ion-item>
+            </ion-col>
+         <ion-col>
+    <ion-item>
+       
+            <ion-label>Area Hat & Val axis on drawing</ion-label>
+             <ion-input  [(ngModel)]="Hal_Axis" type="text"></ion-input>
+          </ion-item>
+         </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Expected no. of BOQ items</ion-label>
+                 <ion-input  [(ngModel)]="Y8" type="number"></ion-input>
+              </ion-item>
+             </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+  
+      <!-- Extra quantities  -->
+      <div style="margin-top : 5px;" *ngSwitchCase="'eq'">
+      
+        <ion-row>
+          <ion-col class="extrasborders" size="8">
+            <ion-row>
+              <ion-col class="extrasborders" size=6 >
+                <ion-list>
+                  <ion-list-header>
+                    <ion-label>Earth work</ion-label>
+                  </ion-list-header>
+              <ion-item>
+                  <ion-label class="ion-text-wrap" >Extra excavation qty:</ion-label>
+                    <ion-input  [(ngModel)]="exc" type="number"></ion-input>
+                  </ion-item>
+              <ion-item>
+                  <ion-label class="ion-text-wrap" >Extra filling qty:</ion-label>
+                    <ion-input  [(ngModel)]="fill" type="number"></ion-input>
+                  </ion-item>
+                </ion-list>
+              </ion-col>
+              <ion-col class="extrasborders" size=6 >
+                <ion-list>
+                  <ion-list-header>
+                    <ion-label class="ion-text-wrap" >Block work</ion-label>
+                  </ion-list-header>
+              <ion-item>
+                  <ion-label class="ion-text-wrap" >Extra block qty:</ion-label>
+                    <ion-input  [(ngModel)]="Y10" type="number"></ion-input>
+                  </ion-item>
+              <ion-item>
+                  <ion-label class="ion-text-wrap" >Extra D.P.C:</ion-label>
+                    <ion-input  [(ngModel)]="extraBlockDPC" type="number"></ion-input>
+                  </ion-item>
+                </ion-list>
+    
+              </ion-col>
+            </ion-row>
+           
+  
+            <ion-col size=6 >
+        
+                <ion-list-header>
+                  <ion-label class="ion-text-wrap" >Structure items</ion-label>
+                </ion-list-header>
+                <ion-row>
+                  <ion-col size=6>
+                <ion-item>
+                    <ion-label class="ion-text-wrap" >Extra blinding qty:</ion-label>
+                      <ion-input  [(ngModel)]="Y10" type="number"></ion-input>
+                  </ion-item>
+                <ion-item>
+                  <ion-label class="ion-text-wrap" >Extra concrete qty:</ion-label>
+                      <ion-input  [(ngModel)]="conc" type="number"></ion-input>
+                    </ion-item>
+                <ion-item>
+                    <ion-label class="ion-text-wrap" >Extra form work qty:</ion-label>
+                      <ion-input  [(ngModel)]="Y12" type="number"></ion-input>
+                    </ion-item>
+                <ion-item>
+                    <ion-label class="ion-text-wrap" >Extra steel qty:</ion-label>
+                      <ion-input  [(ngModel)]="steel" type="number"></ion-input>
+                  </ion-item>
+                  </ion-col>
+  
+                  <ion-col size=6>
+                <ion-item>
+                    <ion-label class="ion-text-wrap" >Extra bitumin paint qty:</ion-label>
+                      <ion-input  [(ngModel)]="bit" type="number"></ion-input>
+                    </ion-item>
+                <ion-item>
+                    <ion-label class="ion-text-wrap" >Extra polythene qty:</ion-label>
+                      <ion-input  [(ngModel)]="polyth" type="number"></ion-input>
+                    </ion-item>
+                <ion-item>
+                    <ion-label class="ion-text-wrap" >Extra precast slabs qty:</ion-label>
+                      <ion-input  [(ngModel)]="precast" type="number"></ion-input>
+                    </ion-item>
+                <ion-item>
+                    <ion-label class="ion-text-wrap" >Extra expansion joint qty:</ion-label>
+                      <ion-input  [(ngModel)]="Y12" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+             
+            
+  
+            </ion-col>
+          </ion-col>
+          <ion-col class="extrasborders" size="4">
+            <ion-list>
+              <ion-list-header>
+                <ion-label class="ion-text-wrap" >Finishing items</ion-label>
+              </ion-list-header>
+          <ion-item>
+              <ion-label class="ion-text-wrap" >Extra floor area:</ion-label>
+                <ion-input [(ngModel)]="areaF" type="number"></ion-input>
+              </ion-item>
+          <ion-item>
+              <ion-label class="ion-text-wrap" >Extra wall area:</ion-label>
+                <ion-input [(ngModel)]="areaW" type="number"></ion-input>
+              </ion-item>
+          <ion-item>
+              <ion-label class="ion-text-wrap" >Extra ceiling area:</ion-label>
+                <ion-input [(ngModel)]="areaC" type="number"></ion-input>
+              </ion-item>
+          <ion-item>
+              <ion-label class="ion-text-wrap" >Extra skirting area:</ion-label>
+                <ion-input [(ngModel)]="areaS" type="number"></ion-input>
+              </ion-item>
+          <ion-item>
+              <ion-label class="ion-text-wrap" >Extra cornice area:</ion-label>
+                <ion-input [(ngModel)]="areaCOR" type="number"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </div>
+              
+
+      <div style="margin-top : 5px;" *ngSwitchCase="'c1'">
+
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1A</ion-label>
+              <ion-input [(ngModel)]="ch1A" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1B</ion-label>
+              <ion-input [(ngModel)]="ch1B" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1C</ion-label>
+              <ion-input [(ngModel)]="ch1C" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1D</ion-label>
+              <ion-input [(ngModel)]="ch1D" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1E</ion-label>
+              <ion-input [(ngModel)]="ch1E" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1F</ion-label>
+              <ion-input [(ngModel)]="ch1F" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1G</ion-label>
+              <ion-input [(ngModel)]="ch1G" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1H</ion-label>
+              <ion-input [(ngModel)]="ch1H" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1I</ion-label>
+              <ion-input [(ngModel)]="ch1I" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1J</ion-label>
+              <ion-input [(ngModel)]="ch1J" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1K</ion-label>
+              <ion-input [(ngModel)]="ch1K" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1L</ion-label>
+              <ion-input [(ngModel)]="ch1L" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1M</ion-label>
+              <ion-input [(ngModel)]="ch1M" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1N</ion-label>
+              <ion-input [(ngModel)]="ch1N" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1O</ion-label>
+              <ion-input [(ngModel)]="ch1O" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1P</ion-label>
+              <ion-input [(ngModel)]="ch1P" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1Q</ion-label>
+              <ion-input [(ngModel)]="ch1Q" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1R</ion-label>
+              <ion-input [(ngModel)]="ch1R" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1S</ion-label>
+              <ion-input [(ngModel)]="ch1S" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1T</ion-label>
+              <ion-input [(ngModel)]="ch1T" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1U</ion-label>
+              <ion-input [(ngModel)]="ch1U" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1V</ion-label>
+              <ion-input [(ngModel)]="ch1V" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1W</ion-label>
+              <ion-input [(ngModel)]="ch1W" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1X</ion-label>
+              <ion-input [(ngModel)]="ch1X" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1Y</ion-label>
+              <ion-input [(ngModel)]="ch1Y" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1Z</ion-label>
+              <ion-input [(ngModel)]="ch1Z" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AA</ion-label>
+              <ion-input [(ngModel)]="ch1AA" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AB</ion-label>
+              <ion-input [(ngModel)]="ch1AB" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AC</ion-label>
+              <ion-input [(ngModel)]="ch1AC" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AD</ion-label>
+              <ion-input [(ngModel)]="ch1AD" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AE</ion-label>
+              <ion-input [(ngModel)]="ch1Y" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AF</ion-label>
+              <ion-input [(ngModel)]="ch1Z" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AG</ion-label>
+              <ion-input [(ngModel)]="ch1AG" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AH</ion-label>
+              <ion-input [(ngModel)]="ch1AH" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AI</ion-label>
+              <ion-input [(ngModel)]="ch1AI" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AJ</ion-label>
+              <ion-input [(ngModel)]="ch1AJ" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AK</ion-label>
+              <ion-input [(ngModel)]="ch1K" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AL</ion-label>
+              <ion-input [(ngModel)]="ch1L" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AM</ion-label>
+              <ion-input [(ngModel)]="ch1AM" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AN</ion-label>
+              <ion-input [(ngModel)]="ch1AN" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch1AO</ion-label>
+              <ion-input [(ngModel)]="ch1AO" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+      <div style="margin-top : 5px;" *ngSwitchCase="'c2'">
+
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2A</ion-label>
+              <ion-input [(ngModel)]="ch2A" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2B</ion-label>
+              <ion-input [(ngModel)]="ch2B" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2C</ion-label>
+              <ion-input [(ngModel)]="ch2C" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2D</ion-label>
+              <ion-input [(ngModel)]="ch2D" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2E</ion-label>
+              <ion-input [(ngModel)]="ch2E" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2F</ion-label>
+              <ion-input [(ngModel)]="ch2F" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2G</ion-label>
+              <ion-input [(ngModel)]="ch2G" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2H</ion-label>
+              <ion-input [(ngModel)]="ch2H" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2I</ion-label>
+              <ion-input [(ngModel)]="ch2I" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2J</ion-label>
+              <ion-input [(ngModel)]="ch2J" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2K</ion-label>
+              <ion-input [(ngModel)]="ch2K" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2L</ion-label>
+              <ion-input [(ngModel)]="ch2L" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2M</ion-label>
+              <ion-input [(ngModel)]="ch2M" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2N</ion-label>
+              <ion-input [(ngModel)]="ch2N" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2O</ion-label>
+              <ion-input [(ngModel)]="ch2O" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2P</ion-label>
+              <ion-input [(ngModel)]="ch2P" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2Q</ion-label>
+              <ion-input [(ngModel)]="ch2Q" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2R</ion-label>
+              <ion-input [(ngModel)]="ch2R" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2S</ion-label>
+              <ion-input [(ngModel)]="ch2S" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2T</ion-label>
+              <ion-input [(ngModel)]="ch2T" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2U</ion-label>
+              <ion-input [(ngModel)]="ch2U" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2V</ion-label>
+              <ion-input [(ngModel)]="ch2V" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2W</ion-label>
+              <ion-input [(ngModel)]="ch2W" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2X</ion-label>
+              <ion-input [(ngModel)]="ch2X" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2Y</ion-label>
+              <ion-input [(ngModel)]="ch2Y" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2Z</ion-label>
+              <ion-input [(ngModel)]="ch2Z" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AA</ion-label>
+              <ion-input [(ngModel)]="ch2AA" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AB</ion-label>
+              <ion-input [(ngModel)]="ch2AB" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AC</ion-label>
+              <ion-input [(ngModel)]="ch2AC" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AD</ion-label>
+              <ion-input [(ngModel)]="ch2AD" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AE</ion-label>
+              <ion-input [(ngModel)]="ch2Y" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AF</ion-label>
+              <ion-input [(ngModel)]="ch2Z" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AG</ion-label>
+              <ion-input [(ngModel)]="ch2AG" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AH</ion-label>
+              <ion-input [(ngModel)]="ch2AH" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AI</ion-label>
+              <ion-input [(ngModel)]="ch2AI" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AJ</ion-label>
+              <ion-input [(ngModel)]="ch2AJ" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AK</ion-label>
+              <ion-input [(ngModel)]="ch2K" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AL</ion-label>
+              <ion-input [(ngModel)]="ch2L" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AM</ion-label>
+              <ion-input [(ngModel)]="ch2AM" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AN</ion-label>
+              <ion-input [(ngModel)]="ch2AN" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch2AO</ion-label>
+              <ion-input [(ngModel)]="ch2AO" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+      <div style="margin-top : 5px;" *ngSwitchCase="'c3'">
+
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3A</ion-label>
+              <ion-input [(ngModel)]="ch3A" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3B</ion-label>
+              <ion-input [(ngModel)]="ch3B" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3C</ion-label>
+              <ion-input [(ngModel)]="ch3C" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3D</ion-label>
+              <ion-input [(ngModel)]="ch3D" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3E</ion-label>
+              <ion-input [(ngModel)]="ch3E" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3F</ion-label>
+              <ion-input [(ngModel)]="ch3F" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3G</ion-label>
+              <ion-input [(ngModel)]="ch3G" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3H</ion-label>
+              <ion-input [(ngModel)]="ch3H" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3I</ion-label>
+              <ion-input [(ngModel)]="ch3I" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3J</ion-label>
+              <ion-input [(ngModel)]="ch3J" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3K</ion-label>
+              <ion-input [(ngModel)]="ch3K" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3L</ion-label>
+              <ion-input [(ngModel)]="ch3L" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3M</ion-label>
+              <ion-input [(ngModel)]="ch3M" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3N</ion-label>
+              <ion-input [(ngModel)]="ch3N" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3O</ion-label>
+              <ion-input [(ngModel)]="ch3O" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3P</ion-label>
+              <ion-input [(ngModel)]="ch3P" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3Q</ion-label>
+              <ion-input [(ngModel)]="ch3Q" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3R</ion-label>
+              <ion-input [(ngModel)]="ch3R" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3S</ion-label>
+              <ion-input [(ngModel)]="ch3S" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3T</ion-label>
+              <ion-input [(ngModel)]="ch3T" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3U</ion-label>
+              <ion-input [(ngModel)]="ch3U" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3V</ion-label>
+              <ion-input [(ngModel)]="ch3V" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3W</ion-label>
+              <ion-input [(ngModel)]="ch3W" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3X</ion-label>
+              <ion-input [(ngModel)]="ch3X" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3Y</ion-label>
+              <ion-input [(ngModel)]="ch3Y" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3Z</ion-label>
+              <ion-input [(ngModel)]="ch3Z" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AA</ion-label>
+              <ion-input [(ngModel)]="ch3AA" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AB</ion-label>
+              <ion-input [(ngModel)]="ch3AB" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AC</ion-label>
+              <ion-input [(ngModel)]="ch3AC" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AD</ion-label>
+              <ion-input [(ngModel)]="ch3AD" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AE</ion-label>
+              <ion-input [(ngModel)]="ch3Y" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AF</ion-label>
+              <ion-input [(ngModel)]="ch3Z" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AG</ion-label>
+              <ion-input [(ngModel)]="ch3AG" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AH</ion-label>
+              <ion-input [(ngModel)]="ch3AH" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AI</ion-label>
+              <ion-input [(ngModel)]="ch3AI" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AJ</ion-label>
+              <ion-input [(ngModel)]="ch3AJ" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AK</ion-label>
+              <ion-input [(ngModel)]="ch3K" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AL</ion-label>
+              <ion-input [(ngModel)]="ch3L" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AM</ion-label>
+              <ion-input [(ngModel)]="ch3AM" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AN</ion-label>
+              <ion-input [(ngModel)]="ch3AN" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size=2>
+            <ion-item>
+              <ion-label position="floating" >ch3AO</ion-label>
+              <ion-input [(ngModel)]="ch3AO" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+
 
        
-        </div>
-      </ion-col>
+            <ion-button (click)="addareatoproj()" expand="block" >
+              Add
+              </ion-button>
+            <!-- AreaSegment End -->
+            </div>
+
+            <!-- SEGMENT End -->
+         </div>
+
+
+   </div>
+ </ion-col>
+
+
+
+
+
+
+
 
 
       <ion-col size="2">
-        <div>
-          <!-- List of Input Items -->
-<!--           
-            <span  *ngFor="let p of appPages">
-              
-                <span *ngFor="let s of p.floor" >
+        <div style="margin-top: 60px;">
+ 
+          <ion-card style="margin: 0px;padding: 0px; height: 200px">
+     
 
-                 <ul>
-                    <li *ngFor="let a of s.area" >
-                          <ion-icon src="assets/icon/under-construction.svg" [style.color]="a.color" style="font-size: 24px;" ></ion-icon>{{a.acat}}
-                      <ul>
-                        <li *ngFor="let i of a.items" >
-                          <ion-icon src="assets/icon/fix.svg" [style.color]="i.color" style="font-size: 24px;" ></ion-icon>
-                          {{ i.cat }}</li> 
-                      </ul>
-                    </li>
-                    </ul>
+            <!-- MY BUILDING SELECTION -->
+           <ion-item class="leftsideitems">
+             <ion-button style="--padding-start : 0px" class="addbtn" fill="clear" >
+               <ion-icon slot="icon-only" name="add"></ion-icon>
+             </ion-button>
+             <ion-label>Items</ion-label>
+             <ion-select placeholder="Select Item" >
+               <ion-select-option > Coming soon </ion-select-option>
+             </ion-select>
+           </ion-item>
 
-                      </span> 
-                </span>
-              -->
-          
-         
-
-        </div>
-      </ion-col>
+     
+             <h4 style="text-align: center;">Coming soon</h4>
+            
+          </ion-card>
+             </div>
+  
+      </ion-col> 
     </ion-row>
   </ion-grid>
-
-
-
 </ion-content>
+
+
+
+
+
+
+
+
+
+
+    <!-- <div>
+            <div style="margin-top: 50px;">
+              <div *ngFor="let item of PBdata ">
+                <ul *ngIf="mySelectedAreaToupdate.!item.expanded">
+                  <ion-icon color="primary" (click)="toaddFloor(item)" size="small" slot="icon-only" name="add-circle"></ion-icon>
+                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="item.color" style="font-size: 24px;" ></ion-icon> 
+                <span (click)="item.expanded=true" > {{ item.name }}   </span>  
+                </ul>
+                <ul *ngIf="mySelectedAreaToupdate.item.expanded" >
+                 <li>
+                  <ion-icon color="primary" (click)="toaddFloor(item)" size="small" slot="icon-only" name="add-circle"></ion-icon>
+                  <ion-icon src="assets/icon/floor-plan.svg" [style.color]="item.color" style="font-size: 24px;" ></ion-icon> 
+                 <span (click)="item.expanded=false" > {{ item.name }}  </span>    
+                 </li> 
+                  <span *ngIf="item.floors && !item.floors.expanded" >
+                    <li style=" margin-left: 30px;" *ngFor="let floor of item.floors">
+                      <ion-icon color="primary" (click)="toaddarea(item,floor)" size="small" slot="icon-only" name="add-circle"></ion-icon>
+                      <ion-icon src="assets/icon/company.svg" [style.color]="floor.color" style="font-size: 24px;" ></ion-icon>
+                      <span (click)="item.floors.expanded=true" >  {{ floor.name }} </span> 
+                  </li>
+                  </span>
+
+                  <span *ngIf="item.floors && item.floors.expanded" >
+                    <li style=" margin-left: 30px;" *ngFor="let floor of item.floors">
+                      <ion-icon color="primary" (click)="toaddarea(item,floor)" size="small" slot="icon-only" name="add-circle"></ion-icon>
+                      <ion-icon src="assets/icon/company.svg" [style.color]="floor.color" style="font-size: 24px;" ></ion-icon>
+                      <span (click)="item.floors.expanded=false" >  {{ floor.name }} </span> 
+                  </li>
+
+                  <span  *ngIf="item.maindata" >
+                    <ul style="margin-left: 80px;" *ngFor="let miandata of item.maindata">
+                  <span>  {{ miandata.catname }} </span> 
+                      <ul>
+                        <span>  {{ miandata.subcatname }} </span>
+                        <ul>
+                          <span>  {{ miandata.subsubcatname }} </span>
+                          <li style="margin-left: 20px;" >
+                            <ion-icon src="assets/icon/under-construction.svg" style="font-size: 24px;" ></ion-icon>
+                            <span >  {{ miandata.name }} </span>
+                          </li>
+                        </ul>
+                      </ul>
+                    </ul>
+                  </span>
+                  </span>
+                </ul>
+              </div>      
+            </div>
+        </div> -->

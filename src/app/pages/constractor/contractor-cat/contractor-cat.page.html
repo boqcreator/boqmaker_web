@@ -1,27 +1,51 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Add Category</ion-title>
+    <ion-title>Add Caontractor</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-col>
-    <ion-label> Contractor </ion-label>
-    <ion-select [(ngModel)]="contractor" okText="Okay" cancelText="Dismiss" placeholder="Select Contractor" >
-      <ion-select-option *ngFor="let item of items" [value]="item.payload.doc">                  
-              <ion-label>  {{ item.payload.doc.data().name }}  </ion-label>
+    <ion-label> Category </ion-label>
+    <ion-select [(ngModel)]="contractor" okText="Okay" cancelText="Dismiss" placeholder="Select Category" >
+      <ion-select-option *ngFor="let item of items" [value]="item">                  
+              <ion-label>  {{ item.data().name }}  </ion-label>
       </ion-select-option>
     </ion-select>
   </ion-col>
 
   <ion-card *ngIf="contractor" >
     <ion-item>
-      <ion-label position="floating" >Name of Catogery</ion-label>
+      <ion-label position="floating" >Name of Contractor</ion-label>
       <ion-input [(ngModel)]="name" >  </ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label position="floating" >Email</ion-label>
+      <ion-input type="email" [(ngModel)]="email" >  </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating" >Address</ion-label>
+      <ion-input [(ngModel)]="address" >  </ion-input>
+    </ion-item>
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating" >Telephone</ion-label>
+            <ion-input [(ngModel)]="tel" >  </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="floating" >Mobile</ion-label>
+            <ion-input [(ngModel)]="mob" >  </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card>
 
 
-<ion-button *ngIf="contractor" (click)="addcat()" > Add </ion-button>
+<ion-button expand="block" *ngIf="contractor" (click)="addcat()" > Add </ion-button>
 </ion-content>

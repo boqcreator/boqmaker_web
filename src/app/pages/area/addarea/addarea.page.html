@@ -1,0 +1,165 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment" >
+    <ion-segment-button value="cat">
+      <ion-label>Category</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="subcat">
+      <ion-label>Subcategory</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="subsubcat">
+      <ion-label>Sub-subcategory</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="area">
+      <ion-label>Area</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <div [ngSwitch]="segment">
+    <div style="margin-top : 10px;" *ngSwitchCase="'cat'">
+      <ion-list>
+        <ion-item>
+          <ion-label>Name</ion-label>
+          <ion-input [(ngModel)]="catName" type="text" placeholder="Enter category name here..."></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Description</ion-label>
+          <ion-textarea [(ngModel)]="catDes" placeholder="Enter description here..."></ion-textarea>
+        </ion-item>
+      </ion-list>
+      <ion-button (click)="addcat()" expand="block" shape="round">
+        Add
+      </ion-button>
+      </div>
+
+
+      <div style="margin-top : 10px;" *ngSwitchCase="'subcat'">
+        <ion-list>
+
+          <ion-item>
+            <ion-label class="ion-text-wrap" >Category</ion-label>
+            <ion-select [(ngModel)]="SelectedCat" placeholder="Select Category">
+              <ion-select-option  *ngFor="let item of catList" [value]="item">{{ item.data().name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input [(ngModel)]="SubcatName" type="text" placeholder="Enter subcategory name here..."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Description</ion-label>
+            <ion-textarea [(ngModel)]="SubcatDes" placeholder="Enter description here..."></ion-textarea>
+          </ion-item>
+        </ion-list>
+        <ion-button (click)="addSubcat()" expand="block" shape="round">
+          Add
+        </ion-button>
+        </div>
+
+        <div style="margin-top : 10px;" *ngSwitchCase="'subsubcat'">
+          <ion-list>
+  
+            <ion-item>
+              <ion-label>Category</ion-label>
+              <ion-select (ionChange)="getSubcat(SelectedCat)" [(ngModel)]="SelectedCat" placeholder="Select Category">
+                <ion-select-option  *ngFor="let item of catList" [value]="item">{{ item.data().name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>Subcategory</ion-label>
+              <ion-select [(ngModel)]="selectedSubcat" placeholder="Select Subcategory">
+                <ion-select-option *ngFor="let item of SubcatList" [value]="item">{{ item.data().name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+  
+            <ion-item>
+              <ion-label>Name</ion-label>
+              <ion-input [(ngModel)]="SubsubcatName" type="text" placeholder="Enter sub-subcategory name here..."></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Description</ion-label>
+              <ion-textarea [(ngModel)]="SubsubcatDes" placeholder="Enter description here..."></ion-textarea>
+            </ion-item>
+          </ion-list>
+          <ion-button (click)="addSubsubcat()" expand="block" shape="round">
+            Add
+          </ion-button>
+          </div>
+
+
+          <div style="margin-top : 10px;" *ngSwitchCase="'area'">
+            <ion-list>
+    
+              <ion-item>
+                <ion-label>Category</ion-label>
+                <ion-select (ionChange)="getSubcat(SelectedCat)" [(ngModel)]="SelectedCat" placeholder="Select Category">
+                  <ion-select-option  *ngFor="let item of catList" [value]="item">{{ item.data().name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label>Subcategory</ion-label>
+                <ion-select (ionChange)="getSubsubcat(selectedSubcat)" [(ngModel)]="selectedSubcat" placeholder="Select Subcategory">
+                  <ion-select-option *ngFor="let item of SubcatList" [value]="item">{{ item.data().name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Sub-subcategory</ion-label>
+                <ion-select [(ngModel)]="selectedSubsubcat" placeholder="Select Sub-subcategory">
+                  <ion-select-option *ngFor="let item of SubsubcatList" [value]="item">{{ item.data().name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+   <ion-grid fixed>
+     <ion-row>
+       <ion-col size="6">
+        <ion-item>
+          <ion-label>Name</ion-label>
+          <ion-input [(ngModel)]="unitname" type="text" placeholder="Enter area name here..."></ion-input>
+        </ion-item>
+       </ion-col>
+       <ion-col size="6">
+        <ion-item>
+          <ion-label>Description</ion-label>
+          <ion-input [(ngModel)]="unitdes" placeholder="Enter description here..."></ion-input>
+        </ion-item>
+       </ion-col>
+     </ion-row>
+   </ion-grid>
+            </ion-list>
+            <ion-list>
+              <ion-list-header>
+                <ion-label>Attributes (uncheck to remove it)</ion-label>
+                <ion-button *ngIf="allselected" (click)="selectall()" >Select all</ion-button>
+                <ion-button *ngIf="!allselected" (click)="removeall()" >Remove all</ion-button>
+              </ion-list-header>
+            <ion-row>
+<ion-col *ngFor="let item of attributes" size="6" >
+  <ion-item>
+    <ion-label>{{item.name}}</ion-label>
+    <ion-checkbox [(ngModel)]="item.flag" slot="start" ></ion-checkbox>
+  </ion-item>
+</ion-col>
+            </ion-row>
+          
+
+            </ion-list>
+
+ <ion-button (click)="addarea()" expand="block">
+   Add
+ </ion-button>
+            </div>
+    </div>
+
+</ion-content>

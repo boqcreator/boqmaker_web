@@ -20,21 +20,27 @@ export class AddprojectPage implements OnInit {
   term;
   id
   name
-  no
-  client
-  con
+  no = ""
+  client = ""
+  con = ""
   access
-  start
+  start = ""
   end = ""
   cont = ""
   catogery;
   des = ""
-  conemail = "";
   latitude: number;
   longitude: number;
   zoom: number;
   address: string;
 
+  selectedCont = [];
+  Estimatedprice =0
+  plotarea =0
+  buildup =0
+  caddress =""
+  cemail= "";
+  cphoneno = ""
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
@@ -136,8 +142,6 @@ export class AddprojectPage implements OnInit {
 
 
   getCat(item){
-    let index = this.contList.findIndex((e) => e.id === item.id);
-    this.conemail = this.contList[index].email
     this.cat = [];
    this.fs.read_contractorsCat(item.id).subscribe(value =>{
      this.cat = value
@@ -145,7 +149,7 @@ export class AddprojectPage implements OnInit {
   }
 
   async addProj(){
-    if(this.id && this.name && this.no && this.client &&  this.con && this.access && this.start  &&  this.des){
+    if(this.id && this.name && this.access ){
 
         const loading = await this.loadingController.create({
           message: 'Adding...',
@@ -157,18 +161,23 @@ export class AddprojectPage implements OnInit {
           id : this.id,
           name : this.name,
           no : this.no,
-          client : this.client,
           con : this.con,
           access : this.access,
           start : this.start,
           end : this.end,
           des : this.des,
           location: new firebase.firestore.GeoPoint(this.latitude , this.longitude),
-          contEmail : this.conemail
-        }).then((value)=>{
-          if(this.cont && this.catogery){
-            this.fs.update_project(value.id ,{contractor : this.cont , cat : this.catogery.data()})
-          }
+          contname : this.catogery.data().name,
+          contEmail : this.catogery.data().email,
+          contaddress : this.catogery.data().address,
+          conttel : this.catogery.data().tel,
+          contmob : this.catogery.data().mob,
+          clientname : this.client,
+          clientaddress : this.caddress,
+          clientemail : this.cemail,
+          clientohoneno : this.cphoneno
+
+        }) .then(()=>{
           loading.dismiss();
           this.navCtrl.back();
         })

@@ -44,6 +44,18 @@ const routes: Routes = [
   {
     path: 'addproject',
     loadChildren: () => import('./pages/addproject/addproject.module').then( m => m.AddprojectPageModule)
+  },
+  {
+    path: 'area',
+    loadChildren: () => import('./pages/area/area.module').then( m => m.AreaPageModule)
+  },
+  {
+    path: 'supplier',
+    loadChildren: () => import('./pages/supplier/supplier.module').then( m => m.SupplierPageModule)
+  },
+  {
+    path: 'addsupplier',
+    loadChildren: () => import('./pages/addsupplier/addsupplier.module').then( m => m.AddsupplierPageModule)
   }
 ];
 

@@ -25,7 +25,7 @@ email2;
   }
 
   async addcontract(){
-    if(this.name1 && this.name2 && this.email1){
+    if(this.name1 ){
       const loading = await this.loadingController.create({
         message: 'Adding...',
         duration: 20000
@@ -34,25 +34,16 @@ email2;
 
       this.fs.create_contractor({
          name : this.name1,
-         email : this.email1
-      }).then((value)=>{
-
-        this.fs.create_contractorCat({
-          name : this.name2,
-       }, value.id).then(async ()=>{
-         loading.dismiss();
-         this.modal.dismiss();
-
-         const alert = await this.alertController.create({
+      }).then(async(value)=>{
+        loading.dismiss();
+        this.modal.dismiss();
+        const alert = await this.alertController.create({
           header: 'Success!',
           message: 'Contractor added Successfully!',
           buttons: ['OK']
         });
     
         await alert.present();
-
-
-       })
       })
     }
     else{

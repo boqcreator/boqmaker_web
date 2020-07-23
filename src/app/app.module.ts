@@ -26,13 +26,20 @@ import { AddContractorPageModule } from './pages/add-contractor/add-contractor.m
 import { AddprojectPageModule } from './pages/addproject/addproject.module';
 import { FirebaseService } from './firebase.service';
 import { ContractorCatPageModule } from './pages/constractor/contractor-cat/contractor-cat.module';
+import { AddareaPageModule } from './pages/area/addarea/addarea.module';
+import { IonicStorageModule } from '@ionic/storage';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddsupplierPageModule } from './pages/addsupplier/addsupplier.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -43,6 +50,8 @@ import { ContractorCatPageModule } from './pages/constractor/contractor-cat/cont
     AddContractorPageModule,
     AddprojectPageModule,
     ContractorCatPageModule,
+    AddareaPageModule,
+    AddsupplierPageModule
     
   ],
   providers: [

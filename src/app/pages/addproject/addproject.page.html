@@ -38,19 +38,13 @@
         </ion-col>
         <ion-col>
           <ion-item>
-            <ion-label position="floating">Client</ion-label>
-            <ion-input type="text" [(ngModel)]="client" name="client"></ion-input>
+            <ion-label position="floating">Consultant</ion-label>
+            <ion-input type="text" [(ngModel)]="con" name="con"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
   
       <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="floating">Consultant</ion-label>
-            <ion-input type="text" [(ngModel)]="con" name="con"></ion-input>
-          </ion-item>
-        </ion-col>
         <ion-col>
           <ion-item>
             <ion-label position="floating">Access Code</ion-label>
@@ -70,6 +64,35 @@
           <ion-item>
             <ion-label position="floating">Completion date</ion-label>
             <ion-datetime [(ngModel)]="end" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2023-12-09"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Estimated Price (BD)</ion-label>
+           <ion-input [(ngModel)]="Estimatedprice" type="number" placeholder="Estimated price here..."></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Total Plot Area (&#13217;)</ion-label>
+           <ion-input [(ngModel)]="plotarea" type="number" placeholder="Enter here..."></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Total Build-up Area Price (&#13217;)</ion-label>
+           <ion-input [(ngModel)]="buildup" type="number" placeholder="Enter here..."></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+           <ion-textarea [(ngModel)]="des" type="text" placeholder="Enter here..."></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -96,7 +119,8 @@
     </div>
   </div>
     </ion-card>
-    
+
+
 
     <ion-card> 
       <div class="title_box" id="bill_to">
@@ -105,7 +129,7 @@
   
       <ion-row>
         <ion-col>
-          <ion-label> Contractor </ion-label>
+          <ion-label> Catogery </ion-label>
           <ion-select (ionChange)="getCat(cont)" [(ngModel)]="cont" okText="Okay" cancelText="Dismiss" interface="action-sheet" placeholder="Select Contractor" >
             <ion-select-option *ngFor="let item of contList" [value]="item">                  
                     <ion-label>  {{ item.name }}  </ion-label>
@@ -114,7 +138,7 @@
         </ion-col>
   
         <ion-col>
-          <ion-label> Catogery </ion-label>
+          <ion-label>Contractor </ion-label>
           <ion-select [(ngModel)]="catogery" okText="Okay" cancelText="Dismiss" interface="action-sheet" placeholder="Select Catogery" >
             <ion-select-option *ngFor="let item of cat" [value]="item.payload.doc">                  
                     <ion-label>  {{ item.payload.doc.data().name }}  </ion-label>
@@ -122,16 +146,89 @@
           </ion-select>
         </ion-col>
       </ion-row>
-       <!-- Textarea in an item with a floating label -->
-  <ion-item>
-    <ion-label  position="floating">Notes</ion-label>
-    <ion-textarea [(ngModel)]="des" ></ion-textarea>
-  </ion-item>
+      <span *ngIf="catogery" >
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating" >Name of Contractor</ion-label>
+              <ion-input [(ngModel)]="catogery.data().name" >  </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating" >Email</ion-label>
+              <ion-input type="email" [(ngModel)]="catogery.data().email" >  </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <ion-label position="floating" >Address</ion-label>
+              <ion-input [(ngModel)]="catogery.data().address" >  </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating" >Telephone</ion-label>
+                    <ion-input [(ngModel)]="catogery.data().tel" >  </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating" >Mobile</ion-label>
+                    <ion-input [(ngModel)]="catogery.data().mob" >  </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+      </span>
+  </div>
+  </div>
+    </ion-card>
+    
+
+    <ion-card> 
+      <div class="title_box" id="bill_to">
+        <div id="title"> Client Info</div>
+        <div id="contents">
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Client name</ion-label>
+                <ion-input type="text" [(ngModel)]="client" name="client"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Address</ion-label>
+                <ion-input type="text" [(ngModel)]="caddress" name="access"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input type="text" [(ngModel)]="cemail" name="client"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">phone no</ion-label>
+                <ion-input type="text" [(ngModel)]="cphoneno" name="access"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
     
   </div>
   </div>
     </ion-card>
   
+    
 
 
 </ion-content>

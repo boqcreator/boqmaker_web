@@ -17,6 +17,9 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
   }
+  ionViewDidEnter(){
+    this.menu.enable(false)
+  }
 
   gotocons(){
    this.router.navigate(['constractor'])
@@ -29,8 +32,11 @@ export class HomePage implements OnInit {
     this.router.navigate(['home'])
   }
 
-  ionViewDidEnter(){
-    this.menu.enable(false)
+  gotoArea(){
+    this.router.navigate(['area'])
+  }
+  gotosupplier(){
+    this.router.navigate(['supplier'])
   }
 
 }

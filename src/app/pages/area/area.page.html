@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar color="primary" >
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Areas</ion-title>
+    <ion-button slot="end" (click)="gotoaddarea()" >Add new</ion-button>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content  scrollY=true scrollX=false >
+
+ 
+        <div class="ex1">
+          <ion-toolbar>
+            <ion-searchbar [(ngModel)]="term1" placeholder="Filter Category" ></ion-searchbar>
+          </ion-toolbar>
+          <ion-radio-group [(ngModel)]="SelCat">
+          <p *ngFor="let item of category | filter:term1" >
+            <ion-item>
+              <ion-label>{{item.payload.doc.data().name}}</ion-label>
+              <ion-radio (click)="getsubcat(item)" slot="end" [value]="item"></ion-radio>
+            </ion-item>
+             </p> 
+            </ion-radio-group>
+        </div>
+
+        <div class="ex1">
+          <ion-toolbar>
+            <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
+          </ion-toolbar>
+          <ion-radio-group *ngIf="subcat" [(ngModel)]="SsubCat">
+          <p *ngFor="let item of subcat" >
+            <ion-item>
+              <ion-label>{{item.data().name}}</ion-label>
+              <ion-radio  (click)="getsubsubcat(item)" slot="end" [value]="item" ></ion-radio>
+            </ion-item>
+             </p> 
+            </ion-radio-group>
+        </div>
+
+        <div class="ex1">
+          <ion-toolbar>
+            <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
+          </ion-toolbar>
+          <ion-radio-group *ngIf="subsubcat" [(ngModel)]="SsubsubCat">
+          <p *ngFor="let item of subsubcat" >
+            <ion-item>
+              <ion-label>{{item.data().name}}</ion-label>
+              <ion-radio  (click)="getareas(item)" slot="end" [value]="item" ></ion-radio>
+            </ion-item>
+             </p> 
+            </ion-radio-group>
+        </div>
+
+
+        <div class="ex1">
+          <ion-toolbar>
+            <ion-searchbar placeholder="Filter Areas" ></ion-searchbar>
+          </ion-toolbar>
+          <ion-radio-group *ngIf="areas" >
+          <p *ngFor="let item of areas" >
+            <ion-item>
+              <ion-label>{{item.data().name}}</ion-label>
+              <ion-button style="--padding-end: 0px;" fill="clear">
+                <ion-icon slot="icon-only" name="create"></ion-icon>
+              </ion-button>
+            </ion-item>
+             </p> 
+            </ion-radio-group>
+        </div>
+     
+
+ 
+  </ion-content>

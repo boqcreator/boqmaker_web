@@ -10,7 +10,7 @@ export class FirebaseService {
   contractorCollection = 'boq/boq/contractors';
   contractorProject = 'boq/boq/projects';
   contractor = 'contractors';
-  contractorCat = 'cat';
+  contractorCat = 'items';
   typeCollection = 'boq/boq/types';
 
 

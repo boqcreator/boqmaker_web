@@ -41,3 +41,15 @@ ion-content{
     --background: linear-gradient(270deg, rgb(205, 222, 245) 10%, rgb(220, 222, 238) 100%);
     
 }
+
+.alert-radio-label.sc-ion-alert-md {
+    white-space: pre-line !important;
+  }
+
+  .addbtn{
+    .item-native{
+        margin:0px !important;
+        padding: 0px !important;
+    }
+   
+}

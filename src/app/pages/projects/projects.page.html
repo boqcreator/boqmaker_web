@@ -28,7 +28,20 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of projectsList | filter:term" >
-      <td> <ion-button (click)="gotoproj(item)" >View</ion-button> </td>
+      <td>
+
+          <ion-button style="--padding-end: 0px;" (click)="gotoproj(item)" fill="clear">
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button style="--padding-end: 0px;" (click)="Delproj(item)" color="danger" fill="clear">
+            <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+          <ion-button style="--padding-end: 0px;" (click)="sendmail(item)" color="danger" fill="clear">
+            <ion-icon color="dark" slot="icon-only" name="mail"></ion-icon>
+          </ion-button>
+   
+
+        </td>
       <td>{{ item.payload.doc.data().id }}</td>
       <td>{{ item.payload.doc.data().name }}</td>
       <td>{{ item.payload.doc.data().no }}</td>
