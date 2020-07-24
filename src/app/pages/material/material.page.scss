@@ -1,0 +1,13 @@
+.ex1 {
+    height: 100%;
+    width: 33.33%;
+    overflow-y: scroll;
+    display: inline-block;
+    border: solid 1px grey;
+  }
+  ion-content{
+      display: table;
+  }
+p{
+    margin: 0px;
+}

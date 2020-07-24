@@ -30,6 +30,8 @@ import { AddareaPageModule } from './pages/area/addarea/addarea.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddsupplierPageModule } from './pages/addsupplier/addsupplier.module';
+import { AddmaterialPageModule } from './pages/addmaterial/addmaterial.module';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,7 +53,8 @@ import { AddsupplierPageModule } from './pages/addsupplier/addsupplier.module';
     AddprojectPageModule,
     ContractorCatPageModule,
     AddareaPageModule,
-    AddsupplierPageModule
+    AddsupplierPageModule,
+    AddmaterialPageModule
     
   ],
   providers: [

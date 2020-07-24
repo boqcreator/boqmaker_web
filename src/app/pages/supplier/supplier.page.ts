@@ -84,6 +84,10 @@ export class SupplierPage implements OnInit {
 
   }
 
+  edit(item){
+    
+  }
+
 
 
   async addnew(){
