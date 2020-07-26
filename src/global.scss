@@ -44,6 +44,11 @@ ion-content{
 
 .alert-radio-label.sc-ion-alert-md {
     white-space: pre-line !important;
+    font-size: small !important;
+  }
+  .sc-ion-select-popover-h ion-label.sc-ion-select-popover{
+    white-space: pre-line !important;
+    font-size: small !important;
   }
 
   .addbtn{
@@ -52,4 +57,9 @@ ion-content{
         padding: 0px !important;
     }
    
+}
+
+.alert-checkbox-label.sc-ion-alert-md{
+    white-space: pre-line !important ;
+    font-size: small !important;
 }

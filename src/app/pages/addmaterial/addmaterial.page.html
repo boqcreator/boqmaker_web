@@ -9,7 +9,6 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
   <ion-content>
     <ion-segment [(ngModel)]="segment" >
       <ion-segment-button value="cat">
@@ -93,7 +92,7 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-label>Supplier Subcategory</ion-label>
+                <ion-label>Suppliers</ion-label>
                 <ion-select (ionChange)="setsupplier()" [(ngModel)]="supplierID" placeholder="Select Supplier">
                   <ion-select-option *ngFor="let item of supplierList" [value]="item.id">{{ item.name }}</ion-select-option>
                 </ion-select>

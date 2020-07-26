@@ -23,6 +23,7 @@ export class ProjDetailsPage implements OnInit {
 
   segment = "project"
   Areasegment ="am"
+  itemsegment = "finish"
   pid= "";
   name= "";
   id= "";
@@ -76,6 +77,18 @@ export class ProjDetailsPage implements OnInit {
 
   myAreaList = []
   myAreaID = ""
+
+  myItemCatList= []
+  myItemCatID = ""
+
+  myItemSubcatList= []
+  myItemSubcatID = ""
+
+  myItemSubsubcatList= []
+  myItemSubsubcatID = ""
+
+  myItems = [];
+  myItemID = "";
 
   GloblecatList = [];
   GloblecatID = ""
@@ -296,6 +309,69 @@ ch3AO = 0;
 
 
 
+boqitemcatList = [];
+boqitemcatID = ""
+
+boqitemsubcatList = [];
+boqitemsubcatID = ""
+
+boqitemsubsubcatList = [];
+boqitemsubsubcatID = "";
+
+boqitemList = [];
+boqitem;
+
+
+ceiling=0;
+floor=0;
+walls=0;
+cornice=0;
+skirting=0;
+shuttering=0;
+block=0;
+blockdpc=0;
+concrete=0;
+polythene=0;
+bitumin=0;
+itemsteel=0;
+blockbitumin=0;
+iqty=1;
+itempercentage=0;
+completion=0;
+itemprecast=0;
+existing="true";
+existing1="false";
+existing2="false";
+tsp=0;
+bpp=0;
+spp1=0;
+spp2=0;
+spp3=0;
+spp4=0;
+tpp=0;
+bbp=0;
+sbp1=0;
+sbp2=0;
+sbp3=0;
+sbp4=0;
+tep=0;
+tbp=0;
+bep=0;
+sep1=0;
+sep2=0;
+sep3=0;
+sep4=0;
+bsp=0;
+ssp1=0;
+ssp2=0;
+ssp3=0;
+ssp4=0;
+
+
+
+
+
+
   constructor(private menu : MenuController,private route: ActivatedRoute,
     private afs :AngularFirestore,
     private mapsAPILoader: MapsAPILoader,
@@ -332,6 +408,7 @@ ch3AO = 0;
 
     ngOnInit() {
       this.getdata();
+      this.getGboqitemcat();
     }
 
    getdata(){
@@ -526,6 +603,19 @@ pushToArray(arr, obj) {
   }
 }
 
+pushToArrayItemCat(arr, obj) {
+  const index = arr.findIndex((e) => e.id === obj.id);
+
+  if (index === -1) {
+      arr.push(obj);
+  } else {
+     if( arr[index].name != obj.name){
+      arr[index].name = obj.name
+     }
+  }
+}
+
+
 getArea(){
 
   this.storage.set(`${this.pid}mySubsubcatList`, this.mySubsubcatList).then(()=>{
@@ -635,6 +725,115 @@ myAreaSeelcted(){
     this.storage.set(`${this.pid}myAreaID`, this.myAreaID)
   })
 
+  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
+    this.myItemCatList = [];
+    console.log(value.length)
+    value.forEach(doc =>{
+        this.afs.doc(`boq/boq/boqitemscat/${doc.payload.doc.data().itemdetails.CatID}`).get().subscribe(boq =>{
+           this.pushToArrayItemCat(this.myItemCatList ,{name : boq.data().name , id : boq.id}) 
+        })
+      })
+  })
+}
+getMyItemsubcat(){
+  this.storage.set(`${this.pid}myItemCatList`, this.myItemCatList).then(()=>{
+  this.storage.set(`${this.pid}myItemCatID`, this.myItemCatID)
+  })
+  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
+    this.myItemSubcatList = [];
+    console.log(value.length)
+    value.forEach(doc =>{
+        this.afs.doc(`boq/boq/boqitemscat/${this.myItemCatID}/subcat/${doc.payload.doc.data().itemdetails.SubcatID}`).get().subscribe(boq =>{
+           this.pushToArrayItemCat(this.myItemSubcatList ,{name : boq.data().name , id : boq.id}) 
+        })
+      })
+  })
+
+}
+
+
+getMyItemsubsubcat(){
+  this.storage.set(`${this.pid}myItemSubcatList`, this.myItemSubcatList).then(()=>{
+    this.storage.set(`${this.pid}myItemSubcatID`, this.myItemSubcatID)
+    })
+    this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
+      this.myItemSubsubcatList = [];
+      console.log(value.length)
+      value.forEach(doc =>{
+          this.afs.doc(`boq/boq/boqitemscat/${this.myItemCatID}/subcat/${this.myItemSubcatID}/subsubcat/${doc.payload.doc.data().itemdetails.SubsubcatID}`).get().subscribe(boq =>{
+             this.pushToArrayItemCat(this.myItemSubsubcatList ,{name : boq.data().name , id : boq.id}) 
+          })
+        })
+    })
+
+}
+
+getMyItems(){
+  this.storage.set(`${this.pid}myItemSubsubcatList`, this.myItemSubsubcatList).then(()=>{
+    this.storage.set(`${this.pid}myItemSubsubcatID`, this.myItemSubsubcatID)
+    })
+    this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`, ref => ref.where("itemdetails.SubsubcatID" , "==", this.myItemSubsubcatID)).snapshotChanges().subscribe(value =>{
+      this.myItems = [];
+      value.forEach(doc =>{
+        this.myItems.push({
+          id : doc.payload.doc.id,
+          itemdetails : doc.payload.doc.data().itemdetails,
+        ceiling : doc.payload.doc.data().ceiling,
+        floor : doc.payload.doc.data().floor,
+        walls : doc.payload.doc.data().walls,
+        cornice : doc.payload.doc.data().cornice,
+        skirting : doc.payload.doc.data().skirting,
+        shuttering : doc.payload.doc.data().shuttering,
+        block : doc.payload.doc.data().block,
+        blockdpc : doc.payload.doc.data().blockdpc,
+        concrete : doc.payload.doc.data().concrete,
+        polythene : doc.payload.doc.data().polythene,
+        bitumin : doc.payload.doc.data().bitumin,
+        itemsteel : doc.payload.doc.data().itemsteel,
+        blockbitumin : doc.payload.doc.data().blockbitumin,
+        iqty : doc.payload.doc.data().iqty,
+        itempercentage : doc.payload.doc.data().itempercentage,
+        completion : doc.payload.doc.data().completion,
+        itemprecast : doc.payload.doc.data().itemprecast,
+        existing : doc.payload.doc.data().existing,
+        existing1 : doc.payload.doc.data().existing1,
+        existing2 : doc.payload.doc.data().existing2,
+        tsp : doc.payload.doc.data().tsp,
+        bpp : doc.payload.doc.data().bpp,
+        spp1 : doc.payload.doc.data().spp1,
+        spp2 : doc.payload.doc.data().spp2,
+        spp3 : doc.payload.doc.data().spp3,
+        spp4 : doc.payload.doc.data().spp4,
+        tpp : doc.payload.doc.data().tpp,
+        bbp : doc.payload.doc.data().bbp,
+        sbp1 : doc.payload.doc.data().sbp1,
+        sbp2 : doc.payload.doc.data().sbp2,
+        sbp3 : doc.payload.doc.data().sbp3,
+        sbp4 : doc.payload.doc.data().sbp4,
+        tep : doc.payload.doc.data().tep,
+        tbp : doc.payload.doc.data().tbp,
+        bep : doc.payload.doc.data().bep,
+        sep1 : doc.payload.doc.data().sep1,
+        sep2 : doc.payload.doc.data().sep2,
+        sep3 : doc.payload.doc.data().sep3,
+        sep4 : doc.payload.doc.data().sep4,
+        bsp : doc.payload.doc.data().bsp,
+        ssp1 : doc.payload.doc.data().ssp1,
+        ssp2 : doc.payload.doc.data().ssp2,
+        ssp3 : doc.payload.doc.data().ssp3,
+        ssp4 : doc.payload.doc.data().ssp4,
+          
+        })
+      })
+
+    })
+
+}
+
+setMyItems(){
+  this.storage.set(`${this.pid}myItems`, this.myItems).then(()=>{
+    this.storage.set(`${this.pid}myItemID`, this.myItemID)
+    })
 }
 
 async updateproj(){
@@ -774,7 +973,10 @@ this.storage.get(`${this.pid}myAreaList`).then(value =>{
 if(value !== null){
  this.myAreaList = value
  this.storage.get(`${this.pid}myAreaID`).then(mySubsub =>{
- this.myAreaID = mySubsub
+   if(mySubsub !== null){
+    this.myAreaID = mySubsub
+    this.myAreaSeelcted()
+   }
  })
 }
 })
@@ -838,6 +1040,75 @@ this.storage.get(`${this.pid}GloblecatList`).then(value=>{
   })
   
 })
+
+this.storage.get(`boqitemcat`).then(value=>{
+  if(value !== null){
+    this.boqitemcatID = value
+    this.getGboqitemsubcat()
+  }
+})
+this.storage.get(`boqitemsubcat`).then(value=>{
+  if(value !== null){
+    this.boqitemsubcatID = value
+    this.getGboqitemsubsubcat()
+  }
+})
+this.storage.get(`boqitemsubsubcat`).then(value=>{
+  if(value !== null){
+    this.boqitemsubsubcatID = value
+    this.getGboqitems()
+  }
+})
+
+this.storage.get(`${this.pid}myItemCatList`).then(value =>{
+  if(value !== null){
+   this.myItemCatList = value
+   this.storage.get(`${this.pid}myItemCatID`).then(mySubsub =>{
+     if(mySubsub !== null){
+      this.myItemCatID = mySubsub
+      this.getMyItemsubcat()
+     }
+   })
+  }
+  })
+
+  this.storage.get(`${this.pid}myItemSubcatList`).then(value =>{
+    if(value !== null){
+     this.myItemSubcatList = value
+     this.storage.get(`${this.pid}myItemSubcatID`).then(v =>{
+      if(v !== null){
+       this.myItemSubcatID = v
+       this.getMyItemsubsubcat()
+      }
+    })
+    }
+    })
+
+    this.storage.get(`${this.pid}myItemSubsubcatList`).then(value =>{
+      if(value !== null){
+       this.myItemSubsubcatList = value
+       this.storage.get(`${this.pid}myItemSubsubcatID`).then(v =>{
+        if(v !== null){
+         this.myItemSubsubcatID = v
+         
+        }
+      })
+      }
+      })
+
+
+    this.storage.get(`${this.pid}myItems`).then(value =>{
+      if(value !== null){
+       this.myItems = value
+       this.storage.get(`${this.pid}myItemID`).then(v =>{
+        if(v !== null){
+         this.myItemID = v
+         
+        }
+      })
+      }
+      })
+
 
  }
 
@@ -927,6 +1198,7 @@ getGlobleareas(){
     })
    
   })
+  
 
 }
 
@@ -1271,6 +1543,149 @@ markerDragEnd(event: MouseEvent) {
   this.latitude = event.coords.lat;
   this.longitude = event.coords.lng;
   this.getAddress(this.latitude, this.longitude);
+}
+
+
+
+
+
+
+
+
+// ITEMS FUNCTIONS
+
+getGboqitemcat(){
+  this.afs.collection<any>(`boq/boq/boqitemscat`).snapshotChanges().subscribe(value =>{
+   this.boqitemcatList = []
+    value.forEach(doc =>{
+     this.boqitemcatList.push({
+       name : doc.payload.doc.data().name,
+      id : doc.payload.doc.id})
+    })
+  })
+}
+
+getGboqitemsubcat(){
+  this.storage.set(`boqitemcat`, this.boqitemcatID)
+
+ this.afs.collection<any>(`boq/boq/boqitemscat/${this.boqitemcatID}/subcat`).snapshotChanges().subscribe(value =>{
+  this.boqitemsubcatList = []
+    value.forEach(doc =>{
+     this.boqitemsubcatList.push({
+       name : doc.payload.doc.data().name,
+      id : doc.payload.doc.id})
+    })
+ })
+}
+
+getGboqitemsubsubcat(){
+  this.storage.set(`boqitemsubcat`, this.boqitemsubcatID)
+
+
+ this.afs.collection<any>(`boq/boq/boqitemscat/${this.boqitemcatID}/subcat/${this.boqitemsubcatID}/subsubcat`).snapshotChanges().subscribe(value =>{
+  this.boqitemsubsubcatList = []
+    value.forEach(doc =>{
+     this.boqitemsubsubcatList.push({
+       name : doc.payload.doc.data().name,
+      id : doc.payload.doc.id})
+    })
+  
+ })
+
+}
+
+getGboqitems(){
+  this.storage.set(`boqitemsubsubcat`, this.boqitemsubsubcatID)
+
+ this.afs.collection<any>(`boq/boq/boqitemscat/${this.boqitemcatID}/subcat/${this.boqitemsubcatID}/subsubcat/${this.boqitemsubsubcatID}/boqitems`).snapshotChanges().subscribe(value =>{
+  this.boqitemList = []
+  value.forEach(doc =>{
+    this.boqitemList.push({
+      name : doc.payload.doc.data().name,
+     id : doc.payload.doc.id,
+     CatID :doc.payload.doc.data().CatID,
+     SubcatID :doc.payload.doc.data().SubcatID,
+     SubsubcatID :doc.payload.doc.data().SubsubcatID,
+     materials :doc.payload.doc.data().materials,
+     price :doc.payload.doc.data().price,
+     unit :doc.payload.doc.data().unit,
+    })
+   })
+ })
+
+}
+
+async addItem(){
+  if(this.myBuildingID 
+    && this.myFloorID 
+    && this.myCatID 
+    && this.mySubsubcatID 
+    && this.mySubsubcatID 
+    && this.myAreaID 
+    && this.boqitemcatID 
+    && this.boqitemsubcatID 
+    && this.boqitemsubsubcatID 
+    && this.boqitem){
+      const loading = await this.loadingController.create({
+        message: 'Adding...',
+        duration: 20000
+      });
+      await loading.present();
+       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems/${this.boqitem.id}`).set({
+       itemdetails : this.boqitem,
+        ceiling : this.ceiling,
+        floor : this.floor,
+        walls : this.walls,
+        cornice : this.cornice,
+        skirting : this.skirting,
+        shuttering : this.shuttering,
+        block : this.block,
+        blockdpc : this.blockdpc,
+        concrete : this.concrete,
+        polythene : this.polythene,
+        bitumin : this.bitumin,
+        itemsteel : this.itemsteel,
+        blockbitumin : this.blockbitumin,
+        iqty : this.iqty,
+        itempercentage : this.itempercentage,
+        completion : this.completion,
+        itemprecast : this.itemprecast,
+        existing : this.existing,
+        existing1 : this.existing1,
+        existing2 : this.existing2,
+        tsp : this.tsp,
+        bpp : this.bpp,
+        spp1 : this.spp1,
+        spp2 : this.spp2,
+        spp3 : this.spp3,
+        spp4 : this.spp4,
+        tpp : this.tpp,
+        bbp : this.bbp,
+        sbp1 : this.sbp1,
+        sbp2 : this.sbp2,
+        sbp3 : this.sbp3,
+        sbp4 : this.sbp4,
+        tep : this.tep,
+        tbp : this.tbp,
+        bep : this.bep,
+        sep1 : this.sep1,
+        sep2 : this.sep2,
+        sep3 : this.sep3,
+        sep4 : this.sep4,
+        bsp : this.bsp,
+        ssp1 : this.ssp1,
+        ssp2 : this.ssp2,
+        ssp3 : this.ssp3,
+        ssp4 : this.ssp4,
+       }).then(()=>{
+         loading.dismiss().then(()=>{
+          alert("Added Successfully!")
+         })
+       })
+    
+  }else{
+    alert("Please recheck, any selection or field is missing.")
+  }
 }
 
 

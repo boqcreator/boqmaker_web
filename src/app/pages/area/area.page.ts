@@ -28,7 +28,7 @@ export class AreaPage implements OnInit {
     menu.enable(false)
 
     this.afs.collection(`boq/boq/Areas`).snapshotChanges().subscribe(value =>{
-this.category = value
+      this.category = value
     })
    }
 

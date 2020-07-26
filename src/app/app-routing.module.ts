@@ -64,6 +64,14 @@ const routes: Routes = [
   {
     path: 'addmaterial',
     loadChildren: () => import('./pages/addmaterial/addmaterial.module').then( m => m.AddmaterialPageModule)
+  },
+  {
+    path: 'boqitem',
+    loadChildren: () => import('./pages/boqitem/boqitem.module').then( m => m.BoqitemPageModule)
+  },
+  {
+    path: 'addboqitem',
+    loadChildren: () => import('./pages/addboqitem/addboqitem.module').then( m => m.AddboqitemPageModule)
   }
 ];
 

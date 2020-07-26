@@ -41,5 +41,8 @@ export class HomePage implements OnInit {
   gotomaterial(){
     this.router.navigate(['material'])
   }
+  gotoitem(){
+    this.router.navigate(['boqitem'])
+  }
 
 }

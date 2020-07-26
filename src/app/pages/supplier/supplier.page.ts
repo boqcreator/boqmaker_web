@@ -21,6 +21,10 @@ export class SupplierPage implements OnInit {
   supplierList=[]
   supplierID = ""
 
+  term1
+  term2
+  term3
+
   constructor(private menu : MenuController,
     private modalController: ModalController,
     private storage : Storage,
@@ -85,7 +89,7 @@ export class SupplierPage implements OnInit {
   }
 
   edit(item){
-    
+
   }
 
 

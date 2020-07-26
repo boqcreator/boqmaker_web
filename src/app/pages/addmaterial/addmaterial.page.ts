@@ -21,7 +21,6 @@ export class AddmaterialPage implements OnInit {
   subcatList=[]
   SubcatID = ""
 
-  
   sname= "";
   sdes = "";
 

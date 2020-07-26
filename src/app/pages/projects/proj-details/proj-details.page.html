@@ -10,7 +10,7 @@
 <ion-content style="font-size: small;" >
   <ion-grid>
     <ion-row>
-       <ion-col size="3">
+       <ion-col size="2.5">
         <div style="margin-top: 60px;">
  
           <ion-card style="margin: 0px;padding: 0px;">
@@ -97,6 +97,9 @@
           </ion-segment-button>
           <ion-segment-button value="area">
             <ion-label>Areas</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="item">
+            <ion-label>Items</ion-label>
           </ion-segment-button>
         </ion-segment>
 
@@ -1574,6 +1577,382 @@
          </div>
 
 
+         <div style="margin-top : 5px;" *ngSwitchCase="'item'">
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="ion-text-wrap" >Category</ion-label>
+                <ion-select (ionChange)="getGboqitemsubcat()" interface="popover" [(ngModel)]="boqitemcatID" placeholder="Select Category" >
+                  <ion-select-option  *ngFor="let item of boqitemcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label class="ion-text-wrap">Subcategory</ion-label>
+                <ion-select (ionChange)="getGboqitemsubsubcat()" interface="popover" [(ngModel)]="boqitemsubcatID" placeholder="Select Sub category">
+                  <ion-select-option *ngFor="let item of boqitemsubcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="ion-text-wrap">Sub subcategory</ion-label>
+                <ion-select (ionChange)="getGboqitems()" interface="popover"  [(ngModel)]="boqitemsubsubcatID" placeholder="Select Sub subcategory">
+                  <ion-select-option *ngFor="let item of boqitemsubsubcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col>
+              <ion-item>
+                <ion-label class="ion-text-wrap">Items</ion-label>
+                <ion-select interface="popover"  [(ngModel)]="boqitem" placeholder="Select Item">
+                  <ion-select-option *ngFor="let item of boqitemList" [value]="item">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-card>
+            <ion-segment [(ngModel)]="itemsegment" >
+              <ion-segment-button value="finish">
+                <ion-label>Finishes</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="qty">
+                <ion-label>Quantity & Progress</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="extra">
+                <ion-label>Extras</ion-label>
+              </ion-segment-button>
+            </ion-segment>
+
+
+            <div [ngSwitch]="itemsegment">  
+              <div style="margin-top : 5px;" *ngSwitchCase="'finish'">
+                 <ion-row>
+                   <ion-col>
+                     <ion-item>
+                       <ion-label position="floating">Ceiling%</ion-label>
+                       <ion-input [(ngModel)]="ceiling" type="number"></ion-input>
+                     </ion-item>
+                   </ion-col>
+                   <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Floor%</ion-label>
+                      <ion-input [(ngModel)]="floor" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Walls%</ion-label>
+                      <ion-input [(ngModel)]="walls" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                 </ion-row>
+                 <ion-row>
+                  <ion-col>
+                   <ion-item>
+                     <ion-label position="floating">Cornice%</ion-label>
+                     <ion-input [(ngModel)]="cornice" type="number"></ion-input>
+                   </ion-item>
+                 </ion-col>
+                 <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Skirting%</ion-label>
+                    <ion-input [(ngModel)]="skirting" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Shuttering%</ion-label>
+                    <ion-input [(ngModel)]="shuttering" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                   <ion-item>
+                     <ion-label position="floating">Block%</ion-label>
+                     <ion-input [(ngModel)]="block" type="number"></ion-input>
+                   </ion-item>
+                 </ion-col>
+                 <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Block DPC%</ion-label>
+                    <ion-input [(ngModel)]="blockdpc" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Concrete%</ion-label>
+                    <ion-input [(ngModel)]="concrete" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                   <ion-item>
+                     <ion-label position="floating">Polythene%</ion-label>
+                     <ion-input [(ngModel)]="polythene" type="number"></ion-input>
+                   </ion-item>
+                 </ion-col>
+                 <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Bitumin%</ion-label>
+                    <ion-input [(ngModel)]="bitumin" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Steel%</ion-label>
+                    <ion-input [(ngModel)]="itemsteel" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Block bitumin%</ion-label>
+                    <ion-input [(ngModel)]="blockbitumin" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+                </ion-row>
+
+              </div>
+
+              <div style="margin-top : 5px;" *ngSwitchCase="'qty'">
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Quantity</ion-label>
+                      <ion-input [(ngModel)]="iqty" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Percentage%</ion-label>
+                      <ion-input [(ngModel)]="itempercentage" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Completion%</ion-label>
+                      <ion-input [(ngModel)]="completion" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Precast</ion-label>
+                      <ion-input [(ngModel)]="itemprecast" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                      <ion-item>
+                        <ion-label>EXISTING</ion-label>
+                        <ion-select [(ngModel)]="existing"  interface="popover" placeholder="Select">
+                          <ion-select-option value=true>Yes</ion-select-option>
+                          <ion-select-option value=false>No</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>EXISTING 1</ion-label>
+                      <ion-select [(ngModel)]="existing1"   interface="popover" placeholder="Select">
+                        <ion-select-option value=true>Yes</ion-select-option>
+                        <ion-select-option value=false>No</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label>EXISTING 2</ion-label>
+                    <ion-select [(ngModel)]="existing2"  interface="popover" placeholder="Select">
+                      <ion-select-option value=true>Yes</ion-select-option>
+                      <ion-select-option value=false>No</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+              </ion-col>
+                </ion-row>
+              </div>
+
+              <div style="margin-top : 5px;" *ngSwitchCase="'extra'">
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">BSP%</ion-label>
+                      <ion-input [(ngModel)]="bsp" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SSP1%</ion-label>
+                      <ion-input [(ngModel)]="ssp1" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SSP2%</ion-label>
+                      <ion-input [(ngModel)]="ssp2" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SSP3%</ion-label>
+                      <ion-input [(ngModel)]="ssp3" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SSP4%</ion-label>
+                      <ion-input [(ngModel)]="ssp4" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">TSP%</ion-label>
+                      <ion-input [(ngModel)]="tsp" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">BPP%</ion-label>
+                      <ion-input [(ngModel)]="bpp" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SPP1%</ion-label>
+                      <ion-input [(ngModel)]="spp1" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SPP2%</ion-label>
+                      <ion-input [(ngModel)]="spp2" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SPP3%</ion-label>
+                      <ion-input [(ngModel)]="spp3" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SPP4%</ion-label>
+                      <ion-input [(ngModel)]="spp4" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">TPP%</ion-label>
+                      <ion-input [(ngModel)]="tpp" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">BBP%</ion-label>
+                      <ion-input [(ngModel)]="bbp" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SBP1%</ion-label>
+                      <ion-input [(ngModel)]="sbp1" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SBP2%</ion-label>
+                      <ion-input [(ngModel)]="sbp2" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SBP3%</ion-label>
+                      <ion-input [(ngModel)]="sbp3" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SBP4%</ion-label>
+                      <ion-input [(ngModel)]="sbp4" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">TEP%</ion-label>
+                      <ion-input [(ngModel)]="tep" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">TBP%</ion-label>
+                      <ion-input [(ngModel)]="tbp" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">BEP%</ion-label>
+                      <ion-input [(ngModel)]="bep" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SEP1%</ion-label>
+                      <ion-input [(ngModel)]="sep1" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SEP2%</ion-label>
+                      <ion-input [(ngModel)]="sep2" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SEP3%</ion-label>
+                      <ion-input [(ngModel)]="sep3" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">SEP4%</ion-label>
+                      <ion-input [(ngModel)]="sep4" type="number"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              
+              
+              </div>
+
+              </div>
+
+          </ion-card>
+        <ion-button expand="block" (click)="addItem()" >Add</ion-button>
+        </div>
+
+
    </div>
  </ion-col>
 
@@ -1585,7 +1964,7 @@
 
 
 
-      <ion-col size="2">
+      <ion-col size="2.5">
         <div style="margin-top: 60px;">
  
           <ion-card style="margin: 0px;padding: 0px; height: 200px">
@@ -1596,14 +1975,42 @@
              <ion-button style="--padding-start : 0px" class="addbtn" fill="clear" >
                <ion-icon slot="icon-only" name="add"></ion-icon>
              </ion-button>
-             <ion-label>Items</ion-label>
-             <ion-select placeholder="Select Item" >
-               <ion-select-option > Coming soon </ion-select-option>
+             <ion-label>Items Category</ion-label>
+             <ion-select (ionChange)="getMyItemsubcat()" [(ngModel)]="myItemCatID" placeholder="Select Item Category" >
+               <ion-select-option *ngFor="let item of myItemCatList" [value]="item.id" > {{item.name}} </ion-select-option>
              </ion-select>
            </ion-item>
+           <ion-item class="leftsideitems">
+            <ion-button style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+            <ion-label>Items Subcategory</ion-label>
+            <ion-select (ionChange)="getMyItemsubsubcat()" [(ngModel)]="myItemSubcatID" placeholder="Select Item Subcategory" >
+              <ion-select-option *ngFor="let item of myItemSubcatList" [value]="item.id" > {{item.name}} </ion-select-option>
+            </ion-select>
+          </ion-item>
 
-     
-             <h4 style="text-align: center;">Coming soon</h4>
+          <ion-item class="leftsideitems">
+            <ion-button style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+            <ion-label>Items Sub subcategory</ion-label>
+            <ion-select (ionChange)="getMyItems()" [(ngModel)]="myItemSubsubcatID" placeholder="Select Item Sub subcategory" >
+              <ion-select-option *ngFor="let item of myItemSubsubcatList" [value]="item.id" > {{item.name}} </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item class="leftsideitems">
+            <ion-button style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-icon slot="icon-only" name="add"></ion-icon>
+            </ion-button>
+            <ion-label>Items</ion-label>
+            <ion-select (ionChange)="setMyItems()" [(ngModel)]="myItemID" placeholder="Select Item" >
+              <ion-select-option *ngFor="let item of myItems" [value]="item.id" > {{item.itemdetails.name}} </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+    
             
           </ion-card>
              </div>

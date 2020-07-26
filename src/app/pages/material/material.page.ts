@@ -19,6 +19,9 @@ export class MaterialPage implements OnInit {
 
   materialList=[]
   materialID = ""
+  term1
+  term2
+  term3
   constructor(private menu : MenuController,
     private modalController: ModalController,
     private storage : Storage,

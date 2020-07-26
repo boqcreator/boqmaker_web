@@ -30,10 +30,10 @@
 
   <div class="ex1">
     <ion-toolbar>
-      <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="term2" placeholder="Filter Subcategory" ></ion-searchbar>
     </ion-toolbar>
     <ion-radio-group (ionChange)="getsuppliers()" [(ngModel)]="SubcatID">
-    <p *ngFor="let sitem of subcatList" >
+    <p *ngFor="let sitem of subcatList | filter:term2" >
       <ion-item>
         <ion-label>{{sitem.name}}</ion-label>
         <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
@@ -44,10 +44,10 @@
 
   <div class="ex1">
     <ion-toolbar>
-      <ion-searchbar placeholder="Filter Supplier" ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="term3" placeholder="Filter Supplier" ></ion-searchbar>
     </ion-toolbar>
     <ion-radio-group *ngIf="supplierList" >
-    <p *ngFor="let item of supplierList" >
+    <p *ngFor="let item of supplierList | filter:term3" >
       <ion-item>
         <ion-label>{{item.name}}</ion-label>
         <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">

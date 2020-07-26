@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>BOQ Items</ion-title>
+    <ion-button slot="end" fill="clear" (click)="addnew()">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+      <ion-label> Add new </ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  scrollY=true scrollX=false >
+
+ 
+  <div class="ex1">
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="term1" placeholder="Filter Category" ></ion-searchbar>
+    </ion-toolbar>
+    <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="SelCat">
+    <p *ngFor="let item of category | filter:term1" >
+      <ion-item>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-radio  slot="end" [value]="item.id"></ion-radio>
+      </ion-item>
+       </p> 
+      </ion-radio-group>
+  </div>
+
+ <div class="ex1">
+    <ion-toolbar>
+      <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
+    </ion-toolbar>
+    <ion-radio-group (ionChange)="getsubsubcat()" [(ngModel)]="SsubCat">
+    <p *ngFor="let item of subcat" >
+      <ion-item>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-radio   slot="end" [value]="item.id" ></ion-radio>
+      </ion-item>
+       </p> 
+      </ion-radio-group>
+  </div>
+
+  <div class="ex1">
+    <ion-toolbar>
+      <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
+    </ion-toolbar>
+    <ion-radio-group (ionChange)="getboqitems()" *ngIf="subsubcat" [(ngModel)]="SsubsubCat">
+    <p *ngFor="let item of subsubcat" >
+      <ion-item>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-radio  slot="end" [value]="item.id" ></ion-radio>
+      </ion-item>
+       </p> 
+      </ion-radio-group>
+  </div>
+
+ 
+  <div class="ex1">
+    <ion-toolbar>
+      <ion-searchbar placeholder="Filter Areas" ></ion-searchbar>
+    </ion-toolbar>
+    <ion-radio-group *ngIf="boqitems" >
+    <p *ngFor="let item of boqitems" >
+      <ion-item>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-button style="--padding-end: 0px;" fill="clear">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+      </ion-item>
+       </p> 
+      </ion-radio-group>
+  </div>
+
+
+
+</ion-content>
