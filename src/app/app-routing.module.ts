@@ -72,6 +72,10 @@ const routes: Routes = [
   {
     path: 'addboqitem',
     loadChildren: () => import('./pages/addboqitem/addboqitem.module').then( m => m.AddboqitemPageModule)
+  },
+  {
+    path: 'report-final-priced-bill',
+    loadChildren: () => import('./pages/report-final-priced-bill/report-final-priced-bill.module').then( m => m.ReportFinalPricedBillPageModule)
   }
 ];
 

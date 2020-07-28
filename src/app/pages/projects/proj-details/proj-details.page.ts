@@ -24,6 +24,11 @@ export class ProjDetailsPage implements OnInit {
   segment = "project"
   Areasegment ="am"
   itemsegment = "finish"
+  firstloadedFloor = false
+  firstloadedCat= false
+  firstloadedSubcat = false
+  firstloadedSubsubcat = false
+  firstloadedArea = false
   pid= "";
   name= "";
   id= "";
@@ -76,7 +81,8 @@ export class ProjDetailsPage implements OnInit {
   mySubsubcatID = ""
 
   myAreaList = []
-  myAreaID = ""
+  myAreaID = [];
+  myAreas;
 
   myItemCatList= []
   myItemCatID = ""
@@ -464,7 +470,7 @@ removelocalstorage(){
   this.storage.remove(`${this.pid}myAreaList`)
   this.storage.remove(`${this.pid}myAreaID`)
   this.myAreaList = [];
-  this.myAreaID = "";
+  this.myAreaID = [];
 }
 
 
@@ -472,8 +478,10 @@ getFloors(){
   this.storage.set(`${this.pid}myBuildingList`, this.myBuildingList).then(()=>{
     this.storage.set(`${this.pid}myBuildingID`, this.myBuildingID)
   })
-// this.removelocalstorage()
-
+  if(this.firstloadedFloor){
+    this.removelocalstorage();
+    this.getAllAreasofBuildings()
+  }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors`, ref => ref.orderBy("no", "asc")).snapshotChanges().subscribe(value =>{
     this.myFloorList =[]
     if(value.length > 0){
@@ -485,6 +493,8 @@ getFloors(){
     }
    
   })
+
+  this.firstloadedFloor = true;
 }
 
 
@@ -495,6 +505,30 @@ getCats(){
       this.FloortoAdd = floor
     })
   })
+  if(this.firstloadedCat){
+    
+    this.storage.remove(`${this.pid}myCatList`)
+    this.storage.remove(`${this.pid}myCatID`)
+    this.myCatList = [];
+    this.myCatID = "";
+  
+    this.storage.remove(`${this.pid}mySubcatList`)
+    this.storage.remove(`${this.pid}mySubcatID`)
+    this.mySubcatList = [];
+    this.mySubcatID = "";
+  
+    this.storage.remove(`${this.pid}mySubsubcatList`)
+    this.storage.remove(`${this.pid}mySubsubcatID`)
+    this.mySubsubcatList = [];
+    this.mySubsubcatID = "";
+  
+    this.storage.remove(`${this.pid}myAreaList`)
+    this.storage.remove(`${this.pid}myAreaID`)
+    this.myAreaList = [];
+    this.myAreaID = [];
+
+    this.getAllAreasofFloors();
+  }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat`).snapshotChanges().subscribe(value =>{
     this.myCatList =[];
     if(value.length > 0){
@@ -521,12 +555,13 @@ getCats(){
       this.storage.remove(`${this.pid}myAreaList`)
       this.storage.remove(`${this.pid}myAreaID`)
       this.myAreaList = [];
-      this.myAreaID = "";
+      this.myAreaID = [];
 
     }
 
    
   })
+  this.firstloadedCat = true;
 }
 
 getSubcats(){
@@ -534,6 +569,24 @@ getSubcats(){
   this.storage.set(`${this.pid}myCatList`, this.myCatList).then(()=>{
     this.storage.set(`${this.pid}myCatID`, this.myCatID)
   })
+  if(this.firstloadedSubcat){
+    this.storage.remove(`${this.pid}mySubcatList`)
+    this.storage.remove(`${this.pid}mySubcatID`)
+    this.mySubcatList = [];
+    this.mySubcatID = "";
+  
+    this.storage.remove(`${this.pid}mySubsubcatList`)
+    this.storage.remove(`${this.pid}mySubsubcatID`)
+    this.mySubsubcatList = [];
+    this.mySubsubcatID = "";
+  
+    this.storage.remove(`${this.pid}myAreaList`)
+    this.storage.remove(`${this.pid}myAreaID`)
+    this.myAreaList = [];
+    this.myAreaID = [];
+
+    this.getAllAreasofCat();
+  }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat`).snapshotChanges().subscribe(value =>{
     this.mySubcatList = [];
     if(value.length > 0){
@@ -554,12 +607,12 @@ getSubcats(){
     this.storage.remove(`${this.pid}myAreaList`)
     this.storage.remove(`${this.pid}myAreaID`)
     this.myAreaList = [];
-    this.myAreaID = "";
+    this.myAreaID = [];
 
    }
 
   })
-
+  this.firstloadedSubcat = true
 }
 
 getSubsubcats(){
@@ -567,6 +620,19 @@ getSubsubcats(){
   this.storage.set(`${this.pid}mySubcatList`, this.mySubcatList).then(()=>{
     this.storage.set(`${this.pid}mySubcatID`, this.mySubcatID)
   })
+  if(this.firstloadedSubsubcat){
+    this.storage.remove(`${this.pid}mySubsubcatList`)
+    this.storage.remove(`${this.pid}mySubsubcatID`)
+    this.mySubsubcatList = [];
+    this.mySubsubcatID = "";
+  
+    this.storage.remove(`${this.pid}myAreaList`)
+    this.storage.remove(`${this.pid}myAreaID`)
+    this.myAreaList = [];
+    this.myAreaID = [];
+
+    this.getAllAreasofSubcat();
+  }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat`).snapshotChanges().subscribe(value =>{
     this.mySubsubcatList = []
     if(value.length > 0){
@@ -582,12 +648,12 @@ getSubsubcats(){
     this.storage.remove(`${this.pid}myAreaList`)
     this.storage.remove(`${this.pid}myAreaID`)
     this.myAreaList = [];
-    this.myAreaID = "";
+    this.myAreaID = [];
    }
 
    
   })
-
+this.firstloadedSubsubcat = true
 }
 
 
@@ -617,16 +683,23 @@ pushToArrayItemCat(arr, obj) {
 
 
 getArea(){
-
+console.log("Get area worked")
   this.storage.set(`${this.pid}mySubsubcatList`, this.mySubsubcatList).then(()=>{
     this.storage.set(`${this.pid}mySubsubcatID`, this.mySubsubcatID)
   })
-
+  if(this.firstloadedArea){
+    this.storage.remove(`${this.pid}myAreaList`)
+    this.storage.remove(`${this.pid}myAreaID`)
+    this.myAreaList = [];
+    this.myAreaID = [];
+  }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas`).snapshotChanges().subscribe(value =>{
     this.myAreaList= []
     if(value.length > 0){
     value.forEach(doc=>{
    this.pushToArray( this.myAreaList, {
+      floorid : this.myFloorID,
+      buildingid : this.myBuildingID,
       name : doc.payload.doc.data().name ,
        id : doc.payload.doc.id,
        catname : doc.payload.doc.data().catname,
@@ -708,24 +781,32 @@ getArea(){
        precast : doc.payload.doc.data().precast
      })
     })
+    this.storage.get(`${this.pid}myAreaID`).then(myarea =>{
+      if(myarea !== null){
+       this.myAreaID = myarea
+       console.log(myarea)
+
+      }
+    })
   }
   else{
     this.storage.remove(`${this.pid}myAreaList`)
     this.storage.remove(`${this.pid}myAreaID`)
     this.myAreaList = [];
-    this.myAreaID = "";
+    this.myAreaID = [];
   }
    
   })
-
+this.firstloadedArea = true;
 }
 
 myAreaSeelcted(){
-  this.storage.set(`${this.pid}myAreaList`, this.myAreaList).then(()=>{
-    this.storage.set(`${this.pid}myAreaID`, this.myAreaID)
-  })
-
-  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
+  this.storage.set(`${this.pid}myAreaList`, this.myAreaList)
+  this.storage.set(`${this.pid}myAreaID`, this.myAreaID)
+this.myAreaID.forEach(element => {
+  var areaarray = element.split("/");
+  let area = this.myAreaList.find(x => x.id == areaarray[2])
+  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${area.buildingid}/floors/${area.floorid}/cat/${area.catid}/subcat/${area.subcatid}/subsubcat/${area.subsubcatid}/areas/${area.id}/boqitems`).snapshotChanges().subscribe(value =>{
     this.myItemCatList = [];
     console.log(value.length)
     value.forEach(doc =>{
@@ -734,6 +815,7 @@ myAreaSeelcted(){
         })
       })
   })
+});
 }
 getMyItemsubcat(){
   this.storage.set(`${this.pid}myItemCatList`, this.myItemCatList).then(()=>{
@@ -927,67 +1009,91 @@ async addBuilding(){
 
 // LOCAL STORAGE CHECK FOR ALREADY SELECTED ITEMS
  checkLocalStorage(){
+
   this.storage.get(`${this.pid}myBuildingList`).then(value =>{
     if(value !== null){
         this.myBuildingList = value
-        this.storage.get(`${this.pid}myBuildingID`).then(myB =>{
-        this.myBuildingID = myB
-        })
     }
 }).then(()=>{
 
 this.storage.get(`${this.pid}myFloorList`).then(value =>{
  if(value !== null){
      this.myFloorList = value
-     this.storage.get(`${this.pid}myFloorID`).then(myF =>{
-     this.myFloorID = myF
-     })
  }
 }).then(()=>{
 this.storage.get(`${this.pid}myCatList`).then(value =>{
 if(value !== null){
  this.myCatList = value
- this.storage.get(`${this.pid}myCatID`).then(myC =>{
- this.myCatID = myC
- })
 }
 }).then(()=>{
 
 this.storage.get(`${this.pid}mySubcatList`).then(value =>{
 if(value !== null){
  this.mySubcatList = value
- this.storage.get(`${this.pid}mySubcatID`).then(mySub =>{
- this.mySubcatID = mySub
- })
 }
 }).then(()=>{
 this.storage.get(`${this.pid}mySubsubcatList`).then(value =>{
 if(value !== null){
  this.mySubsubcatList = value
- this.storage.get(`${this.pid}mySubsubcatID`).then(mySubsub =>{
- this.mySubsubcatID = mySubsub
- })
+
 }
 }).then(()=>{
 this.storage.get(`${this.pid}myAreaList`).then(value =>{
 if(value !== null){
  this.myAreaList = value
- this.storage.get(`${this.pid}myAreaID`).then(mySubsub =>{
-   if(mySubsub !== null){
-    this.myAreaID = mySubsub
-    this.myAreaSeelcted()
-   }
- })
 }
+}).then(()=>{
+  this.storage.get(`${this.pid}myBuildingID`).then(myB =>{
+    if(myB !== null){
+      this.myBuildingID = myB
+    }
+    }).then(()=>{
+      this.storage.get(`${this.pid}myFloorID`).then(myF =>{
+        if(myF !== null){
+          this.myFloorID = myF
+          
+        }
+        }).then(()=>{
+          this.storage.get(`${this.pid}myCatID`).then(myC =>{
+            if(myC !== null){
+              this.myCatID = myC
+         
+            }
+            }).then(()=> {
+              this.storage.get(`${this.pid}mySubcatID`).then(mySub =>{
+                if(mySub !== null){
+                  this.mySubcatID = mySub
+                 
+                }
+                }).then(()=>{
+                  this.storage.get(`${this.pid}mySubsubcatID`).then(mySubsub =>{
+                    if(mySubsub !== null){
+                      this.mySubsubcatID = mySubsub
+                  
+                    }
+                    }).then(()=>{
+                      this.storage.get(`${this.pid}myAreaID`).then(myarea =>{
+                        if(myarea !== null){
+                         this.myAreaID = myarea
+                         console.log(myarea)
+                  
+                        }
+                      })
+                    })
+                    })
+                })
+            })
+        })
+    })
+
+})
+})
 })
 
 })
 })
 
-})
-})
 
-})
 
 this.storage.get(`${this.pid}GloblecatList`).then(value=>{
   if(value !== null){
@@ -1249,76 +1355,78 @@ async addareatoproj(){
               subsubcatid : this.SubsubcattoAdd.id,
               name : this.areatoAdd.name,
               floorname : this.FloortoAdd.name,
+              floorID : this.myFloorID,
+              BuildingID : this.myBuildingID,
               Unit_width : this.Unit_width,
-          Unit_length : this.Unit_length,
-          Unit_height : this.Unit_height,
-          No_of_units : this.No_of_units,
-          R : this.R,
-          RO : this.RO,
-          L1 : this.L1,
-          L2 : this.L2,
-          L3 : this.L3,
-          L4 : this.L4,
-          L5 : this.L5,
-          L6 : this.L6,
-          L7 : this.L7,
-          L8 : this.L8,
-          Hal_Axis : this.Hal_Axis,
-          Val_Axis : this.Val_Axis,
-          Floor_width_1 : this.Floor_width_1,
-          Floor_width_2 : this.Floor_width_2,
-          Floor_width_3 : this.Floor_width_3,
-          Floor_width_4 : this.Floor_width_4,
-          Floor_length_1 : this.Floor_length_1,
-          Floor_length_2 : this.Floor_length_2,
-          Floor_length_3 : this.Floor_length_3,
-          Floor_length_4 : this.Floor_length_4,
-          Wall_per_lengthA : this.Wall_per_lengthA,
-          Wall_per_lengthB : this.Wall_per_lengthB,
-          Wall_per_lengthC : this.Wall_per_lengthC,
-          Wall_per_lengthD : this.Wall_per_lengthD,
-          Wall_per_lengthE : this.Wall_per_lengthE,
-          Wall_per_lengthF : this.Wall_per_lengthF,
-          Wall_per_lengthG : this.Wall_per_lengthG,
-          Wall_per_lengthH : this.Wall_per_lengthH,
-          skirting_per_lengthA : this.skirting_per_lengthA,
-          skirting_per_lengthB : this.skirting_per_lengthB,
-          skirting_per_lengthC : this.skirting_per_lengthC,
-          skirting_per_lengthD : this.skirting_per_lengthD,
-          skirting_per_lengthE : this.skirting_per_lengthE,
-          skirting_per_lengthF : this.skirting_per_lengthF,
-          skirting_per_lengthG : this.skirting_per_lengthG,
-          skirting_per_lengthH : this.skirting_per_lengthH,
-          PCLA : this.PCLA,
-          PCLB : this.PCLB,
-          PCLC : this.PCLC,
-          PCLD : this.PCLD,
-          PCLE : this.PCLE,
-          PCLF : this.PCLF,
-          PCLG : this.PCLG,
-          PCLH : this.PCLH,
-          Y8 : this.Y8,
-          Y10 : this.Y10,
-          Y12 : this.Y12,
-          Y16 : this.Y16,
-          Y20 : this.Y20,
-          Y25 : this.Y25,
-          Y32 : this.Y32,
-          areaF : this.areaF,
-          areaW : this.areaW,
-          areaC : this.areaC,
-          areaS : this.areaS,
-          areaCOR : this.areaCOR,
-          areaB : this.areaB,
-          extraBlockDPC : this.extraBlockDPC,
-          conc : this.conc,
-          shutt : this.shutt,
-          bit : this.bit,
-          polyth : this.polyth,
-          steel : this.steel,
-          exc : this.exc,
-          fill : this.fill,
-          precast : this.precast,
+              Unit_length : this.Unit_length,
+              Unit_height : this.Unit_height,
+              No_of_units : this.No_of_units,
+              R : this.R,
+              RO : this.RO,
+              L1 : this.L1,
+              L2 : this.L2,
+              L3 : this.L3,
+              L4 : this.L4,
+              L5 : this.L5,
+              L6 : this.L6,
+              L7 : this.L7,
+              L8 : this.L8,
+              Hal_Axis : this.Hal_Axis,
+              Val_Axis : this.Val_Axis,
+              Floor_width_1 : this.Floor_width_1,
+              Floor_width_2 : this.Floor_width_2,
+              Floor_width_3 : this.Floor_width_3,
+              Floor_width_4 : this.Floor_width_4,
+              Floor_length_1 : this.Floor_length_1,
+              Floor_length_2 : this.Floor_length_2,
+              Floor_length_3 : this.Floor_length_3,
+              Floor_length_4 : this.Floor_length_4,
+              Wall_per_lengthA : this.Wall_per_lengthA,
+              Wall_per_lengthB : this.Wall_per_lengthB,
+              Wall_per_lengthC : this.Wall_per_lengthC,
+              Wall_per_lengthD : this.Wall_per_lengthD,
+              Wall_per_lengthE : this.Wall_per_lengthE,
+              Wall_per_lengthF : this.Wall_per_lengthF,
+              Wall_per_lengthG : this.Wall_per_lengthG,
+              Wall_per_lengthH : this.Wall_per_lengthH,
+              skirting_per_lengthA : this.skirting_per_lengthA,
+              skirting_per_lengthB : this.skirting_per_lengthB,
+              skirting_per_lengthC : this.skirting_per_lengthC,
+              skirting_per_lengthD : this.skirting_per_lengthD,
+              skirting_per_lengthE : this.skirting_per_lengthE,
+              skirting_per_lengthF : this.skirting_per_lengthF,
+              skirting_per_lengthG : this.skirting_per_lengthG,
+              skirting_per_lengthH : this.skirting_per_lengthH,
+              PCLA : this.PCLA,
+              PCLB : this.PCLB,
+              PCLC : this.PCLC,
+              PCLD : this.PCLD,
+              PCLE : this.PCLE,
+              PCLF : this.PCLF,
+              PCLG : this.PCLG,
+              PCLH : this.PCLH,
+              Y8 : this.Y8,
+              Y10 : this.Y10,
+              Y12 : this.Y12,
+              Y16 : this.Y16,
+              Y20 : this.Y20,
+              Y25 : this.Y25,
+              Y32 : this.Y32,
+              areaF : this.areaF,
+              areaW : this.areaW,
+              areaC : this.areaC,
+              areaS : this.areaS,
+              areaCOR : this.areaCOR,
+              areaB : this.areaB,
+              extraBlockDPC : this.extraBlockDPC,
+              conc : this.conc,
+              shutt : this.shutt,
+              bit : this.bit,
+              polyth : this.polyth,
+              steel : this.steel,
+              exc : this.exc,
+              fill : this.fill,
+              precast : this.precast,
 
 
 ch1A : this.ch1A,
@@ -1616,11 +1724,11 @@ getGboqitems(){
 }
 
 async addItem(){
+  // && this.myFloorID 
+  // && this.myCatID 
+  // && this.mySubsubcatID 
+  // && this.mySubsubcatID 
   if(this.myBuildingID 
-    && this.myFloorID 
-    && this.myCatID 
-    && this.mySubsubcatID 
-    && this.mySubsubcatID 
     && this.myAreaID 
     && this.boqitemcatID 
     && this.boqitemsubcatID 
@@ -1631,61 +1739,624 @@ async addItem(){
         duration: 20000
       });
       await loading.present();
-       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems/${this.boqitem.id}`).set({
-       itemdetails : this.boqitem,
-        ceiling : this.ceiling,
-        floor : this.floor,
-        walls : this.walls,
-        cornice : this.cornice,
-        skirting : this.skirting,
-        shuttering : this.shuttering,
-        block : this.block,
-        blockdpc : this.blockdpc,
-        concrete : this.concrete,
-        polythene : this.polythene,
-        bitumin : this.bitumin,
-        itemsteel : this.itemsteel,
-        blockbitumin : this.blockbitumin,
-        iqty : this.iqty,
-        itempercentage : this.itempercentage,
-        completion : this.completion,
-        itemprecast : this.itemprecast,
-        existing : this.existing,
-        existing1 : this.existing1,
-        existing2 : this.existing2,
-        tsp : this.tsp,
-        bpp : this.bpp,
-        spp1 : this.spp1,
-        spp2 : this.spp2,
-        spp3 : this.spp3,
-        spp4 : this.spp4,
-        tpp : this.tpp,
-        bbp : this.bbp,
-        sbp1 : this.sbp1,
-        sbp2 : this.sbp2,
-        sbp3 : this.sbp3,
-        sbp4 : this.sbp4,
-        tep : this.tep,
-        tbp : this.tbp,
-        bep : this.bep,
-        sep1 : this.sep1,
-        sep2 : this.sep2,
-        sep3 : this.sep3,
-        sep4 : this.sep4,
-        bsp : this.bsp,
-        ssp1 : this.ssp1,
-        ssp2 : this.ssp2,
-        ssp3 : this.ssp3,
-        ssp4 : this.ssp4,
-       }).then(()=>{
-         loading.dismiss().then(()=>{
-          alert("Added Successfully!")
-         })
-       })
-    
+
+      this.myAreaID.forEach(element => {
+        var areaarray = element.split("/");
+        let area = this.myAreaList.find(x => x.id == areaarray[2])
+        this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${area.buildingid}/floors/${area.floorid}/cat/${area.catid}/subcat/${area.subcatid}/subsubcat/${area.subsubcatid}/areas/${area.id}/boqitems/${this.boqitem.id}`).set({
+          itemdetails : this.boqitem,
+           ceiling : this.ceiling,
+           floor : this.floor,
+           walls : this.walls,
+           cornice : this.cornice,
+           skirting : this.skirting,
+           shuttering : this.shuttering,
+           block : this.block,
+           blockdpc : this.blockdpc,
+           concrete : this.concrete,
+           polythene : this.polythene,
+           bitumin : this.bitumin,
+           itemsteel : this.itemsteel,
+           blockbitumin : this.blockbitumin,
+           iqty : this.iqty,
+           itempercentage : this.itempercentage,
+           completion : this.completion,
+           itemprecast : this.itemprecast,
+           existing : this.existing,
+           existing1 : this.existing1,
+           existing2 : this.existing2,
+           tsp : this.tsp,
+           bpp : this.bpp,
+           spp1 : this.spp1,
+           spp2 : this.spp2,
+           spp3 : this.spp3,
+           spp4 : this.spp4,
+           tpp : this.tpp,
+           bbp : this.bbp,
+           sbp1 : this.sbp1,
+           sbp2 : this.sbp2,
+           sbp3 : this.sbp3,
+           sbp4 : this.sbp4,
+           tep : this.tep,
+           tbp : this.tbp,
+           bep : this.bep,
+           sep1 : this.sep1,
+           sep2 : this.sep2,
+           sep3 : this.sep3,
+           sep4 : this.sep4,
+           bsp : this.bsp,
+           ssp1 : this.ssp1,
+           ssp2 : this.ssp2,
+           ssp3 : this.ssp3,
+           ssp4 : this.ssp4,
+          }).then(()=>{
+            loading.dismiss().then(()=>{
+             alert("Added Successfully!")
+            })
+          })
+      })
   }else{
     alert("Please recheck, any selection or field is missing.")
   }
+}
+
+
+
+getAllAreas(){
+  this.myAreaList = []
+  this.afs.collection(`boq/boq/projects/${this.pid}/buildings`).snapshotChanges().subscribe(docs =>{
+    docs.forEach(doc =>{
+      this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${doc.payload.doc.id}/floors`).snapshotChanges().subscribe(fvalue =>{
+        fvalue.forEach(fdoc=>{
+          this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${doc.payload.doc.id}/floors/${fdoc.payload.doc.id}/cat`).snapshotChanges().subscribe(cdocs =>{
+           cdocs.forEach(cdoc =>{
+            this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${doc.payload.doc.id}/floors/${fdoc.payload.doc.id}/cat/${cdoc.payload.doc.id}/subcat`).snapshotChanges().subscribe(subdocs =>{
+            subdocs.forEach(subdoc =>{
+              this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${doc.payload.doc.id}/floors/${fdoc.payload.doc.id}/cat/${cdoc.payload.doc.id}/subcat/${subdoc.payload.doc.id}/subsubcat`).snapshotChanges().subscribe(subsubdocs =>{
+                subsubdocs.forEach(subsubdoc =>{
+                  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${doc.payload.doc.id}/floors/${fdoc.payload.doc.id}/cat/${cdoc.payload.doc.id}/subcat/${subdoc.payload.doc.id}/subsubcat/${subsubdoc.payload.doc.id}/areas`).snapshotChanges().subscribe(adocs=>{
+                   adocs.forEach(adoc =>{
+                      this.pushToArray( this.myAreaList, {
+                        name : adoc.payload.doc.data().name ,
+                         id : adoc.payload.doc.id,
+                         catname : adoc.payload.doc.data().catname,
+                         catid : adoc.payload.doc.data().catid,
+                         subcatname : adoc.payload.doc.data().subcatname,
+                         subcatid : adoc.payload.doc.data().subcatid,
+                         subsubcatname : adoc.payload.doc.data().subsubcatname,
+                         subsubcatid : adoc.payload.doc.data().subsubcatid,
+                         floorname : adoc.payload.doc.data().floorname,
+                         Unit_width : adoc.payload.doc.data().Unit_width,
+                         Unit_length : adoc.payload.doc.data().Unit_length,
+                         Unit_height : adoc.payload.doc.data().Unit_height,
+                         No_of_units : adoc.payload.doc.data().No_of_units,
+                         R : adoc.payload.doc.data().R,
+                         RO : adoc.payload.doc.data().RO,
+                         L1 : adoc.payload.doc.data().L1,
+                         L2 : adoc.payload.doc.data().L2,
+                         L3 : adoc.payload.doc.data().L3,
+                         L4 : adoc.payload.doc.data().L4,
+                         L5 : adoc.payload.doc.data().L5,
+                         L6 : adoc.payload.doc.data().L6,
+                         L7 : adoc.payload.doc.data().L7,
+                         L8 : adoc.payload.doc.data().L8,
+                         Hal_Axis : adoc.payload.doc.data().Hal_Axis,
+                         Val_Axis : adoc.payload.doc.data().Val_Axis,
+                         Floor_width_1 : adoc.payload.doc.data().Floor_width_1,
+                         Floor_width_2 : adoc.payload.doc.data().Floor_width_2,
+                         Floor_width_3 : adoc.payload.doc.data().Floor_width_3,
+                         Floor_width_4 : adoc.payload.doc.data().Floor_width_4,
+                         Floor_length_1 : adoc.payload.doc.data().Floor_length_1,
+                         Floor_length_2 : adoc.payload.doc.data().Floor_length_2,
+                         Floor_length_3 : adoc.payload.doc.data().Floor_length_3,
+                         Floor_length_4 : adoc.payload.doc.data().Floor_length_4,
+                         Wall_per_lengthA : adoc.payload.doc.data().Wall_per_lengthA,
+                         Wall_per_lengthB : adoc.payload.doc.data().Wall_per_lengthB,
+                         Wall_per_lengthC : adoc.payload.doc.data().Wall_per_lengthC,
+                         Wall_per_lengthD : adoc.payload.doc.data().Wall_per_lengthD,
+                         Wall_per_lengthE : adoc.payload.doc.data().Wall_per_lengthE,
+                         Wall_per_lengthF : adoc.payload.doc.data().Wall_per_lengthF,
+                         Wall_per_lengthG : adoc.payload.doc.data().Wall_per_lengthG,
+                         Wall_per_lengthH : adoc.payload.doc.data().Wall_per_lengthH,
+                         skirting_per_lengthA : adoc.payload.doc.data().skirting_per_lengthA,
+                         skirting_per_lengthB : adoc.payload.doc.data().skirting_per_lengthB,
+                         skirting_per_lengthC : adoc.payload.doc.data().skirting_per_lengthC,
+                         skirting_per_lengthD : adoc.payload.doc.data().skirting_per_lengthD,
+                         skirting_per_lengthE : adoc.payload.doc.data().skirting_per_lengthE,
+                         skirting_per_lengthF : adoc.payload.doc.data().skirting_per_lengthF,
+                         skirting_per_lengthG : adoc.payload.doc.data().skirting_per_lengthG,
+                         skirting_per_lengthH : adoc.payload.doc.data().skirting_per_lengthH,
+                         PCLA : adoc.payload.doc.data().PCLA,
+                         PCLB : adoc.payload.doc.data().PCLB,
+                         PCLC : adoc.payload.doc.data().PCLC,
+                         PCLD : adoc.payload.doc.data().PCLD,
+                         PCLE : adoc.payload.doc.data().PCLE,
+                         PCLF : adoc.payload.doc.data().PCLF,
+                         PCLG : adoc.payload.doc.data().PCLG,
+                         PCLH : adoc.payload.doc.data().PCLH,
+                         Y8 : adoc.payload.doc.data().Y8,
+                         Y10 : adoc.payload.doc.data().Y10,
+                         Y12 : adoc.payload.doc.data().Y12,
+                         Y16 : adoc.payload.doc.data().Y16,
+                         Y20 : adoc.payload.doc.data().Y20,
+                         Y25 : adoc.payload.doc.data().Y25,
+                         Y32 : adoc.payload.doc.data().Y32,
+                         areaF : adoc.payload.doc.data().areaF,
+                         areaW : adoc.payload.doc.data().areaW,
+                         areaC : adoc.payload.doc.data().areaC,
+                         areaS : adoc.payload.doc.data().areaS,
+                         areaCOR : adoc.payload.doc.data().areaCOR,
+                         areaB : adoc.payload.doc.data().areaB,
+                         extraBlockDPC : adoc.payload.doc.data().extraBlockDPC,
+                         conc : adoc.payload.doc.data().conc,
+                         shutt : adoc.payload.doc.data().shutt,
+                         bit : adoc.payload.doc.data().bit,
+                         polyth : adoc.payload.doc.data().polyth,
+                         steel : adoc.payload.doc.data().steel,
+                         exc : adoc.payload.doc.data().exc,
+                         fill : adoc.payload.doc.data().fill,
+                         precast : adoc.payload.doc.data().precast
+                       })
+                    })
+                  })
+                })
+              })
+            })
+            })
+          })
+          })
+        })
+      })
+    })
+  })
+}
+
+getAllAreasofBuildings(){
+this.presentLoading();
+  // this.myAreaList = []
+      this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors`).snapshotChanges().subscribe(fvalue =>{
+        fvalue.forEach(fdoc=>{
+          this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${fdoc.payload.doc.id}/cat`).snapshotChanges().subscribe(cdocs =>{
+           cdocs.forEach(cdoc =>{
+            this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${fdoc.payload.doc.id}/cat/${cdoc.payload.doc.id}/subcat`).snapshotChanges().subscribe(subdocs =>{
+            subdocs.forEach(subdoc =>{
+              this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${fdoc.payload.doc.id}/cat/${cdoc.payload.doc.id}/subcat/${subdoc.payload.doc.id}/subsubcat`).snapshotChanges().subscribe(subsubdocs =>{
+                subsubdocs.forEach(subsubdoc =>{
+                  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${fdoc.payload.doc.id}/cat/${cdoc.payload.doc.id}/subcat/${subdoc.payload.doc.id}/subsubcat/${subsubdoc.payload.doc.id}/areas`).snapshotChanges().subscribe(adocs=>{
+                  console.log("GETALLAREASOFBUILDING")
+                    adocs.forEach(adoc =>{
+                      this.myAreaList.push({
+                        floorid : fdoc.payload.doc.id,
+                        buildingid : this.myBuildingID,
+                        name : "("+ fdoc.payload.doc.data().no + ") "+  adoc.payload.doc.data().name,
+                         id : adoc.payload.doc.id,
+                         catname : adoc.payload.doc.data().catname,
+                         catid : adoc.payload.doc.data().catid,
+                         subcatname : adoc.payload.doc.data().subcatname,
+                         subcatid : adoc.payload.doc.data().subcatid,
+                         subsubcatname : adoc.payload.doc.data().subsubcatname,
+                         subsubcatid : adoc.payload.doc.data().subsubcatid,
+                         floorname : adoc.payload.doc.data().floorname,
+                         Unit_width : adoc.payload.doc.data().Unit_width,
+                         Unit_length : adoc.payload.doc.data().Unit_length,
+                         Unit_height : adoc.payload.doc.data().Unit_height,
+                         No_of_units : adoc.payload.doc.data().No_of_units,
+                         R : adoc.payload.doc.data().R,
+                         RO : adoc.payload.doc.data().RO,
+                         L1 : adoc.payload.doc.data().L1,
+                         L2 : adoc.payload.doc.data().L2,
+                         L3 : adoc.payload.doc.data().L3,
+                         L4 : adoc.payload.doc.data().L4,
+                         L5 : adoc.payload.doc.data().L5,
+                         L6 : adoc.payload.doc.data().L6,
+                         L7 : adoc.payload.doc.data().L7,
+                         L8 : adoc.payload.doc.data().L8,
+                         Hal_Axis : adoc.payload.doc.data().Hal_Axis,
+                         Val_Axis : adoc.payload.doc.data().Val_Axis,
+                         Floor_width_1 : adoc.payload.doc.data().Floor_width_1,
+                         Floor_width_2 : adoc.payload.doc.data().Floor_width_2,
+                         Floor_width_3 : adoc.payload.doc.data().Floor_width_3,
+                         Floor_width_4 : adoc.payload.doc.data().Floor_width_4,
+                         Floor_length_1 : adoc.payload.doc.data().Floor_length_1,
+                         Floor_length_2 : adoc.payload.doc.data().Floor_length_2,
+                         Floor_length_3 : adoc.payload.doc.data().Floor_length_3,
+                         Floor_length_4 : adoc.payload.doc.data().Floor_length_4,
+                         Wall_per_lengthA : adoc.payload.doc.data().Wall_per_lengthA,
+                         Wall_per_lengthB : adoc.payload.doc.data().Wall_per_lengthB,
+                         Wall_per_lengthC : adoc.payload.doc.data().Wall_per_lengthC,
+                         Wall_per_lengthD : adoc.payload.doc.data().Wall_per_lengthD,
+                         Wall_per_lengthE : adoc.payload.doc.data().Wall_per_lengthE,
+                         Wall_per_lengthF : adoc.payload.doc.data().Wall_per_lengthF,
+                         Wall_per_lengthG : adoc.payload.doc.data().Wall_per_lengthG,
+                         Wall_per_lengthH : adoc.payload.doc.data().Wall_per_lengthH,
+                         skirting_per_lengthA : adoc.payload.doc.data().skirting_per_lengthA,
+                         skirting_per_lengthB : adoc.payload.doc.data().skirting_per_lengthB,
+                         skirting_per_lengthC : adoc.payload.doc.data().skirting_per_lengthC,
+                         skirting_per_lengthD : adoc.payload.doc.data().skirting_per_lengthD,
+                         skirting_per_lengthE : adoc.payload.doc.data().skirting_per_lengthE,
+                         skirting_per_lengthF : adoc.payload.doc.data().skirting_per_lengthF,
+                         skirting_per_lengthG : adoc.payload.doc.data().skirting_per_lengthG,
+                         skirting_per_lengthH : adoc.payload.doc.data().skirting_per_lengthH,
+                         PCLA : adoc.payload.doc.data().PCLA,
+                         PCLB : adoc.payload.doc.data().PCLB,
+                         PCLC : adoc.payload.doc.data().PCLC,
+                         PCLD : adoc.payload.doc.data().PCLD,
+                         PCLE : adoc.payload.doc.data().PCLE,
+                         PCLF : adoc.payload.doc.data().PCLF,
+                         PCLG : adoc.payload.doc.data().PCLG,
+                         PCLH : adoc.payload.doc.data().PCLH,
+                         Y8 : adoc.payload.doc.data().Y8,
+                         Y10 : adoc.payload.doc.data().Y10,
+                         Y12 : adoc.payload.doc.data().Y12,
+                         Y16 : adoc.payload.doc.data().Y16,
+                         Y20 : adoc.payload.doc.data().Y20,
+                         Y25 : adoc.payload.doc.data().Y25,
+                         Y32 : adoc.payload.doc.data().Y32,
+                         areaF : adoc.payload.doc.data().areaF,
+                         areaW : adoc.payload.doc.data().areaW,
+                         areaC : adoc.payload.doc.data().areaC,
+                         areaS : adoc.payload.doc.data().areaS,
+                         areaCOR : adoc.payload.doc.data().areaCOR,
+                         areaB : adoc.payload.doc.data().areaB,
+                         extraBlockDPC : adoc.payload.doc.data().extraBlockDPC,
+                         conc : adoc.payload.doc.data().conc,
+                         shutt : adoc.payload.doc.data().shutt,
+                         bit : adoc.payload.doc.data().bit,
+                         polyth : adoc.payload.doc.data().polyth,
+                         steel : adoc.payload.doc.data().steel,
+                         exc : adoc.payload.doc.data().exc,
+                         fill : adoc.payload.doc.data().fill,
+                         precast : adoc.payload.doc.data().precast
+                       })
+                    })
+                  })
+                })
+              })
+            })
+            })
+          })
+          })
+        })
+        this.loadingController.dismiss()
+      })
+
+}
+
+getAllAreasofFloors(){
+  this.presentLoading()
+  // this.myAreaList = []
+      this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat`).snapshotChanges().subscribe(cdocs =>{
+       cdocs.forEach(cdoc =>{
+        this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${cdoc.payload.doc.id}/subcat`).snapshotChanges().subscribe(subdocs =>{
+        subdocs.forEach(subdoc =>{
+          this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${cdoc.payload.doc.id}/subcat/${subdoc.payload.doc.id}/subsubcat`).snapshotChanges().subscribe(subsubdocs =>{
+            subsubdocs.forEach(subsubdoc =>{
+              this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${cdoc.payload.doc.id}/subcat/${subdoc.payload.doc.id}/subsubcat/${subsubdoc.payload.doc.id}/areas`).snapshotChanges().subscribe(adocs=>{
+               adocs.forEach(adoc =>{
+                  this.myAreaList.push({
+                    floorid : this.myFloorID,
+                    buildingid : this.myBuildingID,
+                    name : adoc.payload.doc.data().name ,
+                     id : adoc.payload.doc.id,
+                     catname : adoc.payload.doc.data().catname,
+                     catid : adoc.payload.doc.data().catid,
+                     subcatname : adoc.payload.doc.data().subcatname,
+                     subcatid : adoc.payload.doc.data().subcatid,
+                     subsubcatname : adoc.payload.doc.data().subsubcatname,
+                     subsubcatid : adoc.payload.doc.data().subsubcatid,
+                     floorname : adoc.payload.doc.data().floorname,
+                     Unit_width : adoc.payload.doc.data().Unit_width,
+                     Unit_length : adoc.payload.doc.data().Unit_length,
+                     Unit_height : adoc.payload.doc.data().Unit_height,
+                     No_of_units : adoc.payload.doc.data().No_of_units,
+                     R : adoc.payload.doc.data().R,
+                     RO : adoc.payload.doc.data().RO,
+                     L1 : adoc.payload.doc.data().L1,
+                     L2 : adoc.payload.doc.data().L2,
+                     L3 : adoc.payload.doc.data().L3,
+                     L4 : adoc.payload.doc.data().L4,
+                     L5 : adoc.payload.doc.data().L5,
+                     L6 : adoc.payload.doc.data().L6,
+                     L7 : adoc.payload.doc.data().L7,
+                     L8 : adoc.payload.doc.data().L8,
+                     Hal_Axis : adoc.payload.doc.data().Hal_Axis,
+                     Val_Axis : adoc.payload.doc.data().Val_Axis,
+                     Floor_width_1 : adoc.payload.doc.data().Floor_width_1,
+                     Floor_width_2 : adoc.payload.doc.data().Floor_width_2,
+                     Floor_width_3 : adoc.payload.doc.data().Floor_width_3,
+                     Floor_width_4 : adoc.payload.doc.data().Floor_width_4,
+                     Floor_length_1 : adoc.payload.doc.data().Floor_length_1,
+                     Floor_length_2 : adoc.payload.doc.data().Floor_length_2,
+                     Floor_length_3 : adoc.payload.doc.data().Floor_length_3,
+                     Floor_length_4 : adoc.payload.doc.data().Floor_length_4,
+                     Wall_per_lengthA : adoc.payload.doc.data().Wall_per_lengthA,
+                     Wall_per_lengthB : adoc.payload.doc.data().Wall_per_lengthB,
+                     Wall_per_lengthC : adoc.payload.doc.data().Wall_per_lengthC,
+                     Wall_per_lengthD : adoc.payload.doc.data().Wall_per_lengthD,
+                     Wall_per_lengthE : adoc.payload.doc.data().Wall_per_lengthE,
+                     Wall_per_lengthF : adoc.payload.doc.data().Wall_per_lengthF,
+                     Wall_per_lengthG : adoc.payload.doc.data().Wall_per_lengthG,
+                     Wall_per_lengthH : adoc.payload.doc.data().Wall_per_lengthH,
+                     skirting_per_lengthA : adoc.payload.doc.data().skirting_per_lengthA,
+                     skirting_per_lengthB : adoc.payload.doc.data().skirting_per_lengthB,
+                     skirting_per_lengthC : adoc.payload.doc.data().skirting_per_lengthC,
+                     skirting_per_lengthD : adoc.payload.doc.data().skirting_per_lengthD,
+                     skirting_per_lengthE : adoc.payload.doc.data().skirting_per_lengthE,
+                     skirting_per_lengthF : adoc.payload.doc.data().skirting_per_lengthF,
+                     skirting_per_lengthG : adoc.payload.doc.data().skirting_per_lengthG,
+                     skirting_per_lengthH : adoc.payload.doc.data().skirting_per_lengthH,
+                     PCLA : adoc.payload.doc.data().PCLA,
+                     PCLB : adoc.payload.doc.data().PCLB,
+                     PCLC : adoc.payload.doc.data().PCLC,
+                     PCLD : adoc.payload.doc.data().PCLD,
+                     PCLE : adoc.payload.doc.data().PCLE,
+                     PCLF : adoc.payload.doc.data().PCLF,
+                     PCLG : adoc.payload.doc.data().PCLG,
+                     PCLH : adoc.payload.doc.data().PCLH,
+                     Y8 : adoc.payload.doc.data().Y8,
+                     Y10 : adoc.payload.doc.data().Y10,
+                     Y12 : adoc.payload.doc.data().Y12,
+                     Y16 : adoc.payload.doc.data().Y16,
+                     Y20 : adoc.payload.doc.data().Y20,
+                     Y25 : adoc.payload.doc.data().Y25,
+                     Y32 : adoc.payload.doc.data().Y32,
+                     areaF : adoc.payload.doc.data().areaF,
+                     areaW : adoc.payload.doc.data().areaW,
+                     areaC : adoc.payload.doc.data().areaC,
+                     areaS : adoc.payload.doc.data().areaS,
+                     areaCOR : adoc.payload.doc.data().areaCOR,
+                     areaB : adoc.payload.doc.data().areaB,
+                     extraBlockDPC : adoc.payload.doc.data().extraBlockDPC,
+                     conc : adoc.payload.doc.data().conc,
+                     shutt : adoc.payload.doc.data().shutt,
+                     bit : adoc.payload.doc.data().bit,
+                     polyth : adoc.payload.doc.data().polyth,
+                     steel : adoc.payload.doc.data().steel,
+                     exc : adoc.payload.doc.data().exc,
+                     fill : adoc.payload.doc.data().fill,
+                     precast : adoc.payload.doc.data().precast
+                   })
+                })
+              })
+            })
+          })
+        })
+        })
+      })
+      this.storage.get(`${this.pid}myAreaID`).then(myarea =>{
+        if(myarea !== null){
+         this.myAreaID = myarea
+         console.log(myarea)
+    
+        }
+      })
+      this.loadingController.dismiss()
+      })
+
+}
+
+getAllAreasofCat(){
+  this.presentLoading()
+  this.myAreaList = []
+    this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat`).snapshotChanges().subscribe(subdocs =>{
+    subdocs.forEach(subdoc =>{
+      this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${subdoc.payload.doc.id}/subsubcat`).snapshotChanges().subscribe(subsubdocs =>{
+        subsubdocs.forEach(subsubdoc =>{
+          this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${subdoc.payload.doc.id}/subsubcat/${subsubdoc.payload.doc.id}/areas`).snapshotChanges().subscribe(adocs=>{
+           adocs.forEach(adoc =>{
+              this.myAreaList.push({
+                floorid : this.myFloorID,
+                buildingid : this.myBuildingID,
+                name : adoc.payload.doc.data().name ,
+                 id : adoc.payload.doc.id,
+                 catname : adoc.payload.doc.data().catname,
+                 catid : adoc.payload.doc.data().catid,
+                 subcatname : adoc.payload.doc.data().subcatname,
+                 subcatid : adoc.payload.doc.data().subcatid,
+                 subsubcatname : adoc.payload.doc.data().subsubcatname,
+                 subsubcatid : adoc.payload.doc.data().subsubcatid,
+                 floorname : adoc.payload.doc.data().floorname,
+                 Unit_width : adoc.payload.doc.data().Unit_width,
+                 Unit_length : adoc.payload.doc.data().Unit_length,
+                 Unit_height : adoc.payload.doc.data().Unit_height,
+                 No_of_units : adoc.payload.doc.data().No_of_units,
+                 R : adoc.payload.doc.data().R,
+                 RO : adoc.payload.doc.data().RO,
+                 L1 : adoc.payload.doc.data().L1,
+                 L2 : adoc.payload.doc.data().L2,
+                 L3 : adoc.payload.doc.data().L3,
+                 L4 : adoc.payload.doc.data().L4,
+                 L5 : adoc.payload.doc.data().L5,
+                 L6 : adoc.payload.doc.data().L6,
+                 L7 : adoc.payload.doc.data().L7,
+                 L8 : adoc.payload.doc.data().L8,
+                 Hal_Axis : adoc.payload.doc.data().Hal_Axis,
+                 Val_Axis : adoc.payload.doc.data().Val_Axis,
+                 Floor_width_1 : adoc.payload.doc.data().Floor_width_1,
+                 Floor_width_2 : adoc.payload.doc.data().Floor_width_2,
+                 Floor_width_3 : adoc.payload.doc.data().Floor_width_3,
+                 Floor_width_4 : adoc.payload.doc.data().Floor_width_4,
+                 Floor_length_1 : adoc.payload.doc.data().Floor_length_1,
+                 Floor_length_2 : adoc.payload.doc.data().Floor_length_2,
+                 Floor_length_3 : adoc.payload.doc.data().Floor_length_3,
+                 Floor_length_4 : adoc.payload.doc.data().Floor_length_4,
+                 Wall_per_lengthA : adoc.payload.doc.data().Wall_per_lengthA,
+                 Wall_per_lengthB : adoc.payload.doc.data().Wall_per_lengthB,
+                 Wall_per_lengthC : adoc.payload.doc.data().Wall_per_lengthC,
+                 Wall_per_lengthD : adoc.payload.doc.data().Wall_per_lengthD,
+                 Wall_per_lengthE : adoc.payload.doc.data().Wall_per_lengthE,
+                 Wall_per_lengthF : adoc.payload.doc.data().Wall_per_lengthF,
+                 Wall_per_lengthG : adoc.payload.doc.data().Wall_per_lengthG,
+                 Wall_per_lengthH : adoc.payload.doc.data().Wall_per_lengthH,
+                 skirting_per_lengthA : adoc.payload.doc.data().skirting_per_lengthA,
+                 skirting_per_lengthB : adoc.payload.doc.data().skirting_per_lengthB,
+                 skirting_per_lengthC : adoc.payload.doc.data().skirting_per_lengthC,
+                 skirting_per_lengthD : adoc.payload.doc.data().skirting_per_lengthD,
+                 skirting_per_lengthE : adoc.payload.doc.data().skirting_per_lengthE,
+                 skirting_per_lengthF : adoc.payload.doc.data().skirting_per_lengthF,
+                 skirting_per_lengthG : adoc.payload.doc.data().skirting_per_lengthG,
+                 skirting_per_lengthH : adoc.payload.doc.data().skirting_per_lengthH,
+                 PCLA : adoc.payload.doc.data().PCLA,
+                 PCLB : adoc.payload.doc.data().PCLB,
+                 PCLC : adoc.payload.doc.data().PCLC,
+                 PCLD : adoc.payload.doc.data().PCLD,
+                 PCLE : adoc.payload.doc.data().PCLE,
+                 PCLF : adoc.payload.doc.data().PCLF,
+                 PCLG : adoc.payload.doc.data().PCLG,
+                 PCLH : adoc.payload.doc.data().PCLH,
+                 Y8 : adoc.payload.doc.data().Y8,
+                 Y10 : adoc.payload.doc.data().Y10,
+                 Y12 : adoc.payload.doc.data().Y12,
+                 Y16 : adoc.payload.doc.data().Y16,
+                 Y20 : adoc.payload.doc.data().Y20,
+                 Y25 : adoc.payload.doc.data().Y25,
+                 Y32 : adoc.payload.doc.data().Y32,
+                 areaF : adoc.payload.doc.data().areaF,
+                 areaW : adoc.payload.doc.data().areaW,
+                 areaC : adoc.payload.doc.data().areaC,
+                 areaS : adoc.payload.doc.data().areaS,
+                 areaCOR : adoc.payload.doc.data().areaCOR,
+                 areaB : adoc.payload.doc.data().areaB,
+                 extraBlockDPC : adoc.payload.doc.data().extraBlockDPC,
+                 conc : adoc.payload.doc.data().conc,
+                 shutt : adoc.payload.doc.data().shutt,
+                 bit : adoc.payload.doc.data().bit,
+                 polyth : adoc.payload.doc.data().polyth,
+                 steel : adoc.payload.doc.data().steel,
+                 exc : adoc.payload.doc.data().exc,
+                 fill : adoc.payload.doc.data().fill,
+                 precast : adoc.payload.doc.data().precast
+               })
+            })
+          })
+        })
+      })
+    })
+    this.storage.get(`${this.pid}myAreaID`).then(myarea =>{
+      if(myarea !== null){
+       this.myAreaID = myarea
+       console.log(myarea)
+
+      }
+    })
+    this.loadingController.dismiss()
+    })
+
+}
+
+getAllAreasofSubcat(){
+  this.presentLoading()
+  this.myAreaList = []
+    this.afs.collection(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat`).snapshotChanges().subscribe(subsubdocs =>{
+      subsubdocs.forEach(subsubdoc =>{
+        this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${subsubdoc.payload.doc.id}/areas`).snapshotChanges().subscribe(adocs=>{
+         adocs.forEach(adoc =>{
+            this.myAreaList.push({
+              floorid : this.myFloorID,
+              buildingid : this.myBuildingID,
+              name : adoc.payload.doc.data().name ,
+               id : adoc.payload.doc.id,
+               catname : adoc.payload.doc.data().catname,
+               catid : adoc.payload.doc.data().catid,
+               subcatname : adoc.payload.doc.data().subcatname,
+               subcatid : adoc.payload.doc.data().subcatid,
+               subsubcatname : adoc.payload.doc.data().subsubcatname,
+               subsubcatid : adoc.payload.doc.data().subsubcatid,
+               floorname : adoc.payload.doc.data().floorname,
+               Unit_width : adoc.payload.doc.data().Unit_width,
+               Unit_length : adoc.payload.doc.data().Unit_length,
+               Unit_height : adoc.payload.doc.data().Unit_height,
+               No_of_units : adoc.payload.doc.data().No_of_units,
+               R : adoc.payload.doc.data().R,
+               RO : adoc.payload.doc.data().RO,
+               L1 : adoc.payload.doc.data().L1,
+               L2 : adoc.payload.doc.data().L2,
+               L3 : adoc.payload.doc.data().L3,
+               L4 : adoc.payload.doc.data().L4,
+               L5 : adoc.payload.doc.data().L5,
+               L6 : adoc.payload.doc.data().L6,
+               L7 : adoc.payload.doc.data().L7,
+               L8 : adoc.payload.doc.data().L8,
+               Hal_Axis : adoc.payload.doc.data().Hal_Axis,
+               Val_Axis : adoc.payload.doc.data().Val_Axis,
+               Floor_width_1 : adoc.payload.doc.data().Floor_width_1,
+               Floor_width_2 : adoc.payload.doc.data().Floor_width_2,
+               Floor_width_3 : adoc.payload.doc.data().Floor_width_3,
+               Floor_width_4 : adoc.payload.doc.data().Floor_width_4,
+               Floor_length_1 : adoc.payload.doc.data().Floor_length_1,
+               Floor_length_2 : adoc.payload.doc.data().Floor_length_2,
+               Floor_length_3 : adoc.payload.doc.data().Floor_length_3,
+               Floor_length_4 : adoc.payload.doc.data().Floor_length_4,
+               Wall_per_lengthA : adoc.payload.doc.data().Wall_per_lengthA,
+               Wall_per_lengthB : adoc.payload.doc.data().Wall_per_lengthB,
+               Wall_per_lengthC : adoc.payload.doc.data().Wall_per_lengthC,
+               Wall_per_lengthD : adoc.payload.doc.data().Wall_per_lengthD,
+               Wall_per_lengthE : adoc.payload.doc.data().Wall_per_lengthE,
+               Wall_per_lengthF : adoc.payload.doc.data().Wall_per_lengthF,
+               Wall_per_lengthG : adoc.payload.doc.data().Wall_per_lengthG,
+               Wall_per_lengthH : adoc.payload.doc.data().Wall_per_lengthH,
+               skirting_per_lengthA : adoc.payload.doc.data().skirting_per_lengthA,
+               skirting_per_lengthB : adoc.payload.doc.data().skirting_per_lengthB,
+               skirting_per_lengthC : adoc.payload.doc.data().skirting_per_lengthC,
+               skirting_per_lengthD : adoc.payload.doc.data().skirting_per_lengthD,
+               skirting_per_lengthE : adoc.payload.doc.data().skirting_per_lengthE,
+               skirting_per_lengthF : adoc.payload.doc.data().skirting_per_lengthF,
+               skirting_per_lengthG : adoc.payload.doc.data().skirting_per_lengthG,
+               skirting_per_lengthH : adoc.payload.doc.data().skirting_per_lengthH,
+               PCLA : adoc.payload.doc.data().PCLA,
+               PCLB : adoc.payload.doc.data().PCLB,
+               PCLC : adoc.payload.doc.data().PCLC,
+               PCLD : adoc.payload.doc.data().PCLD,
+               PCLE : adoc.payload.doc.data().PCLE,
+               PCLF : adoc.payload.doc.data().PCLF,
+               PCLG : adoc.payload.doc.data().PCLG,
+               PCLH : adoc.payload.doc.data().PCLH,
+               Y8 : adoc.payload.doc.data().Y8,
+               Y10 : adoc.payload.doc.data().Y10,
+               Y12 : adoc.payload.doc.data().Y12,
+               Y16 : adoc.payload.doc.data().Y16,
+               Y20 : adoc.payload.doc.data().Y20,
+               Y25 : adoc.payload.doc.data().Y25,
+               Y32 : adoc.payload.doc.data().Y32,
+               areaF : adoc.payload.doc.data().areaF,
+               areaW : adoc.payload.doc.data().areaW,
+               areaC : adoc.payload.doc.data().areaC,
+               areaS : adoc.payload.doc.data().areaS,
+               areaCOR : adoc.payload.doc.data().areaCOR,
+               areaB : adoc.payload.doc.data().areaB,
+               extraBlockDPC : adoc.payload.doc.data().extraBlockDPC,
+               conc : adoc.payload.doc.data().conc,
+               shutt : adoc.payload.doc.data().shutt,
+               bit : adoc.payload.doc.data().bit,
+               polyth : adoc.payload.doc.data().polyth,
+               steel : adoc.payload.doc.data().steel,
+               exc : adoc.payload.doc.data().exc,
+               fill : adoc.payload.doc.data().fill,
+               precast : adoc.payload.doc.data().precast
+             })
+          })
+        })
+      })
+      this.storage.get(`${this.pid}myAreaID`).then(myarea =>{
+        if(myarea !== null){
+         this.myAreaID = myarea
+         console.log(myarea)
+  
+        }
+      })
+      this.loadingController.dismiss()
+    })
+
+}
+
+
+async presentLoading() {
+  const loading = await this.loadingController.create({
+    message: 'Please wait...',
+    duration: 5000,
+    spinner: 'bubbles'
+  });
+  await loading.present();
 }
 
 
