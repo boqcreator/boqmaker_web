@@ -3,6 +3,10 @@
 }
 
 .backing{
-    background-image: url("../../../assets/back.jpg");
+    background-color: rgb(161, 221, 255);
     height: 90%;
+}
+.modal1{
+    --height  :20px;
+    --min-height : auto;
 }

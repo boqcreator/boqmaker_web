@@ -4,6 +4,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AgmCoreModule } from '@agm/core';
 import { NgxCurrencyModule } from "ngx-currency";
 
+
 @NgModule({
   declarations: [],
   imports: [

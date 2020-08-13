@@ -31,8 +31,15 @@ import { IonicStorageModule } from '@ionic/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddsupplierPageModule } from './pages/addsupplier/addsupplier.module';
 import { AddmaterialPageModule } from './pages/addmaterial/addmaterial.module';
-
-
+import { Html2canvasServiceService } from './html2canvas-service.service';
+import { ReportFinalPricedBillPageModule } from './pages/report-final-priced-bill/report-final-priced-bill.module';
+import { AddsupplierLPageModule } from './pages/addsupplier-l/addsupplier-l.module';
+import { AddlabourPageModule } from './pages/addlabour/addlabour.module';
+import { AddsupplierEPageModule } from './pages/addsupplier-e/addsupplier-e.module';
+import { AddequipmentPageModule } from './pages/addequipment/addequipment.module';
+import { AddsupplierOPageModule } from './pages/addsupplier-o/addsupplier-o.module';
+import { AddotherPageModule } from './pages/addother/addother.module';
+import { AddsubcontractorPageModule } from './pages/addsubcontractor/addsubcontractor.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -54,12 +61,21 @@ import { AddmaterialPageModule } from './pages/addmaterial/addmaterial.module';
     ContractorCatPageModule,
     AddareaPageModule,
     AddsupplierPageModule,
-    AddmaterialPageModule
+    AddmaterialPageModule,
+    ReportFinalPricedBillPageModule,
+    AddsupplierLPageModule,
+    AddlabourPageModule,
+    AddsupplierEPageModule,
+    AddequipmentPageModule,
+    AddsupplierOPageModule,
+    AddotherPageModule,
+    AddsubcontractorPageModule
     
   ],
   providers: [
     StatusBar,
     UserService,
+    Html2canvasServiceService,
     FirebaseService,
     AuthService,
     SplashScreen,

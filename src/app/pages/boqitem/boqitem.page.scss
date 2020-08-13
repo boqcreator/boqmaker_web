@@ -11,3 +11,14 @@
 p{
     margin: 0px;
 }
+ion-avatar{
+    --border-radius : 10px;
+}
+
+.alertDanger{
+    background-color: white;
+    color: red;
+    button{
+        color: red;
+    }
+}

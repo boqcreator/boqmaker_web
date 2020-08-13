@@ -1,0 +1,140 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Subcontractor</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content>
+    <ion-segment [(ngModel)]="segment" >
+      <ion-segment-button value="cat">
+        <ion-label>Category</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="subcat">
+        <ion-label>Subcategory</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="subcontractor">
+        <ion-label>subcontractor</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="segment">
+      <div style="margin-top : 10px;" *ngSwitchCase="'cat'">
+
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Name<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input [(ngModel)]="catName" type="text" placeholder="Enter category name here..."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea [(ngModel)]="catDes" placeholder="Enter description here..."></ion-textarea>
+          </ion-item>
+        </ion-list>
+        <ion-button [disabled]="catName.length > 0 ? false : true" (click)="addcat()" expand="block">
+          Add
+        </ion-button>
+      
+      </div>
+
+      <div style="margin-top : 10px;" *ngSwitchCase="'subcat'">
+
+        <ion-list>
+          <ion-item>
+            <ion-label class="ion-text-wrap" >Category</ion-label>
+            <ion-select (ionChange)="getSubcat()" [(ngModel)]="CatID" placeholder="Select Category">
+              <ion-select-option  *ngFor="let item of catList" [value]="item.id">{{ item.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Name<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input [(ngModel)]="subcatName" type="text" placeholder="Enter category name here..."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea [(ngModel)]="subcatDes" placeholder="Enter description here..."></ion-textarea>
+          </ion-item>
+        </ion-list>
+        <ion-button [disabled]="subcatName.length > 0 ? false : true" (click)="addsubcat()" expand="block">
+          Add
+        </ion-button>
+      
+      </div>
+
+
+      <div style="margin-top : 10px;" *ngSwitchCase="'subcontractor'">
+
+        <ion-list>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="ion-text-wrap" >Category</ion-label>
+                <ion-select (ionChange)="getSubcat()" [(ngModel)]="CatID" placeholder="Select Category">
+                  <ion-select-option  *ngFor="let item of catList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+          <ion-item>
+            <ion-label>Subcategory</ion-label>
+            <ion-select (ionChange)="saveTostorage()" [(ngModel)]="SubcatID" placeholder="Select Subcategory">
+              <ion-select-option *ngFor="let item of subcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">subcontractor Name<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input [(ngModel)]="sname" type="text" placeholder="Enter category name here..."></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Description<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input type="text" [(ngModel)]="sdes" placeholder="Enter contact number here..."></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Unit</ion-label>
+                <ion-select [(ngModel)]="unit" placeholder="Select Unit">
+                  <ion-select-option *ngFor="let item of units" [value]="item">{{ item }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Unit price</ion-label>
+                <input currencyMask [(ngModel)]="price" [options]="{ prefix: 'BHD ', thousands: ',', decimal: '.', precision: '3',align: 'left' }"/>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>EXISTING</ion-label>
+                <ion-checkbox [(ngModel)]="LEXISTING"></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-button [disabled]="sname.length > 0 && unit && CatID && SubcatID ? false : true" (click)="addsubcontractor()" expand="block">
+          Add
+        </ion-button>
+      
+      </div>
+
+      </div>
+
+</ion-content>

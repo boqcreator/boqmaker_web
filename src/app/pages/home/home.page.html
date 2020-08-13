@@ -38,16 +38,15 @@
                 <div class="menu-testing-menu-container" >
                   <ul id="primary-menu" class="menu nav-menu" aria-expanded="false">
                     <li class="menu-item current-menu-item"><a style="color: black; cursor: pointer;" (click)="gotohome()">Home</a></li>
-                    <li class="menu-item menu-item-has-children" aria-haspopup="true"><a style="color: black;" href="#">Projects</a>
+                    <li class="menu-item menu-item-has-children" aria-haspopup="true"><a style="color: black;" (click)="gotoproj()" >Projects</a>
                       <ul class="sub-menu">
-                        <li class="menu-item current-menu-item"><a  href="service.html">Projects</a></li>
                         <li class="menu-item"><a style="cursor: pointer;" (click)="gotoproj()">View Projects</a></li>
                         <li class="menu-item"><a  href="service-item.html">Add Projects</a></li>
                         <li class="menu-item"><a  href="service-item.html">Projects Type</a></li>
                       </ul>
                     </li>
                     <li class="menu-item"><a style="color: black;" href="about.html">Building</a></li>
-                    <li class="menu-item menu-item-has-children" aria-haspopup="true"><a style="color: black;" href="#">Data</a>
+                    <li class="menu-item menu-item-has-children" aria-haspopup="true"><a style="color: black;" >Data</a>
                       <ul class="sub-menu">
                         <li class="menu-item menu-item-has-children" aria-haspopup="true"><a href="#">Areas</a>
                           <ul class="sub-menu">
@@ -60,9 +59,13 @@
                         <li class="menu-item"><a style="cursor: pointer;" (click)="gotocons()">Contractors</a></li>
                         <li class="menu-item"><a style="cursor: pointer;" (click)="gotosupplier()">Suppliers</a></li>
                         <li class="menu-item"><a style="cursor: pointer;" (click)="gotomaterial()">Materials</a></li>
+                        <li class="menu-item"><a style="cursor: pointer;" (click)="gotolabour()">Labours</a></li>
+                        <li class="menu-item"><a style="cursor: pointer;" (click)="gotoequipment()">Equipments</a></li>
+                        <li class="menu-item"><a style="cursor: pointer;" (click)="gotosubcontractor()">Subcontractor</a></li>
+                        <li class="menu-item"><a style="cursor: pointer;" (click)="gotoother()">Others</a></li>
                       </ul>
                     </li>
-                    <li class="menu-item"><a style="color: black;" href="project.html">Reports</a></li>
+                    <li class="menu-item"><a style="color: black; cursor: pointer;" (click)="gotoReport()">Reports</a></li>
                     <li class="menu-item"><a style="color: black;" href="blog.html">Help</a></li>
                     <li class="menu-item"><a style="color: black;" href="contact.html">Contact us</a></li>
                   </ul>

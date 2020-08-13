@@ -170,6 +170,13 @@ export class ProjDetailsPage implements OnInit {
   Y20 = 0;
   Y25 = 0;
   Y32 = 0;
+  Y14 = 0;
+  Y6 = 0;
+  Y18 = 0;
+  Y22 = 0;
+  Y28 = 0;
+  Y40 = 0;
+
   areaF = 0;
   areaW = 0;
   areaC = 0;
@@ -185,7 +192,9 @@ export class ProjDetailsPage implements OnInit {
   exc = 0;
   fill = 0;
   precast = 0;
-
+  EXTRAEXP = 0;
+  EXTRACONCBO = 0;
+  EXTRACONCB = 0;
 
 ch1A = 0;
 ch1B = 0;
@@ -207,27 +216,27 @@ ch1Q = 0;
 ch1R = 0;
 ch1S = 0;
 ch1T = 0;
-ch1U = 0;
-ch1V = 0;
-ch1W = 0;
-ch1X = 0;
-ch1Y = 0;
-ch1Z = 0;
-ch1AA = 0;
-ch1AB = 0;
-ch1AC = 0;
-ch1AD = 0;
-ch1AE = 0;
-ch1AF = 0;
-ch1AG = 0;
-ch1AH = 0;
-ch1AI = 0;
-ch1AJ = 0;
-ch1AK = 0;
-ch1AL = 0;
-ch1AM = 0;
-ch1AN = 0;
-ch1AO = 0;
+ch1U = '';
+ch1V = '';
+ch1W = '';
+ch1X = '';
+ch1Y = '';
+ch1Z = '';
+ch1AA = '';
+ch1AB = '';
+ch1AC = '';
+ch1AD = '';
+ch1AE = '';
+ch1AF = '';
+ch1AG = '';
+ch1AH = '';
+ch1AI = '';
+ch1AJ = '';
+ch1AK = '';
+ch1AL = '';
+ch1AM = '';
+ch1AN = '';
+ch1AO = '';
 
 ch2A = 0;
 ch2B = 0;
@@ -249,27 +258,27 @@ ch2Q = 0;
 ch2R = 0;
 ch2S = 0;
 ch2T = 0;
-ch2U = 0;
-ch2V = 0;
-ch2W = 0;
-ch2X = 0;
-ch2Y = 0;
-ch2Z = 0;
-ch2AA = 0;
-ch2AB = 0;
-ch2AC = 0;
-ch2AD = 0;
-ch2AE = 0;
-ch2AF = 0;
-ch2AG = 0;
-ch2AH = 0;
-ch2AI = 0;
-ch2AJ = 0;
-ch2AK = 0;
-ch2AL = 0;
-ch2AM = 0;
-ch2AN = 0;
-ch2AO = 0;
+ch2U = '';
+ch2V = '';
+ch2W = '';
+ch2X = '';
+ch2Y = '';
+ch2Z = '';
+ch2AA = '';
+ch2AB = '';
+ch2AC = '';
+ch2AD = '';
+ch2AE = '';
+ch2AF = '';
+ch2AG = '';
+ch2AH = '';
+ch2AI = '';
+ch2AJ = '';
+ch2AK = '';
+ch2AL = '';
+ch2AM = '';
+ch2AN = '';
+ch2AO = '';
 
 ch3A = 0;
 ch3B = 0;
@@ -291,27 +300,154 @@ ch3Q = 0;
 ch3R = 0;
 ch3S = 0;
 ch3T = 0;
-ch3U = 0;
-ch3V = 0;
-ch3W = 0;
-ch3X = 0;
-ch3Y = 0;
-ch3Z = 0;
-ch3AA = 0;
-ch3AB = 0;
-ch3AC = 0;
-ch3AD = 0;
-ch3AE = 0;
-ch3AF = 0;
-ch3AG = 0;
-ch3AH = 0;
-ch3AI = 0;
-ch3AJ = 0;
-ch3AK = 0;
-ch3AL = 0;
-ch3AM = 0;
-ch3AN = 0;
-ch3AO = 0;
+ch3U = '';
+ch3V = '';
+ch3W = '';
+ch3X = '';
+ch3Y = '';
+ch3Z = '';
+ch3AA = '';
+ch3AB = '';
+ch3AC = '';
+ch3AD = '';
+ch3AE = '';
+ch3AF = '';
+ch3AG = '';
+ch3AH = '';
+ch3AI = '';
+ch3AJ = '';
+ch3AK = '';
+ch3AL = '';
+ch3AM = '';
+ch3AN = '';
+ch3AO = '';
+
+
+ich1A = 0;
+ich1B = 0;
+ich1C = 0;
+ich1D = 0;
+ich1E = 0;
+ich1F = 0;
+ich1G = 0;
+ich1H = 0;
+ich1I = 0;
+ich1J = 0;
+ich1K = 0;
+ich1L = 0;
+ich1M = 0;
+ich1N = 0;
+ich1O = 0;
+ich1P = 0;
+ich1Q = 0;
+ich1R = 0;
+ich1S = 0;
+ich1T = 0;
+ich1U = '';
+ich1V = '';
+ich1W = '';
+ich1X = '';
+ich1Y = '';
+ich1Z = '';
+ich1AA = '';
+ich1AB = '';
+ich1AC = '';
+ich1AD = '';
+ich1AE = '';
+ich1AF = '';
+ich1AG = '';
+ich1AH = '';
+ich1AI = '';
+ich1AJ = '';
+ich1AK = '';
+ich1AL = '';
+ich1AM = '';
+ich1AN = '';
+ich1AO = '';
+
+ich2A = 0;
+ich2B = 0;
+ich2C = 0;
+ich2D = 0;
+ich2E = 0;
+ich2F = 0;
+ich2G = 0;
+ich2H = 0;
+ich2I = 0;
+ich2J = 0;
+ich2K = 0;
+ich2L = 0;
+ich2M = 0;
+ich2N = 0;
+ich2O = 0;
+ich2P = 0;
+ich2Q = 0;
+ich2R = 0;
+ich2S = 0;
+ich2T = 0;
+ich2U = '';
+ich2V = '';
+ich2W = '';
+ich2X = '';
+ich2Y = '';
+ich2Z = '';
+ich2AA = '';
+ich2AB = '';
+ich2AC = '';
+ich2AD = '';
+ich2AE = '';
+ich2AF = '';
+ich2AG = '';
+ich2AH = '';
+ich2AI = '';
+ich2AJ = '';
+ich2AK = '';
+ich2AL = '';
+ich2AM = '';
+ich2AN = '';
+ich2AO = '';
+
+ich3A = 0;
+ich3B = 0;
+ich3C = 0;
+ich3D = 0;
+ich3E = 0;
+ich3F = 0;
+ich3G = 0;
+ich3H = 0;
+ich3I = 0;
+ich3J = 0;
+ich3K = 0;
+ich3L = 0;
+ich3M = 0;
+ich3N = 0;
+ich3O = 0;
+ich3P = 0;
+ich3Q = 0;
+ich3R = 0;
+ich3S = 0;
+ich3T = 0;
+ich3U = '';
+ich3V = '';
+ich3W = '';
+ich3X = '';
+ich3Y = '';
+ich3Z = '';
+ich3AA = '';
+ich3AB = '';
+ich3AC = '';
+ich3AD = '';
+ich3AE = '';
+ich3AF = '';
+ich3AG = '';
+ich3AH = '';
+ich3AI = '';
+ich3AJ = '';
+ich3AK = '';
+ich3AL = '';
+ich3AM = '';
+ich3AN = '';
+ich3AO = '';
 
 
 
@@ -341,7 +477,13 @@ polythene=0;
 bitumin=0;
 itemsteel=0;
 blockbitumin=0;
-iqty=1;
+FILL_Percentage=0;
+E_Percentage=0;
+I_DIS=0;
+I_FACTOR=100;
+Exp_Percentage=0;
+Concb_Percentage=0;
+iqty=0;
 itempercentage=0;
 completion=0;
 itemprecast=0;
@@ -806,30 +948,30 @@ myAreaSeelcted(){
 this.myAreaID.forEach(element => {
   var areaarray = element.split("/");
   let area = this.myAreaList.find(x => x.id == areaarray[2])
-  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${area.buildingid}/floors/${area.floorid}/cat/${area.catid}/subcat/${area.subcatid}/subsubcat/${area.subsubcatid}/areas/${area.id}/boqitems`).snapshotChanges().subscribe(value =>{
-    this.myItemCatList = [];
-    console.log(value.length)
-    value.forEach(doc =>{
-        this.afs.doc(`boq/boq/boqitemscat/${doc.payload.doc.data().itemdetails.CatID}`).get().subscribe(boq =>{
-           this.pushToArrayItemCat(this.myItemCatList ,{name : boq.data().name , id : boq.id}) 
-        })
-      })
-  })
+  // this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${area.buildingid}/floors/${area.floorid}/cat/${area.catid}/subcat/${area.subcatid}/subsubcat/${area.subsubcatid}/areas/${area.id}/boqitems`).snapshotChanges().subscribe(value =>{
+  //   this.myItemCatList = [];
+  //   console.log(value.length)
+  //   value.forEach(doc =>{
+  //       this.afs.doc(`boq/boq/boqitemscat/${doc.payload.doc.data().itemdetails.CatID}`).get().subscribe(boq =>{
+  //          this.pushToArrayItemCat(this.myItemCatList ,{name : boq.data().name , id : boq.id}) 
+  //       })
+  //     })
+  // })
 });
 }
 getMyItemsubcat(){
   this.storage.set(`${this.pid}myItemCatList`, this.myItemCatList).then(()=>{
   this.storage.set(`${this.pid}myItemCatID`, this.myItemCatID)
   })
-  this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
-    this.myItemSubcatList = [];
-    console.log(value.length)
-    value.forEach(doc =>{
-        this.afs.doc(`boq/boq/boqitemscat/${this.myItemCatID}/subcat/${doc.payload.doc.data().itemdetails.SubcatID}`).get().subscribe(boq =>{
-           this.pushToArrayItemCat(this.myItemSubcatList ,{name : boq.data().name , id : boq.id}) 
-        })
-      })
-  })
+  // this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
+  //   this.myItemSubcatList = [];
+  //   console.log(value.length)
+  //   value.forEach(doc =>{
+  //       this.afs.doc(`boq/boq/boqitemscat/${this.myItemCatID}/subcat/${doc.payload.doc.data().itemdetails.SubcatID}`).get().subscribe(boq =>{
+  //          this.pushToArrayItemCat(this.myItemSubcatList ,{name : boq.data().name , id : boq.id}) 
+  //       })
+  //     })
+  // })
 
 }
 
@@ -838,15 +980,15 @@ getMyItemsubsubcat(){
   this.storage.set(`${this.pid}myItemSubcatList`, this.myItemSubcatList).then(()=>{
     this.storage.set(`${this.pid}myItemSubcatID`, this.myItemSubcatID)
     })
-    this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
-      this.myItemSubsubcatList = [];
-      console.log(value.length)
-      value.forEach(doc =>{
-          this.afs.doc(`boq/boq/boqitemscat/${this.myItemCatID}/subcat/${this.myItemSubcatID}/subsubcat/${doc.payload.doc.data().itemdetails.SubsubcatID}`).get().subscribe(boq =>{
-             this.pushToArrayItemCat(this.myItemSubsubcatList ,{name : boq.data().name , id : boq.id}) 
-          })
-        })
-    })
+    // this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`).snapshotChanges().subscribe(value =>{
+    //   this.myItemSubsubcatList = [];
+    //   console.log(value.length)
+    //   value.forEach(doc =>{
+    //       this.afs.doc(`boq/boq/boqitemscat/${this.myItemCatID}/subcat/${this.myItemSubcatID}/subsubcat/${doc.payload.doc.data().itemdetails.SubsubcatID}`).get().subscribe(boq =>{
+    //          this.pushToArrayItemCat(this.myItemSubsubcatList ,{name : boq.data().name , id : boq.id}) 
+    //       })
+    //     })
+    // })
 
 }
 
@@ -854,61 +996,61 @@ getMyItems(){
   this.storage.set(`${this.pid}myItemSubsubcatList`, this.myItemSubsubcatList).then(()=>{
     this.storage.set(`${this.pid}myItemSubsubcatID`, this.myItemSubsubcatID)
     })
-    this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`, ref => ref.where("itemdetails.SubsubcatID" , "==", this.myItemSubsubcatID)).snapshotChanges().subscribe(value =>{
-      this.myItems = [];
-      value.forEach(doc =>{
-        this.myItems.push({
-          id : doc.payload.doc.id,
-          itemdetails : doc.payload.doc.data().itemdetails,
-        ceiling : doc.payload.doc.data().ceiling,
-        floor : doc.payload.doc.data().floor,
-        walls : doc.payload.doc.data().walls,
-        cornice : doc.payload.doc.data().cornice,
-        skirting : doc.payload.doc.data().skirting,
-        shuttering : doc.payload.doc.data().shuttering,
-        block : doc.payload.doc.data().block,
-        blockdpc : doc.payload.doc.data().blockdpc,
-        concrete : doc.payload.doc.data().concrete,
-        polythene : doc.payload.doc.data().polythene,
-        bitumin : doc.payload.doc.data().bitumin,
-        itemsteel : doc.payload.doc.data().itemsteel,
-        blockbitumin : doc.payload.doc.data().blockbitumin,
-        iqty : doc.payload.doc.data().iqty,
-        itempercentage : doc.payload.doc.data().itempercentage,
-        completion : doc.payload.doc.data().completion,
-        itemprecast : doc.payload.doc.data().itemprecast,
-        existing : doc.payload.doc.data().existing,
-        existing1 : doc.payload.doc.data().existing1,
-        existing2 : doc.payload.doc.data().existing2,
-        tsp : doc.payload.doc.data().tsp,
-        bpp : doc.payload.doc.data().bpp,
-        spp1 : doc.payload.doc.data().spp1,
-        spp2 : doc.payload.doc.data().spp2,
-        spp3 : doc.payload.doc.data().spp3,
-        spp4 : doc.payload.doc.data().spp4,
-        tpp : doc.payload.doc.data().tpp,
-        bbp : doc.payload.doc.data().bbp,
-        sbp1 : doc.payload.doc.data().sbp1,
-        sbp2 : doc.payload.doc.data().sbp2,
-        sbp3 : doc.payload.doc.data().sbp3,
-        sbp4 : doc.payload.doc.data().sbp4,
-        tep : doc.payload.doc.data().tep,
-        tbp : doc.payload.doc.data().tbp,
-        bep : doc.payload.doc.data().bep,
-        sep1 : doc.payload.doc.data().sep1,
-        sep2 : doc.payload.doc.data().sep2,
-        sep3 : doc.payload.doc.data().sep3,
-        sep4 : doc.payload.doc.data().sep4,
-        bsp : doc.payload.doc.data().bsp,
-        ssp1 : doc.payload.doc.data().ssp1,
-        ssp2 : doc.payload.doc.data().ssp2,
-        ssp3 : doc.payload.doc.data().ssp3,
-        ssp4 : doc.payload.doc.data().ssp4,
+    // this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas/${this.myAreaID}/boqitems`, ref => ref.where("itemdetails.SubsubcatID" , "==", this.myItemSubsubcatID)).snapshotChanges().subscribe(value =>{
+    //   this.myItems = [];
+    //   value.forEach(doc =>{
+    //     this.myItems.push({
+    //       id : doc.payload.doc.id,
+    //       itemdetails : doc.payload.doc.data().itemdetails,
+    //     ceiling : doc.payload.doc.data().ceiling,
+    //     floor : doc.payload.doc.data().floor,
+    //     walls : doc.payload.doc.data().walls,
+    //     cornice : doc.payload.doc.data().cornice,
+    //     skirting : doc.payload.doc.data().skirting,
+    //     shuttering : doc.payload.doc.data().shuttering,
+    //     block : doc.payload.doc.data().block,
+    //     blockdpc : doc.payload.doc.data().blockdpc,
+    //     concrete : doc.payload.doc.data().concrete,
+    //     polythene : doc.payload.doc.data().polythene,
+    //     bitumin : doc.payload.doc.data().bitumin,
+    //     itemsteel : doc.payload.doc.data().itemsteel,
+    //     blockbitumin : doc.payload.doc.data().blockbitumin,
+    //     iqty : doc.payload.doc.data().iqty,
+    //     itempercentage : doc.payload.doc.data().itempercentage,
+    //     completion : doc.payload.doc.data().completion,
+    //     itemprecast : doc.payload.doc.data().itemprecast,
+    //     existing : doc.payload.doc.data().existing,
+    //     existing1 : doc.payload.doc.data().existing1,
+    //     existing2 : doc.payload.doc.data().existing2,
+    //     tsp : doc.payload.doc.data().tsp,
+    //     bpp : doc.payload.doc.data().bpp,
+    //     spp1 : doc.payload.doc.data().spp1,
+    //     spp2 : doc.payload.doc.data().spp2,
+    //     spp3 : doc.payload.doc.data().spp3,
+    //     spp4 : doc.payload.doc.data().spp4,
+    //     tpp : doc.payload.doc.data().tpp,
+    //     bbp : doc.payload.doc.data().bbp,
+    //     sbp1 : doc.payload.doc.data().sbp1,
+    //     sbp2 : doc.payload.doc.data().sbp2,
+    //     sbp3 : doc.payload.doc.data().sbp3,
+    //     sbp4 : doc.payload.doc.data().sbp4,
+    //     tep : doc.payload.doc.data().tep,
+    //     tbp : doc.payload.doc.data().tbp,
+    //     bep : doc.payload.doc.data().bep,
+    //     sep1 : doc.payload.doc.data().sep1,
+    //     sep2 : doc.payload.doc.data().sep2,
+    //     sep3 : doc.payload.doc.data().sep3,
+    //     sep4 : doc.payload.doc.data().sep4,
+    //     bsp : doc.payload.doc.data().bsp,
+    //     ssp1 : doc.payload.doc.data().ssp1,
+    //     ssp2 : doc.payload.doc.data().ssp2,
+    //     ssp3 : doc.payload.doc.data().ssp3,
+    //     ssp4 : doc.payload.doc.data().ssp4,
           
-        })
-      })
+    //     })
+    //   })
 
-    })
+    // })
 
 }
 
@@ -1149,8 +1291,8 @@ this.storage.get(`${this.pid}GloblecatList`).then(value=>{
 
 this.storage.get(`boqitemcat`).then(value=>{
   if(value !== null){
-    this.boqitemcatID = value
     this.getGboqitemsubcat()
+    this.boqitemcatID = value
   }
 })
 this.storage.get(`boqitemsubcat`).then(value=>{
@@ -1412,6 +1554,12 @@ async addareatoproj(){
               Y20 : this.Y20,
               Y25 : this.Y25,
               Y32 : this.Y32,
+              Y14 : this.Y14,
+              Y6 : this.Y6,
+              Y18 : this.Y18,
+              Y22 : this.Y22,
+              Y28 : this.Y28,
+              Y40 : this.Y40,
               areaF : this.areaF,
               areaW : this.areaW,
               areaC : this.areaC,
@@ -1427,6 +1575,9 @@ async addareatoproj(){
               exc : this.exc,
               fill : this.fill,
               precast : this.precast,
+              EXTRAEXP : this.EXTRAEXP,
+              EXTRACONCBO : this.EXTRACONCBO,
+              EXTRACONCB : this.EXTRACONCB,
 
 
 ch1A : this.ch1A,
@@ -1715,8 +1866,13 @@ getGboqitems(){
      SubcatID :doc.payload.doc.data().SubcatID,
      SubsubcatID :doc.payload.doc.data().SubsubcatID,
      materials :doc.payload.doc.data().materials,
+     labours : doc.payload.doc.data().labours,
+     equipment : doc.payload.doc.data().equipment,
+     other : doc.payload.doc.data().other,
+     subcontractor : doc.payload.doc.data().subcontractor,
      price :doc.payload.doc.data().price,
      unit :doc.payload.doc.data().unit,
+     image : doc.payload.doc.data().image,
     })
    })
  })
@@ -1724,10 +1880,6 @@ getGboqitems(){
 }
 
 async addItem(){
-  // && this.myFloorID 
-  // && this.myCatID 
-  // && this.mySubsubcatID 
-  // && this.mySubsubcatID 
   if(this.myBuildingID 
     && this.myAreaID 
     && this.boqitemcatID 
@@ -1743,57 +1895,225 @@ async addItem(){
       this.myAreaID.forEach(element => {
         var areaarray = element.split("/");
         let area = this.myAreaList.find(x => x.id == areaarray[2])
-        this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${area.buildingid}/floors/${area.floorid}/cat/${area.catid}/subcat/${area.subcatid}/subsubcat/${area.subsubcatid}/areas/${area.id}/boqitems/${this.boqitem.id}`).set({
-          itemdetails : this.boqitem,
-           ceiling : this.ceiling,
-           floor : this.floor,
-           walls : this.walls,
-           cornice : this.cornice,
-           skirting : this.skirting,
-           shuttering : this.shuttering,
-           block : this.block,
-           blockdpc : this.blockdpc,
-           concrete : this.concrete,
-           polythene : this.polythene,
-           bitumin : this.bitumin,
-           itemsteel : this.itemsteel,
-           blockbitumin : this.blockbitumin,
-           iqty : this.iqty,
-           itempercentage : this.itempercentage,
-           completion : this.completion,
-           itemprecast : this.itemprecast,
-           existing : this.existing,
-           existing1 : this.existing1,
-           existing2 : this.existing2,
-           tsp : this.tsp,
-           bpp : this.bpp,
-           spp1 : this.spp1,
-           spp2 : this.spp2,
-           spp3 : this.spp3,
-           spp4 : this.spp4,
-           tpp : this.tpp,
-           bbp : this.bbp,
-           sbp1 : this.sbp1,
-           sbp2 : this.sbp2,
-           sbp3 : this.sbp3,
-           sbp4 : this.sbp4,
-           tep : this.tep,
-           tbp : this.tbp,
-           bep : this.bep,
-           sep1 : this.sep1,
-           sep2 : this.sep2,
-           sep3 : this.sep3,
-           sep4 : this.sep4,
-           bsp : this.bsp,
-           ssp1 : this.ssp1,
-           ssp2 : this.ssp2,
-           ssp3 : this.ssp3,
-           ssp4 : this.ssp4,
-          }).then(()=>{
-            loading.dismiss().then(()=>{
-             alert("Added Successfully!")
+        this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("areaID", "==", area.id).where("itemID", "==", this.boqitem.id)).get().subscribe(va =>{
+          if(va.docs.length >0){
+            loading.dismiss()
+            alert("Item already exist in "+ area.name)
+          }else{
+            this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`).add({
+              buildID :  area.buildingid,
+              floorID: area.floorid,
+              areacatID : area.catid,
+              areasubcatID : area.subcatid,
+              areasubsubcatID : area.subsubcatid,
+              itemID : this.boqitem.id,
+              areaID : area.id,
+           item : {itemdetails : this.boqitem,
+            ceiling : this.ceiling,
+            floor : this.floor,
+            walls : this.walls,
+            cornice : this.cornice,
+            skirting : this.skirting,
+            shuttering : this.shuttering,
+            block : this.block,
+            blockdpc : this.blockdpc,
+            concrete : this.concrete,
+            polythene : this.polythene,
+            bitumin : this.bitumin,
+            itemsteel : this.itemsteel,
+            blockbitumin : this.blockbitumin,
+            iqty : this.iqty,
+            itempercentage : this.itempercentage,
+            completion : this.completion,
+            itemprecast : this.itemprecast,
+            existing : this.existing,
+            existing1 : this.existing1,
+            existing2 : this.existing2,
+            tsp : this.tsp,
+            bpp : this.bpp,
+            spp1 : this.spp1,
+            spp2 : this.spp2,
+            spp3 : this.spp3,
+            spp4 : this.spp4,
+            tpp : this.tpp,
+            bbp : this.bbp,
+            sbp1 : this.sbp1,
+            sbp2 : this.sbp2,
+            sbp3 : this.sbp3,
+            sbp4 : this.sbp4,
+            tep : this.tep,
+            tbp : this.tbp,
+            bep : this.bep,
+            sep1 : this.sep1,
+            sep2 : this.sep2,
+            sep3 : this.sep3,
+            sep4 : this.sep4,
+            bsp : this.bsp,
+            ssp1 : this.ssp1,
+            ssp2 : this.ssp2,
+            ssp3 : this.ssp3,
+            ssp4 : this.ssp4,
+           FILL_Percentage : this.FILL_Percentage,
+           E_Percentage : this.E_Percentage,
+           I_DIS : this.I_DIS,
+           I_FACTOR : this.I_FACTOR,
+           Exp_Percentage : this.Exp_Percentage,
+           createdon : new Date(),
+           Concb_Percentage : this.Concb_Percentage,
+          
+
+            ich1A : this.ich1A,
+            ich1B : this.ich1B,
+            ich1C : this.ich1C,
+            ich1D : this.ich1D,
+            ich1E : this.ich1E,
+            ich1F : this.ich1F,
+            ich1G : this.ich1G,
+            ich1H : this.ich1H,
+            ich1I : this.ich1I,
+            ich1J : this.ich1J,
+            ich1K : this.ich1K,
+            ich1L : this.ich1L,
+            ich1M : this.ich1M,
+            ich1N : this.ich1N,
+            ich1O : this.ich1O,
+            ich1P : this.ich1P,
+            ich1Q : this.ich1Q,
+            ich1R : this.ich1R,
+            ich1S : this.ich1S,
+            ich1T : this.ich1T,
+            ich1U : this.ich1U,
+            ich1V : this.ich1V,
+            ich1W : this.ich1W,
+            ich1X : this.ich1X,
+            ich1Y : this.ich1Y,
+            ich1Z : this.ich1Z,
+            ich1AA : this.ich1AA,
+            ich1AB : this.ich1AB,
+            ich1AC : this.ich1AC,
+            ich1AD : this.ich1AD,
+            ich1AE : this.ich1AE,
+            ich1AF : this.ich1AF,
+            ich1AG : this.ich1AG,
+            ich1AH : this.ich1AH,
+            ich1AI : this.ich1AI,
+            ich1AJ : this.ich1AJ,
+            ich1AK : this.ich1AK,
+            ich1AL : this.ich1AL,
+            ich1AM : this.ich1AM,
+            ich1AN : this.ich1AN,
+            ich1AO : this.ich1AO,
+
+            ich2A : this.ich2A,
+            ich2B : this.ich2B,
+            ich2C : this.ich2C,
+            ich2D : this.ich2D,
+            ich2E : this.ich2E,
+            ich2F : this.ich2F,
+            ich2G : this.ich2G,
+            ich2H : this.ich2H,
+            ich2I : this.ich2I,
+            ich2J : this.ich2J,
+            ich2K : this.ich2K,
+            ich2L : this.ich2L,
+            ich2M : this.ich2M,
+            ich2N : this.ich2N,
+            ich2O : this.ich2O,
+            ich2P : this.ich2P,
+            ich2Q : this.ich2Q,
+            ich2R : this.ich2R,
+            ich2S : this.ich2S,
+            ich2T : this.ich2T,
+            ich2U : this.ich2U,
+            ich2V : this.ich2V,
+            ich2W : this.ich2W,
+            ich2X : this.ich2X,
+            ich2Y : this.ich2Y,
+            ich2Z : this.ich2Z,
+            ich2AA : this.ich2AA,
+            ich2AB : this.ich2AB,
+            ich2AC : this.ich2AC,
+            ich2AD : this.ich2AD,
+            ich2AE : this.ich2AE,
+            ich2AF : this.ich2AF,
+            ich2AG : this.ich2AG,
+            ich2AH : this.ich2AH,
+            ich2AI : this.ich2AI,
+            ich2AJ : this.ich2AJ,
+            ich2AK : this.ich2AK,
+            ich2AL : this.ich2AL,
+            ich2AM : this.ich2AM,
+            ich2AN : this.ich2AN,
+            ich2AO : this.ich2AO,
+
+            ich3A : this.ich3A,
+            ich3B : this.ich3B,
+            ich3C : this.ich3C,
+            ich3D : this.ich3D,
+            ich3E : this.ich3E,
+            ich3F : this.ich3F,
+            ich3G : this.ich3G,
+            ich3H : this.ich3H,
+            ich3I : this.ich3I,
+            ich3J : this.ich3J,
+            ich3K : this.ich3K,
+            ich3L : this.ich3L,
+            ich3M : this.ich3M,
+            ich3N : this.ich3N,
+            ich3O : this.ich3O,
+            ich3P : this.ich3P,
+            ich3Q : this.ich3Q,
+            ich3R : this.ich3R,
+            ich3S : this.ich3S,
+            ich3T : this.ich3T,
+            ich3U : this.ich3U,
+            ich3V : this.ich3V,
+            ich3W : this.ich3W,
+            ich3X : this.ich3X,
+            ich3Y : this.ich3Y,
+            ich3Z : this.ich3Z,
+            ich3AA : this.ich3AA,
+            ich3AB : this.ich3AB,
+            ich3AC : this.ich3AC,
+            ich3AD : this.ich3AD,
+            ich3AE : this.ich3AE,
+            ich3AF : this.ich3AF,
+            ich3AG : this.ich3AG,
+            ich3AH : this.ich3AH,
+            ich3AI : this.ich3AI,
+            ich3AJ : this.ich3AJ,
+            ich3AK : this.ich3AK,
+            ich3AL : this.ich3AL,
+            ich3AM : this.ich3AM,
+            ich3AN : this.ich3AN,
+            ich3AO : this.ich3AO,
+          
+          }
+           }).then(()=>{
+            var cat = this.boqitemcatList.find(x => x.id == this.boqitem.CatID)
+            this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsCat/${this.boqitem.CatID}`).set({
+              name : cat.name,
+              createdon : new Date()
+            }).then(()=>{
+              var subcat = this.boqitemsubcatList.find(x => x.id == this.boqitem.SubcatID)
+              this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubcat/${this.boqitem.SubcatID}`).set({
+                name : subcat.name,
+                createdon : new Date()
+              }).then(()=>{
+                var subsubcat = this.boqitemsubsubcatList.find(x => x.id == this.boqitem.SubsubcatID)
+                this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubsubcat/${this.boqitem.SubsubcatID}`).set({
+                  name : subsubcat.name,
+                  createdon : new Date()
+                })
+              })
             })
-          })
+           }).then(()=>{
+             loading.dismiss().then(()=>{
+              alert("Added Successfully!")
+             })
+           })
+          }
+        })
       })
   }else{
     alert("Please recheck, any selection or field is missing.")

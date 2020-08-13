@@ -1,9 +1,31 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>ReportFinalPricedBill</ion-title>
+    <ion-title>Project Selection</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col>
+
+        <div style="margin-top: 60px;">
+          <ion-card style="margin: 0px;padding: 0px;">
+            <ion-item class="leftsideitems">           
+              <ion-label>Projects</ion-label>
+              <ion-select (ionChange)="setProject()" [(ngModel)]="myProjectID" interface="popover" >
+                <ion-select-option *ngFor="let item of myProjectList" value="{{item.pid}}"  > {{ item.name }} </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-button (click)="gotoreport1()" expand="block" fill="clear">
+              Generate report
+            </ion-button>
+          </ion-card>
+          </div>
+          
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

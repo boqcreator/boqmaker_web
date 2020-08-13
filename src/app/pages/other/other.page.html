@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Others</ion-title>
+    <ion-button slot="end" fill="clear" (click)="addnew()">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+      <ion-label> Add new </ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content  scrollY=true scrollX=false >
+
+ 
+  <div class="ex1">
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="term1" placeholder="Filter Category" ></ion-searchbar>
+    </ion-toolbar>
+    <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="CatID">
+    <p *ngFor="let item of catList | filter:term1" >
+      <ion-item>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-radio slot="end" [value]="item.id"></ion-radio>
+      </ion-item>
+       </p> 
+      </ion-radio-group>
+  </div>
+
+  <div class="ex1">
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="term2"  placeholder="Filter Subcategory" ></ion-searchbar>
+    </ion-toolbar>
+    <ion-radio-group (ionChange)="getothers()" [(ngModel)]="SubcatID">
+    <p *ngFor="let sitem of subcatList | filter:term2" >
+      <ion-item>
+        <ion-label>{{sitem.name}}</ion-label>
+        <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
+      </ion-item>
+       </p> 
+      </ion-radio-group>
+  </div>
+
+  <div class="ex1">
+    <ion-toolbar>
+      <ion-searchbar [(ngModel)]="term3"  placeholder="Filter other" ></ion-searchbar>
+    </ion-toolbar>
+    <ion-radio-group *ngIf="otherList" >
+    <p *ngFor="let item of otherList | filter:term3" >
+      <ion-item>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+      </ion-item>
+       </p> 
+      </ion-radio-group>
+  </div>
+
+
+
+</ion-content>
+

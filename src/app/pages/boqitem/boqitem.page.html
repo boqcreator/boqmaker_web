@@ -27,10 +27,10 @@
 
  <div class="ex1">
     <ion-toolbar>
-      <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="term2" placeholder="Filter Subcategory" ></ion-searchbar>
     </ion-toolbar>
     <ion-radio-group (ionChange)="getsubsubcat()" [(ngModel)]="SsubCat">
-    <p *ngFor="let item of subcat" >
+    <p *ngFor="let item of subcat | filter:term2" >
       <ion-item>
         <ion-label>{{item.name}}</ion-label>
         <ion-radio   slot="end" [value]="item.id" ></ion-radio>
@@ -41,10 +41,10 @@
 
   <div class="ex1">
     <ion-toolbar>
-      <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="term3" placeholder="Filter Subcategory" ></ion-searchbar>
     </ion-toolbar>
     <ion-radio-group (ionChange)="getboqitems()" *ngIf="subsubcat" [(ngModel)]="SsubsubCat">
-    <p *ngFor="let item of subsubcat" >
+    <p *ngFor="let item of subsubcat | filter:term3" >
       <ion-item>
         <ion-label>{{item.name}}</ion-label>
         <ion-radio  slot="end" [value]="item.id" ></ion-radio>
@@ -56,14 +56,22 @@
  
   <div class="ex1">
     <ion-toolbar>
-      <ion-searchbar placeholder="Filter Areas" ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="term4" placeholder="Filter Areas" ></ion-searchbar>
     </ion-toolbar>
     <ion-radio-group *ngIf="boqitems" >
-    <p *ngFor="let item of boqitems" >
+    <p *ngFor="let item of boqitems | filter:term4" >
       <ion-item>
+        <ion-avatar style="margin-right: 7px;" *ngIf="item.image" >
+          <img [src]="item.image" />
+        </ion-avatar> 
         <ion-label>{{item.name}}</ion-label>
-        <ion-button style="--padding-end: 0px;" fill="clear">
-          <ion-icon slot="icon-only" name="create"></ion-icon>
+
+        <ion-button (click)="edititem(item)"  style="--padding-end: 0px;" fill="clear">
+          <ion-icon  slot="icon-only" name="create"></ion-icon>
+
+        </ion-button>
+        <ion-button (click)="deleteitem(item)" color="danger" style="--padding-end: 0px;" fill="clear">
+          <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
         </ion-button>
       </ion-item>
        </p> 

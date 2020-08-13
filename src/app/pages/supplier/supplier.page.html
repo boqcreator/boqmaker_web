@@ -1,62 +1,263 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Suppliers</ion-title>
-<ion-button slot="end" fill="clear" (click)="addnew()">
-  <ion-icon slot="icon-only" name="add"></ion-icon>
-  <ion-label> Add new </ion-label>
-</ion-button>
-  </ion-toolbar>
+  <div class="col-sm-9">
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+      <ion-buttons style="float: left;">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <button class="menu-toggle" type="button" aria-controls="primary-menu" aria-expanded="false"><span class="pe-7s-menu"></span><span class="sr-only">Primary Menu</span></button>
+
+      <div class="menu-testing-menu-container" >
+        <ul id="primary-menu" class="menu nav-menu" aria-expanded="false">
+          <li (click)="gotohome()" class="menu-item current-menu-item">
+            <a style="color: black; cursor: pointer;">
+              <ion-icon slot="start" src="assets/icon/home-run.svg"></ion-icon>Home</a>
+          </li>
+          <li class="menu-item menu-item-has-children" aria-haspopup="true"><a style="color: black;" href="#">Projects</a>
+            <ul class="sub-menu">
+              <li class="menu-item current-menu-item"><a  href="service.html">Projects</a></li>
+              <li class="menu-item"><a style="cursor: pointer;" (click)="gotoproj()">View Projects</a></li>
+              <li class="menu-item"><a  href="service-item.html">Add Projects</a></li>
+              <li class="menu-item"><a  href="service-item.html">Projects Type</a></li>
+            </ul>
+          </li>
+          <li class="menu-item"><a style="color: black;" href="about.html">Building</a></li>
+          <li class="menu-item menu-item-has-children" aria-haspopup="true"><a style="color: black;" href="#">Data</a>
+            <ul class="sub-menu">
+              <li class="menu-item menu-item-has-children" aria-haspopup="true"><a (click)="gotoArea()">Areas</a>
+                <ul class="sub-menu">
+                  <li class="menu-item"><a href="social.html">Add new area</a></li>
+                </ul>
+              </li>
+              <li class="menu-item"><a style="cursor: pointer;" (click)="gotoitem()">BOQ items</a></li>
+              <li class="menu-item"><a style="cursor: pointer;" (click)="gotocons()">Contractors</a></li>
+              <li class="menu-item"><a style="cursor: pointer;" (click)="gotosupplier()">Suppliers</a></li>
+              <li class="menu-item"><a style="cursor: pointer;" (click)="gotomaterial()">Materials</a></li>
+            </ul>
+          </li>
+          <li class="menu-item"><a style="color: black; cursor: pointer;" (click)="gotoReport()">Reports</a></li>
+          <li class="menu-item"><a style="color: black;" href="blog.html">Help</a></li>
+          <li class="menu-item"><a style="color: black;" href="contact.html">Contact us</a></li>
+        </ul>
+      </div>
+    </nav><!-- #site-navigation -->
+  </div><!-- .col-sm-9 -->
+  <ion-button style="float: right;" fill="clear" (click)="addnew()">
+    <ion-icon slot="icon-only" name="add"></ion-icon>
+    <ion-label> Add new </ion-label>
+  </ion-button>
+
+
 </ion-header>
+
 
 <ion-content  scrollY=true scrollX=false >
 
+  <ion-segment [(ngModel)]="segment" >
+    <ion-segment-button value="ms">
+      <ion-label>Material Suppliers</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="ls">
+      <ion-label>Labour Suppliers</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="es">
+      <ion-label>Equipment Suppliers</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="other">
+      <ion-label>other</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+    <div style="margin-top : 10px;" *ngSwitchCase="'ms'">
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="term1" placeholder="Filter Category" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="CatID">
+        <p *ngFor="let item of catList | filter:term1" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-radio slot="end" [value]="item.id"></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="term2" placeholder="Filter Subcategory" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="getsuppliers()" [(ngModel)]="SubcatID">
+        <p *ngFor="let sitem of subcatList | filter:term2" >
+          <ion-item>
+            <ion-label>{{sitem.name}}</ion-label>
+            <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="term3" placeholder="Filter Supplier" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group *ngIf="supplierList" >
+        <p *ngFor="let item of supplierList | filter:term3" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
+              <ion-icon slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'ls'">
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;" style="z-index: 0;" >
+          <ion-searchbar [(ngModel)]="Lterm1" placeholder="Filter Category" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="Lgetsubcat()" [(ngModel)]="LCatID">
+        <p *ngFor="let item of LcatList | filter:Lterm1" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-radio slot="end" [value]="item.id"></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="Lterm2" placeholder="Filter Subcategory" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="Lgetsuppliers()" [(ngModel)]="LSubcatID">
+        <p *ngFor="let sitem of LsubcatList | filter:Lterm2" >
+          <ion-item>
+            <ion-label>{{sitem.name}}</ion-label>
+            <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="Lterm3" placeholder="Filter Supplier" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group *ngIf="LsupplierList" >
+        <p *ngFor="let item of LsupplierList | filter:term3" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
+              <ion-icon slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'es'">
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;" style="z-index: 0;" >
+          <ion-searchbar [(ngModel)]="Eterm1" placeholder="Filter Category" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="Egetsubcat()" [(ngModel)]="ECatID">
+        <p *ngFor="let item of EcatEist | filter:Eterm1" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-radio slot="end" [value]="item.id"></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="Eterm2" placeholder="Filter Subcategory" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="Egetsuppliers()" [(ngModel)]="ESubcatID">
+        <p *ngFor="let sitem of EsubcatEist | filter:Eterm2" >
+          <ion-item>
+            <ion-label>{{sitem.name}}</ion-label>
+            <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="Eterm3" placeholder="Filter Supplier" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group *ngIf="EsupplierEist" >
+        <p *ngFor="let item of EsupplierEist | filter:term3" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
+              <ion-icon slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'other'">
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;" style="z-index: 0;" >
+          <ion-searchbar [(ngModel)]="Oterm1" placeholder="Filter Category" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="Ogetsubcat()" [(ngModel)]="OCatID">
+        <p *ngFor="let item of OcatOist | filter:Oterm1" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-radio slot="end" [value]="item.id"></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="Oterm2" placeholder="Filter Subcategory" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group (ionChange)="Ogetsuppliers()" [(ngModel)]="OSubcatID">
+        <p *ngFor="let sitem of OsubcatOist | filter:Oterm2" >
+          <ion-item>
+            <ion-label>{{sitem.name}}</ion-label>
+            <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+      <div class="ex1">
+        <ion-toolbar style="z-index: 0;">
+          <ion-searchbar [(ngModel)]="Oterm3" placeholder="Filter Supplier" ></ion-searchbar>
+        </ion-toolbar>
+        <ion-radio-group *ngIf="OsupplierOist" >
+        <p *ngFor="let item of OsupplierOist | filter:term3" >
+          <ion-item>
+            <ion-label>{{item.name}}</ion-label>
+            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
+              <ion-icon slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+          </ion-item>
+           </p> 
+          </ion-radio-group>
+      </div>
+    
+    </div>
+  </div>
+
  
-  <div class="ex1">
-    <ion-toolbar>
-      <ion-searchbar [(ngModel)]="term1" placeholder="Filter Category" ></ion-searchbar>
-    </ion-toolbar>
-    <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="CatID">
-    <p *ngFor="let item of catList | filter:term1" >
-      <ion-item>
-        <ion-label>{{item.name}}</ion-label>
-        <ion-radio slot="end" [value]="item.id"></ion-radio>
-      </ion-item>
-       </p> 
-      </ion-radio-group>
-  </div>
-
-  <div class="ex1">
-    <ion-toolbar>
-      <ion-searchbar [(ngModel)]="term2" placeholder="Filter Subcategory" ></ion-searchbar>
-    </ion-toolbar>
-    <ion-radio-group (ionChange)="getsuppliers()" [(ngModel)]="SubcatID">
-    <p *ngFor="let sitem of subcatList | filter:term2" >
-      <ion-item>
-        <ion-label>{{sitem.name}}</ion-label>
-        <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
-      </ion-item>
-       </p> 
-      </ion-radio-group>
-  </div>
-
-  <div class="ex1">
-    <ion-toolbar>
-      <ion-searchbar [(ngModel)]="term3" placeholder="Filter Supplier" ></ion-searchbar>
-    </ion-toolbar>
-    <ion-radio-group *ngIf="supplierList" >
-    <p *ngFor="let item of supplierList | filter:term3" >
-      <ion-item>
-        <ion-label>{{item.name}}</ion-label>
-        <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
-          <ion-icon slot="icon-only" name="create"></ion-icon>
-        </ion-button>
-      </ion-item>
-       </p> 
-      </ion-radio-group>
-  </div>
 
 
 

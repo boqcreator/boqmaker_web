@@ -76,6 +76,59 @@ const routes: Routes = [
   {
     path: 'report-final-priced-bill',
     loadChildren: () => import('./pages/report-final-priced-bill/report-final-priced-bill.module').then( m => m.ReportFinalPricedBillPageModule)
+  },
+  {
+    path: 'report1/:id',
+    loadChildren: () => import('./pages/report1/report1.module').then( m => m.Report1PageModule)
+  },
+  {
+    path: 'addsupplier-l',
+    loadChildren: () => import('./pages/addsupplier-l/addsupplier-l.module').then( m => m.AddsupplierLPageModule)
+  },
+  {
+    path: 'labour',
+    loadChildren: () => import('./pages/labour/labour.module').then( m => m.LabourPageModule)
+  },
+  {
+    path: 'addlabour',
+    loadChildren: () => import('./pages/addlabour/addlabour.module').then( m => m.AddlabourPageModule)
+  },
+  {
+    path: 'addsupplier-e',
+    loadChildren: () => import('./pages/addsupplier-e/addsupplier-e.module').then( m => m.AddsupplierEPageModule)
+  },
+  {
+    path: 'equipment',
+    loadChildren: () => import('./pages/equipment/equipment.module').then( m => m.EquipmentPageModule)
+  },
+  {
+    path: 'addequipment',
+    loadChildren: () => import('./pages/addequipment/addequipment.module').then( m => m.AddequipmentPageModule)
+  },
+  {
+    path: 'addsupplier-o',
+    loadChildren: () => import('./pages/addsupplier-o/addsupplier-o.module').then( m => m.AddsupplierOPageModule)
+  },
+  {
+    path: 'other',
+    loadChildren: () => import('./pages/other/other.module').then( m => m.OtherPageModule)
+  },
+  {
+    path: 'addother',
+    loadChildren: () => import('./pages/addother/addother.module').then( m => m.AddotherPageModule)
+  },
+  {
+    path: 'subcontractor',
+    loadChildren: () => import('./pages/subcontractor/subcontractor.module').then( m => m.SubcontractorPageModule)
+  }
+  ,
+  {
+    path: 'addsubcontractor',
+    loadChildren: () => import('./pages/addsubcontractor/addsubcontractor.module').then( m => m.AddsubcontractorPageModule)
+  },
+  {
+    path: 'editboqitem/:id',
+    loadChildren: () => import('./pages/editboqitem/editboqitem.module').then( m => m.EditboqitemPageModule)
   }
 ];
 

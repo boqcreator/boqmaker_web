@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Labour Supplier</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-content>
+    <ion-segment [(ngModel)]="segment" >
+      <ion-segment-button value="cat">
+        <ion-label>Category</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="subcat">
+        <ion-label>Subcategory</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="supplier">
+        <ion-label>Supplier</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div [ngSwitch]="segment">
+      <div style="margin-top : 10px;" *ngSwitchCase="'cat'">
+
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">Name<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input [(ngModel)]="catName" type="text" placeholder="Enter category name here..."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea [(ngModel)]="catDes" placeholder="Enter description here..."></ion-textarea>
+          </ion-item>
+        </ion-list>
+        <ion-button [disabled]="catName.length > 0 ? false : true" (click)="addcat()" expand="block">
+          Add
+        </ion-button>
+      
+      </div>
+
+      <div style="margin-top : 10px;" *ngSwitchCase="'subcat'">
+
+        <ion-list>
+          <ion-item>
+            <ion-label class="ion-text-wrap" >Category</ion-label>
+            <ion-select (ionChange)="getSubcat()" [(ngModel)]="CatID" placeholder="Select Category">
+              <ion-select-option  *ngFor="let item of catList" [value]="item.id">{{ item.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Name<ion-text color="danger">*</ion-text></ion-label>
+            <ion-input [(ngModel)]="subcatName" type="text" placeholder="Enter category name here..."></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea [(ngModel)]="subcatDes" placeholder="Enter description here..."></ion-textarea>
+          </ion-item>
+        </ion-list>
+        <ion-button [disabled]="subcatName.length > 0 ? false : true" (click)="addsubcat()" expand="block">
+          Add
+        </ion-button>
+      
+      </div>
+
+
+      <div style="margin-top : 10px;" *ngSwitchCase="'supplier'">
+
+        <ion-list>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label class="ion-text-wrap" >Category</ion-label>
+                <ion-select (ionChange)="getSubcat()" [(ngModel)]="CatID" placeholder="Select Category">
+                  <ion-select-option  *ngFor="let item of catList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+          <ion-item>
+            <ion-label>Subcategory</ion-label>
+            <ion-select (ionChange)="saveTostorage()" [(ngModel)]="SubcatID" placeholder="Select Subcategory">
+              <ion-select-option *ngFor="let item of subcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Supplier Name<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input [(ngModel)]="sname" type="text" placeholder="Enter category name here..."></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Phone no<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input type="text" [(ngModel)]="sno" placeholder="Enter contact number here..."></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Tele no</ion-label>
+                <ion-input [(ngModel)]="stele" type="text" placeholder="Enter Telephone number here..."></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Fax no</ion-label>
+                <ion-input type="text" [(ngModel)]="sfax" placeholder="Enter Fax number here..."></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">E-mail<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input [(ngModel)]="semail" type="email" placeholder="Enter email..."></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Website</ion-label>
+                <ion-input type="text" [(ngModel)]="swebsite" placeholder="Enter website here..."></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+               <ion-item>
+              <ion-label position="floating">Description</ion-label>
+              <ion-textarea type="text" [(ngModel)]="sdes" placeholder="Write description here..."></ion-textarea>
+            </ion-item>
+
+            </ion-col>
+          </ion-row>
+        </ion-list>
+        <ion-button [disabled]="sname.length > 0 && sno.length > 0 && semail.length > 0 ? false : true" (click)="addsupplier()" expand="block">
+          Add
+        </ion-button>
+      
+      </div>
+
+      </div>
+
+</ion-content>

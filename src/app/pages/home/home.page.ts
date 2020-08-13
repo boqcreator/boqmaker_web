@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ReportFinalPricedBillPage } from '../report-final-priced-bill/report-final-priced-bill.page';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 export class HomePage implements OnInit {
 
   constructor(public menu :  MenuController,
+    private modalController: ModalController,
     private router : Router) {
     this.menu.enable(false)
    
@@ -43,6 +45,32 @@ export class HomePage implements OnInit {
   }
   gotoitem(){
     this.router.navigate(['boqitem'])
+  }
+  gotoReport(){
+    this.presentModal()
+  }
+
+  gotolabour(){
+    this.router.navigate(['labour'])
+  }
+  gotoequipment(){
+    this.router.navigate(['equipment'])
+  }
+  gotoother(){
+    this.router.navigate(['other'])
+  }
+  gotosubcontractor(){
+    this.router.navigate(['subcontractor'])
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      cssClass: 'modal1',
+    component: ReportFinalPricedBillPage,
+    });
+  
+    await modal.present();
+  
   }
 
 }
