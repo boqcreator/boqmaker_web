@@ -4096,7 +4096,7 @@ hr {
 }
 
 .main-navigation.text-black ul ul {
-    background-color: #2b2b2b
+    background-color: #ffffff
 }
 
 .main-navigation.text-black ul ul .focus>a,
@@ -4132,7 +4132,8 @@ hr {
 }
 
 .main-navigation.text-black ul ul a {
-    color: #d9d9d9
+    color: #000000;
+    font-weight: bold;
 }
 
 .main-navigation.text-black ul ul a.focus,

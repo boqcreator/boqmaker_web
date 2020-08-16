@@ -40,6 +40,8 @@ import { AddequipmentPageModule } from './pages/addequipment/addequipment.module
 import { AddsupplierOPageModule } from './pages/addsupplier-o/addsupplier-o.module';
 import { AddotherPageModule } from './pages/addother/addother.module';
 import { AddsubcontractorPageModule } from './pages/addsubcontractor/addsubcontractor.module';
+import { AddboqitemGPageModule } from './pages/addboqitem-g/addboqitem-g.module';
+import { BoqitemlibPageModule } from './pages/boqitemlib/boqitemlib.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -69,7 +71,9 @@ import { AddsubcontractorPageModule } from './pages/addsubcontractor/addsubcontr
     AddequipmentPageModule,
     AddsupplierOPageModule,
     AddotherPageModule,
-    AddsubcontractorPageModule
+    AddsubcontractorPageModule,
+    AddboqitemGPageModule,
+    BoqitemlibPageModule
     
   ],
   providers: [

@@ -129,6 +129,18 @@ const routes: Routes = [
   {
     path: 'editboqitem/:id',
     loadChildren: () => import('./pages/editboqitem/editboqitem.module').then( m => m.EditboqitemPageModule)
+  },
+  {
+    path: 'boqitem-g',
+    loadChildren: () => import('./pages/boqitem-g/boqitem-g.module').then( m => m.BoqitemGPageModule)
+  },
+  {
+    path: 'addboqitem-g',
+    loadChildren: () => import('./pages/addboqitem-g/addboqitem-g.module').then( m => m.AddboqitemGPageModule)
+  },
+  {
+    path: 'boqitemlib',
+    loadChildren: () => import('./pages/boqitemlib/boqitemlib.module').then( m => m.BoqitemlibPageModule)
   }
 ];
 

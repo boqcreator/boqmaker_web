@@ -3,6 +3,7 @@ import { MenuController, AlertController, LoadingController } from '@ionic/angul
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Storage } from '@ionic/storage';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-editboqitem',
@@ -12,6 +13,7 @@ import { Storage } from '@ionic/storage';
 export class EditboqitemPage implements OnInit {
   arrayID = [];
   itemname ="" ;
+  itemcode = "";
   unit = '';
   image= '';
   price = 0 ;
@@ -20,11 +22,11 @@ export class EditboqitemPage implements OnInit {
   equipment = [] ;
   other = [] ;
   subcontractor = [] ;
-  materialtotal= 0 ;
-  labourtotal = 0 ;
-  equipmenttotal = 0 ;
-  othertotal = 0 ;
-  subcontractortotal = 0 ;
+  materialtotal= "0" ;
+  labourtotal = "0" ;
+  equipmenttotal = "0" ;
+  othertotal = "0" ;
+  subcontractortotal = "0" ;
   units = ['m','m2','m3','mm','kg','no','pr','doz','roll','load','sheet','tin','litre','gallon','item','pair','set','l.s','ton','kilo','pr']
   segment2 = "m"
 
@@ -74,6 +76,12 @@ export class EditboqitemPage implements OnInit {
 
   pic;
 
+  Addedmaterial = [];
+  Addedlabour = [];
+  Addedequipment = [];
+  Addedsubcontractor = [];
+  Addedother = [];
+
   constructor(private menu : MenuController,
        private route : ActivatedRoute,
        private afs : AngularFirestore, 
@@ -95,19 +103,20 @@ export class EditboqitemPage implements OnInit {
     this.afs.doc<any>(`boq/boq/boqitemscat/${this.arrayID[0]}/subcat/${this.arrayID[1]}/subsubcat/${this.arrayID[2]}/boqitems/${this.arrayID[3]}`).get().subscribe(value =>{
 
        this.itemname = value.data().name;
+       value.data().itemcode  ? this.itemcode = value.data().itemcode : "";
        this.unit = value.data().unit;
        this.price = value.data().price;
-       this.image = value.data().image,
-       this.material = value.data().materials;
-       this.labour = value.data().labours;
-       this.equipment = value.data().equipment;
-       this.other = value.data().other;
-       this.subcontractor = value.data().subcontractor;
-       this.materialtotal = value.data().materialtotal
-       this.labourtotal = value.data().labourtotal;
-       this.equipmenttotal = value.data().equipmenttotal;
-       this.othertotal = value.data().othertotal;
-       this.subcontractortotal = value.data().subcontractortotal;
+       value.data().image ? this.image = value.data().image : "" ;
+       value.data().materials ? this.Addedmaterial = value.data().materials : "";
+       value.data().labours ? this.Addedlabour = value.data().labours : "";
+       value.data().equipment ? this.Addedequipment = value.data().equipment : "";
+       value.data().other ? this.Addedother = value.data().other: "";
+       value.data().subcontractor ? this.Addedsubcontractor = value.data().subcontractor : "";
+       value.data().materialtotal ? this.materialtotal = value.data().materialtotal : "";
+       value.data().labourtotal ? this.labourtotal = value.data().labourtotal : "";
+       value.data().equipmenttotal ? this.equipmenttotal = value.data().equipmenttotal : "";
+       value.data().othertotal ? this.othertotal = value.data().othertotal : "";
+       value.data().subcontractortotal ? this.subcontractortotal = value.data().subcontractortotal : "";
     })
     
   }
@@ -175,6 +184,54 @@ export class EditboqitemPage implements OnInit {
      })
   
    }
+
+   pushtomaterial(){
+     this.material.forEach(ele =>{
+      var index = this.Addedmaterial.findIndex(x => x.id == ele.id)
+      if(index === -1){
+        ele.Per = 100
+        ele.qty = 1
+        ele.WPer = 0
+        this.Addedmaterial.push(ele)
+      }
+     })
+   
+   }
+
+   Mdelitem(item){
+    var index = this.Addedmaterial.findIndex(x => x.id == item.id)
+    this.Addedmaterial.splice(index,1)
+    this.calculate()
+  }
+
+  SelectallMaterial(){
+    if(this.materialList.length > 0){
+      this.material = this.materialList
+      this.materialList.forEach(ele =>{
+        var index = this.Addedmaterial.findIndex(x => x.id == ele.id)
+        if(index === -1){
+          ele.Per = 100
+          ele.qty = 1
+          ele.WPer = 0
+          this.Addedmaterial.push(ele)
+        }
+       })
+    }
+  }
+  
+  RemoveallMaterial(){
+    if(this.materialList.length > 0){
+      this.material = [];
+      this.materialList.forEach(ele =>{
+        var index = this.Addedmaterial.findIndex(x => x.id == ele.id)
+        if(index !== -1){
+          this.Addedmaterial.splice(index,1)
+        }
+       })
+    }
+    this.calculate()
+  }
+  
    
    setmaterial(){
      this.material = this.materialList.find(x => x.id == this.materialID)
@@ -184,58 +241,58 @@ export class EditboqitemPage implements OnInit {
   
    calculate(){
      this.price = 0;
-     this.materialtotal = 0;
-     this.labourtotal = 0;
-     this.equipmenttotal = 0;
-     this.othertotal = 0;
-     this.subcontractortotal = 0;
-     if(this.material.length > 0){
-      this.material.forEach(element => {
+     this.materialtotal = "0";
+     this.labourtotal = "0";
+     this.equipmenttotal = "0";
+     this.othertotal = "0";
+     this.subcontractortotal = "0";
+     if(this.Addedmaterial.length > 0){
+      this.Addedmaterial.forEach(element => {
         if(element.qty){
-         this.price += ( parseFloat(element.price)  * parseFloat(element.qty))
-         this.materialtotal +=( parseFloat(element.price)  * parseFloat(element.qty))
+         this.price += (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))
+         this.materialtotal = (parseFloat(this.materialtotal) + (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))).toFixed(3)
         }
       });
      }
-      if(this.labour.length > 0){
-        this.labour.forEach(element => {
+      if(this.Addedlabour.length > 0){
+        this.Addedlabour.forEach(element => {
           if(element.qty){
-           this.price += ( parseFloat(element.price)  * parseFloat(element.qty))
-           this.labourtotal += ( parseFloat(element.price)  * parseFloat(element.qty))
+           this.price += (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))
+           this.labourtotal = (parseFloat(this.labourtotal) + (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))).toFixed(3)
           }
         });
       }
   
-      if(this.equipment.length > 0){
-        this.equipment.forEach(element => {
+      if(this.Addedequipment.length > 0){
+        this.Addedequipment.forEach(element => {
           if(element.qty){
-           this.price += ( parseFloat(element.price)  * parseFloat(element.qty))
-           this.equipmenttotal += ( parseFloat(element.price)  * parseFloat(element.qty))
+           this.price += (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))
+           this.equipmenttotal = (parseFloat(this.equipmenttotal) + (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))).toFixed(3)            
           }
         });
       }
       
-      if(this.other.length > 0){
-        this.other.forEach(element => {
+      if(this.Addedother.length > 0){
+        this.Addedother.forEach(element => {
           if(element.qty){
-           this.price += ( parseFloat(element.price)  * parseFloat(element.qty))
-           this.othertotal += ( parseFloat(element.price)  * parseFloat(element.qty))
+           this.price += (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))
+           this.othertotal = (parseFloat(this.othertotal) + (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))).toFixed(3)
           }
         });
       }
   
-      if(this.subcontractor.length > 0){
-        this.subcontractor.forEach(element => {
+      if(this.Addedsubcontractor.length > 0){
+        this.Addedsubcontractor.forEach(element => {
           if(element.qty){
-           this.price += ( parseFloat(element.price)  * parseFloat(element.qty))
-           this.subcontractortotal += ( parseFloat(element.price)  * parseFloat(element.qty))
+           this.price += (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))
+           this.subcontractortotal = (parseFloat(this.subcontractortotal) + (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))).toFixed(3)
           }
         });
       }
    }
   
   
-  
+  //**************************   LABOUR    **************************
   
    getlabourCat(){
     this.storage.get('labourcat').then((value)=>{
@@ -294,7 +351,54 @@ export class EditboqitemPage implements OnInit {
      })
   
    }
+
+   pushtolabour(){
+    this.labour.forEach(ele =>{
+     var index = this.Addedlabour.findIndex(x => x.id == ele.id)
+     ele.Per = 100
+     ele.qty = 1
+     ele.note = ""
+     if(index === -1){
+       this.Addedlabour.push(ele)
+     }
+    }) 
+  }
+
+  Ldelitem(item){
+    var index = this.Addedlabour.findIndex(x => x.id == item.id)
+    this.Addedlabour.splice(index,1)
+    this.calculate()
+  }
   
+  SelectallLabour(){
+    if(this.labourList.length > 0){
+      this.labour = this.labourList
+      this.labourList.forEach(ele =>{
+        var index = this.Addedlabour.findIndex(x => x.id == ele.id)
+        if(index === -1){
+          ele.Per = 100
+          ele.qty = 1
+          ele.WPer = 0
+          this.Addedlabour.push(ele)
+        }
+       })
+    }
+  }
+
+  RemoveallLabour(){
+    if(this.labourList.length > 0){
+      this.labour = [];
+      this.labourList.forEach(ele =>{
+        var index = this.Addedlabour.findIndex(x => x.id == ele.id)
+        if(index !== -1){
+          this.Addedlabour.splice(index,1)
+        }
+       })
+    }
+    this.calculate()
+  }
+  
+  //**************************   EQUIPMENT    **************************
   
    getequipmentCat(){
     this.storage.get('equipmentcat').then((value)=>{
@@ -353,6 +457,54 @@ export class EditboqitemPage implements OnInit {
      })
   
    }
+
+   pushtoequipment(){
+    this.equipment.forEach(ele =>{
+     var index = this.Addedequipment.findIndex(x => x.id == ele.id)
+     ele.Per = 100
+     ele.qty = 1
+     ele.note = ""
+     if(index === -1){
+       this.Addedequipment.push(ele)
+     }
+    }) 
+  }
+
+  Edelitem(item){
+    var index = this.Addedequipment.findIndex(x => x.id == item.id)
+    this.Addedequipment.splice(index,1)
+    this.calculate()
+  }
+
+  SelectallEquipment(){
+    if(this.equipmentList.length > 0){
+      this.equipment = this.equipmentList
+      this.equipmentList.forEach(ele =>{
+        var index = this.Addedequipment.findIndex(x => x.id == ele.id)
+        if(index === -1){
+          ele.Per = 100
+          ele.qty = 1
+          ele.WPer = 0
+          this.Addedequipment.push(ele)
+        }
+       })
+    }
+  }
+  
+  RemoveallEquipment(){
+    if(this.equipmentList.length > 0){
+      this.equipment = [];
+      this.equipmentList.forEach(ele =>{
+        var index = this.Addedequipment.findIndex(x => x.id == ele.id)
+        if(index !== -1){
+          this.Addedequipment.splice(index,1)
+        }
+       })
+    }
+    this.calculate()
+  }
+  
+  //**************************   OTHER    **************************
   
   
   
@@ -413,8 +565,56 @@ export class EditboqitemPage implements OnInit {
      })
   
    }
+
+   pushtoother(){
+    this.other.forEach(ele =>{
+     var index = this.Addedother.findIndex(x => x.id == ele.id)
+     ele.Per = 100
+     ele.qty = 1
+     ele.note = ""
+     if(index === -1){
+       this.Addedother.push(ele)
+     }
+    }) 
+  }
+
+  Odelitem(item){
+    var index = this.Addedother.findIndex(x => x.id == item.id)
+    this.Addedother.splice(index,1)
+    this.calculate()
+  }
+
+  SelectallOther(){
+    if(this.otherList.length > 0){
+      this.other = this.otherList
+      this.otherList.forEach(ele =>{
+        var index = this.Addedother.findIndex(x => x.id == ele.id)
+        if(index === -1){
+          ele.Per = 100
+          ele.qty = 1
+          ele.WPer = 0
+          this.Addedother.push(ele)
+        }
+       })
+    }
+  }
   
-   //SUBCONTRACTOR
+  RemoveallOther(){
+    if(this.otherList.length > 0){
+      this.other = [];
+      this.otherList.forEach(ele =>{
+        var index = this.Addedother.findIndex(x => x.id == ele.id)
+        if(index !== -1){
+          this.Addedother.splice(index,1)
+        }
+       })
+    }
+    this.calculate()
+  }
+  
+  
+  //**************************   SUBCONTRACTOR    **************************
+  
   
    getsubcontractorCat(){
     this.storage.get('subcontractorcat').then((value)=>{
@@ -472,6 +672,95 @@ export class EditboqitemPage implements OnInit {
      })
   
    }
+
+   pushtosubcontractor(){
+    this.subcontractor.forEach(ele =>{
+     var index = this.Addedsubcontractor.findIndex(x => x.id == ele.id)
+     ele.Per = 100
+     ele.qty = 1
+     ele.note = ""
+     if(index === -1){
+       this.Addedsubcontractor.push(ele)
+     }
+    }) 
+  }
+
+  Sdelitem(item){
+    var index = this.Addedsubcontractor.findIndex(x => x.id == item.id)
+    this.Addedsubcontractor.splice(index,1)
+    this.calculate()
+  }
+
+  SelectallSubcontractor(){
+    if(this.subcontractorList.length > 0){
+      this.subcontractor = this.subcontractorList
+      this.subcontractorList.forEach(ele =>{
+        var index = this.Addedsubcontractor.findIndex(x => x.id == ele.id)
+        if(index === -1){
+          ele.Per = 100
+          ele.qty = 1
+          ele.WPer = 0
+          this.Addedsubcontractor.push(ele)
+        }
+       })
+    }
+  }
+  
+  RemoveallSubcontractor(){
+    if(this.subcontractorList.length > 0){
+      this.subcontractor = [];
+      this.subcontractorList.forEach(ele =>{
+        var index = this.Addedsubcontractor.findIndex(x => x.id == ele.id)
+        if(index !== -1){
+          this.Addedsubcontractor.splice(index,1)
+        }
+       })
+    }
+    this.calculate()
+  }
+
+  edititem(){
+    this.loader()
+    this.afs.doc<any>(`boq/boq/boqitemscat/${this.arrayID[0]}/subcat/${this.arrayID[1]}/subsubcat/${this.arrayID[2]}/boqitems/${this.arrayID[3]}`).update({
+      name : this.itemname,
+      code : this.itemcode,
+      unit : this.unit,
+      price : this.price,
+      materials : this.Addedmaterial,      
+      labours : this.Addedlabour,
+      equipment : this.Addedequipment,
+      other : this.Addedother,
+      subcontractor : this.Addedsubcontractor,
+      materialtotal : this.materialtotal,
+      labourtotal :   this.labourtotal,
+      equipmenttotal : this.equipmenttotal,
+      othertotal :     this.othertotal,
+      subcontractortotal : this.subcontractortotal,
+    }).then(()=>{
+      if(this.pic){
+        var imagepath
+        imagepath =  `boqitems/${this.arrayID[3]}/${this.itemname}`;
+    
+         var storageRef =  firebase.storage().ref(imagepath);
+    
+             storageRef.put(this.pic).then(()=>{
+               firebase.storage().ref(imagepath).getDownloadURL().then(url =>{
+                   this.afs.doc(`boq/boq/boqitemscat/${this.arrayID[0]}/subcat/${this.arrayID[1]}/subsubcat/${this.arrayID[2]}/boqitems/${this.arrayID[3]}`).update({
+                    image : url
+                   });
+                   });
+    
+             });
+       }
+    }).then(()=>{
+      this.loadingController.dismiss();
+       this.presentAlert();
+
+    }).catch((err)=>{
+      alert(err)
+    })
+  }
+  
   
    setequipment(){
     this.equipment= this.equipmentList.find(x => x.id == this.equipmentID)
@@ -485,7 +774,7 @@ export class EditboqitemPage implements OnInit {
   
     async loader(){
       const loading = await this.loadingController.create({
-        message: 'Adding...',
+        message: 'Updating...',
         duration: 2000
       });
       await loading.present();
@@ -495,8 +784,8 @@ export class EditboqitemPage implements OnInit {
     async presentAlert() {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
-        header: 'Added',
-        message: 'Successfully Added!',
+        header: 'Update',
+        message: 'Successfully Updated!',
         buttons: ['OK']
       });
   

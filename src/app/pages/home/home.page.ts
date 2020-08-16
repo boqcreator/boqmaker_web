@@ -62,6 +62,9 @@ export class HomePage implements OnInit {
   gotosubcontractor(){
     this.router.navigate(['subcontractor'])
   }
+  gotogbi(){
+    this.router.navigate(['boqitem-g'])
+  }
 
   async presentModal() {
     const modal = await this.modalController.create({

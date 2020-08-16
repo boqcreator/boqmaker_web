@@ -106,6 +106,7 @@ export class BoqitemPage implements OnInit {
           value.forEach(doc =>{
             this.boqitems.push({
               name : doc.payload.doc.data().name,
+              code : doc.payload.doc.data().code,
               image : doc.payload.doc.data().image,
               id : doc.payload.doc.id,
               price : doc.payload.doc.data().price,

@@ -56,15 +56,22 @@
  
   <div class="ex1">
     <ion-toolbar>
-      <ion-searchbar [(ngModel)]="term4" placeholder="Filter Areas" ></ion-searchbar>
+      <ion-searchbar [(ngModel)]="term4" placeholder="Filter Items" ></ion-searchbar>
     </ion-toolbar>
     <ion-radio-group *ngIf="boqitems" >
     <p *ngFor="let item of boqitems | filter:term4" >
       <ion-item>
-        <ion-avatar style="margin-right: 7px;" *ngIf="item.image" >
+        <ion-avatar class="item-avatar" style="margin-right: 7px;" *ngIf="item.image" >
           <img [src]="item.image" />
         </ion-avatar> 
-        <ion-label>{{item.name}}</ion-label>
+        <ion-label>
+           <span style="font-weight: bold;" > {{item.name}} </span>
+            <span style="font-size: 11px;" *ngIf="item.code" > {{ "("+item.code+")" }} </span>
+          <p class="pu">
+           Unit: {{item.unit}} <br/>
+            Price : {{ item.price }} 
+          </p>
+        </ion-label>
 
         <ion-button (click)="edititem(item)"  style="--padding-end: 0px;" fill="clear">
           <ion-icon  slot="icon-only" name="create"></ion-icon>

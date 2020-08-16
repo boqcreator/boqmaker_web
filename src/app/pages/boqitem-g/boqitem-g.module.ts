@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AddsubcontractorPageRoutingModule } from './addsubcontractor-routing.module';
+import { BoqitemGPageRoutingModule } from './boqitem-g-routing.module';
 
-import { AddsubcontractorPage } from './addsubcontractor.page';
+import { BoqitemGPage } from './boqitem-g.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    AddsubcontractorPageRoutingModule,
+    BoqitemGPageRoutingModule,
     SharedModule
   ],
-  declarations: [AddsubcontractorPage]
+  declarations: [BoqitemGPage]
 })
-export class AddsubcontractorPageModule {}
+export class BoqitemGPageModule {}

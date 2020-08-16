@@ -123,9 +123,22 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-label position="floating">Item Name <ion-text color="danger">*</ion-text></ion-label>
-                  <ion-input required [(ngModel)]="itemname" type="text"></ion-input>
+                  <ion-label>Item Code <ion-text color="danger">*</ion-text></ion-label>
+                  <ion-input required [(ngModel)]="itemcode" type="text"></ion-input>
                 </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-input placeholder="Item name" required [(ngModel)]="itemname" type="text"></ion-input>
+                  <ion-icon slot="end" (click)="itemlibrary()" size="small" src="assets/icon/book.svg"></ion-icon>     
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-label>Icon</ion-label>
+                  <ion-input (change)="onFileSelected1($event)" type="file">
+                  </ion-input>
+              </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
@@ -134,13 +147,6 @@
                     <ion-select-option *ngFor="let item of units" [value]="item">{{ item }}</ion-select-option>
                   </ion-select>
                 </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item>
-                  <ion-label position="stacked">Item Picture</ion-label>
-                  <ion-input (change)="onFileSelected1($event)" type="file">
-                  </ion-input>
-              </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
@@ -171,12 +177,12 @@
         
           <div [ngSwitch]="segment2">
             <div style="margin-top : 10px;" *ngSwitchCase="'m'">
-
+      
               <ion-card-header>
                 <ion-card-title>Materials</ion-card-title>
                 <ion-label > Total: {{ materialtotal }} </ion-label>
               </ion-card-header>
-    
+      
               <ion-list>
                 <ion-row>
                   <ion-col>
@@ -198,69 +204,84 @@
                   <ion-col>
                     <ion-item>
                       <ion-label>Materials</ion-label>
-                      <ion-select (ionChange)="calculate()"  multiple="true"  [(ngModel)]="material" placeholder="Select material">
+                      <ion-select (ionChange)="pushtomaterial()"  multiple="true"  [(ngModel)]="material" placeholder="Select material">
                         <ion-select-option *ngFor="let item of materialList" [value]="item">{{ item.name }}</ion-select-option>
                       </ion-select>
+                      <ion-button (click)="SelectallMaterial()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
+                      </ion-button>
+                      <ion-button (click)="RemoveallMaterial()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
+                      </ion-button>
                     </ion-item>
                   </ion-col>
                 </ion-row>
               </ion-list>
-    
-    
+      
+      
               <ion-list>
-                <ion-card *ngFor="let mat of material" >
-                   <ion-card-header>
-                     <ion-card-title>{{mat.name}}</ion-card-title>
-                   </ion-card-header>
-                   <ion-row>
-                     <ion-col style="padding-left: 10px;">
-    
-                        <ion-text>
-                          <ion-label>
-                            Unit : {{mat.unit}}
-                          </ion-label> <br/>
-                          <ion-label>
-                           Price : {{mat.price}}
-                         </ion-label>
-                         </ion-text>
-                         <h6>Supplier</h6>
-                         <p>
-                          Name : {{mat.supplier.name}} <br/>
-                          Email : {{mat.supplier.email}} <br/>
-                          Phone no: {{mat.supplier.no}} <br/>
-                        </p>
-                     </ion-col>
-    
-                     <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Percentage %</ion-label>
-                         <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" value=100 type="number"></ion-input>
-                       </ion-item>
-                       <ion-item>
-                        <ion-label position="floating">Wastage percentage %</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.WPer" value=0 type="number"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label position="floating">Quantity</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty" value=1 type="number"></ion-input>
-                      </ion-item>
-                     </ion-col>
-                   </ion-row>
-    
-                </ion-card>
+                <ion-row>
+                  <ion-col *ngFor="let mat of Addedmaterial" size=6 >
+                    <ion-card >
+                      <ion-card-header>
+                        <ion-item>
+                          <ion-card-title>{{mat.name}}</ion-card-title>
+                          <ion-button slot="end" fill="clear" (click)="Mdelitem(mat)">
+                            <ion-icon color="danger" name="trash"></ion-icon>
+                          </ion-button>
+                        </ion-item>
+                      </ion-card-header>
+                      <ion-row>
+                        <ion-col style="padding-left: 10px;">
+                           <ion-text>
+                             <ion-label>
+                               Unit : {{mat.unit}}
+                             </ion-label> <br/>
+                             <ion-label>
+                              Price : {{mat.price}}
+                            </ion-label>
+                            </ion-text>
+                            <h6>Supplier</h6>
+                            <p>
+                             Name : {{mat.supplier.name}} <br/>
+                             Email : {{mat.supplier.email}} <br/>
+                             Phone no: {{mat.supplier.no}} <br/>
+                           </p>
+                        </ion-col>
+         
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Percentage %</ion-label>
+                            <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" value=100 type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                           <ion-label position="floating">Wastage percentage %</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.WPer" value=0 type="number"></ion-input>
+                         </ion-item>
+                         <ion-item>
+                           <ion-label position="floating">Quantity</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty" value=1 type="number"></ion-input>
+                         </ion-item>
+                        </ion-col>
+                      </ion-row>
+         
+                   </ion-card>
+                  </ion-col>
+                </ion-row>
+      
               </ion-list>
               
-
+      
             </div>
-
-
+      
+      
             <div style="margin-top : 10px;" *ngSwitchCase="'l'">
-
+      
               <ion-card-header>
                 <ion-card-title>Labours</ion-card-title>
                 <ion-label > Total: {{ labourtotal }} </ion-label>
               </ion-card-header>
-    
+      
               <ion-list>
                 <ion-row>
                   <ion-col>
@@ -282,68 +303,83 @@
                   <ion-col>
                     <ion-item>
                       <ion-label>labours</ion-label>
-                      <ion-select (ionChange)="calculate()"  multiple="true"  [(ngModel)]="labour" placeholder="Select labour">
+                      <ion-select (ionChange)="pushtolabour()"  multiple="true"  [(ngModel)]="labour" placeholder="Select labour">
                         <ion-select-option *ngFor="let item of labourList" [value]="item">{{ item.name }}</ion-select-option>
                       </ion-select>
+                      <ion-button (click)="SelectallLabour()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
+                      </ion-button>
+                      <ion-button (click)="RemoveallLabour()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
+                      </ion-button>
                     </ion-item>
                   </ion-col>
                 </ion-row>
               </ion-list>
-    
-    
+      
+      
               <ion-list>
-                <ion-card *ngFor="let mat of labour" >
-                   <ion-card-header>
-                     <ion-card-title>{{mat.name}}</ion-card-title>
-                   </ion-card-header>
-                   <ion-row>
-                     <ion-col style="padding-left: 10px;">
-    
-                        <ion-text>
-                          <ion-label>
-                            Unit : {{mat.unit}}
-                          </ion-label> <br/>
-                          <ion-label>
-                           Price : {{mat.price}}
-                         </ion-label>
-                         </ion-text>
-                         <h6>Supplier</h6>
-                         <p>
-                          Name : {{mat.supplier.name}} <br/>
-                          Email : {{mat.supplier.email}} <br/>
-                          Phone no: {{mat.supplier.no}} <br/>
-                        </p>
-                     </ion-col>
-    
-                     <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Percentage %</ion-label>
-                         <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
-                       </ion-item>
-                       <ion-item>
-                        <ion-label position="floating">Quantity</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label position="floating">Note</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
-                      </ion-item>
-                     </ion-col>
-                   </ion-row>
-    
-                </ion-card>
+                <ion-row>
+                  <ion-col *ngFor="let mat of Addedlabour" size=6 >
+                    <ion-card  >
+                      <ion-card-header>
+                          <ion-item>
+                          <ion-card-title>{{mat.name}}</ion-card-title>
+                          <ion-button slot="end" fill="clear" (click)="Ldelitem(mat)">
+                            <ion-icon color="danger" name="trash"></ion-icon>
+                          </ion-button>
+                        </ion-item>
+                      </ion-card-header>
+                      <ion-row>
+                        <ion-col style="padding-left: 10px;">
+         
+                           <ion-text>
+                             <ion-label>
+                               Unit : {{mat.unit}}
+                             </ion-label> <br/>
+                             <ion-label>
+                              Price : {{mat.price}}
+                            </ion-label>
+                            </ion-text>
+                            <h6>Supplier</h6>
+                            <p>
+                             Name : {{mat.supplier.name}} <br/>
+                             Email : {{mat.supplier.email}} <br/>
+                             Phone no: {{mat.supplier.no}} <br/>
+                           </p>
+                        </ion-col>
+         
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Percentage %</ion-label>
+                            <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                           <ion-label position="floating">Quantity</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
+                         </ion-item>
+                         <ion-item>
+                           <ion-label position="floating">Note</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
+                         </ion-item>
+                        </ion-col>
+                      </ion-row>
+         
+                   </ion-card>
+                  </ion-col>
+                </ion-row>
               </ion-list>
               
-
+      
             </div>
-
+      
             <div style="margin-top : 10px;" *ngSwitchCase="'e'">
-
+      
               <ion-card-header>
                 <ion-card-title>Equipments</ion-card-title>
                 <ion-label > Total: {{ equipmenttotal }} </ion-label>
               </ion-card-header>
-    
+      
               <ion-list>
                 <ion-row>
                   <ion-col>
@@ -365,67 +401,82 @@
                   <ion-col>
                     <ion-item>
                       <ion-label>Equipments</ion-label>
-                      <ion-select (ionChange)="calculate()"  multiple="true"  [(ngModel)]="equipment" placeholder="Select equipment">
+                      <ion-select (ionChange)="pushtoequipment()"  multiple="true"  [(ngModel)]="equipment" placeholder="Select equipment">
                         <ion-select-option *ngFor="let item of equipmentList" [value]="item">{{ item.name }}</ion-select-option>
                       </ion-select>
+                      <ion-button (click)="SelectallEquipment()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
+                      </ion-button>
+                      <ion-button (click)="RemoveallEquipment()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
+                      </ion-button>
                     </ion-item>
                   </ion-col>
                 </ion-row>
               </ion-list>
-    
-    
+      
+      
               <ion-list>
-                <ion-card *ngFor="let mat of equipment" >
-                   <ion-card-header>
-                     <ion-card-title>{{mat.name}}</ion-card-title>
-                   </ion-card-header>
-                   <ion-row>
-                     <ion-col style="padding-left: 10px;">
-    
-                        <ion-text>
-                          <ion-label>
-                            Unit : {{mat.unit}}
-                          </ion-label> <br/>
-                          <ion-label>
-                           Price : {{mat.price}}
-                         </ion-label>
-                         </ion-text>
-                         <h6>Supplier</h6>
-                         <p>
-                          Name : {{mat.supplier.name}} <br/>
-                          Email : {{mat.supplier.email}} <br/>
-                          Phone no: {{mat.supplier.no}} <br/>
-                        </p>
-                     </ion-col>
-    
-                     <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Percentage %</ion-label>
-                         <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
-                       </ion-item>
-                       <ion-item>
-                        <ion-label position="floating">Quantity</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label position="floating">Note</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
-                      </ion-item>
-                     </ion-col>
-                   </ion-row>
-    
-                </ion-card>
+                <ion-row>
+                  <ion-col *ngFor="let mat of Addedequipment" size=6>
+                    <ion-card>
+                      <ion-card-header>
+                        <ion-item>
+                          <ion-card-title>{{mat.name}}</ion-card-title>
+                          <ion-button slot="end" fill="clear" (click)="Edelitem(mat)">
+                            <ion-icon color="danger" name="trash"></ion-icon>
+                          </ion-button>
+                        </ion-item>
+                      </ion-card-header>
+                      <ion-row>
+                        <ion-col style="padding-left: 10px;">
+         
+                           <ion-text>
+                             <ion-label>
+                               Unit : {{mat.unit}}
+                             </ion-label> <br/>
+                             <ion-label>
+                              Price : {{mat.price}}
+                            </ion-label>
+                            </ion-text>
+                            <h6>Supplier</h6>
+                            <p>
+                             Name : {{mat.supplier.name}} <br/>
+                             Email : {{mat.supplier.email}} <br/>
+                             Phone no: {{mat.supplier.no}} <br/>
+                           </p>
+                        </ion-col>
+         
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Percentage %</ion-label>
+                            <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                           <ion-label position="floating">Quantity</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
+                         </ion-item>
+                         <ion-item>
+                           <ion-label position="floating">Note</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
+                         </ion-item>
+                        </ion-col>
+                      </ion-row>
+         
+                   </ion-card>
+                  </ion-col>
+                </ion-row>
               </ion-list>
               
-
+      
             </div>
             <div style="margin-top : 10px;" *ngSwitchCase="'o'">
-
+      
               <ion-card-header>
                 <ion-card-title>Others</ion-card-title>
                 <ion-label > Total: {{ othertotal }} </ion-label>
               </ion-card-header>
-    
+      
               <ion-list>
                 <ion-row>
                   <ion-col>
@@ -447,68 +498,83 @@
                   <ion-col>
                     <ion-item>
                       <ion-label>Others</ion-label>
-                      <ion-select (ionChange)="calculate()"  multiple="true"  [(ngModel)]="other" placeholder="Select other">
+                      <ion-select (ionChange)="pushtoother()"  multiple="true"  [(ngModel)]="other" placeholder="Select other">
                         <ion-select-option *ngFor="let item of otherList" [value]="item">{{ item.name }}</ion-select-option>
                       </ion-select>
+                      <ion-button (click)="SelectallOther()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
+                      </ion-button>
+                      <ion-button (click)="RemoveallOther()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
+                      </ion-button>
                     </ion-item>
                   </ion-col>
                 </ion-row>
               </ion-list>
-    
-    
+      
+      
               <ion-list>
-                <ion-card *ngFor="let mat of other" >
-                   <ion-card-header>
-                     <ion-card-title>{{mat.name}}</ion-card-title>
-                   </ion-card-header>
-                   <ion-row>
-                     <ion-col style="padding-left: 10px;">
-    
-                        <ion-text>
-                          <ion-label>
-                            Unit : {{mat.unit}}
-                          </ion-label> <br/>
-                          <ion-label>
-                           Price : {{mat.price}}
-                         </ion-label>
-                         </ion-text>
-                         <h6>Supplier</h6>
-                         <p>
-                          Name : {{mat.supplier.name}} <br/>
-                          Email : {{mat.supplier.email}} <br/>
-                          Phone no: {{mat.supplier.no}} <br/>
-                        </p>
-                     </ion-col>
-    
-                     <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Percentage %</ion-label>
-                         <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
-                       </ion-item>
-                       <ion-item>
-                        <ion-label position="floating">Quantity</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label position="floating">Note</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
-                      </ion-item>
-                     </ion-col>
-                   </ion-row>
-    
-                </ion-card>
+                <ion-row>
+                  <ion-col *ngFor="let mat of Addedother" size=6>
+                    <ion-card >
+                      <ion-card-header>
+                        <ion-item>
+                          <ion-card-title>{{mat.name}}</ion-card-title>
+                          <ion-button slot="end" fill="clear" (click)="Odelitem(mat)">
+                            <ion-icon color="danger" name="trash"></ion-icon>
+                          </ion-button>
+                        </ion-item>
+                      </ion-card-header>
+                      <ion-row>
+                        <ion-col style="padding-left: 10px;">
+         
+                           <ion-text>
+                             <ion-label>
+                               Unit : {{mat.unit}}
+                             </ion-label> <br/>
+                             <ion-label>
+                              Price : {{mat.price}}
+                            </ion-label>
+                            </ion-text>
+                            <h6>Supplier</h6>
+                            <p>
+                             Name : {{mat.supplier.name}} <br/>
+                             Email : {{mat.supplier.email}} <br/>
+                             Phone no: {{mat.supplier.no}} <br/>
+                           </p>
+                        </ion-col>
+         
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Percentage %</ion-label>
+                            <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                           <ion-label position="floating">Quantity</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
+                         </ion-item>
+                         <ion-item>
+                           <ion-label position="floating">Note</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
+                         </ion-item>
+                        </ion-col>
+                      </ion-row>
+         
+                   </ion-card>
+                  </ion-col>
+                </ion-row>
               </ion-list>
               
-
+      
             </div>
-
+      
             <div style="margin-top : 10px;" *ngSwitchCase="'s'">
-
+      
               <ion-card-header>
                 <ion-card-title>Subcontractors</ion-card-title>
                 <ion-label > Total: {{ subcontractortotal }} </ion-label>
               </ion-card-header>
-    
+      
               <ion-list>
                 <ion-row>
                   <ion-col>
@@ -530,53 +596,68 @@
                   <ion-col>
                     <ion-item>
                       <ion-label>Subcontractors</ion-label>
-                      <ion-select (ionChange)="calculate()"  multiple="true"  [(ngModel)]="subcontractor" placeholder="Select subcontractor">
+                      <ion-select (ionChange)="pushtosubcontractor()"  multiple="true"  [(ngModel)]="subcontractor" placeholder="Select subcontractor">
                         <ion-select-option *ngFor="let item of subcontractorList" [value]="item">{{ item.name }}</ion-select-option>
                       </ion-select>
+                      <ion-button (click)="SelectallSubcontractor()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
+                      </ion-button>
+                      <ion-button (click)="RemoveallSubcontractor()" style="--padding-start : 0px" fill="clear" >
+                        <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
+                      </ion-button>
                     </ion-item>
                   </ion-col>
                 </ion-row>
               </ion-list>
-    
-    
+      
+      
               <ion-list>
-                <ion-card *ngFor="let mat of subcontractor" >
-                   <ion-card-header>
-                     <ion-card-title>{{mat.name}}</ion-card-title>
-                   </ion-card-header>
-                   <ion-row>
-                     <ion-col style="padding-left: 10px;">
-    
-                        <ion-text>
-                          <ion-label>
-                            Unit : {{mat.unit}}
-                          </ion-label> <br/>
-                          <ion-label>
-                           Price : {{mat.price}}
-                         </ion-label>
-                         </ion-text>
-                     </ion-col>
-    
-                     <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Percentage %</ion-label>
-                         <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
-                       </ion-item>
-                       <ion-item>
-                        <ion-label position="floating">Quantity</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
-                      </ion-item>
-                      <ion-item>
-                        <ion-label position="floating">Note</ion-label>
-                        <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
-                      </ion-item>
-                     </ion-col>
-                   </ion-row>
-    
-                </ion-card>
+                <ion-row>
+                  <ion-col *ngFor="let mat of Addedsubcontractor" size=6>
+                    <ion-card >
+                      <ion-card-header>
+                        <ion-item>
+                          <ion-card-title>{{mat.name}}</ion-card-title>
+                          <ion-button slot="end" fill="clear" (click)="Sdelitem(mat)">
+                            <ion-icon color="danger" name="trash"></ion-icon>
+                          </ion-button>
+                        </ion-item>
+                      </ion-card-header>
+                      <ion-row>
+                        <ion-col style="padding-left: 10px;">
+         
+                           <ion-text>
+                             <ion-label>
+                               Unit : {{mat.unit}}
+                             </ion-label> <br/>
+                             <ion-label>
+                              Price : {{mat.price}}
+                            </ion-label>
+                            </ion-text>
+                        </ion-col>
+         
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Percentage %</ion-label>
+                            <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                           <ion-label position="floating">Quantity</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty"  type="number"></ion-input>
+                         </ion-item>
+                         <ion-item>
+                           <ion-label position="floating">Note</ion-label>
+                           <ion-input (ionChange)="calculate()" [(ngModel)]="mat.note"  type="text"></ion-input>
+                         </ion-item>
+                        </ion-col>
+                      </ion-row>
+         
+                   </ion-card>
+                  </ion-col>
+                </ion-row>
               </ion-list>
               
-
+      
             </div>
             </div>
             <br/><br/>
