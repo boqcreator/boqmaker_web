@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AddboqitemGPage } from '../addboqitem-g/addboqitem-g.page';
-import { ModalController, MenuController } from '@ionic/angular';
+import { ModalController, MenuController, LoadingController, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
@@ -13,10 +13,13 @@ export class BoqitemGPage implements OnInit {
   term;
   constructor(private modalController: ModalController,
      private menu : MenuController,
-     private afs : AngularFirestore
+     private alertController: AlertController,
+     private afs : AngularFirestore,
+     private loadingController: LoadingController
      ) {
     this.menu.enable(false)
-    this.afs.collection(`boq/boq/generalboqitems`).get().subscribe(value =>{
+    this.presentLoading()
+    this.afs.collection(`boq/boq/generalboqitems`, ref => ref.orderBy("id", "asc")).get().subscribe(value =>{
       value.docs.forEach(doc =>{
       this.itemList.push({
         id :doc.data().id ,
@@ -26,6 +29,7 @@ export class BoqitemGPage implements OnInit {
         price : doc.data().price 
       })
       })
+      this.loadingController.dismiss()
     })
    }
 
@@ -36,7 +40,47 @@ export class BoqitemGPage implements OnInit {
     
   }
   edit(item){
+
+  }
+  async delall(){
+      const alert = await this.alertController.create({
+        header: 'Confirm!',
+        message: ' <strong>Are you sure you want to delete all boqitems</strong>?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Delete',
+            handler: async () => {
+              
+                  
+      const loading = await this.loadingController.create({
+        message: 'Deleting...',
+        duration: 20000,
+        spinner: 'bubbles'
+      });
+      await loading.present();
+
+    this.afs.collection(`boq/boq/generalboqitems`).get().subscribe(value=>{
+
+      value.docs.forEach(doc =>{
+        this.afs.doc(`boq/boq/generalboqitems/${doc.ref.id}`).delete()
+      })
+      this.loadingController.dismiss()
+      this.itemList = [];
+    })
+            }
+          }
+        ]
+      });
     
+      await alert.present();
+
   }
 
   async addnew(){
@@ -47,6 +91,14 @@ export class BoqitemGPage implements OnInit {
       await modal.present();
     
  
+  }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading data',
+      duration: 20000,
+      spinner: 'bubbles'
+    });
+    await loading.present();
   }
 
 }

@@ -11,57 +11,60 @@
   <ion-content  scrollY=true scrollX=false >
 
  
-        <div class="ex1">
-          <ion-toolbar>
-            <ion-searchbar [(ngModel)]="term1" placeholder="Filter Category" ></ion-searchbar>
-          </ion-toolbar>
-          <ion-radio-group [(ngModel)]="SelCat">
-          <p *ngFor="let item of category | filter:term1" >
-            <ion-item>
-              <ion-label>{{item.payload.doc.data().name}}</ion-label>
-              <ion-radio (click)="getsubcat(item)" slot="end" [value]="item"></ion-radio>
-            </ion-item>
-             </p> 
-            </ion-radio-group>
-        </div>
+    <div class="ex1">
+      <ion-toolbar>
+        <ion-searchbar [(ngModel)]="term1" placeholder="Filter Category" ></ion-searchbar>
+      </ion-toolbar>
+      <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="SelCat">
+      <p *ngFor="let item of category | filter:term1" >
+        <ion-item>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-radio  slot="end" [value]="item.id"></ion-radio>
+        </ion-item>
+         </p> 
+        </ion-radio-group>
+    </div>
+
+    <div class="ex1">
+      <ion-toolbar>
+        <ion-searchbar [(ngModel)]="term2" placeholder="Filter Subcategory" ></ion-searchbar>
+      </ion-toolbar>
+      <ion-radio-group (ionChange)="getsubsubcat()" [(ngModel)]="SsubCat">
+      <p *ngFor="let item of subcat | filter:term2" >
+        <ion-item>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-radio   slot="end" [value]="item.id" ></ion-radio>
+        </ion-item>
+         </p> 
+        </ion-radio-group>
+    </div>
+  
+    <div class="ex1">
+      <ion-toolbar>
+        <ion-searchbar [(ngModel)]="term3" placeholder="Filter Subcategory" ></ion-searchbar>
+      </ion-toolbar>
+      <ion-radio-group (ionChange)="getareas()" [(ngModel)]="SsubsubCat">
+      <p *ngFor="let item of subsubcat | filter:term3" >
+        <ion-item>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-radio  slot="end" [value]="item.id" ></ion-radio>
+        </ion-item>
+         </p> 
+        </ion-radio-group>
+    </div>
+
 
         <div class="ex1">
           <ion-toolbar>
-            <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
-          </ion-toolbar>
-          <ion-radio-group *ngIf="subcat" [(ngModel)]="SsubCat">
-          <p *ngFor="let item of subcat" >
-            <ion-item>
-              <ion-label>{{item.data().name}}</ion-label>
-              <ion-radio  (click)="getsubsubcat(item)" slot="end" [value]="item" ></ion-radio>
-            </ion-item>
-             </p> 
-            </ion-radio-group>
-        </div>
-
-        <div class="ex1">
-          <ion-toolbar>
-            <ion-searchbar placeholder="Filter Subcategory" ></ion-searchbar>
-          </ion-toolbar>
-          <ion-radio-group *ngIf="subsubcat" [(ngModel)]="SsubsubCat">
-          <p *ngFor="let item of subsubcat" >
-            <ion-item>
-              <ion-label>{{item.data().name}}</ion-label>
-              <ion-radio  (click)="getareas(item)" slot="end" [value]="item" ></ion-radio>
-            </ion-item>
-             </p> 
-            </ion-radio-group>
-        </div>
-
-
-        <div class="ex1">
-          <ion-toolbar>
-            <ion-searchbar placeholder="Filter Areas" ></ion-searchbar>
+            <ion-searchbar [(ngModel)]="term4" placeholder="Filter Areas" ></ion-searchbar>
           </ion-toolbar>
           <ion-radio-group *ngIf="areas" >
-          <p *ngFor="let item of areas" >
+          <p *ngFor="let item of areas | filter:term4" >
             <ion-item>
-              <ion-label>{{item.data().name}}</ion-label>
+              <ion-avatar class="item-avatar" style="margin-right: 7px;" *ngIf="item.image" >
+                <img [src]="item.image" />
+              </ion-avatar> 
+              <ion-label>{{item.name}}</ion-label>
               <ion-button style="--padding-end: 0px;" fill="clear">
                 <ion-icon slot="icon-only" name="create"></ion-icon>
               </ion-button>

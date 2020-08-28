@@ -41,6 +41,17 @@ export class AddprojectPage implements OnInit {
   caddress =""
   cemail= "";
   cphoneno = ""
+
+  F1 = "";
+  F2 = "";
+  F3 = "";
+  F4 = "";
+  F5 = "";
+  F6 = "";
+  F7 = "";
+  F8 = "";
+  F9 = "";
+  F10 = "";
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
@@ -175,7 +186,17 @@ export class AddprojectPage implements OnInit {
           clientname : this.client,
           clientaddress : this.caddress,
           clientemail : this.cemail,
-          clientohoneno : this.cphoneno
+          clientohoneno : this.cphoneno,
+          F1 :  this.F1 ,
+          F2 :  this.F2 ,
+          F3 :  this.F3 ,
+          F4 :  this.F4 ,
+          F5 :  this.F5 ,
+          F6 :  this.F6 ,
+          F7 :  this.F7 ,
+          F8 :  this.F8 ,
+          F9 :  this.F9 ,
+          F10 :  this.F10 ,
 
         }) .then(()=>{
           loading.dismiss();

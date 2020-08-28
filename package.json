@@ -38,6 +38,7 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-sqlite-storage": "^5.0.1",
     "dom-to-image": "^2.6.0",
+    "emailjs-com": "^2.6.3",
     "firebase": "^7.15.5",
     "firebase-tools": "^8.4.3",
     "html-to-pdfmake": "^2.0.10",

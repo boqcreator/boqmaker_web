@@ -11,3 +11,69 @@
 p{
     margin: 0px;
 }
+
+.ex1 {
+    height: 100%;
+    width: 25%;
+    overflow-y: scroll;
+    display: inline-block;
+    border: solid 1px grey;
+  }
+  ion-content{
+      display: table;
+  }
+p{
+    margin: 0px;
+}
+ion-avatar{
+    --border-radius : 10px;
+}
+
+.alertDanger{
+    background-color: white;
+    color: red;
+    button{
+        color: red;
+    }
+}
+
+ion-select{
+    white-space: normal !important;
+}
+ion-select-option{
+    white-space: normal !important;
+}
+ion-label , ion-input{
+font-size: small;
+}
+ion-item{
+    font-size: small;;
+}
+ion-segment-button{
+    ion-label{
+        font-size: small;
+    }
+}
+
+ion-item{
+    font-size: 12px;
+    --min-height: 28px;
+    --padding-top: 0px;
+    --inner-padding-top: 0px;
+    --padding-bottom: 0px;
+    --inner-padding-bottom: 0px;
+  }
+
+  .item-avatar  {     
+    width:100% !important;  
+    height : 100% !important;  
+    max-width: 30px !important;  //any size
+    max-height: 30px !important; //any size 
+    }
+    .pu{
+        padding: 0px;
+        margin: 0px;
+        font-size: 11px;
+        line-height: initial;
+    }
+  

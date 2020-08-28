@@ -38,14 +38,28 @@
         </div>
       </nav><!-- #site-navigation -->
     </div><!-- .col-sm-9 -->
-    <ion-button style="float: right;margin-top: 8px;" (click)="exporttoPDF()" fill="clear" color="primary">
-      <ion-icon size="large" slot="start" src="assets/icon/pdf.svg"></ion-icon>
-    </ion-button>
+    <span style="float: right;margin-top: 8px;">
+      <span title="Show/Hide Rata&Total">
+        <ion-icon style="cursor: pointer;" (click)="SH()" size="large" slot="start" [name]="eye"></ion-icon>
+      </span> 
+      <span title="Export to PDF">
+        <ion-icon style="cursor: pointer;" (click)="exporttoPDF()" size="large" slot="start" src="assets/icon/pdf.svg"></ion-icon>
+      </span> 
+      <span title="Export to Excel">
+        <ion-icon style="margin-right: 15px;cursor: pointer;" (click)="exporttoExcel()" size="large" slot="start" src="assets/icon/excel.svg"></ion-icon>
+      </span>
 
+      <!-- <span title="Send an Email">
+        <ion-icon style="margin-right: 15px;cursor: pointer;" (click)="sendEmail($event)" size="large" slot="start" name="mail"></ion-icon>
+      </span> -->
+      
+          
+  </span>
 
 </ion-header>
 
 <ion-content>
+
   <ion-grid>
     <ion-row>
       <ion-col size="6">
@@ -55,10 +69,10 @@
               <ion-select multiple="true" class="select-test" (ionChange)="getFloors()" [(ngModel)]="BuildingID"  placeholder="Select Building" >
                 <ion-select-option *ngFor="let item of BuildingList" [value]="item.id" > {{ item.name }} </ion-select-option>
               </ion-select>
-              <ion-button (click)="SelectallAbuildings()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Select all"  (click)="SelectallAbuildings()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
              </ion-button>
-             <ion-button (click)="RemoveallAbuildings()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+             <ion-button title="Unselect all" (click)="RemoveallAbuildings()" style="--padding-start : 0px" class="addbtn" fill="clear" >
               <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
             </ion-button>
             </ion-item>
@@ -67,10 +81,10 @@
               <ion-select multiple="true" (ionChange)="getsubcats()" [(ngModel)]="CatID"  interface="popover" placeholder="Select Category">
                 <ion-select-option *ngFor="let citem of CatList" [value]="citem.id" > {{ citem.name }}</ion-select-option>
               </ion-select>
-              <ion-button (click)="SelectallACat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Select all" (click)="SelectallACat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
               </ion-button>
-              <ion-button (click)="RemoveallACat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Unselect all" (click)="RemoveallACat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
               </ion-button>
             </ion-item>
@@ -79,10 +93,10 @@
               <ion-select multiple="true" (ionChange)="getsubsubcats()"  [(ngModel)]="SubcatID"  placeholder="Select Subcategory">
                 <ion-select-option *ngFor="let sitem of SubcatList" [value]="sitem.id"  > {{ sitem.name }}</ion-select-option>
               </ion-select>
-              <ion-button (click)="SelectallASubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Select all" (click)="SelectallASubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
               </ion-button>
-              <ion-button (click)="RemoveallASubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Unselect all" (click)="RemoveallASubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
               </ion-button>
             </ion-item>
@@ -91,10 +105,10 @@
               <ion-select multiple="true" (ionChange)="getareas()"  [(ngModel)]="SubsubcatID" placeholder="Select Sub-subcategory">
                 <ion-select-option *ngFor="let ssitem of SubsubcatList" [value]="ssitem.id"  > {{ ssitem.name }}</ion-select-option>
               </ion-select>
-              <ion-button (click)="SelectallASubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Select all" (click)="SelectallASubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
               </ion-button>
-              <ion-button (click)="RemoveallASubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Unselect all" (click)="RemoveallASubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
               </ion-button>
             </ion-item>
@@ -103,10 +117,10 @@
               <ion-select multiple="true" [(ngModel)]="AreaID" placeholder="Select Area">
                 <ion-select-option *ngFor="let aitem of AreaList" [value]="aitem.id"> {{ aitem.name }}</ion-select-option>
               </ion-select>
-              <ion-button (click)="SelectallAreas()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Select all" (click)="SelectallAreas()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
               </ion-button>
-              <ion-button (click)="RemoveallAreas()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+              <ion-button title="Unselect all" (click)="RemoveallAreas()" style="--padding-start : 0px" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
               </ion-button>
             </ion-item>
@@ -117,10 +131,10 @@
           <ion-select multiple="true" (ionChange)="getcats()" [(ngModel)]="FloorID" placeholder="Select Floor">
             <ion-select-option *ngFor="let fitem of FloorList" [value]="fitem.id" > {{ fitem.name }} </ion-select-option>
           </ion-select>
-          <ion-button (click)="SelectallAfloors()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Select all" (click)="SelectallAfloors()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
           </ion-button>
-          <ion-button (click)="RemoveallAfloors()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Unselect all" (click)="RemoveallAfloors()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
           </ion-button>
         </ion-item>
@@ -129,10 +143,10 @@
           <ion-select multiple="true" (ionChange)="getitemsubcat()" [(ngModel)]="IcatID"   placeholder="Select Category">
             <ion-select-option *ngFor="let icitem of IcatList" [value]="icitem.id" > {{ icitem.name }}</ion-select-option>
           </ion-select>
-          <ion-button (click)="SelectallIcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Select all" (click)="SelectallIcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
           </ion-button>
-          <ion-button (click)="RemoveallIcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Unselect all" (click)="RemoveallIcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
           </ion-button>
         </ion-item>
@@ -141,10 +155,10 @@
           <ion-select multiple="true" (ionChange)="getitemsubsubcat()" [(ngModel)]="IsubcatID"  placeholder="Select Subcategory">
             <ion-select-option *ngFor="let isitem of IsubcatList" [value]="isitem.id"  > {{ isitem.name }}</ion-select-option>
           </ion-select>
-          <ion-button (click)="SelectallIsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Select all" (click)="SelectallIsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
           </ion-button>
-          <ion-button (click)="RemoveallIsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Unselect all" (click)="RemoveallIsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
           </ion-button>
         </ion-item>
@@ -153,10 +167,10 @@
           <ion-select multiple="true" (ionChange)="getitem()" [(ngModel)]="IsubsubcatID"   placeholder="Select Sub-subcategory">
             <ion-select-option *ngFor="let issitem of IsubsubcatList" [value]="issitem.id"  > {{ issitem.name }}</ion-select-option>
           </ion-select>
-          <ion-button (click)="SelectallIsubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Select all" (click)="SelectallIsubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
           </ion-button>
-          <ion-button (click)="RemoveallIsubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Unselect all" (click)="RemoveallIsubsubcat()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
           </ion-button>
         </ion-item>
@@ -165,14 +179,13 @@
           <ion-select multiple="true" [(ngModel)]="ItemID"  placeholder="Select Item">
             <ion-select-option *ngFor="let item of ItemList" [value]="item.id"  > {{ item.name }} </ion-select-option>
           </ion-select>
-          <ion-button (click)="SelectallItem()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Select all" (click)="SelectallItem()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
           </ion-button>
-          <ion-button (click)="RemoveallItem()" style="--padding-start : 0px" class="addbtn" fill="clear" >
+          <ion-button title="Unselect all" (click)="RemoveallItem()" style="--padding-start : 0px" class="addbtn" fill="clear" >
             <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
           </ion-button>
         </ion-item>
-
       </ion-col>
     </ion-row>
     <ion-button style="width: 30%; margin-left: auto; margin-right: auto;margin-top: 5px;margin-bottom: 5px;" (click)="Filter()" expand="block" >
@@ -195,27 +208,26 @@
 									<th class="cell100 column1">Description</th>
 									<th class="cell100 column2">Quantity</th>
 									<th class="cell100 column3">Unit</th>
-									<th class="cell100 column4">Rate</th>
-									<th class="cell100 column5">Total</th>
+									<th [style.display]="showhide"  class="cell100 column4">Rate</th>
+									<th [style.display]="showhide"  class="cell100 column5">Total</th>
                 </tr>
               </thead>
-            
 						</table>
 					</div>
 
 					<div class="table100-body js-pscroll">
-						<table>
+						<table id="excel-table" >
 							<tbody>
 							<tr *ngFor="let item of ItemsList"  class="row100 body">
 									<td class="cell100 column1">{{item.name}}</td>
 									<td class="cell100 column2">{{item.qty}}</td>
 									<td class="cell100 column3">{{item.unit}}</td>
-									<td class="cell100 column4">{{item.rate}}</td>
-									<td class="cell100 column5">{{item.total}}</td>
+									<td [style.display]="showhide" class="cell100 column4">{{item.rate | number:'0.0-3'}}</td>
+									<td [style.display]="showhide" class="cell100 column5">{{item.total | number:'0.0-3'}}</td>
                 </tr>
                 <tr style="text-align: right;" >
-                  <td colspan="1000" style="text-align: right; padding-right:80px;" >
-                    Grand total : <span style="color: maroon;"> {{totalPrice}} </span> 
+                  <td [style.display]="showhide"  colspan="1000" style="text-align: right; padding-right:80px;" >
+                    Grand total : <span style="color: maroon;"> {{totalPrice | number:'0.0-3'}} </span> 
                   </td>
                 </tr>
 							</tbody>

@@ -1,3 +1,20 @@
 .alert-radio-label.sc-ion-alert-md {
     white-space: pre-line !important;
   }
+  ion-select{
+    white-space: normal !important;
+}
+ion-select-option{
+    white-space: normal !important;
+}
+ion-label , ion-input{
+font-size: small;
+}
+ion-item{
+    font-size: small;;
+}
+ion-segment-button{
+    ion-label{
+        font-size: small;
+    }
+}

@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Subcontractor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card-header>
+    <ion-card-title>Subcontractors</ion-card-title>
+    <ion-label > Total: {{ subcontractortotal }} </ion-label>
+  </ion-card-header>
+
+  <ion-list>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label class="ion-text-wrap" >Subcontractor Category</ion-label>
+          <ion-select (ionChange)="getSsubcat()" [(ngModel)]="SCatID" placeholder="Select subcontractor Category">
+            <ion-select-option  *ngFor="let item of ScatList" [value]="item.id">{{ item.name }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+    <ion-item>
+      <ion-label>Subcontractor Subcategory</ion-label>
+      <ion-select (ionChange)="getsubcontractors()" [(ngModel)]="SSubcatID" placeholder="Select Subcategory">
+        <ion-select-option *ngFor="let item of SsubcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Subcontractors</ion-label>
+          <ion-select (ionChange)="pushtosubcontractor()"  multiple="true"  [(ngModel)]="subcontractor" placeholder="Select subcontractor">
+            <ion-select-option *ngFor="let item of subcontractorList" [value]="item">{{ item.name }}</ion-select-option>
+          </ion-select>
+          <ion-button (click)="SelectallSubcontractor()" style="--padding-start : 0px" fill="clear" >
+            <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
+          </ion-button>
+          <ion-button (click)="RemoveallSubcontractor()" style="--padding-start : 0px" fill="clear" >
+            <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
+          </ion-button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="addsubcontractor()" expand="block" fill="clear">
+          Add
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+
+
+  <ion-list>
+    <ion-row>
+      <ion-col *ngFor="let mat of Addedsubcontractor" size=6>
+        <ion-card >
+          <ion-card-header>
+            <ion-item>
+              <ion-card-title>{{mat.name}}</ion-card-title>
+              <ion-button slot="end" fill="clear" (click)="Sdelitem(mat)">
+                <ion-icon color="danger" name="trash"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-card-header>
+          <ion-row>
+            <ion-col style="padding-left: 10px;">
+               <ion-text>
+                 <ion-label>
+                   Unit : {{mat.unit}}
+                 </ion-label> <br/>
+                 <ion-label>
+                  Price : {{mat.price}}
+                </ion-label>
+                </ion-text>
+            </ion-col>
+
+
+            <ion-col>
+             <ion-item>
+               <ion-label position="floating">Quantity</ion-label>
+               <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty" value=1 type="number"></ion-input>
+             </ion-item>
+            </ion-col>
+          </ion-row>
+
+       </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+  
+
+</ion-content>

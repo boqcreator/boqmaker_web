@@ -17,23 +17,23 @@
   <ion-searchbar [(ngModel)]="term" placeholder="Filter boqitem" type="text" [debounce]="250" showCancelButton="always"></ion-searchbar>
   <table *ngIf="itemList.length > 0" > 
     <tr>
-      <th>Action</th>
-      <th>Code</th>
+      <th style="padding-left:5px;">Action</th>
+      <th style="width: 14%;">Code</th>
       <th>Name</th>
       <th>Unit</th>
-      <th>Price</th>
+      <th style="width: 10%;">Price</th>
     </tr>
 
       <tr *ngFor="let item of itemList| filter:term">
-        <td>
+        <td style="align-items: center; text-align: center;">
           <ion-radio-group [(ngModel)]="Selecteditem">
           <ion-radio [value]="item"></ion-radio>
         </ion-radio-group>
         </td>
-        <td>{{item.code}}</td>
+        <td  style="width: 14%;">{{item.code}}</td>
         <td>{{item.name}}</td>
         <td>{{item.unit}}</td>
-        <td>{{item.price}}</td>
+        <td style="width: 10%;">{{item.price | number:'0.0-3'}}</td>
       </tr>
 
   </table>

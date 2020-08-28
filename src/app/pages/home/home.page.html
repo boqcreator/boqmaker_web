@@ -27,7 +27,7 @@
             <div class="col-sm-3">
               <div class="site-branding">
                 <h1 class="site-title title-image"><a href="index-2.html" rel="home">
-                  <img style="color: black;max-height: 200px; width: 160px;" src="assets/logo.png" alt="BoqMaker" class="img-responsive"></a></h1>
+                  <img style="color: black;max-height: 200px; width: 160px; border-radius: 10px;" src="assets/boqlogo.jpg" alt="BoqMaker" class="img-responsive"></a></h1>
               </div><!-- .site-branding -->
             </div><!-- .col-sm-3 -->
   
@@ -48,11 +48,14 @@
                     <li aria-haspopup="true" class="menu-item menu-item-has-children"><a style="color: black;font-weight: bold;cursor: pointer;">Libraries</a>
                       <ul style="background-color: whitesmoke;" class="sub-menu">
                         <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" (click)="gotogbi()">General Boqitems library</a></li>
+                        <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" (click)="gotogal()">General Areas library</a></li>
                       </ul>
                     </li>
                     <li class="menu-item menu-item-has-children" aria-haspopup="true"><a style="color: black;font-weight: bold;" >Data</a>
                       <ul style="background-color: whitesmoke;" class="sub-menu">
-                        <li class="menu-item menu-item-has-children" aria-haspopup="true"><a (click)="gotoArea()" style="cursor: pointer; color: black; font-weight: bold;" >Areas</a>
+                        <li class="menu-item menu-item-has-children" aria-haspopup="true"><a (click)="gotoArea()" style="cursor: pointer; color: black; font-weight: bold;" >
+                          Areas
+                        </a>
                           <ul style="background-color: whitesmoke;" class="sub-menu">
                             <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" (click)="gotoArea()" >Areas Categories</a></li>
                             <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" >Areas Subcategories</a></li>
@@ -67,6 +70,7 @@
                         <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" (click)="gotoequipment()">Equipments</a></li>
                         <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" (click)="gotosubcontractor()">Subcontractor</a></li>
                         <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" (click)="gotoother()">Others</a></li>
+                        <li class="menu-item"><a style="cursor: pointer; color: black; font-weight: bold;" (click)="gotocastdetails()">Cost details</a></li>
                       </ul>
                     </li>
                     <li class="menu-item"><a style="color: black; cursor: pointer;font-weight: bold;" (click)="gotoReport()">Reports</a></li>
@@ -86,9 +90,26 @@
       <div class="row">
         <div class="col-sm-5">
           <div class="header-caption">
-            <span class="caption-subtitle" style="color: black;">Our Service</span>
-            <h2 class="caption-title" style="color: black;" >We are your best homes, offices renovations and construction solution.</h2>
-            <p style="color: black;" >We provide overall planning, coordination and control of a project, so you don’t have to worry about anything. Our promise as a contractor is to build community value into every project while delivering professional expertise.</p>
+            <span class="caption-subtitle" style="color: black;">boqmaker.com</span>
+            <h5 class="caption-title" style="color: black;" >
+              Cloud-based construction estimating software for
+              preparing bills of quantities
+            </h5>
+            <!-- <p style="color: black;" >
+              Enter complete measurements for different
+              types of buildin elements such as foundations,
+              columns, internal rooms, elevations, etc. With adding
+              openings details and projections details for each area.</p>
+              <p style="color: black;" >
+                Get final results and differenet types of reports
+                such as complete priced bill of quantities, un priced bill of quantities and 
+                other different reports.</p>
+                <p style="color: black;" >
+                  Get Final results and different types
+                  of reports such as complete priced
+                  bill of quantities , un priced bill of
+                  quantities and other different
+                  reports.</p> -->
           </div><!-- .header-caption -->
         </div><!-- .col-sm-5 -->
       </div><!-- .row -->
@@ -135,7 +156,7 @@
                 <ion-icon name="home" ></ion-icon>
               </div><!-- .contact-item-icon -->
               <h4 class="contact-item-title">Company:</h4>
-              <div class="contact-item-info">Al Dhahrani</div>
+              <div class="contact-item-info">BoqMaker</div>
             </div><!-- .contact-item -->
           </div><!-- .col-# -->
         </div><!-- .row -->

@@ -104,6 +104,135 @@ export class AddboqitemPage implements OnInit {
   Addedsubcontractor = [];
   Addedother = [];
 
+
+
+
+boq1A = 0;
+boq1B = 0;
+boq1C = 0;
+boq1D = 0;
+boq1E = 0;
+boq1F = 0;
+boq1G = 0;
+boq1H = 0;
+boq1I = 0;
+boq1J = 0;
+boq1K = 0;
+boq1L = 0;
+boq1M = 0;
+boq1N = 0;
+boq1O = 0;
+boq1P = 0;
+boq1Q = 0;
+boq1R = 0;
+boq1S = 0;
+boq1T = 0;
+boq1U = '';
+boq1V = '';
+boq1W = '';
+boq1X = '';
+boq1Y = '';
+boq1Z = '';
+boq1AA = '';
+boq1AB = '';
+boq1AC = '';
+boq1AD = '';
+boq1AE = '';
+boq1AF = '';
+boq1AG = '';
+boq1AH = '';
+boq1AI = '';
+boq1AJ = '';
+boq1AK = '';
+boq1AL = '';
+boq1AM = '';
+boq1AN = '';
+boq1AO = '';
+
+boq2A = 0;
+boq2B = 0;
+boq2C = 0;
+boq2D = 0;
+boq2E = 0;
+boq2F = 0;
+boq2G = 0;
+boq2H = 0;
+boq2I = 0;
+boq2J = 0;
+boq2K = 0;
+boq2L = 0;
+boq2M = 0;
+boq2N = 0;
+boq2O = 0;
+boq2P = 0;
+boq2Q = 0;
+boq2R = 0;
+boq2S = 0;
+boq2T = 0;
+boq2U = '';
+boq2V = '';
+boq2W = '';
+boq2X = '';
+boq2Y = '';
+boq2Z = '';
+boq2AA = '';
+boq2AB = '';
+boq2AC = '';
+boq2AD = '';
+boq2AE = '';
+boq2AF = '';
+boq2AG = '';
+boq2AH = '';
+boq2AI = '';
+boq2AJ = '';
+boq2AK = '';
+boq2AL = '';
+boq2AM = '';
+boq2AN = '';
+boq2AO = '';
+
+boq3A = 0;
+boq3B = 0;
+boq3C = 0;
+boq3D = 0;
+boq3E = 0;
+boq3F = 0;
+boq3G = 0;
+boq3H = 0;
+boq3I = 0;
+boq3J = 0;
+boq3K = 0;
+boq3L = 0;
+boq3M = 0;
+boq3N = 0;
+boq3O = 0;
+boq3P = 0;
+boq3Q = 0;
+boq3R = 0;
+boq3S = 0;
+boq3T = 0;
+boq3U = '';
+boq3V = '';
+boq3W = '';
+boq3X = '';
+boq3Y = '';
+boq3Z = '';
+boq3AA = '';
+boq3AB = '';
+boq3AC = '';
+boq3AD = '';
+boq3AE = '';
+boq3AF = '';
+boq3AG = '';
+boq3AH = '';
+boq3AI = '';
+boq3AJ = '';
+boq3AK = '';
+boq3AL = '';
+boq3AM = '';
+boq3AN = '';
+boq3AO = '';
+
   constructor(private afs : AngularFirestore,
     public loadingController: LoadingController,
     private storage : Storage,
@@ -267,6 +396,131 @@ export class AddboqitemPage implements OnInit {
             equipmenttotal : this.equipmenttotal,
             othertotal :     this.othertotal,
             subcontractortotal : this.subcontractortotal,
+            boq1A : this.boq1A,
+            boq1B : this.boq1B,
+            boq1C : this.boq1C,
+            boq1D : this.boq1D,
+            boq1E : this.boq1E,
+            boq1F : this.boq1F,
+            boq1G : this.boq1G,
+            boq1H : this.boq1H,
+            boq1I : this.boq1I,
+            boq1J : this.boq1J,
+            boq1K : this.boq1K,
+            boq1L : this.boq1L,
+            boq1M : this.boq1M,
+            boq1N : this.boq1N,
+            boq1O : this.boq1O,
+            boq1P : this.boq1P,
+            boq1Q : this.boq1Q,
+            boq1R : this.boq1R,
+            boq1S : this.boq1S,
+            boq1T : this.boq1T,
+            boq1U : this.boq1U,
+            boq1V : this.boq1V,
+            boq1W : this.boq1W,
+            boq1X : this.boq1X,
+            boq1Y : this.boq1Y,
+            boq1Z : this.boq1Z,
+            boq1AA : this.boq1AA,
+            boq1AB : this.boq1AB,
+            boq1AC : this.boq1AC,
+            boq1AD : this.boq1AD,
+            boq1AE : this.boq1AE,
+            boq1AF : this.boq1AF,
+            boq1AG : this.boq1AG,
+            boq1AH : this.boq1AH,
+            boq1AI : this.boq1AI,
+            boq1AJ : this.boq1AJ,
+            boq1AK : this.boq1AK,
+            boq1AL : this.boq1AL,
+            boq1AM : this.boq1AM,
+            boq1AN : this.boq1AN,
+            boq1AO : this.boq1AO,
+
+            boq2A : this.boq2A,
+            boq2B : this.boq2B,
+            boq2C : this.boq2C,
+            boq2D : this.boq2D,
+            boq2E : this.boq2E,
+            boq2F : this.boq2F,
+            boq2G : this.boq2G,
+            boq2H : this.boq2H,
+            boq2I : this.boq2I,
+            boq2J : this.boq2J,
+            boq2K : this.boq2K,
+            boq2L : this.boq2L,
+            boq2M : this.boq2M,
+            boq2N : this.boq2N,
+            boq2O : this.boq2O,
+            boq2P : this.boq2P,
+            boq2Q : this.boq2Q,
+            boq2R : this.boq2R,
+            boq2S : this.boq2S,
+            boq2T : this.boq2T,
+            boq2U : this.boq2U,
+            boq2V : this.boq2V,
+            boq2W : this.boq2W,
+            boq2X : this.boq2X,
+            boq2Y : this.boq2Y,
+            boq2Z : this.boq2Z,
+            boq2AA : this.boq2AA,
+            boq2AB : this.boq2AB,
+            boq2AC : this.boq2AC,
+            boq2AD : this.boq2AD,
+            boq2AE : this.boq2AE,
+            boq2AF : this.boq2AF,
+            boq2AG : this.boq2AG,
+            boq2AH : this.boq2AH,
+            boq2AI : this.boq2AI,
+            boq2AJ : this.boq2AJ,
+            boq2AK : this.boq2AK,
+            boq2AL : this.boq2AL,
+            boq2AM : this.boq2AM,
+            boq2AN : this.boq2AN,
+            boq2AO : this.boq2AO,
+
+            boq3A : this.boq3A,
+            boq3B : this.boq3B,
+            boq3C : this.boq3C,
+            boq3D : this.boq3D,
+            boq3E : this.boq3E,
+            boq3F : this.boq3F,
+            boq3G : this.boq3G,
+            boq3H : this.boq3H,
+            boq3I : this.boq3I,
+            boq3J : this.boq3J,
+            boq3K : this.boq3K,
+            boq3L : this.boq3L,
+            boq3M : this.boq3M,
+            boq3N : this.boq3N,
+            boq3O : this.boq3O,
+            boq3P : this.boq3P,
+            boq3Q : this.boq3Q,
+            boq3R : this.boq3R,
+            boq3S : this.boq3S,
+            boq3T : this.boq3T,
+            boq3U : this.boq3U,
+            boq3V : this.boq3V,
+            boq3W : this.boq3W,
+            boq3X : this.boq3X,
+            boq3Y : this.boq3Y,
+            boq3Z : this.boq3Z,
+            boq3AA : this.boq3AA,
+            boq3AB : this.boq3AB,
+            boq3AC : this.boq3AC,
+            boq3AD : this.boq3AD,
+            boq3AE : this.boq3AE,
+            boq3AF : this.boq3AF,
+            boq3AG : this.boq3AG,
+            boq3AH : this.boq3AH,
+            boq3AI : this.boq3AI,
+            boq3AJ : this.boq3AJ,
+            boq3AK : this.boq3AK,
+            boq3AL : this.boq3AL,
+            boq3AM : this.boq3AM,
+            boq3AN : this.boq3AN,
+            boq3AO : this.boq3AO,
        }).then((value)=>{
          if(this.pic){
           var imagepath
@@ -681,9 +935,6 @@ RemoveallEquipment(){
 }
 
 //**************************   OTHER    **************************
-
-
-
 
 
  getotherCat(){

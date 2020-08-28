@@ -49,8 +49,8 @@
 
           <ion-item>
             <ion-label class="ion-text-wrap" >Category</ion-label>
-            <ion-select [(ngModel)]="SelectedCat" placeholder="Select Category">
-              <ion-select-option  *ngFor="let item of catList" [value]="item">{{ item.data().name }}</ion-select-option>
+            <ion-select (ionChange)="getSubcat()" [(ngModel)]="CatID" placeholder="Select Category">
+              <ion-select-option  *ngFor="let item of catList" [value]="item.id">{{ item.name }}</ion-select-option>
             </ion-select>
           </ion-item>
 
@@ -72,15 +72,15 @@
           <ion-list>
   
             <ion-item>
-              <ion-label>Category</ion-label>
-              <ion-select (ionChange)="getSubcat(SelectedCat)" [(ngModel)]="SelectedCat" placeholder="Select Category">
-                <ion-select-option  *ngFor="let item of catList" [value]="item">{{ item.data().name }}</ion-select-option>
+              <ion-label class="ion-text-wrap" >Category</ion-label>
+              <ion-select (ionChange)="getSubcat()" [(ngModel)]="CatID" placeholder="Select Category">
+                <ion-select-option  *ngFor="let item of catList" [value]="item.id">{{ item.name }}</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item>
-              <ion-label>Subcategory</ion-label>
-              <ion-select [(ngModel)]="selectedSubcat" placeholder="Select Subcategory">
-                <ion-select-option *ngFor="let item of SubcatList" [value]="item">{{ item.data().name }}</ion-select-option>
+              <ion-label class="ion-text-wrap">Subcategory</ion-label>
+              <ion-select (ionChange)="getSubsubcat()" [(ngModel)]="SubcatID" placeholder="Select Sub category">
+                <ion-select-option *ngFor="let item of subcatList" [value]="item.id">{{ item.name }}</ion-select-option>
               </ion-select>
             </ion-item>
   
@@ -101,32 +101,38 @@
 
           <div style="margin-top : 10px;" *ngSwitchCase="'area'">
             <ion-list>
-    
-              <ion-item>
-                <ion-label>Category</ion-label>
-                <ion-select (ionChange)="getSubcat(SelectedCat)" [(ngModel)]="SelectedCat" placeholder="Select Category">
-                  <ion-select-option  *ngFor="let item of catList" [value]="item">{{ item.data().name }}</ion-select-option>
-                </ion-select>
-              </ion-item>
-              <ion-item>
-                <ion-label>Subcategory</ion-label>
-                <ion-select (ionChange)="getSubsubcat(selectedSubcat)" [(ngModel)]="selectedSubcat" placeholder="Select Subcategory">
-                  <ion-select-option *ngFor="let item of SubcatList" [value]="item">{{ item.data().name }}</ion-select-option>
-                </ion-select>
-              </ion-item>
-
-              <ion-item>
-                <ion-label>Sub-subcategory</ion-label>
-                <ion-select [(ngModel)]="selectedSubsubcat" placeholder="Select Sub-subcategory">
-                  <ion-select-option *ngFor="let item of SubsubcatList" [value]="item">{{ item.data().name }}</ion-select-option>
-                </ion-select>
-              </ion-item>
+              <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-label class="ion-text-wrap" >Category</ion-label>
+                    <ion-select (ionChange)="getSubcat()" [(ngModel)]="CatID" placeholder="Select Category">
+                      <ion-select-option  *ngFor="let item of catList" [value]="item.id">{{ item.name }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label class="ion-text-wrap">Subcategory</ion-label>
+                    <ion-select (ionChange)="getSubsubcat()" [(ngModel)]="SubcatID" placeholder="Select Sub category">
+                      <ion-select-option *ngFor="let item of subcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label class="ion-text-wrap">Sub subcategory</ion-label>
+                    <ion-select (ionChange)="saveTostorage()" [(ngModel)]="SubsubcatID" placeholder="Select Sub subcategory">
+                      <ion-select-option *ngFor="let item of subsubcatList" [value]="item.id">{{ item.name }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
    <ion-grid fixed>
      <ion-row>
        <ion-col size="6">
         <ion-item>
-          <ion-label>Name</ion-label>
           <ion-input [(ngModel)]="unitname" type="text" placeholder="Enter area name here..."></ion-input>
+          <ion-icon slot="end" (click)="itemlibrary()" size="small" src="assets/icon/book.svg"></ion-icon>   
         </ion-item>
        </ion-col>
        <ion-col size="6">
@@ -135,6 +141,19 @@
           <ion-input [(ngModel)]="unitdes" placeholder="Enter description here..."></ion-input>
         </ion-item>
        </ion-col>
+       <ion-col>
+        <ion-item>
+          <ion-label>Area Code <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required [(ngModel)]="code" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+       <ion-col>
+        <ion-item>
+          <ion-label>Icon</ion-label>
+          <ion-input (change)="onFileSelected1($event)" type="file">
+          </ion-input>
+      </ion-item>
+      </ion-col>
      </ion-row>
    </ion-grid>
             </ion-list>

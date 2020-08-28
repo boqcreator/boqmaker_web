@@ -141,6 +141,42 @@ const routes: Routes = [
   {
     path: 'boqitemlib',
     loadChildren: () => import('./pages/boqitemlib/boqitemlib.module').then( m => m.BoqitemlibPageModule)
+  },
+  {
+    path: 'area-g',
+    loadChildren: () => import('./pages/area-g/area-g.module').then( m => m.AreaGPageModule)
+  },
+  {
+    path: 'addarea-g',
+    loadChildren: () => import('./pages/addarea-g/addarea-g.module').then( m => m.AddareaGPageModule)
+  },
+  {
+    path: 'arealib',
+    loadChildren: () => import('./pages/arealib/arealib.module').then( m => m.ArealibPageModule)
+  },
+  {
+    path: 'costdetails',
+    loadChildren: () => import('./pages/costdetails/costdetails.module').then( m => m.CostdetailsPageModule)
+  },
+  {
+    path: 'addmaterialtocost',
+    loadChildren: () => import('./pages/addmaterialtocost/addmaterialtocost.module').then( m => m.AddmaterialtocostPageModule)
+  },
+  {
+    path: 'addlabourtocost',
+    loadChildren: () => import('./pages/addlabourtocost/addlabourtocost.module').then( m => m.AddlabourtocostPageModule)
+  },
+  {
+    path: 'addequipmenttocost',
+    loadChildren: () => import('./pages/addequipmenttocost/addequipmenttocost.module').then( m => m.AddequipmenttocostPageModule)
+  },
+  {
+    path: 'addsubcontractortocost',
+    loadChildren: () => import('./pages/addsubcontractortocost/addsubcontractortocost.module').then( m => m.AddsubcontractortocostPageModule)
+  },
+  {
+    path: 'addothertocost',
+    loadChildren: () => import('./pages/addothertocost/addothertocost.module').then( m => m.AddothertocostPageModule)
   }
 ];
 

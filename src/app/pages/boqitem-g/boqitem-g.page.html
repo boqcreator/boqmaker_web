@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>General BoqItems</ion-title>
+    <ion-button slot="end" fill="clear" (click)="delall()">
+      <ion-icon (click)="delall()" slot="icon-only" name="add"></ion-icon>
+      <ion-label> Delete All </ion-label>
+    </ion-button>
     <ion-button slot="end" fill="clear" (click)="addnew()">
       <ion-icon slot="icon-only" name="add"></ion-icon>
       <ion-label> Add new </ion-label>
@@ -13,28 +17,28 @@
   <ion-searchbar [(ngModel)]="term" placeholder="Filter boqitem" type="text" [debounce]="250" showCancelButton="always"></ion-searchbar>
   <table *ngIf="itemList.length > 0" > 
     <tr>
-      <th>Action</th>
-      <th>ID</th>
-      <th>Code</th>
-      <th>Name</th>
-      <th>Unit</th>
-      <th>Price</th>
+      <th style="width: 10%;" >Action</th>
+      <th style="width: 8%;">ID</th>
+      <th style="width: 14%;">Code</th>
+      <th style="width: 50%;">Name</th>
+      <th style="width: 8%;">Unit</th>
+      <th style="width: 10%;">Price</th>
     </tr>
 
       <tr *ngFor="let item of itemList| filter:term">
-        <td>
-          <ion-button style="--padding-end: 0px;" (click)="edit(item)" fill="clear">
+        <td style="width: 10%;">
+          <ion-button style="--padding-end: 0px;font-size: smaller;" (click)="edit(item)" fill="clear">
             <ion-icon slot="icon-only" name="create"></ion-icon>
           </ion-button>
-          <ion-button style="--padding-end: 0px;" (click)="Del(item)" color="danger" fill="clear">
+          <ion-button style="--padding-end: 0px;font-size: smaller;" (click)="Del(item)" color="danger" fill="clear">
             <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
           </ion-button>
         </td>
-        <td>{{item.id}}</td>
-        <td>{{item.code}}</td>
-        <td>{{item.name}}</td>
-        <td>{{item.unit}}</td>
-        <td>{{item.price}}</td>
+        <td style="width: 8%;">{{item.id}}</td>
+        <td style="width: 14%;" >{{item.code}}</td>
+        <td style="width: 50%;">{{item.name}}</td>
+        <td style="width: 8%;">{{item.unit}}</td>
+        <td style="width: 10%;">{{item.price | number:'0.0-3' }}</td>
       </tr>
 
   </table>

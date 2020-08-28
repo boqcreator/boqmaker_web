@@ -6,7 +6,8 @@ import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';  
 import { Html2canvasServiceService } from 'src/app/html2canvas-service.service';
 import htmlToPdfmake from "html-to-pdfmake"
-
+import * as XLSX from 'xlsx';
+import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Router } from '@angular/router';
@@ -43,6 +44,8 @@ export class Report1Page implements OnInit {
   ItemList = [];
   ItemID = [];
   totalPrice = 0 ;
+  showhide ="table-cell"
+  eye = "eye"
   constructor(private menu : MenuController,
     private route : ActivatedRoute,
     private router : Router,
@@ -52,7 +55,17 @@ export class Report1Page implements OnInit {
     this.menu.enable(false)
     
   }
+  SH(){
+    if(this.eye == "eye" && this.showhide == "table-cell") {
+      this.eye = "eye-off";
+      this.showhide = "none"
+    }else{
+      this.eye = "eye";
+      this.showhide = "table-cell"
+    }
 
+
+  }
   calculateFinalQuantity(L,W,H,EXTRA_FILL,N,FILL_PERCENTAGE,
     EXTRA_EXC,E_PERCENTAGE,R,RO,pww1,psw1,pww2,psw2,pwl1,psl1,
     pwl2,psl2,Sum_of_Areafloor_p,EXTRA_FLOOR_AREA,F_Percentage,
@@ -1655,6 +1668,50 @@ pdf.save('new-file.pdf'); // Generated PDF
 });
 
   }
+
+  exporttoExcel(){
+var list = this.ItemsList
+     list.forEach(value =>{
+      delete value.itemID
+    })   
+       /* table id is passed over here */   
+      //  let element = document.getElementById('excel-head'); 
+       const ws: XLSX.WorkSheet =XLSX.utils.json_to_sheet(list);
+
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+       /* save to file */
+       XLSX.writeFile(wb, "BOQ_report.xlsx");
+			
+  }
+
+  sendEmail(e: Event){
+    const element = document.getElementById('html2canvas');
+const targetElement = document.getElementById('keywordsInput').cloneNode(true);
+element.appendChild(targetElement);
+this.html2canvas.html2canvas(element.firstChild).then((canvas) => {
+  emailjs.send('boqmaker', 'template_KtrgNZZJ', {
+    content:`<html> <body> <img src=${canvas}> </body> </html>`, alternative:true
+  }, 'user_HHO1Bbl8ubkXCbyL8VvbH')
+    element.firstChild.remove();
+    targetElement.firstChild.remove();
+}).catch((res) => {
+    console.log(res);
+});
+
+ 
+
+    // emailjs.sendForm('boqmaker', 'template_KtrgNZZJ', e.target as HTMLFormElement, 'user_HHO1Bbl8ubkXCbyL8VvbH')
+    //   .then((result: EmailJSResponseStatus) => {
+    //     console.log(result.text);
+    //   }, (error) => {
+    //     console.log(error.text);
+    //   });
+  }
+
+  
 
 
 

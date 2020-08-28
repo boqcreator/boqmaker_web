@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Area library</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button (click)="sendbackitem()" expand="block">
+    Select
+  </ion-button>
+
+  <ion-searchbar [(ngModel)]="term" placeholder="Filter boqitem" type="text" [debounce]="250" showCancelButton="always"></ion-searchbar>
+  <table *ngIf="itemList.length > 0" > 
+    <tr>
+      <th>Action</th>
+      <th>Code</th>
+      <th>Name</th>
+    </tr>
+
+      <tr *ngFor="let item of itemList| filter:term">
+        <td>
+          <ion-radio-group [(ngModel)]="Selecteditem">
+          <ion-radio [value]="item"></ion-radio>
+        </ion-radio-group>
+        </td>
+        <td>{{item.code}}</td>
+        <td>{{item.name}}</td>
+      </tr>
+
+  </table>
+</ion-content>

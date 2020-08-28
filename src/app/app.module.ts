@@ -42,6 +42,14 @@ import { AddotherPageModule } from './pages/addother/addother.module';
 import { AddsubcontractorPageModule } from './pages/addsubcontractor/addsubcontractor.module';
 import { AddboqitemGPageModule } from './pages/addboqitem-g/addboqitem-g.module';
 import { BoqitemlibPageModule } from './pages/boqitemlib/boqitemlib.module';
+import { ArealibPageModule } from './pages/arealib/arealib.module';
+import { AddmaterialtocostPageModule } from './pages/addmaterialtocost/addmaterialtocost.module';
+import { AddlabourtocostPageModule } from './pages/addlabourtocost/addlabourtocost.module';
+import { AddequipmenttocostPageModule } from './pages/addequipmenttocost/addequipmenttocost.module';
+import { AddsubcontractortocostPageModule } from './pages/addsubcontractortocost/addsubcontractortocost.module';
+import { AddothertocostPageModule } from './pages/addothertocost/addothertocost.module';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -73,7 +81,13 @@ import { BoqitemlibPageModule } from './pages/boqitemlib/boqitemlib.module';
     AddotherPageModule,
     AddsubcontractorPageModule,
     AddboqitemGPageModule,
-    BoqitemlibPageModule
+    BoqitemlibPageModule,
+    ArealibPageModule,
+    AddmaterialtocostPageModule,
+    AddlabourtocostPageModule,
+    AddequipmenttocostPageModule,
+    AddsubcontractortocostPageModule,
+    AddothertocostPageModule,
     
   ],
   providers: [

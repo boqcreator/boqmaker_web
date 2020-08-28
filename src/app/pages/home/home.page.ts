@@ -65,6 +65,12 @@ export class HomePage implements OnInit {
   gotogbi(){
     this.router.navigate(['boqitem-g'])
   }
+  gotogal(){
+    this.router.navigate(['area-g'])
+  }
+  gotocastdetails(){
+    this.router.navigate(['costdetails'])
+  }
 
   async presentModal() {
     const modal = await this.modalController.create({

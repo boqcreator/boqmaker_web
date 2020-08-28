@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, AlertController, ModalController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+import * as firebase from "firebase"
+import { ArealibPage } from '../../arealib/arealib.page';
 
 @Component({
   selector: 'app-addarea',
@@ -10,6 +13,13 @@ import { LoadingController, AlertController, ModalController } from '@ionic/angu
 export class AddareaPage implements OnInit {
 segment ="cat"
 
+pic;
+code= "";
+CatID = "";
+SubcatID = "";
+SubsubcatID = "";
+
+
 catName;
 catDes;
 catList;
@@ -17,18 +27,18 @@ SelectedCat;
 
 SubcatName;
 SubcatDes;
-SubcatList;
+subcatList;
 selectedSubcat;
 
 SubsubcatName;
 SubsubcatDes;
-SubsubcatList;
+subsubcatList;
 selectedSubsubcat;
 
 AW= 0.0;
 
-unitname;
-unitdes;
+unitname = "";
+unitdes = "";
 
 allselected = false
 
@@ -105,36 +115,79 @@ attributes = [
   {name : "precast" , flag: true },
 
 
-
-
-
 ]
 
 
   constructor(private afs : AngularFirestore,
     public loadingController: LoadingController,
-    private modal : ModalController,
-    public alertController: AlertController) { 
-    this.afs.collection(`boq/boq/Areas`).get().subscribe(value =>{
-      this.catList = value.docs
+    private modalController: ModalController,
+    public alertController: AlertController,
+    private storage : Storage) { 
+
+    this.storage.get('areacat').then((value)=>{
+      if(value !== null){
+        this.CatID = value
+        this.getSubcat()
+      }
+
+    })
+    this.storage.get('areasubcat').then((value)=>{
+      if(value !== null){
+        this.SubcatID = value
+        this.getSubsubcat()
+      }
+    })
+    this.storage.get('areasubcatList').then((value)=>{
+      this.subcatList = value
+    })
+
+    this.storage.get('areasubsubcat').then((value)=>{
+      this.SubsubcatID = value
+    })
+    this.storage.get('areasubsubcatList').then((value)=>{
+      this.subsubcatList = value
+    })
+
+    this.afs.collection<any>(`boq/boq/Areas`).snapshotChanges().subscribe(value =>{
+      this.catList = []
+      value.forEach(doc =>{
+        this.catList.push({
+          name : doc.payload.doc.data().name,
+          id : doc.payload.doc.id
+        })
+      })
           })
   }
 
   ngOnInit() {
   }
-  getSubcat(item){
-    if(item){
-      this.afs.collection(`boq/boq/Areas/${item.ref.id}/cat`).get().subscribe(value =>{
-        this.SubcatList = value.docs
+  getSubcat(){
+    this.storage.set("areacat", this.CatID);
+      this.afs.collection<any>(`boq/boq/Areas/${this.CatID}/cat`).snapshotChanges().subscribe(value =>{
+        this.subcatList = [];
+        value.forEach(doc =>{
+          this.subcatList.push({name : doc.payload.doc.data().name, id : doc.payload.doc.id })
+        })
       })
-    }
+
    
   }
 
-  getSubsubcat(item){
-    this.afs.collection(`boq/boq/Areas/${this.SelectedCat.ref.id}/cat/${item.ref.id}/subcat`).get().subscribe(value =>{
-      this.SubsubcatList = value.docs
+  getSubsubcat(){
+    this.storage.set("areasubcat", this.SubcatID);
+    this.storage.set("areasubcatList", this.subcatList);
+    this.afs.collection<any>(`boq/boq/Areas/${this.CatID}/cat/${this.SubcatID}/subcat`).snapshotChanges().subscribe(value =>{
+      this.subsubcatList = [];
+      value.forEach(doc =>{
+        this.subsubcatList.push({name : doc.payload.doc.data().name, id : doc.payload.doc.id })
+      })
     })
+  }
+
+  saveTostorage(){
+    this.storage.set("areasubsubcat", this.SubsubcatID);
+    this.storage.set("areasubsubcatList", this.subsubcatList);
+
   }
 
   addcat(){
@@ -162,7 +215,7 @@ this.loader()
   addSubcat(){
     if(this.SubcatName.trim() && this.SubcatDes.trim()){
 this.loader()
-      this.afs.collection(`boq/boq/Areas/${this.SelectedCat.ref.id}/cat`).add({
+      this.afs.collection(`boq/boq/Areas/${this.CatID}/cat`).add({
         name : this.SubcatName,
         des : this.SubcatDes,
         createdon : new Date().toISOString()
@@ -171,7 +224,6 @@ this.loader()
               this.presentAlert();
               this.SubcatName = "";
               this.SubcatDes = "";
-              this.SelectedCat = [];
             }).catch((err)=>{
               alert(err)
             })
@@ -183,7 +235,7 @@ this.loader()
   addSubsubcat(){
     if(this.SubsubcatName.trim() && this.SubsubcatDes.trim()){
 this.loader()
-      this.afs.collection(`boq/boq/Areas/${this.SelectedCat.ref.id}/cat/${this.selectedSubcat.ref.id}/subcat`).add({
+      this.afs.collection(`boq/boq/Areas/${this.CatID}/cat/${this.SubcatID}/subcat`).add({
         name : this.SubsubcatName,
         des : this.SubsubcatDes,
         createdon : new Date().toISOString()
@@ -192,8 +244,6 @@ this.loader()
               this.presentAlert();
               this.SubsubcatName = "";
               this.SubsubcatDes = "";
-              this.SelectedCat = [];
-              this.selectedSubcat = [];
             }).catch((err)=>{
               alert(err)
             })
@@ -203,24 +253,38 @@ this.loader()
   }
 
   addarea(){
-    console.log(this.SelectedCat.ref.id)
-    console.log(this.selectedSubcat.ref.id)
-    console.log(this.selectedSubsubcat.ref.id)
     if(this.unitname.trim() && this.unitdes.trim()){
       this.loader()
-            this.afs.collection(`boq/boq/Areas/${this.SelectedCat.ref.id}/cat/${this.selectedSubcat.ref.id}/subcat/${this.selectedSubsubcat.ref.id}/items`).add({
+            this.afs.collection(`boq/boq/Areas/${this.CatID}/cat/${this.SubcatID}/subcat/${this.SubsubcatID}/items`).add({
               name : this.unitname,
               des : this.unitdes,
               createdon : new Date().toISOString(),
               attributes : this.attributes
+                  }).then((value)=>{
+                    if(this.pic){
+                     var imagepath
+                     imagepath =  `areas/${value.id}/${this.unitname}`;
+                 
+                      var storageRef =  firebase.storage().ref(imagepath);
+                 
+                          storageRef.put(this.pic).then(()=>{
+                            firebase.storage().ref(imagepath).getDownloadURL().then(url =>{
+                                this.afs.doc(`boq/boq/Areas/${this.CatID}/cat/${this.SubcatID}/subcat/${this.SubsubcatID}/items/${value.id}`).update({
+                                 image : url
+                                });
+                                });
+                 
+                          });
+                    }else{
+                     this.afs.doc(`boq/boq/Areas/${this.CatID}/cat/${this.SubcatID}/subcat/${this.SubsubcatID}/items/${value.id}`).update({
+                       image : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+                      });
+                    }
                   }).then(()=>{
                     this.loadingController.dismiss();
                     this.presentAlert();
                     this.unitname = "";
                     this.unitdes = "";
-                    this.SelectedCat = [];
-                    this.selectedSubcat = [];
-                    this.selectedSubsubcat = [];
                   }).catch((err)=>{
                     alert(err)
                   })
@@ -253,7 +317,7 @@ this.loader()
   }
 
   close(){
-    this.modal.dismiss();
+    this.modalController.dismiss();
   }
 
   selectall(){
@@ -269,4 +333,23 @@ this.loader()
      }
      this.allselected = true
    }
+
+   onFileSelected1(event){
+    this.pic = event.target.files[0];
+  }
+
+  async itemlibrary(){
+    const modal = await this.modalController.create({
+    component: ArealibPage,
+    });
+  
+    await modal.present();
+    
+    const data = await modal.onDidDismiss();
+    if(data){
+      this.unitname = data.data.name
+      this.code = data.data.code
+    }
+ 
+}
 }

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>General Areas</ion-title>
+    <ion-button slot="end" fill="clear" (click)="addnew()">
+      <ion-icon slot="icon-only" name="add"></ion-icon>
+      <ion-label> Add new </ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-searchbar [(ngModel)]="term" placeholder="Filter boqitem" type="text" [debounce]="250" showCancelButton="always"></ion-searchbar>
+  <table *ngIf="itemList.length > 0" > 
+    <tr>
+      <th>Action</th>
+      <th>ID</th>
+      <th>Code</th>
+      <th>Name</th>
+    </tr>
+
+      <tr *ngFor="let item of itemList| filter:term">
+        <td>
+          <ion-button style="--padding-end: 0px;" (click)="edit(item)" fill="clear">
+            <ion-icon slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button style="--padding-end: 0px;" (click)="Del(item)" color="danger" fill="clear">
+            <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </td>
+        <td>{{item.id}}</td>
+        <td>{{item.code}}</td>
+        <td>{{item.name}}</td>
+      </tr>
+
+  </table>
+
+</ion-content>

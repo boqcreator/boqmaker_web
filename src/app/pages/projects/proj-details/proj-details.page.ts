@@ -1908,7 +1908,8 @@ async addItem(){
               areasubsubcatID : area.subsubcatid,
               itemID : this.boqitem.id,
               areaID : area.id,
-           item : {itemdetails : this.boqitem,
+           item : {
+            itemdetails : this.boqitem,
             ceiling : this.ceiling,
             floor : this.floor,
             walls : this.walls,
@@ -2097,11 +2098,14 @@ async addItem(){
             }).then(()=>{
               var subcat = this.boqitemsubcatList.find(x => x.id == this.boqitem.SubcatID)
               this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubcat/${this.boqitem.SubcatID}`).set({
+                catID : this.boqitem.CatID,
                 name : subcat.name,
                 createdon : new Date()
               }).then(()=>{
                 var subsubcat = this.boqitemsubsubcatList.find(x => x.id == this.boqitem.SubsubcatID)
                 this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubsubcat/${this.boqitem.SubsubcatID}`).set({
+                  catID : this.boqitem.CatID,
+                  subcatID : this.boqitem.SubcatID,
                   name : subsubcat.name,
                   createdon : new Date()
                 })
