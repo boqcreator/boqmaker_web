@@ -38,8 +38,14 @@ export class AddequipmentPage implements OnInit {
   SCatID;
   SSubcatID;
   supplierID;
+  supplier1ID="";
+  supplier2ID="";
+  supplier3ID="";
 
   supplier = ""
+  supplier1 = ""
+  supplier2 = ""
+  supplier3 = ""
   constructor(private afs : AngularFirestore,
     public loadingController: LoadingController,
     private storage : Storage,
@@ -139,7 +145,8 @@ export class AddequipmentPage implements OnInit {
               unit : this.unit,
               price : this.price,
               LEXISTING : this.LEXISTING,
-              supplier : this.supplier
+              supplier : this.supplier,
+              additionalsupplier : [this.supplier1,this.supplier2,this.supplier3]
                   }).then(()=>{
                     this.loadingController.dismiss();
                      this.presentAlert();
@@ -212,6 +219,18 @@ export class AddequipmentPage implements OnInit {
  
  setsupplier(){
    this.supplier = this.supplierList.find(x => x.id == this.supplierID)
+   var s1 = this.supplierList.find(x => x.id == this.supplier1ID)
+   if(s1){
+    this.supplier1 = s1
+   }
+   var s2 = this.supplierList.find(x => x.id == this.supplier2ID)
+   if(s2){
+    this.supplier2 = s2
+   }
+   var s3 = this.supplierList.find(x => x.id == this.supplier3ID)
+   if(s3){
+    this.supplier3 = s3
+   }
  }
 
 

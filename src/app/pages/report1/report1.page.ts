@@ -84,28 +84,42 @@ export class Report1Page implements OnInit {
 
           //****************EQUATION START********************
 
-return (( ((L*W*H)+(EXTRA_FILL))*N*FILL_PERCENTAGE/100 +
-((L*W*H)+(EXTRA_EXC))*N*E_PERCENTAGE/100+
-((((W*L+(R*R*RO*(22/7)/100)+(pww1*psw1)+(pww2*psw2)+(pwl1*psl1)+(pwl2*psl2))-(Sum_of_Areafloor_p/100)+EXTRA_FLOOR_AREA)*F_Percentage)*N)/100 +
-(((L1+L2+L3+L4+L5+L6+L7+L8)+EXTRA_BLOCK_DPC)*N*DPC_PERCENTAGE)/100 +
-(((W*L+(R*R*RO*(22/7))/100+pww1*psw1+pww2*psw2+pwl1*psl1+pwl2*psl2)-(SumofAreaCEILING_P/100)+EXTRAceilingAREA)*CPercentage)*N/100 +
-((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H)/100
-)+((SumofAreawallp/100))+EXTRAWALLAREA-SUMOFOPENAREA)*Wpercentage*N/100 +
-((((L1*PCLA+L2*PCLB+L3*PCLC+L4*PCLD+L5*PCLE+L6*PCLF+L7*PCLG+L8*PCLH)/100)+(SumofLengthcornicep/100)+EXTRACORNICELENGTH)*CORpercentage*N)/100 +
-((((L1*PSLA+L2*PSLB+L3*PSLC+L4*PSLD+L5*PSLE+L6*PSLF+L7*PSLG+L8*PSLH)/100)+((SumofLengthskirtingp/100))+EXTRASKIRTINGLENGTH-sumofOpenwidthtotal)*Spercentage*N)/100 +
-(((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H)/100)+EXTRABLOCKAREA-SUMOFOPENAREA)*N*BPERCENTAGE/1)/100 +
-(((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H)/100)+
-EXTRABIT-SUMOFOPENAREA)*N*BBITPERCENTAGE/(0.5))/100 +
-((L*W*H+EXTRACONC)*N*CONCPERCENTAGE)/100+
-(((L+2*EXTRACONCbO)*(W+2*EXTRACONCbO)+EXTRACONCb)*N*CONCbPERCENTAGE)/100+
-((W*L*(BSP/100)+W*L*(TSP/100)+H*L*(SSP3/100)+H*L*(SSP4/100)+H*W*(SSP2/100)+(EXTRASHUTT)+
-w*H*(SSP1/100))*N*FORMPERCENTAGE)/100 +
-((W*L*(TBP/100)+W*L*(BBP/100)+H*L*(SBP4/100)+H*L*(SBP3/100)+H*W*(SBP2/100)+(EXTRABIT)+w*H*(SBP1/100))*N*BITPERCENTAGE)/100 +
-((W*L*(BEP/100)+W*L*(TEP/100)+H*L*(SEP3/100)+H*L*(SEP4/100)+H*W*(SEP2/100)+(EXTRAEXP)+w*H*(SEP1/100))*N*EXPPERCENTAGE)/100 +
-((W*L*precastPercentage+(EXTRAPRECAST))*N)/100
-+((W*L*(TpP/100)+W*L*(BpP/100)+H*L*(SpP4/100)+H*L*(SpP3/100)+H*W*(SpP1/100)+(EXTRAPOLYTH)+w*H*(SpP2/100))*N*polyPERCENTAGE)/100 +
-((Y8R/2520)+(Y10R/1596)+(Y12R/1104)+(Y16R/624)+(Y20R/396)+(Y25R/252)+(Y32R/156)+(EXTRASTEEL))*(steelpercentage/100) +
-QTY*N)*ifactor)/100
+          return ((((L*W*H)+ EXTRA_FILL)*N*FILL_PERCENTAGE/100)+
+          (((L*W*H)+ EXTRA_EXC)*N*E_PERCENTAGE/100)+
+          
+          (((((W*L+(R*R*RO*(22/7)/100)+(pww1*psw1)+(pww2*psw2)+(pwl1*psl1)+(pwl2*psl2))-(Sum_of_Areafloor_p/100)+EXTRA_FLOOR_AREA)*F_Percentage)*N)/100) +
+          (((L1+L2+L3+L4+L5+L6+L7+L8+EXTRA_BLOCK_DPC)*N*DPC_PERCENTAGE)/100)+
+          
+          ((((W*L+(R*R*RO*(22/7))/100+pww1*psw1+pww2*psw2+pwl1*psl1+pwl2*psl2)-(SumofAreaCEILING_P/100)+EXTRAceilingAREA)*CPercentage)*N/100)+
+          
+          (((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H)/100
+          )+((SumofAreawallp/100))+EXTRAWALLAREA-SUMOFOPENAREA)*Wpercentage*N/100)+
+          
+          (((((L1*PCLA+L2*PCLB+L3*PCLC+L4*PCLD+L5*PCLE+L6*PCLF+L7*PCLG+L8*PCLH)/100)+(SumofLengthcornicep/100)+EXTRACORNICELENGTH)*CORpercentage*N)/100)+
+          
+          (((((L1*PSLA+L2*PSLB+L3*PSLC+L4*PSLD+L5*PSLE+L6*PSLF+L7*PSLG+L8*PSLH)/100)+((SumofLengthskirtingp/100))+EXTRASKIRTINGLENGTH-sumofOpenwidthtotal)*Spercentage*N)/100)+
+          
+          ((((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H)/100)+
+          EXTRABLOCKAREA-SUMOFOPENAREA)*N*BPERCENTAGE)/100)+
+          
+          ((((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD)+ EXTRABIT-SUMOFOPENAREA)*N*BBITPERCENTAGE/(0.5)))/100) +
+          ((((L*W*H)+(EXTRACONC)*N*CONCPERCENTAGE)/100)+
+          
+          ((((L+2*EXTRACONCbO)*(W+2*EXTRACONCbO)+EXTRACONCb)*N*CONCbPERCENTAGE)/100)+
+          
+          (((W*L*(BSP/100)+W*L*(TSP/100)+H*L*(SSP3/100)+H*L*(SSP4/100)+H*W*(SSP2/100)+ w*H*(SSP1/100)+ EXTRASHUTT)*N*FORMPERCENTAGE)/100)+
+          
+          
+          (((W*L*(TBP/100)+W*L*(BBP/100)+H*L*(SBP4/100)+H*L*(SBP3/100)+H*W*(SBP2/100)+ w*H*(SBP1/100)+ EXTRABIT)*N*BITPERCENTAGE)/100)+
+          
+          (((W*L*(BEP/100)+W*L*(TEP/100)+H*L*(SEP3/100)+H*L*(SEP4/100)+H*W*(SEP2/100)+ w*H*(SEP1/100)+ (EXTRAEXP))*N*EXPPERCENTAGE)/100)+  
+          
+          ((((W*L)+ EXTRAPRECAST)*precastPercentage)*N/100)+
+          
+          (((W*L*(TpP/100)+W*L*(BpP/100)+H*L*(SpP4/100)+H*L*(SpP3/100)+H*W*(SpP1/100)+ +w*H*(SpP2/100)+ EXTRAPOLYTH)*N*polyPERCENTAGE)/100 )+
+          (((Y8R/2520)+(Y10R/1596)+(Y12R/1104)+(Y16R/624)+(Y20R/396)+(Y25R/252)+(Y32R/156)+(EXTRASTEEL))*(steelpercentage/100)) +
+          
+          (QTY*N*ifactor)/100)))
 
           ////****************EQUATION END********************
   }
@@ -1503,7 +1517,7 @@ QTY*N)*ifactor)/100
  getitemsubcat(){
   this.IsubcatList =[]
   this.IcatID.forEach(ic =>{
-    this.afs.collection<any>(`boq/boq/boqitemscat/${ic}/subcat`).get().subscribe(value =>{
+    this.afs.collection<any>(`boq/boq/boqitemssubcat/`, ref =>ref.where("catID", "==", ic)).get().subscribe(value =>{
       if(value.docs.length > 0){
         value.forEach(doc=>{
           const index = this.IsubcatList.findIndex(x => x.id == doc.ref.id)
@@ -1523,7 +1537,7 @@ QTY*N)*ifactor)/100
   this.IsubsubcatList =[]
   this.IcatID.forEach(ic =>{
     this.IsubcatID.forEach(isc =>{
-      this.afs.collection<any>(`boq/boq/boqitemscat/${ic}/subcat/${isc}/subsubcat`).get().subscribe(value =>{
+      this.afs.collection<any>(`boq/boq/boqitemssubsubcat`, ref =>ref.where("subcatID", "==", isc)).get().subscribe(value =>{
         if(value.docs.length > 0){
           value.forEach(doc=>{
             const index = this.IsubsubcatList.findIndex(x => x.id == doc.ref.id)
@@ -1545,7 +1559,7 @@ QTY*N)*ifactor)/100
   this.IcatID.forEach(ic =>{
     this.IsubcatID.forEach(isc =>{
       this.IsubsubcatID.forEach(issc =>{
-        this.afs.collection<any>(`boq/boq/boqitemscat/${ic}/subcat/${isc}/subsubcat/${issc}/boqitems`).get().subscribe(value =>{
+        this.afs.collection<any>(`boq/boq/boqitems`, ref =>ref.where("SubsubcatID", "==", issc)).get().subscribe(value =>{
           if(value.docs.length > 0){
             value.forEach(doc=>{
               const index = this.ItemList.findIndex(x => x.id == doc.ref.id)

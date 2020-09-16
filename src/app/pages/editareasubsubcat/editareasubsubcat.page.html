@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Area Sub-subCategory</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Name</ion-label>
+      <ion-input [(ngModel)]="item.name" type="text" placeholder="Enter category name here..."></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Description</ion-label>
+      <ion-textarea [(ngModel)]="item.des" placeholder="Enter description here..."></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="updatecat()" expand="block" >
+    Update
+  </ion-button>
+
+</ion-content>

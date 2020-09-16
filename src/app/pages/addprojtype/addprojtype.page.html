@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Project type</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-item>
+  <ion-label position="floating">Name</ion-label>
+  <ion-input [(ngModel)]="name" type="text"></ion-input>
+</ion-item>
+<ion-button (click)="add()" expand="block">
+  Add
+</ion-button>
+</ion-content>

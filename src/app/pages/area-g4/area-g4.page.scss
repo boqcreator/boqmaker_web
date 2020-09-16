@@ -1,0 +1,22 @@
+table {
+    margin-left: 10px;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  ion-button{
+    font-size: 12px;
+    height: 22px;
+}

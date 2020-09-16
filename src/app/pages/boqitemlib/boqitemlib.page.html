@@ -10,6 +10,17 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label>Library</ion-label>
+    <ion-select (ionChange)="getLibrary()" [(ngModel)]="library" placeholder="Select Library">
+      <ion-select-option value="generalboqitems">Master Library</ion-select-option>
+      <ion-select-option value="generalboqitems1">Library 1</ion-select-option>
+      <ion-select-option value="generalboqitems2">Library 2</ion-select-option>
+      <ion-select-option value="generalboqitems3">Library 3</ion-select-option>
+      <ion-select-option value="generalboqitems4">Library 4</ion-select-option>
+      <ion-select-option value="generalboqitems5">Library 5</ion-select-option>
+    </ion-select>
+  </ion-item>
   <ion-button (click)="sendbackitem()" expand="block">
     Select
   </ion-button>
@@ -22,6 +33,11 @@
       <th>Name</th>
       <th>Unit</th>
       <th style="width: 10%;">Price</th>
+      <th style="width: 10%;">Material</th>
+      <th style="width: 10%;">Labour</th>
+      <th style="width: 10%;">Equipment</th>
+      <th style="width: 10%;">Subcont</th>
+      <th style="width: 10%;">Other</th>
     </tr>
 
       <tr *ngFor="let item of itemList| filter:term">
@@ -34,6 +50,11 @@
         <td>{{item.name}}</td>
         <td>{{item.unit}}</td>
         <td style="width: 10%;">{{item.price | number:'0.0-3'}}</td>
+        <td style="width: 10%;">{{item.mprice | number:'0.0-3'}}</td>
+        <td style="width: 10%;">{{item.lprice | number:'0.0-3'}}</td>
+        <td style="width: 10%;">{{item.eprice | number:'0.0-3'}}</td>
+        <td style="width: 10%;">{{item.sprice | number:'0.0-3'}}</td>
+        <td style="width: 10%;">{{item.oprice | number:'0.0-3'}}</td>
       </tr>
 
   </table>

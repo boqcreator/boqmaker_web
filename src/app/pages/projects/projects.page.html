@@ -1,17 +1,18 @@
-<ion-header color="primary" >
-  <ion-toolbar color="primary" >
+<ion-header  >
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Projects</ion-title>
+    <ion-button slot="end" fill="clear" (click)="addProj()">
+      <ion-icon  name="add"></ion-icon>
+      <ion-label> Add new </ion-label>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-row class="ion-padding">
-    <ion-button (click)="addProj()" color="primary">
-      <ion-icon name="add" ></ion-icon>
-      Add Project</ion-button>
   </ion-row>
   <!-- Searchbar with a cancel button and custom cancel button text -->
 <ion-searchbar [(ngModel)]="term" showCancelButton="focus" cancelButtonText="Custom Cancel"></ion-searchbar>
@@ -19,8 +20,9 @@
   <thead>
     <tr>
       <th>Action</th>
-      <th>ID</th>
+      <th>Code</th>
       <th>Name</th>
+      <th>Type</th>
       <th>Number</th>
       <th>Starting date</th>
       <th>Ending date</th>
@@ -42,8 +44,9 @@
    
 
         </td>
-      <td>{{ item.id }}</td>
+      <td>{{ item.code }}</td>
       <td>{{ item.name }}</td>
+      <td>{{ item.type }}</td>
       <td>{{ item.no }}</td>
       <td>{{ item.start | date }}</td>
       <td>{{ item.end | date }}</td>

@@ -3,6 +3,10 @@ import { MenuController, NavController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Storage } from '@ionic/storage';
+import {GridOptions} from "ag-grid-community";
+import 'ag-grid-enterprise';
+import 'ag-grid-enterprise/chartsModule';
+import { TwobuttonRendererComponent } from 'src/app/renderer/twobutton-renderer.component';
 
 @Component({
   selector: 'app-boqitem',
@@ -10,6 +14,8 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['./boqitem.page.scss'],
 })
 export class BoqitemPage implements OnInit {
+  public gridOptions: GridOptions;
+  frameworkComponents: any;
   category = [];
   subcat = [];
   subsubcat = [];
@@ -24,6 +30,10 @@ export class BoqitemPage implements OnInit {
   term3;
   term4;
 
+  AllboqitemsList = [];
+
+  rowData: any;
+
   constructor(private menu : MenuController,
     private afs : AngularFirestore,
     private alertController: AlertController,
@@ -31,37 +41,82 @@ export class BoqitemPage implements OnInit {
     private storage  : Storage,
     private router : Router) { 
     this.menu.enable(false);
+    // this.storage.get('boqitemcat').then((value)=>{
+    //   if(value !== null){
+    //     this.SelCat = value
+    //   }
+    // })
+    // this.storage.get('boqitemsubcat').then((value)=>{
+    //   if(value !== null){
+    //     this.SsubCat = value
+    //   }
+    // })
+    // this.storage.get('boqitemsubsubcat').then((value)=>{
+    //   if(value !== null){
+    //     this.SsubsubCat = value
+    //   }
+    // })
 
-    this.storage.get('boqitemcat').then((value)=>{
-      if(value !== null){
-        this.SelCat = value
-      }
-    })
-    this.storage.get('boqitemsubcat').then((value)=>{
-      if(value !== null){
-        this.SsubCat = value
-      }
-    })
-    this.storage.get('boqitemsubsubcat').then((value)=>{
-      if(value !== null){
-        this.SsubsubCat = value
-      }
-    })
+    // this.afs.collection<any>(`boq/boq/boqitemscat`).snapshotChanges().subscribe(value =>{
+    //   this.category = [];
+    //   value.forEach(doc =>{
+    //     this.category.push({
+    //       name : doc.payload.doc.data().name,
+    //       id : doc.payload.doc.id
+    //     })
 
-    this.afs.collection<any>(`boq/boq/boqitemscat`).snapshotChanges().subscribe(value =>{
-      this.category = [];
-      value.forEach(doc =>{
-        this.category.push({
-          name : doc.payload.doc.data().name,
-          id : doc.payload.doc.id
-        })
+    //   })
 
-      })
-
-    })
+    // })
   }
 
   ngOnInit() {
+    this.gridOptions = <GridOptions>{};
+    this.gridOptions.enableCharts=true;
+    this.gridOptions.enableRangeSelection=true;
+    this.gridOptions.suppressClickEdit = true;
+    this.frameworkComponents = {
+      buttonRenderer: TwobuttonRendererComponent,
+    }
+
+  this.gridOptions.columnDefs = [
+    {
+        headerName: 'Action',
+        width:80,
+        resizable  : true,
+        cellRenderer: 'buttonRenderer',
+        cellRendererParams: {
+        onClick1: this.edititem.bind(this),
+        label1: 'create',
+        onClick2: this.deleteitem.bind(this),
+        label2: 'trash',
+        },
+      },
+    {headerName: 'Category', field: 'category' , hide: true,resizable  : true, sortable: true, filter: true},
+    {headerName: 'Sub Category', field: 'subcategory' , hide: true,resizable  : true, sortable: true, filter: true },
+    {headerName: 'Sub sub-category', field: 'subsubcategory' , hide: true, sortable: true, filter: true },
+    {headerName: 'Name', field: 'name' ,resizable  : true, sortable: true, filter: true,  },
+    {headerName: 'Code', field: 'code' ,resizable  : true, sortable: true, filter: true,  },
+    {headerName: 'Unit', field: 'unit' ,resizable  : true, sortable: true, filter: true },
+    {headerName: 'Lib unit Price', field: 'libprice' , hide: true,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Unit Price', field: 'price' ,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Material Price', field: 'materialtotal' ,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Lib Material', field: 'libmaterialtotal' ,hide: true,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Equipment Price', field: 'equipmenttotal' ,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Lib Equipment', field: 'libequipmenttotal' ,hide: true,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Labour Price', field: 'labourtotal' ,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Lib Labour', field: 'liblabourtotal' ,hide: true,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Subcont Price', field: 'subcontractortotal' ,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Lib Subcont', field: 'libsubcontractortotal' ,hide: true,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Other Price', field: 'othertotal' ,hide: true,resizable  : true, sortable: true, filter: true, },
+    {headerName: 'Lib Other', field: 'libothertotal' ,resizable  : true, sortable: true, filter: true, },
+];
+
+    this.getallitems(); 
+  }
+
+  getallitems(){
+    this.rowData = this.afs.collection<any>(`boq/boq/boqitems`).valueChanges()
   }
 
   getsubcat(){
@@ -125,7 +180,7 @@ export class BoqitemPage implements OnInit {
     this.router.navigate([`addboqitem`])
   }
   edititem(item){
-    this.router.navigate(['editboqitem/'+ item.catID+"&"+item.subcatID+"&"+item.subsubcatID+"&"+item.id.split('/')[0]]);
+    this.router.navigate(['editboqitem/'+ item.rowData.id.split('/')[0]]);
   }
 
   async deleteitem(item){
@@ -143,7 +198,7 @@ export class BoqitemPage implements OnInit {
             text: 'Delete',
             cssClass: 'alertDanger',
             handler: () => {
-              this.afs.doc<any>(`boq/boq/boqitemscat/${item.catID}/subcat/${item.subcatID}/subsubcat/${item.subsubcatID}/boqitems/${item.id}`).delete();
+              this.afs.doc<any>(`boq/boq/boqitems/${item.rowData.id}`).delete();
             }
           }
         ]

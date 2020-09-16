@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Storage } from '@ionic/storage';
 import * as firebase from 'firebase';
 import { BoqitemlibPage } from '../boqitemlib/boqitemlib.page';
+import { url } from 'inspector';
 @Component({
   selector: 'app-addboqitem',
   templateUrl: './addboqitem.page.html',
@@ -103,6 +104,15 @@ export class AddboqitemPage implements OnInit {
   Addedequipment = [];
   Addedsubcontractor = [];
   Addedother = [];
+
+  Libunit="";
+  Libprice=0;
+  Libmaterialtotal=0;
+  Liblabourtotal=0;
+  Libequipmenttotal=0;
+  Libsubcontractortotal=0;
+  Libothertotal=0;
+
 
 
 
@@ -288,7 +298,7 @@ boq3AO = '';
 
   getSubcat(){
     this.storage.set("boqitemcat", this.CatID);
-      this.afs.collection<any>(`boq/boq/boqitemscat/${this.CatID}/subcat`).snapshotChanges().subscribe(value =>{
+      this.afs.collection<any>(`boq/boq/boqitemssubcat/`,ref => ref.where("catID", "==" ,this.CatID)).snapshotChanges().subscribe(value =>{
         this.subcatList = [];
         value.forEach(doc =>{
           this.subcatList.push({name : doc.payload.doc.data().name, id : doc.payload.doc.id })
@@ -300,7 +310,7 @@ boq3AO = '';
   getSubsubcat(){
     this.storage.set("boqitemsubcat", this.SubcatID);
     this.storage.set("boqitemsubcatList", this.subcatList);
-    this.afs.collection<any>(`boq/boq/boqitemscat/${this.CatID}/subcat/${this.SubcatID}/subsubcat`).snapshotChanges().subscribe(value =>{
+    this.afs.collection<any>(`boq/boq/boqitemssubsubcat`,ref => ref.where("subcatID", "==" ,this.SubcatID)).snapshotChanges().subscribe(value =>{
       this.subsubcatList = [];
       value.forEach(doc =>{
         this.subsubcatList.push({name : doc.payload.doc.data().name, id : doc.payload.doc.id })
@@ -341,9 +351,10 @@ boq3AO = '';
   addsubcat(){
     if(this.subcatName.trim()){
       this.loader()
-            this.afs.collection(`boq/boq/boqitemscat/${this.CatID}/subcat`).add({
+            this.afs.collection(`boq/boq/boqitemssubcat`).add({
               name : this.subcatName,
               des : this.subcatDes,
+              catID : this.CatID,
               createdon : new Date().toISOString()
                   }).then(()=>{
                     this.loadingController.dismiss();
@@ -361,9 +372,11 @@ boq3AO = '';
 
   addSubsubcat(){
       this.loader()
-            this.afs.collection(`boq/boq/boqitemscat/${this.CatID}/subcat/${this.SubcatID}/subsubcat`).add({
+            this.afs.collection(`boq/boq/boqitemssubsubcat`).add({
               name : this.SubsubcatName,
               des : this.SubsubcatDes,
+              catID : this.CatID,
+              subcatID : this.SubcatID,
               createdon : new Date().toISOString()
                   }).then(()=>{
                     this.loadingController.dismiss();
@@ -377,9 +390,16 @@ boq3AO = '';
   
 
   addboqitem(){
+    let cat = this.catList.find(x => x.id == this.CatID)
+    let subcat = this.subcatList.find(x => x.id == this.SubcatID)
+    let subsubcat = this.subsubcatList.find(x => x.id == this.SubsubcatID)
+    let myicon;
            this.loader()
-           this.afs.collection(`boq/boq/boqitemscat/${this.CatID}/subcat/${this.SubcatID}/subsubcat/${this.SubsubcatID}/boqitems`).add({
+           this.afs.collection(`boq/boq/boqitems`).add({
             CatID : this.CatID,
+            category : cat.name,
+            subcategory : subcat.name,
+            subsubcategory : subsubcat.name,
             SubcatID : this.SubcatID,
             SubsubcatID : this.SubsubcatID,
             name : this.itemname,
@@ -391,11 +411,18 @@ boq3AO = '';
             equipment : this.Addedequipment,
             other : this.Addedother,
             subcontractor : this.Addedsubcontractor,
-            materialtotal : this.materialtotal,
-            labourtotal :   this.labourtotal,
-            equipmenttotal : this.equipmenttotal,
-            othertotal :     this.othertotal,
-            subcontractortotal : this.subcontractortotal,
+            materialtotal : parseFloat(this.materialtotal),
+            labourtotal :  parseFloat(this.labourtotal),
+            equipmenttotal :parseFloat(this.equipmenttotal),
+            othertotal :    parseFloat(this.othertotal) ,
+            subcontractortotal : parseFloat(this.subcontractortotal),
+            libunit : this.Libunit,
+            libprice : this.Libprice,
+            libmaterialtotal: this.Libmaterialtotal,
+            liblabourtotal : this.Liblabourtotal,
+            libequipmenttotal : this.Libequipmenttotal,
+            libsubcontractortotal : this.Libsubcontractortotal,
+            libothertotal : this.Libothertotal,
             boq1A : this.boq1A,
             boq1B : this.boq1B,
             boq1C : this.boq1C,
@@ -437,7 +464,7 @@ boq3AO = '';
             boq1AM : this.boq1AM,
             boq1AN : this.boq1AN,
             boq1AO : this.boq1AO,
-
+  
             boq2A : this.boq2A,
             boq2B : this.boq2B,
             boq2C : this.boq2C,
@@ -479,7 +506,7 @@ boq3AO = '';
             boq2AM : this.boq2AM,
             boq2AN : this.boq2AN,
             boq2AO : this.boq2AO,
-
+  
             boq3A : this.boq3A,
             boq3B : this.boq3B,
             boq3C : this.boq3C,
@@ -530,24 +557,27 @@ boq3AO = '';
       
                storageRef.put(this.pic).then(()=>{
                  firebase.storage().ref(imagepath).getDownloadURL().then(url =>{
-                     this.afs.doc(`boq/boq/boqitemscat/${this.CatID}/subcat/${this.SubcatID}/subsubcat/${this.SubsubcatID}/boqitems/${value.id}`).update({
-                      image : url
+                  myicon = url;
+                     this.afs.doc(`boq/boq/boqitems/${value.id}`).update({
+                      image : url,
+                      id : value.id
                      });
                      });
       
                });
          }else{
-          this.afs.doc(`boq/boq/boqitemscat/${this.CatID}/subcat/${this.SubcatID}/subsubcat/${this.SubsubcatID}/boqitems/${value.id}`).update({
-            image : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
-           });
+          this.afs.doc(`boq/boq/boqitems/${value.id}`).update({
+            image : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png",
+            id : value.id
+          });
          }
        }).then(()=>{
-        this.loadingController.dismiss();
-         this.presentAlert();
+      this.loadingController.dismiss();
+       this.presentAlert();
 
-      }).catch((err)=>{
-        alert(err)
-      })
+    }).catch((err)=>{
+      alert(err)
+    })
           }
 
 
@@ -1196,8 +1226,13 @@ RemoveallSubcontractor(){
       if(data){
         this.itemname = data.data.name
         this.itemcode = data.data.code
-        this.unit = data.data.unit
-        this.price =data.data.price
+        this.Libunit = data.data.unit
+        this.Libprice =data.data.price
+        this.Libmaterialtotal = data.data.mprice
+        this.Liblabourtotal = data.data.lprice
+        this.Libequipmenttotal = data.data.eprice
+        this.Libsubcontractortotal = data.data.sprice
+        this.Libothertotal = data.data.oprice
       }
    
   }

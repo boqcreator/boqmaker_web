@@ -177,6 +177,130 @@ const routes: Routes = [
   {
     path: 'addothertocost',
     loadChildren: () => import('./pages/addothertocost/addothertocost.module').then( m => m.AddothertocostPageModule)
+  },
+  {
+    path: 'editareas',
+    loadChildren: () => import('./pages/editareas/editareas.module').then( m => m.EditareasPageModule)
+  },
+  {
+    path: 'edititems',
+    loadChildren: () => import('./pages/edititems/edititems.module').then( m => m.EdititemsPageModule)
+  },
+  {
+    path: 'boqitem-g1',
+    loadChildren: () => import('./pages/boqitem-g1/boqitem-g1.module').then( m => m.BoqitemG1PageModule)
+  },
+  {
+    path: 'addboqitem-g1',
+    loadChildren: () => import('./pages/addboqitem-g1/addboqitem-g1.module').then( m => m.AddboqitemG1PageModule)
+  },
+  {
+    path: 'boqitem-g2',
+    loadChildren: () => import('./pages/boqitem-g2/boqitem-g2.module').then( m => m.BoqitemG2PageModule)
+  },
+  {
+    path: 'boqitem-g3',
+    loadChildren: () => import('./pages/boqitem-g3/boqitem-g3.module').then( m => m.BoqitemG3PageModule)
+  },
+  {
+    path: 'boqitem-g4',
+    loadChildren: () => import('./pages/boqitem-g4/boqitem-g4.module').then( m => m.BoqitemG4PageModule)
+  },
+  {
+    path: 'boqitem-g5',
+    loadChildren: () => import('./pages/boqitem-g5/boqitem-g5.module').then( m => m.BoqitemG5PageModule)
+  },
+  {
+    path: 'addboqitem-g2',
+    loadChildren: () => import('./pages/addboqitem-g2/addboqitem-g2.module').then( m => m.AddboqitemG2PageModule)
+  },
+  {
+    path: 'addboqitem-g3',
+    loadChildren: () => import('./pages/addboqitem-g3/addboqitem-g3.module').then( m => m.AddboqitemG3PageModule)
+  },
+  {
+    path: 'addboqitem-g4',
+    loadChildren: () => import('./pages/addboqitem-g4/addboqitem-g4.module').then( m => m.AddboqitemG4PageModule)
+  },
+  {
+    path: 'addboqitem-g5',
+    loadChildren: () => import('./pages/addboqitem-g5/addboqitem-g5.module').then( m => m.AddboqitemG5PageModule)
+  },
+  {
+    path: 'area-g1',
+    loadChildren: () => import('./pages/area-g1/area-g1.module').then( m => m.AreaG1PageModule)
+  },
+  {
+    path: 'area-g2',
+    loadChildren: () => import('./pages/area-g2/area-g2.module').then( m => m.AreaG2PageModule)
+  },
+  {
+    path: 'area-g3',
+    loadChildren: () => import('./pages/area-g3/area-g3.module').then( m => m.AreaG3PageModule)
+  },
+  {
+    path: 'area-g4',
+    loadChildren: () => import('./pages/area-g4/area-g4.module').then( m => m.AreaG4PageModule)
+  },
+  {
+    path: 'area-g5',
+    loadChildren: () => import('./pages/area-g5/area-g5.module').then( m => m.AreaG5PageModule)
+  },
+  {
+    path: 'addarea-g1',
+    loadChildren: () => import('./pages/addarea-g1/addarea-g1.module').then( m => m.AddareaG1PageModule)
+  },
+  {
+    path: 'addarea-g2',
+    loadChildren: () => import('./pages/addarea-g2/addarea-g2.module').then( m => m.AddareaG2PageModule)
+  },
+  {
+    path: 'addarea-g3',
+    loadChildren: () => import('./pages/addarea-g3/addarea-g3.module').then( m => m.AddareaG3PageModule)
+  },
+  {
+    path: 'addarea-g4',
+    loadChildren: () => import('./pages/addarea-g4/addarea-g4.module').then( m => m.AddareaG4PageModule)
+  },
+  {
+    path: 'addarea-g5',
+    loadChildren: () => import('./pages/addarea-g5/addarea-g5.module').then( m => m.AddareaG5PageModule)
+  },
+  {
+    path: 'projecttypes',
+    loadChildren: () => import('./pages/projecttypes/projecttypes.module').then( m => m.ProjecttypesPageModule)
+  },
+  {
+    path: 'addprojtype',
+    loadChildren: () => import('./pages/addprojtype/addprojtype.module').then( m => m.AddprojtypePageModule)
+  },
+  {
+    path: 'opening',
+    loadChildren: () => import('./pages/opening/opening.module').then( m => m.OpeningPageModule)
+  },
+  {
+    path: 'addopening',
+    loadChildren: () => import('./pages/addopening/addopening.module').then( m => m.AddopeningPageModule)
+  },
+  {
+    path: 'editopening',
+    loadChildren: () => import('./pages/editopening/editopening.module').then( m => m.EditopeningPageModule)
+  },
+  {
+    path: 'editareacat',
+    loadChildren: () => import('./pages/editareacat/editareacat.module').then( m => m.EditareacatPageModule)
+  },
+  {
+    path: 'editareasubcat',
+    loadChildren: () => import('./pages/editareasubcat/editareasubcat.module').then( m => m.EditareasubcatPageModule)
+  },
+  {
+    path: 'editareasubsubcat',
+    loadChildren: () => import('./pages/editareasubsubcat/editareasubsubcat.module').then( m => m.EditareasubsubcatPageModule)
+  },
+  {
+    path: 'editarea',
+    loadChildren: () => import('./pages/editarea/editarea.module').then( m => m.EditareaPageModule)
   }
 ];
 

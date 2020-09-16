@@ -18,6 +18,12 @@
       <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="SelCat">
       <p *ngFor="let item of category | filter:term1" >
         <ion-item>
+          <ion-button (click)="editcat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+            <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button (click)="delcat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+            <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
           <ion-label>{{item.name}}</ion-label>
           <ion-radio  slot="end" [value]="item.id"></ion-radio>
         </ion-item>
@@ -32,6 +38,12 @@
       <ion-radio-group (ionChange)="getsubsubcat()" [(ngModel)]="SsubCat">
       <p *ngFor="let item of subcat | filter:term2" >
         <ion-item>
+          <ion-button (click)="editsubcat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+            <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button (click)="delsubcat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+            <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
           <ion-label>{{item.name}}</ion-label>
           <ion-radio   slot="end" [value]="item.id" ></ion-radio>
         </ion-item>
@@ -46,6 +58,12 @@
       <ion-radio-group (ionChange)="getareas()" [(ngModel)]="SsubsubCat">
       <p *ngFor="let item of subsubcat | filter:term3" >
         <ion-item>
+          <ion-button (click)="editsubsubcat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+            <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button (click)="delsubsubcat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+            <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
           <ion-label>{{item.name}}</ion-label>
           <ion-radio  slot="end" [value]="item.id" ></ion-radio>
         </ion-item>
@@ -65,8 +83,11 @@
                 <img [src]="item.image" />
               </ion-avatar> 
               <ion-label>{{item.name}}</ion-label>
-              <ion-button style="--padding-end: 0px;" fill="clear">
-                <ion-icon slot="icon-only" name="create"></ion-icon>
+              <ion-button (click)="editarea(item)" slot="end" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+                <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+              </ion-button>
+              <ion-button (click)="delarea(item)" size="small" slot="end" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+                <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
               </ion-button>
             </ion-item>
              </p> 

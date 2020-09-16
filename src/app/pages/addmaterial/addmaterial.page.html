@@ -92,8 +92,34 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-label>Suppliers</ion-label>
+                <ion-label>Main Supplier</ion-label>
                 <ion-select (ionChange)="setsupplier()" [(ngModel)]="supplierID" placeholder="Select Supplier">
+                  <ion-select-option *ngFor="let item of supplierList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Suppliers(optional)</ion-label>
+                <ion-select (ionChange)="setsupplier()" [(ngModel)]="supplier1ID" placeholder="Select Supplier">
+                  <ion-select-option *ngFor="let item of supplierList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Suppliers(optional)</ion-label>
+                <ion-select (ionChange)="setsupplier()" [(ngModel)]="supplier2ID" placeholder="Select Supplier">
+                  <ion-select-option *ngFor="let item of supplierList" [value]="item.id">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Suppliers(optional)</ion-label>
+                <ion-select (ionChange)="setsupplier()" [(ngModel)]="supplier3ID" placeholder="Select Supplier">
                   <ion-select-option *ngFor="let item of supplierList" [value]="item.id">{{ item.name }}</ion-select-option>
                 </ion-select>
               </ion-item>

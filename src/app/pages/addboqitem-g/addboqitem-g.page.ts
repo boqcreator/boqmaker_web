@@ -14,20 +14,24 @@ export class AddboqitemGPage implements OnInit {
   file:File;
   data: [][];
   datatable = [];
-  id = 0;
+  id = "";
   code = "";
   name = "";
   unit = "";
-  price = "";
+  price = 0;
+  mprice = 0;
+  lprice = 0;
+  eprice = 0;
+  sprice = 0;
+  oprice = 0;
+
 
   segment = "form"
   constructor(private modalController: ModalController,
      private afs : AngularFirestore,
      private loadingController: LoadingController,
      private alertController: AlertController) {
-    this.afs.doc<any>(`boq/boq`).snapshotChanges().subscribe(value =>{
-    this.id = parseInt(value.payload.data().gbiID) + 1 
-    })
+      this.id = this.afs.createId();
    }
 
   ngOnInit() {
@@ -46,7 +50,13 @@ export class AddboqitemGPage implements OnInit {
       name : this.name,
       code : this.code,
       unit : this.unit,
-      price : this.price
+      price : this.price,
+      mprice: this.mprice,
+      lprice: this.lprice,
+      eprice:  this.eprice,
+      sprice: this.sprice,
+      oprice: this.oprice
+
     }).then(()=>{
       this.afs.doc(`boq/boq`).update({
         gbiID : this.id.toString()
@@ -57,14 +67,17 @@ export class AddboqitemGPage implements OnInit {
       this.code="";
       this.name = '';
       this.unit = '';
-      this.price = ''
+      this.price = 0;
+      this.mprice =0;
+      this.lprice = 0;
+      this.sprice = 0;
+      this.oprice = 0;
     }).catch(err =>{
       alert(err)
     })
   }
   async Uploadexcel(){
     if(this.datatable.length >0){
-      let iid = this.id-1
       const loading = await this.loadingController.create({
         message: 'Adding...',
         duration: 20000,
@@ -72,25 +85,18 @@ export class AddboqitemGPage implements OnInit {
       });
       await loading.present();
       this.datatable.forEach(ele =>{
-        ++iid
-        this.afs.doc(`boq/boq/generalboqitems/${iid}`).set({
-          id: iid,
+        const id = this.afs.createId()
+        this.afs.doc(`boq/boq/generalboqitems/${id}`).set({
+          id: id,
           name : ele[1],
           code : ele[0],
           unit : ele[2],
-          price : ele[3]
-        }).then(()=>{
-          this.afs.doc(`boq/boq`).update({
-            gbiID : iid.toString()
-          }).catch(async err =>{
-            const alert = await this.alertController.create({
-              header: 'Added',
-              message: err,
-              buttons: ['OK']
-            });
-          
-            await alert.present();
-          })
+          price : ele[3],
+          mprice: ele[4],
+          lprice: ele[5],
+          eprice:  ele[6],
+          sprice: ele[7],
+          oprice: ele[8]
         }).catch(async err =>{
           const alert = await this.alertController.create({
             header: 'Added',

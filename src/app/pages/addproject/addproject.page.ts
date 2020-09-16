@@ -52,6 +52,11 @@ export class AddprojectPage implements OnInit {
   F8 = "";
   F9 = "";
   F10 = "";
+  typeList;
+  selectedType;
+  code = "";
+  country = "Bahrain";
+  currency = "BHD";
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
@@ -67,9 +72,9 @@ export class AddprojectPage implements OnInit {
     private menu : MenuController,
     public alertController: AlertController) {
       this.menu.enable(false)
-    this.fs.read_projects().subscribe(snap => {
-      this.id = snap.length+1 // will return the collection size
-   });
+     this.id =  this.afs.createId()
+
+     this.typeList = this.afs.collection(`boq/boq/projecttypes`).valueChanges()
 
     this.fs.read_contractors().subscribe(value =>{
       value.forEach(doc =>{
@@ -171,12 +176,16 @@ export class AddprojectPage implements OnInit {
         this.fs.create_project({
           id : this.id,
           name : this.name,
+          code : this.code,
+          type : this.selectedType.name,
           no : this.no,
           con : this.con,
           access : this.access,
           start : this.start,
           end : this.end,
           des : this.des,
+          country : this.country,
+          currency : this.currency,
           location: new firebase.firestore.GeoPoint(this.latitude , this.longitude),
           contname : this.catogery.data().name,
           contEmail : this.catogery.data().email,

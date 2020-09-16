@@ -122,4 +122,39 @@ input[type=text], select, textarea{
 
   }
 
- 
+  table, th, td {
+    border: 1px solid grey;
+    border-spacing: 5px;
+    color: black;
+  }
+  th, td {
+    padding: 3px;
+    text-align: left;
+    font-size: smaller;
+  }
+  tr:nth-child(even) {
+    background-color: #deeaeb;
+  }
+
+  .ex1 {
+    height: 450px;
+    width: 100%;
+    overflow-y: scroll;
+    display: inline-block;
+    border: solid 1px grey;
+  }
+  ion-content{
+    display: table;
+}
+.editbtn{
+    --padding-end: 0px;
+    --padding-start: 0px;
+    height: 14px;
+    width: 14px;
+}
+.editbtn1{
+    --padding-end: 0px;
+    --padding-start: 0px;
+    height: 18px;
+    width: 18px;
+}

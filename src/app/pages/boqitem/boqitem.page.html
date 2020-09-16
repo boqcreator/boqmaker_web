@@ -8,7 +8,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  scrollY=true scrollX=false >
+<ion-content>
+  <ag-grid-angular #agGrid
+  class="ag-theme-blue"
+  [gridOptions]="gridOptions"
+  style="width: 100%; height: 85%;"
+  [columnDefs]="gridOptions.columnDefs"
+  [rowData]="rowData | async"
+  [enableSorting]="true"
+  [enableFilter]="true"
+  [pagination]="true"
+  [frameworkComponents]="frameworkComponents"
+  rowSelection="multiple"
+  >
+</ag-grid-angular>
+</ion-content>
+
+
+
+
+
+
+<!-- <ion-content  scrollY=true scrollX=false >
 
  
   <div class="ex1">
@@ -75,7 +96,6 @@
 
         <ion-button (click)="edititem(item)"  style="--padding-end: 0px;" fill="clear">
           <ion-icon  slot="icon-only" name="create"></ion-icon>
-
         </ion-button>
         <ion-button (click)="deleteitem(item)" color="danger" style="--padding-end: 0px;" fill="clear">
           <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
@@ -87,4 +107,4 @@
 
 
 
-</ion-content>
+</ion-content> -->

@@ -13,7 +13,7 @@ export class AddareaGPage implements OnInit {
   file:File;
   data: [][];
   datatable = [];
-  id = 0;
+  id = "";
   code = "";
   name = "";
 
@@ -22,9 +22,7 @@ export class AddareaGPage implements OnInit {
      private afs : AngularFirestore,
      private loadingController: LoadingController,
      private alertController: AlertController) {
-    this.afs.doc<any>(`boq/boq`).snapshotChanges().subscribe(value =>{
-    this.id = parseInt(value.payload.data().gaID) + 1 
-    })
+      this.id = this.afs.createId();
    }
 
   ngOnInit() {
@@ -57,7 +55,6 @@ export class AddareaGPage implements OnInit {
   }
   async Uploadexcel(){
     if(this.datatable.length >0){
-      let iid = this.id-1
       const loading = await this.loadingController.create({
         message: 'Adding...',
         duration: 20000,
@@ -65,23 +62,11 @@ export class AddareaGPage implements OnInit {
       });
       await loading.present();
       this.datatable.forEach(ele =>{
-        ++iid
-        this.afs.doc(`boq/boq/generalareas/${iid}`).set({
-          id: iid,
+        const id = this.afs.createId()
+        this.afs.doc(`boq/boq/generalareas/${id}`).set({
+          id: id,
           name : ele[1],
           code : ele[0],
-        }).then(()=>{
-          this.afs.doc(`boq/boq`).update({
-            gaID : iid.toString()
-          }).catch(async err =>{
-            const alert = await this.alertController.create({
-              header: 'Error',
-              message: err,
-              buttons: ['OK']
-            });
-          
-            await alert.present();
-          })
         }).catch(async err =>{
           const alert = await this.alertController.create({
             header: 'Error',

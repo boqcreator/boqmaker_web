@@ -155,6 +155,44 @@
                 </ion-item>
               </ion-col>
             </ion-row>
+            <ion-row>
+              <ion-col *ngIf="Libunit" >
+                <ion-item>
+                  <ion-label>Lib Unit: {{Libunit}}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="Libprice">
+                <ion-item>
+                  <ion-label>Lib price: {{Libprice | number:'0.0-3' }}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="Libmaterialtotal">
+                <ion-item>
+                  <ion-label>Lib Material: {{Libmaterialtotal | number:'0.0-3' }}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="Liblabourtotal">
+                <ion-item>
+                  <ion-label>Lib Labour: {{Liblabourtotal | number:'0.0-3' }}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="Libequipmenttotal">
+                <ion-item>
+                  <ion-label>Lib Equipment: {{Libequipmenttotal | number:'0.0-3' }}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="Libsubcontractortotal">
+                <ion-item>
+                  <ion-label>Lib Subcontractor: {{Libsubcontractortotal | number:'0.0-3' }}</ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col *ngIf="Libothertotal">
+                <ion-item>
+                  <ion-label>Lib Other: {{Libothertotal | number:'0.0-3' }}</ion-label>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
           </ion-card>
 
           <ion-segment [(ngModel)]="segment2" >

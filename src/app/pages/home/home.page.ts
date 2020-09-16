@@ -65,11 +65,47 @@ export class HomePage implements OnInit {
   gotogbi(){
     this.router.navigate(['boqitem-g'])
   }
+  gotogbi1(){
+    this.router.navigate(['boqitem-g1'])
+  }
+  gotogbi2(){
+    this.router.navigate(['boqitem-g2'])
+  }
+  gotogbi3(){
+    this.router.navigate(['boqitem-g3'])
+  }
+  gotogbi4(){
+    this.router.navigate(['boqitem-g4'])
+  }
+  gotogbi5(){
+    this.router.navigate(['boqitem-g5'])
+  }
   gotogal(){
     this.router.navigate(['area-g'])
   }
+  gotogal1(){
+    this.router.navigate(['area-g1'])
+  }
+  gotogal2(){
+    this.router.navigate(['area-g2'])
+  }
+  gotogal3(){
+    this.router.navigate(['area-g3'])
+  }
+  gotogal4(){
+    this.router.navigate(['area-g4'])
+  }
+  gotogal5(){
+    this.router.navigate(['area-g5'])
+  }
   gotocastdetails(){
     this.router.navigate(['costdetails'])
+  }
+  gotoprojtype(){
+    this.router.navigate(['projecttypes'])
+  }
+  gotoopen(){
+    this.router.navigate(['opening'])
   }
 
   async presentModal() {

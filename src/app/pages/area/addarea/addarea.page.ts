@@ -258,6 +258,7 @@ this.loader()
             this.afs.collection(`boq/boq/Areas/${this.CatID}/cat/${this.SubcatID}/subcat/${this.SubsubcatID}/items`).add({
               name : this.unitname,
               des : this.unitdes,
+              code : this.code,
               createdon : new Date().toISOString(),
               attributes : this.attributes
                   }).then((value)=>{

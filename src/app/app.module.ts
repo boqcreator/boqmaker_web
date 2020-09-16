@@ -18,7 +18,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { environment } from '../environments/environment';
 import { UserService } from './user.service';
 import { AuthService } from './auth.service';
-import { AgGridModule } from 'ag-grid-angular';
 import { SharedModule } from './shared/shared.module';
 import { HTTP } from '@ionic-native/http/ngx';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -48,6 +47,24 @@ import { AddlabourtocostPageModule } from './pages/addlabourtocost/addlabourtoco
 import { AddequipmenttocostPageModule } from './pages/addequipmenttocost/addequipmenttocost.module';
 import { AddsubcontractortocostPageModule } from './pages/addsubcontractortocost/addsubcontractortocost.module';
 import { AddothertocostPageModule } from './pages/addothertocost/addothertocost.module';
+import { EditareasPageModule } from './pages/editareas/editareas.module';
+import { EdititemsPageModule } from './pages/edititems/edititems.module';
+import { AddboqitemG1PageModule } from './pages/addboqitem-g1/addboqitem-g1.module';
+import { AddboqitemG2PageModule } from './pages/addboqitem-g2/addboqitem-g2.module';
+import { AddboqitemG3PageModule } from './pages/addboqitem-g3/addboqitem-g3.module';
+import { AddboqitemG4PageModule } from './pages/addboqitem-g4/addboqitem-g4.module';
+import { AddboqitemG5PageModule } from './pages/addboqitem-g5/addboqitem-g5.module';
+import { AddareaG1PageModule } from './pages/addarea-g1/addarea-g1.module';
+import { AddareaG2PageModule } from './pages/addarea-g2/addarea-g2.module';
+import { AddareaG3PageModule } from './pages/addarea-g3/addarea-g3.module';
+import { AddareaG4PageModule } from './pages/addarea-g4/addarea-g4.module';
+import { AddareaG5PageModule } from './pages/addarea-g5/addarea-g5.module';
+import { AddprojtypePageModule } from './pages/addprojtype/addprojtype.module';
+import { AddopeningPageModule } from './pages/addopening/addopening.module';
+import { EditareacatPageModule } from './pages/editareacat/editareacat.module';
+import { EditareasubcatPageModule } from './pages/editareasubcat/editareasubcat.module';
+import { EditareasubsubcatPageModule } from './pages/editareasubsubcat/editareasubsubcat.module';
+import { EditareaPageModule } from './pages/editarea/editarea.module';
 
 
 @NgModule({
@@ -62,7 +79,6 @@ import { AddothertocostPageModule } from './pages/addothertocost/addothertocost.
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AgGridModule.withComponents([]),
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireStorageModule,
@@ -88,6 +104,24 @@ import { AddothertocostPageModule } from './pages/addothertocost/addothertocost.
     AddequipmenttocostPageModule,
     AddsubcontractortocostPageModule,
     AddothertocostPageModule,
+    EditareasPageModule,
+    EdititemsPageModule,
+    AddboqitemG1PageModule,
+    AddboqitemG2PageModule,
+    AddboqitemG3PageModule,
+    AddboqitemG4PageModule,
+    AddboqitemG5PageModule,
+    AddareaG1PageModule,
+    AddareaG2PageModule,
+    AddareaG3PageModule,
+    AddareaG4PageModule,
+    AddareaG5PageModule,
+    AddprojtypePageModule,
+    AddopeningPageModule,
+    EditareacatPageModule,
+    EditareasubcatPageModule,
+    EditareasubsubcatPageModule,
+    EditareaPageModule
     
   ],
   providers: [

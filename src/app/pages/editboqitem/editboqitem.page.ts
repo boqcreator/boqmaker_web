@@ -11,6 +11,7 @@ import * as firebase from 'firebase';
   styleUrls: ['./editboqitem.page.scss'],
 })
 export class EditboqitemPage implements OnInit {
+  itemID;
   arrayID = [];
   itemname ="" ;
   itemcode = "";
@@ -98,12 +99,12 @@ export class EditboqitemPage implements OnInit {
    }
 
   ngOnInit() {
-    var id = this.route.snapshot.paramMap.get('id')
-    this.arrayID = id.split("&")
-    this.afs.doc<any>(`boq/boq/boqitemscat/${this.arrayID[0]}/subcat/${this.arrayID[1]}/subsubcat/${this.arrayID[2]}/boqitems/${this.arrayID[3]}`).get().subscribe(value =>{
+    this.itemID = this.route.snapshot.paramMap.get('id')
+    // this.arrayID = id.split("&")
+    this.afs.doc<any>(`boq/boq/boqitems/${this.itemID}`).get().subscribe(value =>{
 
        this.itemname = value.data().name;
-       value.data().itemcode  ? this.itemcode = value.data().itemcode : "";
+       value.data().code  ? this.itemcode = value.data().code : "";
        this.unit = value.data().unit;
        this.price = value.data().price;
        value.data().image ? this.image = value.data().image : "" ;
@@ -721,7 +722,7 @@ export class EditboqitemPage implements OnInit {
 
   edititem(){
     this.loader()
-    this.afs.doc<any>(`boq/boq/boqitemscat/${this.arrayID[0]}/subcat/${this.arrayID[1]}/subsubcat/${this.arrayID[2]}/boqitems/${this.arrayID[3]}`).update({
+    this.afs.doc<any>(`boq/boq/boqitems/${this.itemID}`).update({
       name : this.itemname,
       code : this.itemcode,
       unit : this.unit,
@@ -745,7 +746,7 @@ export class EditboqitemPage implements OnInit {
     
              storageRef.put(this.pic).then(()=>{
                firebase.storage().ref(imagepath).getDownloadURL().then(url =>{
-                   this.afs.doc(`boq/boq/boqitemscat/${this.arrayID[0]}/subcat/${this.arrayID[1]}/subsubcat/${this.arrayID[2]}/boqitems/${this.arrayID[3]}`).update({
+                   this.afs.doc(`boq/boq/boqitems/${this.itemID}`).update({
                     image : url
                    });
                    });

@@ -36,7 +36,9 @@ export class ProjectsPage implements OnInit {
           no : doc.payload.doc.data().no,
           start : doc.payload.doc.data().start,
           end : doc.payload.doc.data().end,
-          pid : doc.payload.doc.ref.id
+          pid : doc.payload.doc.ref.id,
+          type : doc.payload.doc.data().type,
+          code : doc.payload.doc.data().code
         })
       })
     })
