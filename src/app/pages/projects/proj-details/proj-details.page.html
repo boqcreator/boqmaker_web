@@ -24,6 +24,9 @@
     <ion-segment-button value="item">
       <ion-label>Items Details</ion-label>
     </ion-segment-button>
+    <ion-segment-button value="projection">
+      <ion-label>Projection Details</ion-label>
+    </ion-segment-button>
     <ion-segment-button value="open">
       <ion-label>Opening Details</ion-label>
     </ion-segment-button>
@@ -401,11 +404,20 @@
 
       <ion-row>
         <ion-col>
-          <ion-select (ionChange)="assigning()"  [(ngModel)]="GlobleareaID"  okText="Okay" cancelText="Dismiss"  placeholder="Select Area" interface="popover" >
-            <ion-select-option *ngFor="let a of GlobleareaList" [value]="a.id">                  
-                    <ion-label>  {{ a.name }}  </ion-label>
-            </ion-select-option>
-          </ion-select>
+          <ion-item>
+            <ion-label>Areas</ion-label>
+            <ion-select multiple="true" (ionChange)="assigning()"  [(ngModel)]="Globlearea"  okText="Okay" cancelText="Dismiss"  placeholder="Select Area" >
+              <ion-select-option *ngFor="let a of GlobleareaList" [value]="a">                  
+                      <ion-label>  {{ a.name }}  </ion-label>
+              </ion-select-option>
+            </ion-select>
+            <ion-button slot="end" title="Select all"  (click)="SelectallAreas()" style="--padding-start : 0px;margin: 0px;" class="addbtn" fill="clear" >
+              <ion-icon size="small" slot="icon-only" src="assets/icon/check.svg"></ion-icon>     
+            </ion-button>
+            <ion-button  slot="end" title="Unselect all" (click)="RemoveallAreas()" style="--padding-start : 0px;margin: 0px;" class="addbtn" fill="clear" >
+             <ion-icon size="small" slot="icon-only" src="assets/icon/cancel.svg"></ion-icon>     
+           </ion-button>
+          </ion-item>
         </ion-col>
       </ion-row>
      <ion-item>
@@ -433,7 +445,7 @@
           <ion-label>Details 3</ion-label>
         </ion-segment-button>
       </ion-segment>
- 
+      
         <div [ngSwitch]="Areasegment">     
           <div style="margin-top : 5px;" *ngSwitchCase="'am'">
   
@@ -2942,9 +2954,9 @@
                   
                   <td>{{ item.item.itemdetails.code }}</td>
                   <td> {{item.areaname+"("+item.code+")"  }} </td>
-                  <td>{{ item.fqty }}</td>
+                  <td style="cursor: pointer;"  (click)="gototable(item)" >{{ item.fqty }}</td>
                   <td>{{ item.item.itemdetails.unit }}</td>
-                  <td>{{ item.item.itemdetails.price | number:'0.0-3' }}</td>
+                  <td>{{ item.item.itemdetails.price*item.fqty | number:'0.0-3' }}</td>
                   <td style="text-align: center; align-items: center;" >
                     <ion-button class="editbtn1" (click)="editItem(item)" fill="clear">
                       <ion-icon slot="icon-only" name="create"></ion-icon>
@@ -3064,6 +3076,148 @@
 
         </div> 
 
+ <!-- PROJECTION -->
+        <div style="margin-top : 5px;" *ngSwitchCase="'projection'">
+          <ion-segment [(ngModel)]="segmentprojectionDetails" >
+            <ion-segment-button value="list">
+              <ion-label>List</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="addprojection">
+              <ion-label>Add</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+
+          <div [ngSwitch]="segmentprojectionDetails">  
+            <div style="margin-top : 5px;" *ngSwitchCase="'list'">
+              <ion-searchbar [(ngModel)]="termprojection" placeholder="Search" ></ion-searchbar>
+              <table style="width:100%">
+                <tr>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Area</th>
+                  <th>Quantity</th>
+                  <th>Percentage</th>
+                  <th>H</th>
+                  <th>W1|W2</th>
+                  <th>L1|L2</th>
+                  <th>Action</th>
+                </tr>
+                <tr *ngFor="let item of myprojectionsList | filter:termprojection" >
+                  <td>
+                    <ion-row>
+                      <ion-col size="3">
+                        <ion-avatar *ngIf="item.projection.image" style="--border-radius: 10px; height: 30px;width: 30px;">
+                          <img [src]="item.projection.image" />
+                        </ion-avatar>
+                      </ion-col>
+                      <ion-col size="9">
+                        <ion-label style="font-size: smaller;" > {{ item.projection.name }}</ion-label>
+                      </ion-col>
+                    </ion-row>
+                  </td>
+                  
+                  <td>{{ item.projection.code }}</td>
+                  <td> {{item.areaname+"("+item.code+")"  }} </td>
+                  <td>{{ item.projectionno }}</td>
+                  <td>{{ item.projectionper }}</td>
+                  <td>{{ item.projection.height | number:'0.0-3' }}</td>
+                  <td>{{ item.projection.width1 | number:'0.0-3' }} | {{ item.projection.width2 | number:'0.0-3' }} </td>
+                  <td>{{ item.projection.length1 | number:'0.0-3' }} | {{ item.projection.length2 | number:'0.0-3' }} </td>
+                  <td style="text-align: center; align-items: center;" >
+                    <ion-button class="editbtn1" fill="clear">
+                      <ion-icon slot="icon-only" name="create"></ion-icon>
+                    </ion-button>
+                    <ion-button class="editbtn1" (click)="delprojection(item)" color="danger" fill="clear">
+                      <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+                    </ion-button>
+                     </td>
+                </tr>
+              </table>
+            </div>
+
+          <div style="margin-top : 5px;" *ngSwitchCase="'addprojection'">
+            <ion-card>
+              <ion-row>
+                <ion-col>
+                  <ion-select (ionChange)="getprojections()" [(ngModel)]="projectiontypeID"  placeholder="Select type"  okText="Okay" cancelText="Dismiss" interface="popover" >
+                    <ion-select-option *ngFor="let projectionL of projectiontypeList | async" [value]="projectionL.id">                  
+                            <ion-label>  {{ projectionL.name }}  </ion-label>
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+                <ion-col>
+                  <ion-select [(ngModel)]="projectionID" placeholder="Select projection"   okText="Okay" cancelText="Dismiss" interface="popover" >
+                    <ion-select-option *ngFor="let projection of projectionList | async" [value]="projection">                  
+                            <ion-label>  {{ projection.name }}  </ion-label>
+                    </ion-select-option>
+                  </ion-select>
+                </ion-col>
+              </ion-row>
+               <ion-row>
+                 <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">No of projection</ion-label>
+                    <ion-input [(ngModel)]="noofprojection" type="number"></ion-input>
+                  </ion-item>
+                 </ion-col>
+                 <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Percentage</ion-label>
+                    <ion-input [(ngModel)]="projectionper" type="number"></ion-input>
+                  </ion-item>
+                 </ion-col>
+               </ion-row>
+
+               <ion-row>
+                <ion-col>
+                 <ion-item>
+                   <ion-label position="floating">- %projection floor</ion-label>
+                   <ion-input [(ngModel)]="projectionFloor" type="number"></ion-input>
+                 </ion-item>
+                </ion-col>
+                <ion-col>
+                 <ion-item>
+                   <ion-label position="floating">- %projection ceiling</ion-label>
+                   <ion-input [(ngModel)]="projectionCeiling" type="number"></ion-input>
+                 </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                 <ion-item>
+                   <ion-label position="floating">+ %projection wall</ion-label>
+                   <ion-input [(ngModel)]="projectionWall" type="number"></ion-input>
+                 </ion-item>
+                </ion-col>
+                <ion-col>
+                 <ion-item>
+                   <ion-label position="floating">+ %projection skirting</ion-label>
+                   <ion-input [(ngModel)]="projectionSkirting" type="number"></ion-input>
+                 </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">+ %projection cornice</ion-label>
+                    <ion-input [(ngModel)]="projectionCornice" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+               <ion-item>
+                <ion-label position="floating">Notes</ion-label>
+                 <ion-textarea [(ngModel)]="projectionnote" placeholder="Enter more information here..."></ion-textarea>
+               </ion-item>
+               <ion-button (click)="addprojectiontoarea()" expand="block">
+                 Add
+               </ion-button>
+            </ion-card>
+          </div>
+        </div>
+
+        </div> 
+
+<!-- VARIATION -->
         <div style="margin-top : 5px;" *ngSwitchCase="'variation'">
           <ion-segment [(ngModel)]="segmentvariationDetails" >
             <ion-segment-button value="list">
@@ -3267,8 +3421,8 @@
                     <ion-row>
                       <ion-col>
                           <ion-item>
-                            <ion-label>OMM</ion-label>
-                            <ion-select [(ngModel)]="varexisting"  interface="popover" placeholder="Select">
+                            <ion-label>Omission</ion-label>
+                            <ion-select (ionChange)="checkOMM()" [(ngModel)]="varexisting"  interface="popover" placeholder="Select">
                               <ion-select-option value=true>Yes</ion-select-option>
                               <ion-select-option value=false>No</ion-select-option>
                             </ion-select>
@@ -3276,8 +3430,8 @@
                       </ion-col>
                       <ion-col>
                         <ion-item>
-                          <ion-label>OMM 1</ion-label>
-                          <ion-select [(ngModel)]="varexisting1"   interface="popover" placeholder="Select">
+                          <ion-label>Addition</ion-label>
+                          <ion-select (ionChange)="checkOMM1()" [(ngModel)]="varexisting1"   interface="popover" placeholder="Select">
                             <ion-select-option value=true>Yes</ion-select-option>
                             <ion-select-option value=false>No</ion-select-option>
                           </ion-select>
@@ -3285,7 +3439,7 @@
                     </ion-col>
                     <ion-col>
                       <ion-item>
-                        <ion-label>OMM 2</ion-label>
+                        <ion-label>Variation</ion-label>
                         <ion-select [(ngModel)]="varexisting2"  interface="popover" placeholder="Select">
                           <ion-select-option value=true>Yes</ion-select-option>
                           <ion-select-option value=false>No</ion-select-option>
@@ -4290,10 +4444,10 @@
                   <td>{{ item.variation.variationdetails.unit }}</td>
                   <td>{{ item.variation.variationdetails.price | number:'0.0-3' }}</td>
                   <td style="text-align: center; align-items: center;" >
-                    <ion-button class="editbtn1" (click)="editItem(item)" fill="clear">
+                    <ion-button class="editbtn1" (click)="editVariation(item)" fill="clear">
                       <ion-icon slot="icon-only" name="create"></ion-icon>
                     </ion-button>
-                    <ion-button class="editbtn1" (click)="delItem(item)" color="danger" fill="clear">
+                    <ion-button class="editbtn1" (click)="delVariation(item)" color="danger" fill="clear">
                       <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
                     </ion-button>
                      </td>
@@ -4368,7 +4522,7 @@
                   <ion-toolbar>
                     <ion-searchbar [(ngModel)]="term1" placeholder="Filter BoqItems" ></ion-searchbar>
                   </ion-toolbar>
-                  <ion-radio-group [(ngModel)]="boqitem">
+                  <ion-radio-group>
                     <table  style="width:100%;">
                       <tr>
                         <th> </th>
@@ -4379,7 +4533,7 @@
                       </tr>
                       <tr *ngFor="let aitem of boqitemList  | filter:term1">
                         <td >
-                          <ion-radio [value]="aitem"></ion-radio>
+                          <ion-checkbox [(ngModel)]="aitem.flag" (click)="addtoitemsList(aitem)" ></ion-checkbox>
                         </td>
                         <td>
                          <ion-chip color="primary" mode="ios" outline="true">
@@ -4397,7 +4551,6 @@
                     
                   </ion-radio-group>
                   </div>
-      
           </ion-card>
              </div>
   

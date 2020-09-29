@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Projection</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-label>Type</ion-label>
+    <ion-select [(ngModel)]="selectedtype" [selectedText]="selectedtype.name" [compareWith]="compareObject" placeholder="Select type">
+      <ion-select-option *ngFor="let type of typeList"  [value]="type">{{type.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input [(ngModel)]="projectionname" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Code</ion-label>
+        <ion-input [(ngModel)]="projectioncode" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-avatar>
+          <img [src]="icon" />
+        </ion-avatar>
+        <ion-label>Icon</ion-label>
+        <ion-input (change)="onFileSelected1($event)" type="file">
+        </ion-input>
+    </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">1st Width</ion-label>
+        <ion-input [(ngModel)]="width1" type="number"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">2nd Width</ion-label>
+        <ion-input [(ngModel)]="width2" type="number"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Length 1</ion-label>
+        <ion-input [(ngModel)]="length1" type="number"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Length 2</ion-label>
+        <ion-input [(ngModel)]="length2" type="number"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item>
+    <ion-label position="floating">Height</ion-label>
+    <ion-input [(ngModel)]="height" type="number"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Notes:</ion-label>
+    <ion-textarea [(ngModel)]="projectionnote" placeholder="Enter more information here..."></ion-textarea>
+  </ion-item>
+  <ion-button (click)="editprojection()" expand="block" >
+   Update
+  </ion-button>
+
+</ion-content>

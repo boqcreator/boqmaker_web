@@ -1,0 +1,30 @@
+.my-custom-modal-css .modal-wrapper {
+    --width: 100% !important;
+    --height: 100% !important;
+    top: 0%;
+    position: absolute; 
+    display: block;  
+  }
+  .modal-wrapper {
+    --width: 100% !important;
+    --height: 100% !important;
+  }
+
+  table {
+    margin-left: 10px;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    border-collapse: collapse;
+    width: 100%;
+    line-height: 12px;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 1px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }

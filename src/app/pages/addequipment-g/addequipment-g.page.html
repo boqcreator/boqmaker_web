@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Equipment to Library</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-segment [(ngModel)]="segment" >
+    <ion-segment-button value="form">
+      <ion-label>Form</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="excel">
+      <ion-label>Excel file</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+    <div style="margin-top : 10px;" *ngSwitchCase="'form'">
+     <ion-list>
+       <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Name</ion-label>
+            <ion-input  [(ngModel)]="name" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+         <ion-col>
+          <ion-item>
+            <ion-label>Description</ion-label>
+            <ion-input [(ngModel)]="des" type="text"></ion-input>
+          </ion-item>
+         </ion-col>
+       </ion-row>
+       <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Unit</ion-label>
+            <ion-input  [(ngModel)]="unit" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+         <ion-col>
+          <ion-item>
+            <ion-label>Price</ion-label>
+            <ion-input [(ngModel)]="price" type="number"></ion-input>
+          </ion-item>
+         </ion-col>
+       </ion-row>
+     </ion-list>
+      <ion-button (click)="additem()" expand="block" >
+        Add Item
+      </ion-button>
+    </div>
+
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'excel'">
+      <ion-item>
+        <ion-label>Choose excel XLSX file to import data</ion-label>
+        <input type="file" (change)="onFileChange($event)" multiple="false" />
+      </ion-item>
+      <ion-button expand="block" (click)="Uploadexcel()" >Upload</ion-button>
+       
+      <table *ngIf="datatable.length > 0" > 
+        <tr>
+          <th>Name</th>
+          <th>Des</th>
+          <th>Unit</th>
+          <th>Price</th>
+          <th>Action</th>
+        </tr>
+        <tr *ngFor="let item of datatable">
+          <td>{{item[0]}}</td>
+          <td>{{item[1]}}</td>
+          <td>{{item[2]}}</td>
+          <td>{{item[3]}}</td>
+          <td>
+            <ion-button slot="end" fill="clear" (click)="remove(item)">
+            <ion-icon color="danger" name="trash"></ion-icon>
+          </ion-button> 
+        </td>
+        </tr>
+      </table>
+     
+
+    </div>
+
+    </div>
+
+</ion-content>

@@ -46,8 +46,8 @@ export class HomePage implements OnInit {
   gotoitem(){
     this.router.navigate(['boqitem'])
   }
-  gotoReport(){
-    this.presentModal()
+  gotoReport(type){
+    this.presentModal(type)
   }
 
   gotolabour(){
@@ -107,11 +107,30 @@ export class HomePage implements OnInit {
   gotoopen(){
     this.router.navigate(['opening'])
   }
+  gotoprojection(){
+    this.router.navigate(['projection'])
+  }
+  gotovariationreport(){
+    this.router.navigate(['report-variation'])
+  }
+  gotomateriallib(){
+    this.router.navigate(['material-g'])
+  }
+  gotolabourib(){
+    this.router.navigate(['labour-g'])
+  }
+  gotoequipmentlib(){
+    this.router.navigate(['equipment-g'])
+  }
+  addProj(){
+    this.router.navigate(['addproject'])
+   }
 
-  async presentModal() {
+  async presentModal(type) {
     const modal = await this.modalController.create({
       cssClass: 'modal1',
     component: ReportFinalPricedBillPage,
+    componentProps: { type: type }
     });
   
     await modal.present();

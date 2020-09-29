@@ -65,6 +65,16 @@ import { EditareacatPageModule } from './pages/editareacat/editareacat.module';
 import { EditareasubcatPageModule } from './pages/editareasubcat/editareasubcat.module';
 import { EditareasubsubcatPageModule } from './pages/editareasubsubcat/editareasubsubcat.module';
 import { EditareaPageModule } from './pages/editarea/editarea.module';
+import { EditvaritiondetailsPageModule } from './pages/editvaritiondetails/editvaritiondetails.module';
+import { AddprojectionPageModule } from './pages/addprojection/addprojection.module';
+import { EditprojectionPageModule } from './pages/editprojection/editprojection.module';
+import { FinalqtytablePageModule } from './pages/finalqtytable/finalqtytable.module';
+import { AddmaterialGPageModule } from './pages/addmaterial-g/addmaterial-g.module';
+import { AddlabourGPageModule } from './pages/addlabour-g/addlabour-g.module';
+import { AddequipmentGPageModule } from './pages/addequipment-g/addequipment-g.module';
+import { MateriallibPageModule } from './pages/materiallib/materiallib.module';
+import { Report1DetailsPageModule } from './pages/report1-details/report1-details.module';
+import { Report1MaterialPageModule } from './pages/report1-material/report1-material.module';
 
 
 @NgModule({
@@ -121,7 +131,17 @@ import { EditareaPageModule } from './pages/editarea/editarea.module';
     EditareacatPageModule,
     EditareasubcatPageModule,
     EditareasubsubcatPageModule,
-    EditareaPageModule
+    EditareaPageModule,
+    EditvaritiondetailsPageModule,
+    AddprojectionPageModule,
+    EditprojectionPageModule,
+    FinalqtytablePageModule,
+    AddmaterialGPageModule,
+    AddlabourGPageModule,
+    AddequipmentGPageModule,
+    MateriallibPageModule,
+    Report1DetailsPageModule,
+    Report1MaterialPageModule
     
   ],
   providers: [

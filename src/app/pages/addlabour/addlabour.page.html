@@ -99,6 +99,16 @@
               </ion-item>
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Addional Suppliers(optional)</ion-label>
+                <ion-select multiple="true" [(ngModel)]="supplierAdd" placeholder="Select Supplier">
+                  <ion-select-option *ngFor="let item of supplierList" [value]="item">{{ item.name }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
           <ion-item-divider style="background: grey;" >
             <ion-label></ion-label>
           </ion-item-divider>
@@ -125,8 +135,9 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-label position="floating">labour Name<ion-text color="danger">*</ion-text></ion-label>
+               
                 <ion-input [(ngModel)]="sname" type="text" placeholder="Enter category name here..."></ion-input>
+                <ion-icon slot="end" (click)="itemlibrary()" size="small" src="assets/icon/book.svg"></ion-icon>   
               </ion-item>
             </ion-col>
             <ion-col>

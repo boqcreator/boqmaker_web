@@ -301,6 +301,78 @@ const routes: Routes = [
   {
     path: 'editarea',
     loadChildren: () => import('./pages/editarea/editarea.module').then( m => m.EditareaPageModule)
+  },
+  {
+    path: 'editvaritiondetails',
+    loadChildren: () => import('./pages/editvaritiondetails/editvaritiondetails.module').then( m => m.EditvaritiondetailsPageModule)
+  },
+  {
+    path: 'report-variation/:id',
+    loadChildren: () => import('./pages/report-variation/report-variation.module').then( m => m.ReportVariationPageModule)
+  },
+  {
+    path: 'projection',
+    loadChildren: () => import('./pages/projection/projection.module').then( m => m.ProjectionPageModule)
+  },
+  {
+    path: 'addprojection',
+    loadChildren: () => import('./pages/addprojection/addprojection.module').then( m => m.AddprojectionPageModule)
+  },
+  {
+    path: 'editprojection',
+    loadChildren: () => import('./pages/editprojection/editprojection.module').then( m => m.EditprojectionPageModule)
+  },
+  {
+    path: 'material-g',
+    loadChildren: () => import('./pages/material-g/material-g.module').then( m => m.MaterialGPageModule)
+  },
+  {
+    path: 'addmaterial-g',
+    loadChildren: () => import('./pages/addmaterial-g/addmaterial-g.module').then( m => m.AddmaterialGPageModule)
+  },
+  {
+    path: 'labour-g',
+    loadChildren: () => import('./pages/labour-g/labour-g.module').then( m => m.LabourGPageModule)
+  },
+  {
+    path: 'addlabour-g',
+    loadChildren: () => import('./pages/addlabour-g/addlabour-g.module').then( m => m.AddlabourGPageModule)
+  },
+  {
+    path: 'addequipment-g',
+    loadChildren: () => import('./pages/addequipment-g/addequipment-g.module').then( m => m.AddequipmentGPageModule)
+  },
+  {
+    path: 'equipment-g',
+    loadChildren: () => import('./pages/equipment-g/equipment-g.module').then( m => m.EquipmentGPageModule)
+  },
+  {
+    path: 'materiallib',
+    loadChildren: () => import('./pages/materiallib/materiallib.module').then( m => m.MateriallibPageModule)
+  },
+  {
+    path: 'labourlib',
+    loadChildren: () => import('./pages/labourlib/labourlib.module').then( m => m.LabourlibPageModule)
+  },
+  {
+    path: 'equipmentlib',
+    loadChildren: () => import('./pages/equipmentlib/equipmentlib.module').then( m => m.EquipmentlibPageModule)
+  },
+  {
+    path: 'report1-details',
+    loadChildren: () => import('./pages/report1-details/report1-details.module').then( m => m.Report1DetailsPageModule)
+  },
+  {
+    path: 'report1-material',
+    loadChildren: () => import('./pages/report1-material/report1-material.module').then( m => m.Report1MaterialPageModule)
+  },
+  {
+    path: 'report1-labour',
+    loadChildren: () => import('./pages/report1-labour/report1-labour.module').then( m => m.Report1LabourPageModule)
+  },
+  {
+    path: 'report1-equipment',
+    loadChildren: () => import('./pages/report1-equipment/report1-equipment.module').then( m => m.Report1EquipmentPageModule)
   }
 ];
 

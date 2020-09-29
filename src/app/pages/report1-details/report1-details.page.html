@@ -1,0 +1,146 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment" >
+    <ion-segment-button value="material">
+      <ion-label>Materials</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="labour">
+      <ion-label>Labours</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="equipment">
+      <ion-label>Equipments</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="other">
+      <ion-label>Others</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="subcontractor">
+      <ion-label>Subcontractor</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'material'">
+
+      <table style="width:100%">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Total</th>
+          <th>Supplier</th>
+        </tr>
+        <tr *ngFor="let myitem of item.material">
+          <td>{{myitem.name}}</td>
+          <td>{{myitem.qty*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.unit}}</td>
+          <td>{{myitem.etotal*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.supplier.name}} <br/>
+            <a href="mailto:{{myitem.supplier.email}}?body=Dear%20{{myitem.supplier.name}}%2C%0D%0A%0D%0AI%20would%20like%20to%20request%20a%20quote%20for%20a%20{{myitem.name}}.%20I%20have%20seen%20that%20your%20company%20sells%20several%20items%2C%20but%20since%20the%20quantity%20I%20need%20is%20{{myitem.qty*item.qty | number:'0.0-3'}}.%0D%0A%0D%0AI%20would%20also%20know%20how%20long%20it%20would%20take%20to%20deliver%20the%20_______%20to%20%5Bplace%20where%20you%20live%5D.%0D%0A%0D%0AThanks%20in%20advance%2C%0D%0A%0D%0ABOQ%20Maker">{{myitem.supplier.email}}</a>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'labour'">
+
+      <table style="width:100%">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Total</th>
+          <th>Supplier</th>
+        </tr>
+        <tr *ngFor="let myitem of item.labour">
+          <td>{{myitem.name}}</td>
+          <td>{{myitem.qty*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.unit}}</td>
+          <td>{{myitem.etotal*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.supplier.name}} <br/>
+             <a href="mailto:{{myitem.supplier.email}}?body=Dear%20{{myitem.supplier.name}}%2C%0D%0A%0D%0AI%20would%20like%20to%20request%20a%20quote%20for%20a%20{{myitem.name}}.%20I%20have%20seen%20that%20your%20company%20sells%20several%20items%2C%20but%20since%20the%20quantity%20I%20need%20is%20{{myitem.qty*item.qty | number:'0.0-3'}}.%0D%0A%0D%0AI%20would%20also%20know%20how%20long%20it%20would%20take%20to%20deliver%20the%20_______%20to%20%5Bplace%20where%20you%20live%5D.%0D%0A%0D%0AThanks%20in%20advance%2C%0D%0A%0D%0ABOQ%20Maker">{{myitem.supplier.email}}</a>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'equipment'">
+
+      <table style="width:100%">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Total</th>
+          <th>Supplier</th>
+        </tr>
+        <tr *ngFor="let myitem of item.equipment">
+          <td>{{myitem.name}}</td>
+          <td>{{myitem.qty*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.unit}}</td>
+          <td>{{myitem.etotal*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.supplier.name}} <br/>
+             <a href="mailto:{{myitem.supplier.email}}?body=Dear%20{{myitem.supplier.name}}%2C%0D%0A%0D%0AI%20would%20like%20to%20request%20a%20quote%20for%20a%20{{myitem.name}}.%20I%20have%20seen%20that%20your%20company%20sells%20several%20items%2C%20but%20since%20the%20quantity%20I%20need%20is%20{{myitem.qty*item.qty | number:'0.0-3'}}.%0D%0A%0D%0AI%20would%20also%20know%20how%20long%20it%20would%20take%20to%20deliver%20the%20_______%20to%20%5Bplace%20where%20you%20live%5D.%0D%0A%0D%0AThanks%20in%20advance%2C%0D%0A%0D%0ABOQ%20Maker">{{myitem.supplier.email}}</a>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'subcontractor'">
+
+      <table style="width:100%">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Total</th>
+        </tr>
+        <tr *ngFor="let myitem of item.subcontractor">
+          <td>{{myitem.name}}</td>
+          <td>{{myitem.qty*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.unit}}</td>
+          <td>{{myitem.etotal*item.qty | number:'0.0-3'}}</td>
+        </tr>
+      </table>
+
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'other'">
+
+      <table style="width:100%">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Total</th>
+          <th>Supplier</th>
+        </tr>
+        <tr *ngFor="let myitem of item.other">
+          <td>{{myitem.name}}</td>
+          <td>{{myitem.qty*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.unit}}</td>
+          <td>{{myitem.etotal*item.qty | number:'0.0-3'}}</td>
+          <td>{{myitem.supplier.name}} <br/>
+             <a href="mailto:{{myitem.supplier.email}}?body=Dear%20{{myitem.supplier.name}}%2C%0D%0A%0D%0AI%20would%20like%20to%20request%20a%20quote%20for%20a%20{{myitem.name}}.%20I%20have%20seen%20that%20your%20company%20sells%20several%20items%2C%20but%20since%20the%20quantity%20I%20need%20is%20{{myitem.qty*item.qty | number:'0.0-3'}}.%0D%0A%0D%0AI%20would%20also%20know%20how%20long%20it%20would%20take%20to%20deliver%20the%20_______%20to%20%5Bplace%20where%20you%20live%5D.%0D%0A%0D%0AThanks%20in%20advance%2C%0D%0A%0D%0ABOQ%20Maker">{{myitem.supplier.email}}</a>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    </div>
+
+</ion-content>

@@ -18,6 +18,7 @@ export class ReportFinalPricedBillPage implements OnInit {
 
   myProjectList = [];
   myProjectID;
+  type;
 
   constructor(private menu : MenuController,
     private router : Router,
@@ -77,6 +78,24 @@ export class ReportFinalPricedBillPage implements OnInit {
   else{
     alert("Please select project")
   }
+  }
+  gotovariation(){
+    if(this.myProjectID){
+    this.router.navigate(['report-variation/'+ this.myProjectID.split('/')[0]]);
+    this.modalController.dismiss();
+  }
+  else{
+    alert("Please select project")
+  }
+  }
+
+  gotoreport(){
+    if(this.type == "boq"){
+      this.gotoreport1()
+    }
+    else if(this.type == "vr"){
+      this.gotovariation()
+    }
   }
 
 async presentLoading() {

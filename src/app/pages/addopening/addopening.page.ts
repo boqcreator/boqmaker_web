@@ -95,7 +95,7 @@ export class AddopeningPage implements OnInit {
  
           });
     }else{
-     this.afs.doc(`boq/boq/boqitems/${value.id}`).update({
+     this.afs.doc(`boq/boq/openings/${value.id}`).update({
        image : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png",
        id : value.id
      });

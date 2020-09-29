@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { MateriallibPage } from '../materiallib/materiallib.page';
 
 @Component({
   selector: 'app-addmaterial',
@@ -42,18 +43,15 @@ export class AddmaterialPage implements OnInit {
   SCatID;
   SSubcatID;
   supplierID;
-  supplier1ID="";
-  supplier2ID="";
-  supplier3ID="";
+  supplierAdd=[];
 
   supplier = ""
-  supplier1 = ""
-  supplier2 = ""
-  supplier3 = ""
+
   constructor(private afs : AngularFirestore,
     public loadingController: LoadingController,
     private storage : Storage,
     private modal : ModalController,
+    private modalController: ModalController,
     public alertController: AlertController) { 
       this.storage.get('materialcat').then((value)=>{
         this.CatID = value
@@ -153,7 +151,7 @@ export class AddmaterialPage implements OnInit {
               unit2 : this.unit2,
               price2 : this.price2,
               supplier : this.supplier,
-              additionalsupplier : [this.supplier1,this.supplier2,this.supplier3]
+              additionalsupplier : this.supplierAdd
                   }).then(()=>{
                     this.loadingController.dismiss();
                      this.presentAlert();
@@ -226,18 +224,6 @@ export class AddmaterialPage implements OnInit {
  
  setsupplier(){
    this.supplier = this.supplierList.find(x => x.id == this.supplierID)
-   var s1 = this.supplierList.find(x => x.id == this.supplier1ID)
-   if(s1){
-    this.supplier1 = s1
-   }
-   var s2 = this.supplierList.find(x => x.id == this.supplier2ID)
-   if(s2){
-    this.supplier2 = s2
-   }
-   var s3 = this.supplierList.find(x => x.id == this.supplier3ID)
-   if(s3){
-    this.supplier3 = s3
-   }
  }
 
 
@@ -264,4 +250,21 @@ export class AddmaterialPage implements OnInit {
   close(){
     this.modal.dismiss();
   }
+
+  async itemlibrary(){
+    const modal = await this.modalController.create({
+    component: MateriallibPage,
+    });
+  
+    await modal.present();
+    
+    const data = await modal.onDidDismiss();
+    if(data){
+      this.sname = data.data.name
+      this.sdes = data.data.des
+      this.unit = data.data.unit
+      this.price = data.data.price
+    }
+ 
+}
 }

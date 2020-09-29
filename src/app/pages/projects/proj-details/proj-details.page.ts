@@ -10,6 +10,8 @@ import { MapsAPILoader, MouseEvent } from '@agm/core';
 import { EditareasPage } from '../../editareas/editareas.page';
 import { element } from 'protractor';
 import { EdititemsPage } from '../../edititems/edititems.page';
+import { EditvaritiondetailsPage } from '../../editvaritiondetails/editvaritiondetails.page';
+import { FinalqtytablePage } from '../../finalqtytable/finalqtytable.page';
 declare var google: any;
 
 @Component({
@@ -123,6 +125,7 @@ export class ProjDetailsPage implements OnInit {
 
   GlobleareaList = [];
   GlobleareaID = ""
+  Globlearea;
 
   FloortoAdd;
   areatoAdd;
@@ -354,7 +357,7 @@ boqitemsubsubcatList = [];
 boqitemsubsubcatID = "";
 
 boqitemList = [];
-boqitem;
+boqitem=[];
 
 //ITEMS Variables
 ceiling=0;
@@ -548,6 +551,23 @@ openper = 100;
 opennote = ""
 myopeningsList = [];
 termopen = "";
+
+
+segmentprojectionDetails = "list";
+projectiontypeList;
+projectiontypeID = "";
+projectionList;
+projectionID;
+noofprojection = 1;
+projectionper = 100;
+projectionnote = ""
+myprojectionsList = [];
+termprojection = "";
+projectionFloor = 0;
+projectionCeiling = 0;
+projectionWall = 100;
+projectionSkirting = 100;
+projectionCornice = 100;
 
 
 //VARIATION VARIABLES
@@ -889,8 +909,9 @@ varich3AO = '';
 
     ngOnInit() {
       this.getdata();
-      this.getGboqitemcat();
       this.getopentype();
+      this.getprojectiontype();
+      this.getGboqitemcat();
     }
     hidearea(){
       if(this.areapanel && this.itempanel){
@@ -1007,6 +1028,81 @@ varich3AO = '';
     }
     }
 
+    getprojectiontype(){
+      this.projectiontypeList =  this.afs.collection<any>(`boq/boq/projectiontypes/`).valueChanges();
+      }
+      getprojections(){
+        this.projectionList =  this.afs.collection<any>(`boq/boq/projections/`, ref => ref.where("type.id","==", this.projectiontypeID)).valueChanges();
+      }
+      async addprojectiontoarea(){
+        if(this.myAreaID.length > 0){
+          const loading = await this.loadingController.create({
+            message: 'Adding...',
+            duration: 20000
+          });
+          await loading.present();
+    
+          this.myAreaID.forEach(element => {
+            var areaarray = element.split("/");
+            let area = this.myAreaList.find(x => x.id == areaarray[2])
+            this.afs.collection(`boq/boq/projects/${this.pid}/projections/`, ref => ref.where("areaID", "==", area.id).where("projectionID", "==", this.projectionID.id)).get().subscribe(va =>{
+              if(va.docs.length >0){
+                loading.dismiss()
+                alert("projection already exist in "+ area.name)
+              }else{
+                this.afs.collection(`boq/boq/projects/${this.pid}/projections/`).add({
+                  buildID :  area.BuildingID,
+                  floorID: area.floorID,
+                  areacatID : area.catid,
+                  areasubcatID : area.subcatid,
+                  areasubsubcatID : area.subsubcatid,
+                  areaID : area.id,
+                  projectionID : this.projectionID.id,
+                  projectionno : this.noofprojection,
+                  projectionper :  this.projectionper,
+                  projectionnote : this.projectionnote,
+                  projectionFloor : this.projectionFloor,
+                  projectionCeiling : this.projectionCeiling,
+                  projectionWall : this.projectionWall,
+                  projectionSkirting : this.projectionSkirting,
+                  projectionCornice : this.projectionCornice,
+                  projection : this.projectionID,
+               }).then(()=>{
+                this.afs.doc(`boq/boq/projects/${this.pid}/projectionsType/${this.projectionID.type.id}`).set({
+                  name : this.projectionID.type.name,
+                  createdon : new Date()
+                })
+               }).then(()=>{
+                 loading.dismiss().then(()=>{
+                  alert("Added Successfully!")
+  
+                  if(this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllprojectionsofBuilding()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllprojectionsofFloor()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllprojectionofCat()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllprojectionofSubcat()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && this.mySubsubcatID){
+                    this.getAllprojectionofSubsubcat()
+                  }else if(!this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllprojections()
+                  }
+                 })
+               })
+              }
+            })
+          })
+      }else{
+        alert("Please recheck, any selection or field is missing.")
+      }
+      }
+
    getdata(){
     this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings`).snapshotChanges().subscribe(pbdata =>{
       if(pbdata.length > 0){
@@ -1074,6 +1170,7 @@ getFloors(){
     this.getAllItemsofBuilding()
     this.getAllVariationsofBuilding()
     this.getAllOpeningsofBuilding()
+    this.getAllprojectionsofBuilding()
   }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors`, ref => ref.orderBy("no", "asc")).snapshotChanges().subscribe(value =>{
     this.myFloorList =[]
@@ -1131,6 +1228,7 @@ getCats(){
     this.getAllItemsofFloor();
     this.getAllVariationsofFloor();
     this.getAllOpensofFloor();
+    this.getAllprojectionsofFloor();
   }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat`).snapshotChanges().subscribe(value =>{
     this.myCatList =[];
@@ -1192,6 +1290,7 @@ getSubcats(){
     this.getAllItemsofCat();
     this.getAllVariationsofCat();
     this.getAllOpeningofCat()
+    this.getAllprojectionofCat()
   }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat`).snapshotChanges().subscribe(value =>{
     this.mySubcatList = [];
@@ -1241,6 +1340,7 @@ getSubsubcats(){
     this.getAllItemsofSubcat();
     this.getAllVariationsofSubcat();
     this.getAllOpeningofSubcat();
+    this.getAllprojectionofSubcat();
   }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat`).snapshotChanges().subscribe(value =>{
     this.mySubsubcatList = []
@@ -1304,6 +1404,7 @@ console.log("Get area worked")
     this.getAllItemsofSubsubcat();
     this.getAllVariationsofSubsubcat();
     this.getAllOpeningofSubsubcat();
+    this.getAllprojectionofSubsubcat();
   }
   this.afs.collection<any>(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.myCatID}/subcat/${this.mySubcatID}/subsubcat/${this.mySubsubcatID}/areas`).snapshotChanges().subscribe(value =>{
     this.myAreaList= []
@@ -1699,6 +1800,9 @@ async updateproj(){
     location  : new firebase.firestore.GeoPoint(this.latitude , this.longitude),
     contname : this.contname,
     clientname : this.client,
+    country : this.country,
+    currency : this.currency,
+    code : this.code
   }).then(()=>{
     loading.dismiss().then(()=>{
       alert("Updated Successfully!")
@@ -1880,34 +1984,67 @@ if(value !== null){
                         this.getAllItemsofBuilding()
                         this.getAllVariationsofBuilding()
                         this.getAllOpeningsofBuilding()
+                        this.getAllprojectionsofBuilding()
                       }
                       else if(this.myBuildingID && this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
                         this.getAllAreasofFloors()
                         this.getAllItemsofFloor()
                         this.getAllVariationsofFloor()
                         this.getAllOpensofFloor()
+                        this.getAllprojectionsofFloor()
                       }
                       else if(this.myBuildingID && this.myFloorID && this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
                         this.getAllAreasofCat()
                         this.getAllItemsofCat()
                         this.getAllVariationsofCat()
                         this.getAllOpeningofCat()
+                        this.getAllprojectionofCat()
                       }
                       else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && !this.mySubsubcatID){
                         this.getAllItemsofSubcat()
                         this.getAllVariationsofSubcat()
                         this.getAllOpeningofSubcat()
+                        this.getAllprojectionofSubcat()
                       }
                       else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && this.mySubsubcatID){
                         this.getAllItemsofSubsubcat()
                         this.getAllVariationsofSubsubcat()
                         this.getAllOpeningofSubsubcat()
+                        this.getAllprojectionofSubsubcat()
                       }
                       else if(!this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
                         this.getAllItems()
                         this.getAllVariations()
                         this.getAllOpenings()
+                        this.getAllprojections()
                       }
+                    }).then(()=>{
+                      setTimeout(()=>{ 
+                        this.storage.get(`boqitemcat`).then(value=>{
+                          if(value !== null){
+                            this.boqitemcatID = value
+                          }
+                        })
+                      
+                      }, 1000);
+                    }).then(()=>{
+                      setTimeout(()=>{ 
+                        this.storage.get(`boqitemsubcat`).then(value=>{
+                          if(value !== null){
+                            this.boqitemsubcatID = value
+                            
+                          }
+                        }).then(()=>{
+                          setTimeout(()=>{ 
+                            this.storage.get(`boqitemsubsubcat`).then(value=>{
+                              if(value !== null){
+                                this.boqitemsubsubcatID = value
+                                
+                              }
+                            })
+                          }, 2000);
+                        })
+                      }, 2000);
                     })
                 })
             })
@@ -1973,25 +2110,6 @@ this.storage.get(`${this.pid}GloblecatList`).then(value=>{
 
   })
   
-})
-
-this.storage.get(`boqitemcat`).then(value=>{
-  if(value !== null){
-    this.boqitemcatID = value
-    
-  }
-})
-this.storage.get(`boqitemsubcat`).then(value=>{
-  if(value !== null){
-    this.boqitemsubcatID = value
-    
-  }
-})
-this.storage.get(`boqitemsubsubcat`).then(value=>{
-  if(value !== null){
-    this.boqitemsubsubcatID = value
-    
-  }
 })
 
 
@@ -2124,251 +2242,257 @@ async addareatoproj(){
         name : this.SubsubcattoAdd.name,
          id : this.SubsubcattoAdd.id,
       }).then(()=>{
-
-        this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.GloblecatID}/subcat/${this.GloblesubcatID}/subsubcat/${this.GloblesubsubcatID}/areas/${this.GlobleareaID}`).get().subscribe(ch =>{
-          if(!ch.exists){
-            this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.GloblecatID}/subcat/${this.GloblesubcatID}/subsubcat/${this.GloblesubsubcatID}/areas/${this.GlobleareaID}`).set({
-              catname : this.CattoAdd.name,
-              catid :  this.CattoAdd.id,
-              subcatname : this.SubcattoAdd.name,
-              subcatid : this.SubcattoAdd.id,
-              subsubcatname : this.SubsubcattoAdd.name,
-              subsubcatid : this.SubsubcattoAdd.id,
-              name : this.areatoAdd.name,
-              image : this.areatoAdd.image,
-              floorname : this.FloortoAdd.name,
-              floorID : this.myFloorID,
-              BuildingID : this.myBuildingID,
-              code : this.areacode,
-              Unit_width : this.Unit_width,
-              Unit_length : this.Unit_length,
-              Unit_height : this.Unit_height,
-              No_of_units : this.No_of_units,
-              R : this.R,
-              RO : this.RO,
-              L1 : this.L1,
-              L2 : this.L2,
-              L3 : this.L3,
-              L4 : this.L4,
-              L5 : this.L5,
-              L6 : this.L6,
-              L7 : this.L7,
-              L8 : this.L8,
-              Hal_Axis : this.Hal_Axis,
-              Val_Axis : this.Val_Axis,
-              Floor_width_1 : this.Floor_width_1,
-              Floor_width_2 : this.Floor_width_2,
-              Floor_width_3 : this.Floor_width_3,
-              Floor_width_4 : this.Floor_width_4,
-              Floor_length_1 : this.Floor_length_1,
-              Floor_length_2 : this.Floor_length_2,
-              Floor_length_3 : this.Floor_length_3,
-              Floor_length_4 : this.Floor_length_4,
-              Wall_per_lengthA : this.Wall_per_lengthA,
-              Wall_per_lengthB : this.Wall_per_lengthB,
-              Wall_per_lengthC : this.Wall_per_lengthC,
-              Wall_per_lengthD : this.Wall_per_lengthD,
-              Wall_per_lengthE : this.Wall_per_lengthE,
-              Wall_per_lengthF : this.Wall_per_lengthF,
-              Wall_per_lengthG : this.Wall_per_lengthG,
-              Wall_per_lengthH : this.Wall_per_lengthH,
-              skirting_per_lengthA : this.skirting_per_lengthA,
-              skirting_per_lengthB : this.skirting_per_lengthB,
-              skirting_per_lengthC : this.skirting_per_lengthC,
-              skirting_per_lengthD : this.skirting_per_lengthD,
-              skirting_per_lengthE : this.skirting_per_lengthE,
-              skirting_per_lengthF : this.skirting_per_lengthF,
-              skirting_per_lengthG : this.skirting_per_lengthG,
-              skirting_per_lengthH : this.skirting_per_lengthH,
-              PCLA : this.PCLA,
-              PCLB : this.PCLB,
-              PCLC : this.PCLC,
-              PCLD : this.PCLD,
-              PCLE : this.PCLE,
-              PCLF : this.PCLF,
-              PCLG : this.PCLG,
-              PCLH : this.PCLH,
-              Y6 : this.Y6,
-              Y8 : this.Y8,
-              Y10 : this.Y10,
-              Y12 : this.Y12,
-              Y14 : this.Y14,
-              Y16 : this.Y16,
-              Y18 : this.Y18,
-              Y20 : this.Y20,
-              Y22 : this.Y22,
-              Y25 : this.Y25,
-              Y28 : this.Y28,
-              Y32 : this.Y32,
-              Y40 : this.Y40,
-              extraworkqqty : this.extraworkqqty,
-              extraexpansionjointqty : this.extraexpansionjointqty,
-              extrablkqty : this.extrablkqty,
-              extrablindqty : this.extrablindqty,
-              expectnoboqitem : this.expectnoboqitem,
-              areaF : this.areaF,
-              areaW : this.areaW,
-              areaC : this.areaC,
-              areaS : this.areaS,
-              areaCOR : this.areaCOR,
-              areaB : this.areaB,
-              extraBlockDPC : this.extraBlockDPC,
-              conc : this.conc,
-              shutt : this.shutt,
-              bit : this.bit,
-              polyth : this.polyth,
-              steel : this.steel,
-              exc : this.exc,
-              fill : this.fill,
-              precast : this.precast,
-              EXTRAEXP : this.EXTRAEXP,
-              EXTRACONCBO : this.EXTRACONCBO,
-              EXTRACONCB : this.EXTRACONCB,
-
-
-ch1A : this.ch1A,
-ch1B : this.ch1B,
-ch1C : this.ch1C,
-ch1D : this.ch1D,
-ch1E : this.ch1E,
-ch1F : this.ch1F,
-ch1G : this.ch1G,
-ch1H : this.ch1H,
-ch1I : this.ch1I,
-ch1J : this.ch1J,
-ch1K : this.ch1K,
-ch1L : this.ch1L,
-ch1M : this.ch1M,
-ch1N : this.ch1N,
-ch1O : this.ch1O,
-ch1P : this.ch1P,
-ch1Q : this.ch1Q,
-ch1R : this.ch1R,
-ch1S : this.ch1S,
-ch1T : this.ch1T,
-ch1U : this.ch1U,
-ch1V : this.ch1V,
-ch1W : this.ch1W,
-ch1X : this.ch1X,
-ch1Y : this.ch1Y,
-ch1Z : this.ch1Z,
-ch1AA : this.ch1AA,
-ch1AB : this.ch1AB,
-ch1AC : this.ch1AC,
-ch1AD : this.ch1AD,
-ch1AE : this.ch1AE,
-ch1AF : this.ch1AF,
-ch1AG : this.ch1AG,
-ch1AH : this.ch1AH,
-ch1AI : this.ch1AI,
-ch1AJ : this.ch1AJ,
-ch1AK : this.ch1AK,
-ch1AL : this.ch1AL,
-ch1AM : this.ch1AM,
-ch1AN : this.ch1AN,
-ch1AO : this.ch1AO,
-
-ch2A : this.ch2A,
-ch2B : this.ch2B,
-ch2C : this.ch2C,
-ch2D : this.ch2D,
-ch2E : this.ch2E,
-ch2F : this.ch2F,
-ch2G : this.ch2G,
-ch2H : this.ch2H,
-ch2I : this.ch2I,
-ch2J : this.ch2J,
-ch2K : this.ch2K,
-ch2L : this.ch2L,
-ch2M : this.ch2M,
-ch2N : this.ch2N,
-ch2O : this.ch2O,
-ch2P : this.ch2P,
-ch2Q : this.ch2Q,
-ch2R : this.ch2R,
-ch2S : this.ch2S,
-ch2T : this.ch2T,
-ch2U : this.ch2U,
-ch2V : this.ch2V,
-ch2W : this.ch2W,
-ch2X : this.ch2X,
-ch2Y : this.ch2Y,
-ch2Z : this.ch2Z,
-ch2AA : this.ch2AA,
-ch2AB : this.ch2AB,
-ch2AC : this.ch2AC,
-ch2AD : this.ch2AD,
-ch2AE : this.ch2AE,
-ch2AF : this.ch2AF,
-ch2AG : this.ch2AG,
-ch2AH : this.ch2AH,
-ch2AI : this.ch2AI,
-ch2AJ : this.ch2AJ,
-ch2AK : this.ch2AK,
-ch2AL : this.ch2AL,
-ch2AM : this.ch2AM,
-ch2AN : this.ch2AN,
-ch2AO : this.ch2AO,
-
-ch3A : this.ch3A,
-ch3B : this.ch3B,
-ch3C : this.ch3C,
-ch3D : this.ch3D,
-ch3E : this.ch3E,
-ch3F : this.ch3F,
-ch3G : this.ch3G,
-ch3H : this.ch3H,
-ch3I : this.ch3I,
-ch3J : this.ch3J,
-ch3K : this.ch3K,
-ch3L : this.ch3L,
-ch3M : this.ch3M,
-ch3N : this.ch3N,
-ch3O : this.ch3O,
-ch3P : this.ch3P,
-ch3Q : this.ch3Q,
-ch3R : this.ch3R,
-ch3S : this.ch3S,
-ch3T : this.ch3T,
-ch3U : this.ch3U,
-ch3V : this.ch3V,
-ch3W : this.ch3W,
-ch3X : this.ch3X,
-ch3Y : this.ch3Y,
-ch3Z : this.ch3Z,
-ch3AA : this.ch3AA,
-ch3AB : this.ch3AB,
-ch3AC : this.ch3AC,
-ch3AD : this.ch3AD,
-ch3AE : this.ch3AE,
-ch3AF : this.ch3AF,
-ch3AG : this.ch3AG,
-ch3AH : this.ch3AH,
-ch3AI : this.ch3AI,
-ch3AJ : this.ch3AJ,
-ch3AK : this.ch3AK,
-ch3AL : this.ch3AL,
-ch3AM : this.ch3AM,
-ch3AN : this.ch3AN,
-ch3AO : this.ch3AO,
-          
-            }).then(()=>{
-              loading.dismiss().then(()=>{
-               alert("Added Successfully!")
-                this.refresharea();
-
+        this.Globlearea.forEach(element => {
+          this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.GloblecatID}/subcat/${this.GloblesubcatID}/subsubcat/${this.GloblesubsubcatID}/areas/${element.id}`).get().subscribe(ch =>{
+            if(!ch.exists){
+              this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${this.myBuildingID}/floors/${this.myFloorID}/cat/${this.GloblecatID}/subcat/${this.GloblesubcatID}/subsubcat/${this.GloblesubsubcatID}/areas/${element.id}`).set({
+                catname : this.CattoAdd.name,
+                catid :  this.CattoAdd.id,
+                subcatname : this.SubcattoAdd.name,
+                subcatid : this.SubcattoAdd.id,
+                subsubcatname : this.SubsubcattoAdd.name,
+                subsubcatid : this.SubsubcattoAdd.id,
+                name : element.name,
+                image : element.image,
+                floorname : this.FloortoAdd.name,
+                floorID : this.myFloorID,
+                BuildingID : this.myBuildingID,
+                code : this.areacode,
+                Unit_width : this.Unit_width,
+                Unit_length : this.Unit_length,
+                Unit_height : this.Unit_height,
+                No_of_units : this.No_of_units,
+                R : this.R,
+                RO : this.RO,
+                L1 : this.L1,
+                L2 : this.L2,
+                L3 : this.L3,
+                L4 : this.L4,
+                L5 : this.L5,
+                L6 : this.L6,
+                L7 : this.L7,
+                L8 : this.L8,
+                Hal_Axis : this.Hal_Axis,
+                Val_Axis : this.Val_Axis,
+                Floor_width_1 : this.Floor_width_1,
+                Floor_width_2 : this.Floor_width_2,
+                Floor_width_3 : this.Floor_width_3,
+                Floor_width_4 : this.Floor_width_4,
+                Floor_length_1 : this.Floor_length_1,
+                Floor_length_2 : this.Floor_length_2,
+                Floor_length_3 : this.Floor_length_3,
+                Floor_length_4 : this.Floor_length_4,
+                Wall_per_lengthA : this.Wall_per_lengthA,
+                Wall_per_lengthB : this.Wall_per_lengthB,
+                Wall_per_lengthC : this.Wall_per_lengthC,
+                Wall_per_lengthD : this.Wall_per_lengthD,
+                Wall_per_lengthE : this.Wall_per_lengthE,
+                Wall_per_lengthF : this.Wall_per_lengthF,
+                Wall_per_lengthG : this.Wall_per_lengthG,
+                Wall_per_lengthH : this.Wall_per_lengthH,
+                skirting_per_lengthA : this.skirting_per_lengthA,
+                skirting_per_lengthB : this.skirting_per_lengthB,
+                skirting_per_lengthC : this.skirting_per_lengthC,
+                skirting_per_lengthD : this.skirting_per_lengthD,
+                skirting_per_lengthE : this.skirting_per_lengthE,
+                skirting_per_lengthF : this.skirting_per_lengthF,
+                skirting_per_lengthG : this.skirting_per_lengthG,
+                skirting_per_lengthH : this.skirting_per_lengthH,
+                PCLA : this.PCLA,
+                PCLB : this.PCLB,
+                PCLC : this.PCLC,
+                PCLD : this.PCLD,
+                PCLE : this.PCLE,
+                PCLF : this.PCLF,
+                PCLG : this.PCLG,
+                PCLH : this.PCLH,
+                Y6 : this.Y6,
+                Y8 : this.Y8,
+                Y10 : this.Y10,
+                Y12 : this.Y12,
+                Y14 : this.Y14,
+                Y16 : this.Y16,
+                Y18 : this.Y18,
+                Y20 : this.Y20,
+                Y22 : this.Y22,
+                Y25 : this.Y25,
+                Y28 : this.Y28,
+                Y32 : this.Y32,
+                Y40 : this.Y40,
+                extraworkqqty : this.extraworkqqty,
+                extraexpansionjointqty : this.extraexpansionjointqty,
+                extrablkqty : this.extrablkqty,
+                extrablindqty : this.extrablindqty,
+                expectnoboqitem : this.expectnoboqitem,
+                areaF : this.areaF,
+                areaW : this.areaW,
+                areaC : this.areaC,
+                areaS : this.areaS,
+                areaCOR : this.areaCOR,
+                areaB : this.areaB,
+                extraBlockDPC : this.extraBlockDPC,
+                conc : this.conc,
+                shutt : this.shutt,
+                bit : this.bit,
+                polyth : this.polyth,
+                steel : this.steel,
+                exc : this.exc,
+                fill : this.fill,
+                precast : this.precast,
+                EXTRAEXP : this.EXTRAEXP,
+                EXTRACONCBO : this.EXTRACONCBO,
+                EXTRACONCB : this.EXTRACONCB,
+  
+  
+  ch1A : this.ch1A,
+  ch1B : this.ch1B,
+  ch1C : this.ch1C,
+  ch1D : this.ch1D,
+  ch1E : this.ch1E,
+  ch1F : this.ch1F,
+  ch1G : this.ch1G,
+  ch1H : this.ch1H,
+  ch1I : this.ch1I,
+  ch1J : this.ch1J,
+  ch1K : this.ch1K,
+  ch1L : this.ch1L,
+  ch1M : this.ch1M,
+  ch1N : this.ch1N,
+  ch1O : this.ch1O,
+  ch1P : this.ch1P,
+  ch1Q : this.ch1Q,
+  ch1R : this.ch1R,
+  ch1S : this.ch1S,
+  ch1T : this.ch1T,
+  ch1U : this.ch1U,
+  ch1V : this.ch1V,
+  ch1W : this.ch1W,
+  ch1X : this.ch1X,
+  ch1Y : this.ch1Y,
+  ch1Z : this.ch1Z,
+  ch1AA : this.ch1AA,
+  ch1AB : this.ch1AB,
+  ch1AC : this.ch1AC,
+  ch1AD : this.ch1AD,
+  ch1AE : this.ch1AE,
+  ch1AF : this.ch1AF,
+  ch1AG : this.ch1AG,
+  ch1AH : this.ch1AH,
+  ch1AI : this.ch1AI,
+  ch1AJ : this.ch1AJ,
+  ch1AK : this.ch1AK,
+  ch1AL : this.ch1AL,
+  ch1AM : this.ch1AM,
+  ch1AN : this.ch1AN,
+  ch1AO : this.ch1AO,
+  
+  ch2A : this.ch2A,
+  ch2B : this.ch2B,
+  ch2C : this.ch2C,
+  ch2D : this.ch2D,
+  ch2E : this.ch2E,
+  ch2F : this.ch2F,
+  ch2G : this.ch2G,
+  ch2H : this.ch2H,
+  ch2I : this.ch2I,
+  ch2J : this.ch2J,
+  ch2K : this.ch2K,
+  ch2L : this.ch2L,
+  ch2M : this.ch2M,
+  ch2N : this.ch2N,
+  ch2O : this.ch2O,
+  ch2P : this.ch2P,
+  ch2Q : this.ch2Q,
+  ch2R : this.ch2R,
+  ch2S : this.ch2S,
+  ch2T : this.ch2T,
+  ch2U : this.ch2U,
+  ch2V : this.ch2V,
+  ch2W : this.ch2W,
+  ch2X : this.ch2X,
+  ch2Y : this.ch2Y,
+  ch2Z : this.ch2Z,
+  ch2AA : this.ch2AA,
+  ch2AB : this.ch2AB,
+  ch2AC : this.ch2AC,
+  ch2AD : this.ch2AD,
+  ch2AE : this.ch2AE,
+  ch2AF : this.ch2AF,
+  ch2AG : this.ch2AG,
+  ch2AH : this.ch2AH,
+  ch2AI : this.ch2AI,
+  ch2AJ : this.ch2AJ,
+  ch2AK : this.ch2AK,
+  ch2AL : this.ch2AL,
+  ch2AM : this.ch2AM,
+  ch2AN : this.ch2AN,
+  ch2AO : this.ch2AO,
+  
+  ch3A : this.ch3A,
+  ch3B : this.ch3B,
+  ch3C : this.ch3C,
+  ch3D : this.ch3D,
+  ch3E : this.ch3E,
+  ch3F : this.ch3F,
+  ch3G : this.ch3G,
+  ch3H : this.ch3H,
+  ch3I : this.ch3I,
+  ch3J : this.ch3J,
+  ch3K : this.ch3K,
+  ch3L : this.ch3L,
+  ch3M : this.ch3M,
+  ch3N : this.ch3N,
+  ch3O : this.ch3O,
+  ch3P : this.ch3P,
+  ch3Q : this.ch3Q,
+  ch3R : this.ch3R,
+  ch3S : this.ch3S,
+  ch3T : this.ch3T,
+  ch3U : this.ch3U,
+  ch3V : this.ch3V,
+  ch3W : this.ch3W,
+  ch3X : this.ch3X,
+  ch3Y : this.ch3Y,
+  ch3Z : this.ch3Z,
+  ch3AA : this.ch3AA,
+  ch3AB : this.ch3AB,
+  ch3AC : this.ch3AC,
+  ch3AD : this.ch3AD,
+  ch3AE : this.ch3AE,
+  ch3AF : this.ch3AF,
+  ch3AG : this.ch3AG,
+  ch3AH : this.ch3AH,
+  ch3AI : this.ch3AI,
+  ch3AJ : this.ch3AJ,
+  ch3AK : this.ch3AK,
+  ch3AL : this.ch3AL,
+  ch3AM : this.ch3AM,
+  ch3AN : this.ch3AN,
+  ch3AO : this.ch3AO,
+            
+              }).then(()=>{
+                alert("Added Successfully!")
               })
-              
-            })
-          } else{
-            loading.dismiss()
-            alert("Can't add because this area already exist")
-          }
-        })
+            } else{
+              alert("Can't add because this area already exist")
+            }
+          })
+        });
+      }).then(()=>{
+        loading.dismiss().then(()=>{
+           this.refresharea();
 
+         })
       })
     })
   })
+}
+
+SelectallAreas(){
+  this.Globlearea = this.GlobleareaList;
+}
+RemoveallAreas(){
+  this.Globlearea = [];
 }
 
 
@@ -2534,7 +2658,7 @@ getGboqitems(){
 }
 
 async addItem(){
-  if(this.myAreaID ){
+  if(this.myAreaID){
       const loading = await this.loadingController.create({
         message: 'Adding...',
         duration: 20000
@@ -2544,229 +2668,250 @@ async addItem(){
       this.myAreaID.forEach(element => {
         var areaarray = element.split("/");
         let area = this.myAreaList.find(x => x.id == areaarray[2])
-        this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("areaID", "==", area.id).where("itemID", "==", this.boqitem.id)).get().subscribe(va =>{
-          if(va.docs.length >0){
-            loading.dismiss()
-            alert("Item already exist in "+ area.name)
-          }else{
-            this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`).add({
-              buildID :  area.BuildingID,
-              floorID: area.floorID,
-              areacatID : area.catid,
-              areasubcatID : area.subcatid,
-              areasubsubcatID : area.subsubcatid,
-              itemID : this.boqitem.id,
-              areaID : area.id,
-           item : {
-            itemdetails : this.boqitem,
-            ceiling : this.ceiling,
-            floor : this.floor,
-            walls : this.walls,
-            cornice : this.cornice,
-            skirting : this.skirting,
-            shuttering : this.shuttering,
-            block : this.block,
-            blockdpc : this.blockdpc,
-            concrete : this.concrete,
-            polythene : this.polythene,
-            bitumin : this.bitumin,
-            itemsteel : this.itemsteel,
-            blockbitumin : this.blockbitumin,
-            iqty : this.iqty,
-            itempercentage : this.itempercentage,
-            completion : this.completion,
-            itemprecast : this.itemprecast,
-            existing : this.existing,
-            existing1 : this.existing1,
-            existing2 : this.existing2,
-            tsp : this.tsp,
-            bpp : this.bpp,
-            spp1 : this.spp1,
-            spp2 : this.spp2,
-            spp3 : this.spp3,
-            spp4 : this.spp4,
-            tpp : this.tpp,
-            bbp : this.bbp,
-            sbp1 : this.sbp1,
-            sbp2 : this.sbp2,
-            sbp3 : this.sbp3,
-            sbp4 : this.sbp4,
-            tep : this.tep,
-            tbp : this.tbp,
-            bep : this.bep,
-            sep1 : this.sep1,
-            sep2 : this.sep2,
-            sep3 : this.sep3,
-            sep4 : this.sep4,
-            bsp : this.bsp,
-            ssp1 : this.ssp1,
-            ssp2 : this.ssp2,
-            ssp3 : this.ssp3,
-            ssp4 : this.ssp4,
-           FILL_Percentage : this.FILL_Percentage,
-           E_Percentage : this.E_Percentage,
-           I_DIS : this.I_DIS,
-           I_FACTOR : this.I_FACTOR,
-           Exp_Percentage : this.Exp_Percentage,
-           createdon : new Date(),
-           Concb_Percentage : this.Concb_Percentage,
-          
-
-            ich1A : this.ich1A,
-            ich1B : this.ich1B,
-            ich1C : this.ich1C,
-            ich1D : this.ich1D,
-            ich1E : this.ich1E,
-            ich1F : this.ich1F,
-            ich1G : this.ich1G,
-            ich1H : this.ich1H,
-            ich1I : this.ich1I,
-            ich1J : this.ich1J,
-            ich1K : this.ich1K,
-            ich1L : this.ich1L,
-            ich1M : this.ich1M,
-            ich1N : this.ich1N,
-            ich1O : this.ich1O,
-            ich1P : this.ich1P,
-            ich1Q : this.ich1Q,
-            ich1R : this.ich1R,
-            ich1S : this.ich1S,
-            ich1T : this.ich1T,
-            ich1U : this.ich1U,
-            ich1V : this.ich1V,
-            ich1W : this.ich1W,
-            ich1X : this.ich1X,
-            ich1Y : this.ich1Y,
-            ich1Z : this.ich1Z,
-            ich1AA : this.ich1AA,
-            ich1AB : this.ich1AB,
-            ich1AC : this.ich1AC,
-            ich1AD : this.ich1AD,
-            ich1AE : this.ich1AE,
-            ich1AF : this.ich1AF,
-            ich1AG : this.ich1AG,
-            ich1AH : this.ich1AH,
-            ich1AI : this.ich1AI,
-            ich1AJ : this.ich1AJ,
-            ich1AK : this.ich1AK,
-            ich1AL : this.ich1AL,
-            ich1AM : this.ich1AM,
-            ich1AN : this.ich1AN,
-            ich1AO : this.ich1AO,
-
-            ich2A : this.ich2A,
-            ich2B : this.ich2B,
-            ich2C : this.ich2C,
-            ich2D : this.ich2D,
-            ich2E : this.ich2E,
-            ich2F : this.ich2F,
-            ich2G : this.ich2G,
-            ich2H : this.ich2H,
-            ich2I : this.ich2I,
-            ich2J : this.ich2J,
-            ich2K : this.ich2K,
-            ich2L : this.ich2L,
-            ich2M : this.ich2M,
-            ich2N : this.ich2N,
-            ich2O : this.ich2O,
-            ich2P : this.ich2P,
-            ich2Q : this.ich2Q,
-            ich2R : this.ich2R,
-            ich2S : this.ich2S,
-            ich2T : this.ich2T,
-            ich2U : this.ich2U,
-            ich2V : this.ich2V,
-            ich2W : this.ich2W,
-            ich2X : this.ich2X,
-            ich2Y : this.ich2Y,
-            ich2Z : this.ich2Z,
-            ich2AA : this.ich2AA,
-            ich2AB : this.ich2AB,
-            ich2AC : this.ich2AC,
-            ich2AD : this.ich2AD,
-            ich2AE : this.ich2AE,
-            ich2AF : this.ich2AF,
-            ich2AG : this.ich2AG,
-            ich2AH : this.ich2AH,
-            ich2AI : this.ich2AI,
-            ich2AJ : this.ich2AJ,
-            ich2AK : this.ich2AK,
-            ich2AL : this.ich2AL,
-            ich2AM : this.ich2AM,
-            ich2AN : this.ich2AN,
-            ich2AO : this.ich2AO,
-
-            ich3A : this.ich3A,
-            ich3B : this.ich3B,
-            ich3C : this.ich3C,
-            ich3D : this.ich3D,
-            ich3E : this.ich3E,
-            ich3F : this.ich3F,
-            ich3G : this.ich3G,
-            ich3H : this.ich3H,
-            ich3I : this.ich3I,
-            ich3J : this.ich3J,
-            ich3K : this.ich3K,
-            ich3L : this.ich3L,
-            ich3M : this.ich3M,
-            ich3N : this.ich3N,
-            ich3O : this.ich3O,
-            ich3P : this.ich3P,
-            ich3Q : this.ich3Q,
-            ich3R : this.ich3R,
-            ich3S : this.ich3S,
-            ich3T : this.ich3T,
-            ich3U : this.ich3U,
-            ich3V : this.ich3V,
-            ich3W : this.ich3W,
-            ich3X : this.ich3X,
-            ich3Y : this.ich3Y,
-            ich3Z : this.ich3Z,
-            ich3AA : this.ich3AA,
-            ich3AB : this.ich3AB,
-            ich3AC : this.ich3AC,
-            ich3AD : this.ich3AD,
-            ich3AE : this.ich3AE,
-            ich3AF : this.ich3AF,
-            ich3AG : this.ich3AG,
-            ich3AH : this.ich3AH,
-            ich3AI : this.ich3AI,
-            ich3AJ : this.ich3AJ,
-            ich3AK : this.ich3AK,
-            ich3AL : this.ich3AL,
-            ich3AM : this.ich3AM,
-            ich3AN : this.ich3AN,
-            ich3AO : this.ich3AO,
-          
-          }
-           }).then(()=>{
-            var cat = this.boqitemcatList.find(x => x.id == this.boqitem.CatID)
-            this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsCat/${this.boqitem.CatID}`).set({
-              name : cat.name,
-              createdon : new Date()
-            }).then(()=>{
-              var subcat = this.boqitemsubcatList.find(x => x.id == this.boqitem.SubcatID)
-              this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubcat/${this.boqitem.SubcatID}`).set({
-                catID : this.boqitem.CatID,
-                name : subcat.name,
+        this.boqitem.forEach(itemEle =>{
+          this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("areaID", "==", area.id).where("itemID", "==", itemEle.id).where("floorID", "==", area.floorID )).get().subscribe(va =>{
+            if(va.docs.length >0){
+              loading.dismiss()
+              alert("Item already exist in "+ area.name)
+            }else{
+              this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`).add({
+                buildID :  area.BuildingID,
+                floorID: area.floorID,
+                areacatID : area.catid,
+                areasubcatID : area.subcatid,
+                areasubsubcatID : area.subsubcatid,
+                itemID : itemEle.id,
+                areaID : area.id,
+             item : {
+              itemdetails : itemEle,
+              ceiling : this.ceiling,
+              floor : this.floor,
+              walls : this.walls,
+              cornice : this.cornice,
+              skirting : this.skirting,
+              shuttering : this.shuttering,
+              block : this.block,
+              blockdpc : this.blockdpc,
+              concrete : this.concrete,
+              polythene : this.polythene,
+              bitumin : this.bitumin,
+              itemsteel : this.itemsteel,
+              blockbitumin : this.blockbitumin,
+              iqty : this.iqty,
+              itempercentage : this.itempercentage,
+              completion : this.completion,
+              itemprecast : this.itemprecast,
+              existing : this.existing,
+              existing1 : this.existing1,
+              existing2 : this.existing2,
+              tsp : this.tsp,
+              bpp : this.bpp,
+              spp1 : this.spp1,
+              spp2 : this.spp2,
+              spp3 : this.spp3,
+              spp4 : this.spp4,
+              tpp : this.tpp,
+              bbp : this.bbp,
+              sbp1 : this.sbp1,
+              sbp2 : this.sbp2,
+              sbp3 : this.sbp3,
+              sbp4 : this.sbp4,
+              tep : this.tep,
+              tbp : this.tbp,
+              bep : this.bep,
+              sep1 : this.sep1,
+              sep2 : this.sep2,
+              sep3 : this.sep3,
+              sep4 : this.sep4,
+              bsp : this.bsp,
+              ssp1 : this.ssp1,
+              ssp2 : this.ssp2,
+              ssp3 : this.ssp3,
+              ssp4 : this.ssp4,
+             FILL_Percentage : this.FILL_Percentage,
+             E_Percentage : this.E_Percentage,
+             I_DIS : this.I_DIS,
+             I_FACTOR : this.I_FACTOR,
+             Exp_Percentage : this.Exp_Percentage,
+             createdon : new Date(),
+             Concb_Percentage : this.Concb_Percentage,
+            
+  
+              ich1A : this.ich1A,
+              ich1B : this.ich1B,
+              ich1C : this.ich1C,
+              ich1D : this.ich1D,
+              ich1E : this.ich1E,
+              ich1F : this.ich1F,
+              ich1G : this.ich1G,
+              ich1H : this.ich1H,
+              ich1I : this.ich1I,
+              ich1J : this.ich1J,
+              ich1K : this.ich1K,
+              ich1L : this.ich1L,
+              ich1M : this.ich1M,
+              ich1N : this.ich1N,
+              ich1O : this.ich1O,
+              ich1P : this.ich1P,
+              ich1Q : this.ich1Q,
+              ich1R : this.ich1R,
+              ich1S : this.ich1S,
+              ich1T : this.ich1T,
+              ich1U : this.ich1U,
+              ich1V : this.ich1V,
+              ich1W : this.ich1W,
+              ich1X : this.ich1X,
+              ich1Y : this.ich1Y,
+              ich1Z : this.ich1Z,
+              ich1AA : this.ich1AA,
+              ich1AB : this.ich1AB,
+              ich1AC : this.ich1AC,
+              ich1AD : this.ich1AD,
+              ich1AE : this.ich1AE,
+              ich1AF : this.ich1AF,
+              ich1AG : this.ich1AG,
+              ich1AH : this.ich1AH,
+              ich1AI : this.ich1AI,
+              ich1AJ : this.ich1AJ,
+              ich1AK : this.ich1AK,
+              ich1AL : this.ich1AL,
+              ich1AM : this.ich1AM,
+              ich1AN : this.ich1AN,
+              ich1AO : this.ich1AO,
+  
+              ich2A : this.ich2A,
+              ich2B : this.ich2B,
+              ich2C : this.ich2C,
+              ich2D : this.ich2D,
+              ich2E : this.ich2E,
+              ich2F : this.ich2F,
+              ich2G : this.ich2G,
+              ich2H : this.ich2H,
+              ich2I : this.ich2I,
+              ich2J : this.ich2J,
+              ich2K : this.ich2K,
+              ich2L : this.ich2L,
+              ich2M : this.ich2M,
+              ich2N : this.ich2N,
+              ich2O : this.ich2O,
+              ich2P : this.ich2P,
+              ich2Q : this.ich2Q,
+              ich2R : this.ich2R,
+              ich2S : this.ich2S,
+              ich2T : this.ich2T,
+              ich2U : this.ich2U,
+              ich2V : this.ich2V,
+              ich2W : this.ich2W,
+              ich2X : this.ich2X,
+              ich2Y : this.ich2Y,
+              ich2Z : this.ich2Z,
+              ich2AA : this.ich2AA,
+              ich2AB : this.ich2AB,
+              ich2AC : this.ich2AC,
+              ich2AD : this.ich2AD,
+              ich2AE : this.ich2AE,
+              ich2AF : this.ich2AF,
+              ich2AG : this.ich2AG,
+              ich2AH : this.ich2AH,
+              ich2AI : this.ich2AI,
+              ich2AJ : this.ich2AJ,
+              ich2AK : this.ich2AK,
+              ich2AL : this.ich2AL,
+              ich2AM : this.ich2AM,
+              ich2AN : this.ich2AN,
+              ich2AO : this.ich2AO,
+  
+              ich3A : this.ich3A,
+              ich3B : this.ich3B,
+              ich3C : this.ich3C,
+              ich3D : this.ich3D,
+              ich3E : this.ich3E,
+              ich3F : this.ich3F,
+              ich3G : this.ich3G,
+              ich3H : this.ich3H,
+              ich3I : this.ich3I,
+              ich3J : this.ich3J,
+              ich3K : this.ich3K,
+              ich3L : this.ich3L,
+              ich3M : this.ich3M,
+              ich3N : this.ich3N,
+              ich3O : this.ich3O,
+              ich3P : this.ich3P,
+              ich3Q : this.ich3Q,
+              ich3R : this.ich3R,
+              ich3S : this.ich3S,
+              ich3T : this.ich3T,
+              ich3U : this.ich3U,
+              ich3V : this.ich3V,
+              ich3W : this.ich3W,
+              ich3X : this.ich3X,
+              ich3Y : this.ich3Y,
+              ich3Z : this.ich3Z,
+              ich3AA : this.ich3AA,
+              ich3AB : this.ich3AB,
+              ich3AC : this.ich3AC,
+              ich3AD : this.ich3AD,
+              ich3AE : this.ich3AE,
+              ich3AF : this.ich3AF,
+              ich3AG : this.ich3AG,
+              ich3AH : this.ich3AH,
+              ich3AI : this.ich3AI,
+              ich3AJ : this.ich3AJ,
+              ich3AK : this.ich3AK,
+              ich3AL : this.ich3AL,
+              ich3AM : this.ich3AM,
+              ich3AN : this.ich3AN,
+              ich3AO : this.ich3AO,
+            
+            }
+             }).then(()=>{
+              var cat = this.boqitemcatList.find(x => x.id == itemEle.CatID)
+              this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsCat/${itemEle.CatID}`).set({
+                name : cat.name,
                 createdon : new Date()
               }).then(()=>{
-                var subsubcat = this.boqitemsubsubcatList.find(x => x.id == this.boqitem.SubsubcatID)
-                this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubsubcat/${this.boqitem.SubsubcatID}`).set({
-                  catID : this.boqitem.CatID,
-                  subcatID : this.boqitem.SubcatID,
-                  name : subsubcat.name,
+                var subcat = this.boqitemsubcatList.find(x => x.id == itemEle.SubcatID)
+                this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubcat/${itemEle.SubcatID}`).set({
+                  catID : itemEle.CatID,
+                  name : subcat.name,
                   createdon : new Date()
+                }).then(()=>{
+                  var subsubcat = this.boqitemsubsubcatList.find(x => x.id == itemEle.SubsubcatID)
+                  this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsSubsubcat/${itemEle.SubsubcatID}`).set({
+                    catID : itemEle.CatID,
+                    subcatID : itemEle.SubcatID,
+                    name : subsubcat.name,
+                    createdon : new Date()
+                  })
+                }).then(()=>{
+                  if(this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllItemsofBuilding()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllItemsofFloor()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllItemsofCat()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllItemsofSubcat()
+                  }
+                  else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && this.mySubsubcatID){
+                    this.getAllItemsofSubsubcat()
+                  }else if(!this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+                    this.getAllItems()
+                  }
                 })
               })
-            })
-           }).then(()=>{
-             loading.dismiss().then(()=>{
-              alert("Added Successfully!")
+             }).then(()=>{
+               loading.dismiss().then(()=>{
+                alert("Added Successfully!")
+               })
              })
-           })
-          }
+            }
+          })
         })
+
       })
   }else{
     alert("Please recheck, any selection or field is missing.")
@@ -2785,231 +2930,234 @@ async addVariation(){
     this.myAreaID.forEach(element => {
       var areaarray = element.split("/");
       let area = this.myAreaList.find(x => x.id == areaarray[2])
-      this.afs.collection(`boq/boq/projects/${this.pid}/variations/`, ref => ref.where("areaID", "==", area.id).where("variationID", "==", this.boqitem.id)).get().subscribe(va =>{
-        if(va.docs.length >0){
-          loading.dismiss()
-          alert("Item already exist in "+ area.name)
-        }else{
-          this.afs.collection(`boq/boq/projects/${this.pid}/variations/`).add({
-            buildID :  area.BuildingID,
-            floorID: area.floorID,
-            areacatID : area.catid,
-            areasubcatID : area.subcatid,
-            areasubsubcatID : area.subsubcatid,
-            variationID : this.boqitem.id,
-            areaID : area.id,
-        variation : {
-          variationdetails : this.boqitem,
-          ceiling : this.varceiling,
-          floor : this.varfloor,
-          walls : this.varwalls,
-          cornice : this.varcornice,
-          skirting : this.varskirting,
-          shuttering : this.varshuttering,
-          block : this.varblock,
-          blockdpc : this.varblockdpc,
-          concrete : this.varconcrete,
-          polythene : this.varpolythene,
-          bitumin : this.varbitumin,
-          itemsteel : this.varitemsteel,
-          blockbitumin : this.varblockbitumin,
-          iqty : this.variqty,
-          itempercentage : this.varitempercentage,
-          completion : this.varcompletion,
-          itemprecast : this.varitemprecast,
-          existing : this.varexisting,
-          existing1 : this.varexisting1,
-          existing2 : this.varexisting2,
-          tsp : this.vartsp,
-          bpp : this.varbpp,
-          spp1 : this.varspp1,
-          spp2 : this.varspp2,
-          spp3 : this.varspp3,
-          spp4 : this.varspp4,
-          tpp : this.vartpp,
-          bbp : this.varbbp,
-          sbp1 : this.varsbp1,
-          sbp2 : this.varsbp2,
-          sbp3 : this.varsbp3,
-          sbp4 : this.varsbp4,
-          tep : this.vartep,
-          tbp : this.vartbp,
-          bep : this.varbep,
-          sep1 : this.varsep1,
-          sep2 : this.varsep2,
-          sep3 : this.varsep3,
-          sep4 : this.varsep4,
-          bsp : this.varbsp,
-          ssp1 : this.varssp1,
-          ssp2 : this.varssp2,
-          ssp3 : this.varssp3,
-          ssp4 : this.varssp4,
-         FILL_Percentage : this.varFILL_Percentage,
-         E_Percentage : this.varE_Percentage,
-         I_DIS : this.varI_DIS,
-         I_FACTOR : this.varI_FACTOR,
-         Exp_Percentage : this.varExp_Percentage,
-         createdon : new Date(),
-         Concb_Percentage : this.varConcb_Percentage,
-        
-
-          ich1A : this.varich1A,
-          ich1B : this.varich1B,
-          ich1C : this.varich1C,
-          ich1D : this.varich1D,
-          ich1E : this.varich1E,
-          ich1F : this.varich1F,
-          ich1G : this.varich1G,
-          ich1H : this.varich1H,
-          ich1I : this.varich1I,
-          ich1J : this.varich1J,
-          ich1K : this.varich1K,
-          ich1L : this.varich1L,
-          ich1M : this.varich1M,
-          ich1N : this.varich1N,
-          ich1O : this.varich1O,
-          ich1P : this.varich1P,
-          ich1Q : this.varich1Q,
-          ich1R : this.varich1R,
-          ich1S : this.varich1S,
-          ich1T : this.varich1T,
-          ich1U : this.varich1U,
-          ich1V : this.varich1V,
-          ich1W : this.varich1W,
-          ich1X : this.varich1X,
-          ich1Y : this.varich1Y,
-          ich1Z : this.varich1Z,
-          ich1AA : this.varich1AA,
-          ich1AB : this.varich1AB,
-          ich1AC : this.varich1AC,
-          ich1AD : this.varich1AD,
-          ich1AE : this.varich1AE,
-          ich1AF : this.varich1AF,
-          ich1AG : this.varich1AG,
-          ich1AH : this.varich1AH,
-          ich1AI : this.varich1AI,
-          ich1AJ : this.varich1AJ,
-          ich1AK : this.varich1AK,
-          ich1AL : this.varich1AL,
-          ich1AM : this.varich1AM,
-          ich1AN : this.varich1AN,
-          ich1AO : this.varich1AO,
-
-          ich2A : this.varich2A,
-          ich2B : this.varich2B,
-          ich2C : this.varich2C,
-          ich2D : this.varich2D,
-          ich2E : this.varich2E,
-          ich2F : this.varich2F,
-          ich2G : this.varich2G,
-          ich2H : this.varich2H,
-          ich2I : this.varich2I,
-          ich2J : this.varich2J,
-          ich2K : this.varich2K,
-          ich2L : this.varich2L,
-          ich2M : this.varich2M,
-          ich2N : this.varich2N,
-          ich2O : this.varich2O,
-          ich2P : this.varich2P,
-          ich2Q : this.varich2Q,
-          ich2R : this.varich2R,
-          ich2S : this.varich2S,
-          ich2T : this.varich2T,
-          ich2U : this.varich2U,
-          ich2V : this.varich2V,
-          ich2W : this.varich2W,
-          ich2X : this.varich2X,
-          ich2Y : this.varich2Y,
-          ich2Z : this.varich2Z,
-          ich2AA : this.varich2AA,
-          ich2AB : this.varich2AB,
-          ich2AC : this.varich2AC,
-          ich2AD : this.varich2AD,
-          ich2AE : this.varich2AE,
-          ich2AF : this.varich2AF,
-          ich2AG : this.varich2AG,
-          ich2AH : this.varich2AH,
-          ich2AI : this.varich2AI,
-          ich2AJ : this.varich2AJ,
-          ich2AK : this.varich2AK,
-          ich2AL : this.varich2AL,
-          ich2AM : this.varich2AM,
-          ich2AN : this.varich2AN,
-          ich2AO : this.varich2AO,
-
-          ich3A : this.varich3A,
-          ich3B : this.varich3B,
-          ich3C : this.varich3C,
-          ich3D : this.varich3D,
-          ich3E : this.varich3E,
-          ich3F : this.varich3F,
-          ich3G : this.varich3G,
-          ich3H : this.varich3H,
-          ich3I : this.varich3I,
-          ich3J : this.varich3J,
-          ich3K : this.varich3K,
-          ich3L : this.varich3L,
-          ich3M : this.varich3M,
-          ich3N : this.varich3N,
-          ich3O : this.varich3O,
-          ich3P : this.varich3P,
-          ich3Q : this.varich3Q,
-          ich3R : this.varich3R,
-          ich3S : this.varich3S,
-          ich3T : this.varich3T,
-          ich3U : this.varich3U,
-          ich3V : this.varich3V,
-          ich3W : this.varich3W,
-          ich3X : this.varich3X,
-          ich3Y : this.varich3Y,
-          ich3Z : this.varich3Z,
-          ich3AA : this.varich3AA,
-          ich3AB : this.varich3AB,
-          ich3AC : this.varich3AC,
-          ich3AD : this.varich3AD,
-          ich3AE : this.varich3AE,
-          ich3AF : this.varich3AF,
-          ich3AG : this.varich3AG,
-          ich3AH : this.varich3AH,
-          ich3AI : this.varich3AI,
-          ich3AJ : this.varich3AJ,
-          ich3AK : this.varich3AK,
-          ich3AL : this.varich3AL,
-          ich3AM : this.varich3AM,
-          ich3AN : this.varich3AN,
-          ich3AO : this.varich3AO,
-        
-        }
-         }).then(()=>{
-           this.refreshVariation()
-         }).then(()=>{
-          var cat = this.boqitemcatList.find(x => x.id == this.boqitem.CatID)
-          this.afs.doc(`boq/boq/projects/${this.pid}/variationsCat/${this.boqitem.CatID}`).set({
-            name : cat.name,
-            createdon : new Date()
-          }).then(()=>{
-            var subcat = this.boqitemsubcatList.find(x => x.id == this.boqitem.SubcatID)
-            this.afs.doc(`boq/boq/projects/${this.pid}/variationsSubcat/${this.boqitem.SubcatID}`).set({
-              catID : this.boqitem.CatID,
-              name : subcat.name,
+      this.boqitem.forEach(itemEle =>{
+        this.afs.collection(`boq/boq/projects/${this.pid}/variations/`, ref => ref.where("areaID", "==", area.id).where("variationID", "==", itemEle.id)).get().subscribe(va =>{
+          if(va.docs.length >0){
+            loading.dismiss()
+            alert("Item already exist in "+ area.name)
+          }else{
+            this.afs.collection(`boq/boq/projects/${this.pid}/variations/`).add({
+              buildID :  area.BuildingID,
+              floorID: area.floorID,
+              areacatID : area.catid,
+              areasubcatID : area.subcatid,
+              areasubsubcatID : area.subsubcatid,
+              variationID : itemEle.id,
+              areaID : area.id,
+          variation : {
+            variationdetails : itemEle,
+            ceiling : this.varceiling,
+            floor : this.varfloor,
+            walls : this.varwalls,
+            cornice : this.varcornice,
+            skirting : this.varskirting,
+            shuttering : this.varshuttering,
+            block : this.varblock,
+            blockdpc : this.varblockdpc,
+            concrete : this.varconcrete,
+            polythene : this.varpolythene,
+            bitumin : this.varbitumin,
+            itemsteel : this.varitemsteel,
+            blockbitumin : this.varblockbitumin,
+            iqty : this.variqty,
+            itempercentage : this.varitempercentage,
+            completion : this.varcompletion,
+            itemprecast : this.varitemprecast,
+            existing : this.varexisting,
+            existing1 : this.varexisting1,
+            existing2 : this.varexisting2,
+            tsp : this.vartsp,
+            bpp : this.varbpp,
+            spp1 : this.varspp1,
+            spp2 : this.varspp2,
+            spp3 : this.varspp3,
+            spp4 : this.varspp4,
+            tpp : this.vartpp,
+            bbp : this.varbbp,
+            sbp1 : this.varsbp1,
+            sbp2 : this.varsbp2,
+            sbp3 : this.varsbp3,
+            sbp4 : this.varsbp4,
+            tep : this.vartep,
+            tbp : this.vartbp,
+            bep : this.varbep,
+            sep1 : this.varsep1,
+            sep2 : this.varsep2,
+            sep3 : this.varsep3,
+            sep4 : this.varsep4,
+            bsp : this.varbsp,
+            ssp1 : this.varssp1,
+            ssp2 : this.varssp2,
+            ssp3 : this.varssp3,
+            ssp4 : this.varssp4,
+           FILL_Percentage : this.varFILL_Percentage,
+           E_Percentage : this.varE_Percentage,
+           I_DIS : this.varI_DIS,
+           I_FACTOR : this.varI_FACTOR,
+           Exp_Percentage : this.varExp_Percentage,
+           createdon : new Date(),
+           Concb_Percentage : this.varConcb_Percentage,
+          
+  
+            ich1A : this.varich1A,
+            ich1B : this.varich1B,
+            ich1C : this.varich1C,
+            ich1D : this.varich1D,
+            ich1E : this.varich1E,
+            ich1F : this.varich1F,
+            ich1G : this.varich1G,
+            ich1H : this.varich1H,
+            ich1I : this.varich1I,
+            ich1J : this.varich1J,
+            ich1K : this.varich1K,
+            ich1L : this.varich1L,
+            ich1M : this.varich1M,
+            ich1N : this.varich1N,
+            ich1O : this.varich1O,
+            ich1P : this.varich1P,
+            ich1Q : this.varich1Q,
+            ich1R : this.varich1R,
+            ich1S : this.varich1S,
+            ich1T : this.varich1T,
+            ich1U : this.varich1U,
+            ich1V : this.varich1V,
+            ich1W : this.varich1W,
+            ich1X : this.varich1X,
+            ich1Y : this.varich1Y,
+            ich1Z : this.varich1Z,
+            ich1AA : this.varich1AA,
+            ich1AB : this.varich1AB,
+            ich1AC : this.varich1AC,
+            ich1AD : this.varich1AD,
+            ich1AE : this.varich1AE,
+            ich1AF : this.varich1AF,
+            ich1AG : this.varich1AG,
+            ich1AH : this.varich1AH,
+            ich1AI : this.varich1AI,
+            ich1AJ : this.varich1AJ,
+            ich1AK : this.varich1AK,
+            ich1AL : this.varich1AL,
+            ich1AM : this.varich1AM,
+            ich1AN : this.varich1AN,
+            ich1AO : this.varich1AO,
+  
+            ich2A : this.varich2A,
+            ich2B : this.varich2B,
+            ich2C : this.varich2C,
+            ich2D : this.varich2D,
+            ich2E : this.varich2E,
+            ich2F : this.varich2F,
+            ich2G : this.varich2G,
+            ich2H : this.varich2H,
+            ich2I : this.varich2I,
+            ich2J : this.varich2J,
+            ich2K : this.varich2K,
+            ich2L : this.varich2L,
+            ich2M : this.varich2M,
+            ich2N : this.varich2N,
+            ich2O : this.varich2O,
+            ich2P : this.varich2P,
+            ich2Q : this.varich2Q,
+            ich2R : this.varich2R,
+            ich2S : this.varich2S,
+            ich2T : this.varich2T,
+            ich2U : this.varich2U,
+            ich2V : this.varich2V,
+            ich2W : this.varich2W,
+            ich2X : this.varich2X,
+            ich2Y : this.varich2Y,
+            ich2Z : this.varich2Z,
+            ich2AA : this.varich2AA,
+            ich2AB : this.varich2AB,
+            ich2AC : this.varich2AC,
+            ich2AD : this.varich2AD,
+            ich2AE : this.varich2AE,
+            ich2AF : this.varich2AF,
+            ich2AG : this.varich2AG,
+            ich2AH : this.varich2AH,
+            ich2AI : this.varich2AI,
+            ich2AJ : this.varich2AJ,
+            ich2AK : this.varich2AK,
+            ich2AL : this.varich2AL,
+            ich2AM : this.varich2AM,
+            ich2AN : this.varich2AN,
+            ich2AO : this.varich2AO,
+  
+            ich3A : this.varich3A,
+            ich3B : this.varich3B,
+            ich3C : this.varich3C,
+            ich3D : this.varich3D,
+            ich3E : this.varich3E,
+            ich3F : this.varich3F,
+            ich3G : this.varich3G,
+            ich3H : this.varich3H,
+            ich3I : this.varich3I,
+            ich3J : this.varich3J,
+            ich3K : this.varich3K,
+            ich3L : this.varich3L,
+            ich3M : this.varich3M,
+            ich3N : this.varich3N,
+            ich3O : this.varich3O,
+            ich3P : this.varich3P,
+            ich3Q : this.varich3Q,
+            ich3R : this.varich3R,
+            ich3S : this.varich3S,
+            ich3T : this.varich3T,
+            ich3U : this.varich3U,
+            ich3V : this.varich3V,
+            ich3W : this.varich3W,
+            ich3X : this.varich3X,
+            ich3Y : this.varich3Y,
+            ich3Z : this.varich3Z,
+            ich3AA : this.varich3AA,
+            ich3AB : this.varich3AB,
+            ich3AC : this.varich3AC,
+            ich3AD : this.varich3AD,
+            ich3AE : this.varich3AE,
+            ich3AF : this.varich3AF,
+            ich3AG : this.varich3AG,
+            ich3AH : this.varich3AH,
+            ich3AI : this.varich3AI,
+            ich3AJ : this.varich3AJ,
+            ich3AK : this.varich3AK,
+            ich3AL : this.varich3AL,
+            ich3AM : this.varich3AM,
+            ich3AN : this.varich3AN,
+            ich3AO : this.varich3AO,
+          
+          }
+           }).then(()=>{
+             this.refreshVariation()
+           }).then(()=>{
+            var cat = this.boqitemcatList.find(x => x.id == itemEle.CatID)
+            this.afs.doc(`boq/boq/projects/${this.pid}/variationsCat/${itemEle.CatID}`).set({
+              name : cat.name,
               createdon : new Date()
             }).then(()=>{
-              var subsubcat = this.boqitemsubsubcatList.find(x => x.id == this.boqitem.SubsubcatID)
-              this.afs.doc(`boq/boq/projects/${this.pid}/variationsSubsubcat/${this.boqitem.SubsubcatID}`).set({
-                catID : this.boqitem.CatID,
-                subcatID : this.boqitem.SubcatID,
-                name : subsubcat.name,
+              var subcat = this.boqitemsubcatList.find(x => x.id == itemEle.SubcatID)
+              this.afs.doc(`boq/boq/projects/${this.pid}/variationsSubcat/${itemEle.SubcatID}`).set({
+                catID : itemEle.CatID,
+                name : subcat.name,
                 createdon : new Date()
+              }).then(()=>{
+                var subsubcat = this.boqitemsubsubcatList.find(x => x.id == itemEle.SubsubcatID)
+                this.afs.doc(`boq/boq/projects/${this.pid}/variationsSubsubcat/${itemEle.SubsubcatID}`).set({
+                  catID : itemEle.CatID,
+                  subcatID : itemEle.SubcatID,
+                  name : subsubcat.name,
+                  createdon : new Date()
+                })
               })
             })
-          })
-         }).then(()=>{
-           loading.dismiss().then(()=>{
-            alert("Added Successfully!")
+           }).then(()=>{
+             loading.dismiss().then(()=>{
+              alert("Added Successfully!")
+             })
            })
-         })
-        }
+          }
+        })
       })
+
     })
 }else{
   alert("Please recheck, any selection or field is missing.")
@@ -3022,39 +3170,26 @@ getAllItemsofBuilding(){
   this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("buildID", "==", this.myBuildingID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
-        let qty = this.calculateFinalQuantity(
-          areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,
-          areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage,
-          areavalue.data().exc,doc.data().item.E_Percentage,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,
-          areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,
-          areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor,
-          areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,
-          doc.data().item.blockdpc,0,areavalue.data().areaC,doc.data().item.ceiling,
-          areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,
-          areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,
-          areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,
-          doc.data().item.walls,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,
-          areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,
-          doc.data().item.cornice,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,
-          areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,
-          areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,
-          0,areavalue.data().areaS,
-          0,doc.data().item.skirting,areavalue.data().areaB,doc.data().item.block,areavalue.data().bit,
-          doc.data().item.blockbitumin,
-          areavalue.data().conc,doc.data().item.concrete,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,
-          doc.data().item.Concb_Percentage,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,
-          doc.data().item.ssp4,doc.data().item.ssp2,
-          areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering,doc.data().item.tbp,
-          doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,
-          doc.data().item.bitumin,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,
-          doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,
-          doc.data().item.Exp_Percentage,doc.data().item.itemprecast,areavalue.data().precast,
-          doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,
-          doc.data().item.spp1,areavalue.data().polyth,
-          doc.data().item.spp2,doc.data().item.polythene,areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,
-          areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,
-          doc.data().item.itemsteel,doc.data().item.iqty,doc.data().item.I_FACTOR
-          )
+
+        var fill  = this.calculateFill(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage);
+        var excavation = this.calculateExcavation(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().exc,doc.data().item.E_Percentage);
+          var floor =  this.calculateFloor(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor);
+          var BlockDPC =  this.calculateBlockDPC(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,doc.data().item.blockdpc);
+          var ceiling = this.calculateCeiling(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaC,doc.data().item.ceiling);
+          var wall = this.calculateWall(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,doc.data().item.walls);
+          var cornice = this.calculateCornice(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,doc.data().item.cornice);
+          var skirting = this.calculateSkirting(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,0,areavalue.data().areaS,0,doc.data().item.skirting);
+          var block =  this.calculateBlock(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaB,doc.data().item.block);
+          var blockbitpaint = this.calculateBlockbitpaint(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,0,areavalue.data().bit,doc.data().item.blockbitumin);
+           var concrete = this.calculateConcrete(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().conc,doc.data().item.concrete);
+           var blinding = this.calculateBlinding(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,doc.data().item.Concb_Percentage);
+          var formwork = this.calculateFormwork(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,doc.data().item.ssp4,doc.data().item.ssp2,areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering);
+          var bitpaint = this.calculateBitpaint(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().bit,areavalue.data().Unit_width,doc.data().item.tbp,doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,doc.data().item.bitumin);
+          var expansionjoints =  this.calculateExpansionjoints(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,doc.data().item.Exp_Percentage);
+          var precast = this.calculatePrecast(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,doc.data().item.itemprecast,areavalue.data().precast);
+          var polythene =  this.calculatePolythene(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,doc.data().item.spp1,areavalue.data().polyth,doc.data().item.spp2,doc.data().item.polythene);
+          var steel = this.calculateSteel(areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,doc.data().item.itemsteel);      
+          var individualqty = this.calculateIndividualqty(areavalue.data().No_of_units,doc.data().item.iqty,doc.data().item.I_FACTOR)
         this.myItemsList.push({
           id: doc.ref.id,
           buildID :  doc.data().buildID,
@@ -3067,7 +3202,26 @@ getAllItemsofBuilding(){
           areaname : areavalue.data().name,
           code : areavalue.data().code,
           item : doc.data().item,
-          fqty : qty
+          fill: fill,
+          excavation : excavation,
+          floor : floor,
+          BlockDPC : BlockDPC,
+          ceiling : ceiling,
+          wall : wall,
+          cornice : cornice,
+          skirting : skirting,
+          block : block,
+          blockbitpaint : blockbitpaint,
+          concrete : concrete,
+          blinding : blinding,
+          formwork : formwork,
+          bitpaint : bitpaint,
+          expansionjoints : expansionjoints,
+          precast : precast,
+          polythene : polythene,
+          steel : steel,
+          individualqty : individualqty,
+          fqty : (fill+excavation+floor+BlockDPC+ceiling+wall+cornice+skirting+block+blockbitpaint+concrete+blinding+formwork+bitpaint+expansionjoints+precast+polythene+steel+individualqty)
        })
       })
     })
@@ -3079,39 +3233,26 @@ getAllItemsofFloor(){
   this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("floorID", "==", this.myFloorID).where("buildID","==",this.myBuildingID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
-        let qty = this.calculateFinalQuantity(
-          areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,
-          areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage,
-          areavalue.data().exc,doc.data().item.E_Percentage,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,
-          areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,
-          areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor,
-          areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,
-          doc.data().item.blockdpc,0,areavalue.data().areaC,doc.data().item.ceiling,
-          areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,
-          areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,
-          areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,
-          doc.data().item.walls,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,
-          areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,
-          doc.data().item.cornice,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,
-          areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,
-          areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,
-          0,areavalue.data().areaS,
-          0,doc.data().item.skirting,areavalue.data().areaB,doc.data().item.block,areavalue.data().bit,
-          doc.data().item.blockbitumin,
-          areavalue.data().conc,doc.data().item.concrete,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,
-          doc.data().item.Concb_Percentage,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,
-          doc.data().item.ssp4,doc.data().item.ssp2,
-          areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering,doc.data().item.tbp,
-          doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,
-          doc.data().item.bitumin,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,
-          doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,
-          doc.data().item.Exp_Percentage,doc.data().item.itemprecast,areavalue.data().precast,
-          doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,
-          doc.data().item.spp1,areavalue.data().polyth,
-          doc.data().item.spp2,doc.data().item.polythene,areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,
-          areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,
-          doc.data().item.itemsteel,doc.data().item.iqty,doc.data().item.I_FACTOR
-          )
+       
+        var fill  = this.calculateFill(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage);
+        var excavation = this.calculateExcavation(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().exc,doc.data().item.E_Percentage);
+          var floor =  this.calculateFloor(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor);
+          var BlockDPC =  this.calculateBlockDPC(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,doc.data().item.blockdpc);
+          var ceiling = this.calculateCeiling(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaC,doc.data().item.ceiling);
+          var wall = this.calculateWall(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,doc.data().item.walls);
+          var cornice = this.calculateCornice(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,doc.data().item.cornice);
+          var skirting = this.calculateSkirting(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,0,areavalue.data().areaS,0,doc.data().item.skirting);
+          var block =  this.calculateBlock(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaB,doc.data().item.block);
+          var blockbitpaint = this.calculateBlockbitpaint(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,0,areavalue.data().bit,doc.data().item.blockbitumin);
+           var concrete = this.calculateConcrete(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().conc,doc.data().item.concrete);
+           var blinding = this.calculateBlinding(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,doc.data().item.Concb_Percentage);
+          var formwork = this.calculateFormwork(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,doc.data().item.ssp4,doc.data().item.ssp2,areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering);
+          var bitpaint = this.calculateBitpaint(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().bit,areavalue.data().Unit_width,doc.data().item.tbp,doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,doc.data().item.bitumin);
+          var expansionjoints =  this.calculateExpansionjoints(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,doc.data().item.Exp_Percentage);
+          var precast = this.calculatePrecast(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,doc.data().item.itemprecast,areavalue.data().precast);
+          var polythene =  this.calculatePolythene(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,doc.data().item.spp1,areavalue.data().polyth,doc.data().item.spp2,doc.data().item.polythene);
+          var steel = this.calculateSteel(areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,doc.data().item.itemsteel);      
+          var individualqty = this.calculateIndividualqty(areavalue.data().No_of_units,doc.data().item.iqty,doc.data().item.I_FACTOR)
         this.myItemsList.push({
           id: doc.ref.id,
           buildID :  doc.data().buildID,
@@ -3124,7 +3265,26 @@ getAllItemsofFloor(){
           areaname : areavalue.data().name,
           code : areavalue.data().code,
           item : doc.data().item,
-          fqty : qty
+          fill: fill,
+          excavation : excavation,
+          floor : floor,
+          BlockDPC : BlockDPC,
+          ceiling : ceiling,
+          wall : wall,
+          cornice : cornice,
+          skirting : skirting,
+          block : block,
+          blockbitpaint : blockbitpaint,
+          concrete : concrete,
+          blinding : blinding,
+          formwork : formwork,
+          bitpaint : bitpaint,
+          expansionjoints : expansionjoints,
+          precast : precast,
+          polythene : polythene,
+          steel : steel,
+          individualqty : individualqty,
+          fqty : (fill+excavation+floor+BlockDPC+ceiling+wall+cornice+skirting+block+blockbitpaint+concrete+blinding+formwork+bitpaint+expansionjoints+precast+polythene+steel+individualqty)
        })
       })
     })
@@ -3136,39 +3296,26 @@ getAllItemsofCat(){
   this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
-        let qty = this.calculateFinalQuantity(
-          areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,
-          areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage,
-          areavalue.data().exc,doc.data().item.E_Percentage,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,
-          areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,
-          areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor,
-          areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,
-          doc.data().item.blockdpc,0,areavalue.data().areaC,doc.data().item.ceiling,
-          areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,
-          areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,
-          areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,
-          doc.data().item.walls,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,
-          areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,
-          doc.data().item.cornice,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,
-          areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,
-          areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,
-          0,areavalue.data().areaS,
-          0,doc.data().item.skirting,areavalue.data().areaB,doc.data().item.block,areavalue.data().bit,
-          doc.data().item.blockbitumin,
-          areavalue.data().conc,doc.data().item.concrete,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,
-          doc.data().item.Concb_Percentage,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,
-          doc.data().item.ssp4,doc.data().item.ssp2,
-          areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering,doc.data().item.tbp,
-          doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,
-          doc.data().item.bitumin,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,
-          doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,
-          doc.data().item.Exp_Percentage,doc.data().item.itemprecast,areavalue.data().precast,
-          doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,
-          doc.data().item.spp1,areavalue.data().polyth,
-          doc.data().item.spp2,doc.data().item.polythene,areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,
-          areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,
-          doc.data().item.itemsteel,doc.data().item.iqty,doc.data().item.I_FACTOR
-          )
+       
+        var fill  = this.calculateFill(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage);
+        var excavation = this.calculateExcavation(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().exc,doc.data().item.E_Percentage);
+          var floor =  this.calculateFloor(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor);
+          var BlockDPC =  this.calculateBlockDPC(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,doc.data().item.blockdpc);
+          var ceiling = this.calculateCeiling(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaC,doc.data().item.ceiling);
+          var wall = this.calculateWall(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,doc.data().item.walls);
+          var cornice = this.calculateCornice(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,doc.data().item.cornice);
+          var skirting = this.calculateSkirting(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,0,areavalue.data().areaS,0,doc.data().item.skirting);
+          var block =  this.calculateBlock(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaB,doc.data().item.block);
+          var blockbitpaint = this.calculateBlockbitpaint(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,0,areavalue.data().bit,doc.data().item.blockbitumin);
+           var concrete = this.calculateConcrete(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().conc,doc.data().item.concrete);
+           var blinding = this.calculateBlinding(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,doc.data().item.Concb_Percentage);
+          var formwork = this.calculateFormwork(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,doc.data().item.ssp4,doc.data().item.ssp2,areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering);
+          var bitpaint = this.calculateBitpaint(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().bit,areavalue.data().Unit_width,doc.data().item.tbp,doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,doc.data().item.bitumin);
+          var expansionjoints =  this.calculateExpansionjoints(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,doc.data().item.Exp_Percentage);
+          var precast = this.calculatePrecast(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,doc.data().item.itemprecast,areavalue.data().precast);
+          var polythene =  this.calculatePolythene(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,doc.data().item.spp1,areavalue.data().polyth,doc.data().item.spp2,doc.data().item.polythene);
+          var steel = this.calculateSteel(areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,doc.data().item.itemsteel);      
+          var individualqty = this.calculateIndividualqty(areavalue.data().No_of_units,doc.data().item.iqty,doc.data().item.I_FACTOR)
         this.myItemsList.push({
           id: doc.ref.id,
           buildID :  doc.data().buildID,
@@ -3181,7 +3328,26 @@ getAllItemsofCat(){
           areaname : areavalue.data().name,
           code : areavalue.data().code,
           item : doc.data().item,
-          fqty : qty
+          fill: fill,
+          excavation : excavation,
+          floor : floor,
+          BlockDPC : BlockDPC,
+          ceiling : ceiling,
+          wall : wall,
+          cornice : cornice,
+          skirting : skirting,
+          block : block,
+          blockbitpaint : blockbitpaint,
+          concrete : concrete,
+          blinding : blinding,
+          formwork : formwork,
+          bitpaint : bitpaint,
+          expansionjoints : expansionjoints,
+          precast : precast,
+          polythene : polythene,
+          steel : steel,
+          individualqty : individualqty,
+          fqty : (fill+excavation+floor+BlockDPC+ceiling+wall+cornice+skirting+block+blockbitpaint+concrete+blinding+formwork+bitpaint+expansionjoints+precast+polythene+steel+individualqty)
        })
       })
     })
@@ -3193,39 +3359,26 @@ getAllItemsofSubcat(){
   this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("areasubcatID", "==", this.mySubcatID).where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
-        let qty = this.calculateFinalQuantity(
-          areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,
-          areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage,
-          areavalue.data().exc,doc.data().item.E_Percentage,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,
-          areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,
-          areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor,
-          areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,
-          doc.data().item.blockdpc,0,areavalue.data().areaC,doc.data().item.ceiling,
-          areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,
-          areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,
-          areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,
-          doc.data().item.walls,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,
-          areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,
-          doc.data().item.cornice,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,
-          areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,
-          areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,
-          0,areavalue.data().areaS,
-          0,doc.data().item.skirting,areavalue.data().areaB,doc.data().item.block,areavalue.data().bit,
-          doc.data().item.blockbitumin,
-          areavalue.data().conc,doc.data().item.concrete,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,
-          doc.data().item.Concb_Percentage,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,
-          doc.data().item.ssp4,doc.data().item.ssp2,
-          areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering,doc.data().item.tbp,
-          doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,
-          doc.data().item.bitumin,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,
-          doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,
-          doc.data().item.Exp_Percentage,doc.data().item.itemprecast,areavalue.data().precast,
-          doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,
-          doc.data().item.spp1,areavalue.data().polyth,
-          doc.data().item.spp2,doc.data().item.polythene,areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,
-          areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,
-          doc.data().item.itemsteel,doc.data().item.iqty,doc.data().item.I_FACTOR
-          )
+        
+        var fill  = this.calculateFill(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage);
+        var excavation = this.calculateExcavation(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().exc,doc.data().item.E_Percentage);
+          var floor =  this.calculateFloor(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor);
+          var BlockDPC =  this.calculateBlockDPC(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,doc.data().item.blockdpc);
+          var ceiling = this.calculateCeiling(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaC,doc.data().item.ceiling);
+          var wall = this.calculateWall(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,doc.data().item.walls);
+          var cornice = this.calculateCornice(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,doc.data().item.cornice);
+          var skirting = this.calculateSkirting(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,0,areavalue.data().areaS,0,doc.data().item.skirting);
+          var block =  this.calculateBlock(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaB,doc.data().item.block);
+          var blockbitpaint = this.calculateBlockbitpaint(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,0,areavalue.data().bit,doc.data().item.blockbitumin);
+           var concrete = this.calculateConcrete(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().conc,doc.data().item.concrete);
+           var blinding = this.calculateBlinding(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,doc.data().item.Concb_Percentage);
+          var formwork = this.calculateFormwork(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,doc.data().item.ssp4,doc.data().item.ssp2,areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering);
+          var bitpaint = this.calculateBitpaint(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().bit,areavalue.data().Unit_width,doc.data().item.tbp,doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,doc.data().item.bitumin);
+          var expansionjoints =  this.calculateExpansionjoints(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,doc.data().item.Exp_Percentage);
+          var precast = this.calculatePrecast(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,doc.data().item.itemprecast,areavalue.data().precast);
+          var polythene =  this.calculatePolythene(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,doc.data().item.spp1,areavalue.data().polyth,doc.data().item.spp2,doc.data().item.polythene);
+          var steel = this.calculateSteel(areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,doc.data().item.itemsteel);      
+          var individualqty = this.calculateIndividualqty(areavalue.data().No_of_units,doc.data().item.iqty,doc.data().item.I_FACTOR)
         this.myItemsList.push({
           id: doc.ref.id,
           buildID :  doc.data().buildID,
@@ -3238,7 +3391,26 @@ getAllItemsofSubcat(){
           areaname : areavalue.data().name,
           code : areavalue.data().code,
           item : doc.data().item,
-          fqty : qty
+          fill: fill,
+          excavation : excavation,
+          floor : floor,
+          BlockDPC : BlockDPC,
+          ceiling : ceiling,
+          wall : wall,
+          cornice : cornice,
+          skirting : skirting,
+          block : block,
+          blockbitpaint : blockbitpaint,
+          concrete : concrete,
+          blinding : blinding,
+          formwork : formwork,
+          bitpaint : bitpaint,
+          expansionjoints : expansionjoints,
+          precast : precast,
+          polythene : polythene,
+          steel : steel,
+          individualqty : individualqty,
+          fqty : (fill+excavation+floor+BlockDPC+ceiling+wall+cornice+skirting+block+blockbitpaint+concrete+blinding+formwork+bitpaint+expansionjoints+precast+polythene+steel+individualqty)
        })
       })
     })
@@ -3250,39 +3422,26 @@ getAllItemsofSubsubcat(){
   this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("areasubsubcatID", "==", this.mySubsubcatID).where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
-        let qty = this.calculateFinalQuantity(
-          areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,
-          areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage,
-          areavalue.data().exc,doc.data().item.E_Percentage,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,
-          areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,
-          areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor,
-          areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,
-          doc.data().item.blockdpc,0,areavalue.data().areaC,doc.data().item.ceiling,
-          areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,
-          areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,
-          areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,
-          doc.data().item.walls,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,
-          areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,
-          doc.data().item.cornice,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,
-          areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,
-          areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,
-          0,areavalue.data().areaS,
-          0,doc.data().item.skirting,areavalue.data().areaB,doc.data().item.block,areavalue.data().bit,
-          doc.data().item.blockbitumin,
-          areavalue.data().conc,doc.data().item.concrete,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,
-          doc.data().item.Concb_Percentage,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,
-          doc.data().item.ssp4,doc.data().item.ssp2,
-          areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering,doc.data().item.tbp,
-          doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,
-          doc.data().item.bitumin,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,
-          doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,
-          doc.data().item.Exp_Percentage,doc.data().item.itemprecast,areavalue.data().precast,
-          doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,
-          doc.data().item.spp1,areavalue.data().polyth,
-          doc.data().item.spp2,doc.data().item.polythene,areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,
-          areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,
-          doc.data().item.itemsteel,doc.data().item.iqty,doc.data().item.I_FACTOR
-          )
+     
+        var fill  = this.calculateFill(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage);
+        var excavation = this.calculateExcavation(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().exc,doc.data().item.E_Percentage);
+          var floor =  this.calculateFloor(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor);
+          var BlockDPC =  this.calculateBlockDPC(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,doc.data().item.blockdpc);
+          var ceiling = this.calculateCeiling(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaC,doc.data().item.ceiling);
+          var wall = this.calculateWall(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,doc.data().item.walls);
+          var cornice = this.calculateCornice(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,doc.data().item.cornice);
+          var skirting = this.calculateSkirting(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,0,areavalue.data().areaS,0,doc.data().item.skirting);
+          var block =  this.calculateBlock(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaB,doc.data().item.block);
+          var blockbitpaint = this.calculateBlockbitpaint(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,0,areavalue.data().bit,doc.data().item.blockbitumin);
+           var concrete = this.calculateConcrete(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().conc,doc.data().item.concrete);
+           var blinding = this.calculateBlinding(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,doc.data().item.Concb_Percentage);
+          var formwork = this.calculateFormwork(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,doc.data().item.ssp4,doc.data().item.ssp2,areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering);
+          var bitpaint = this.calculateBitpaint(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().bit,areavalue.data().Unit_width,doc.data().item.tbp,doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,doc.data().item.bitumin);
+          var expansionjoints =  this.calculateExpansionjoints(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,doc.data().item.Exp_Percentage);
+          var precast = this.calculatePrecast(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,doc.data().item.itemprecast,areavalue.data().precast);
+          var polythene =  this.calculatePolythene(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,doc.data().item.spp1,areavalue.data().polyth,doc.data().item.spp2,doc.data().item.polythene);
+          var steel = this.calculateSteel(areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,doc.data().item.itemsteel);      
+          var individualqty = this.calculateIndividualqty(areavalue.data().No_of_units,doc.data().item.iqty,doc.data().item.I_FACTOR)
         this.myItemsList.push({
           id: doc.ref.id,
           buildID :  doc.data().buildID,
@@ -3295,7 +3454,26 @@ getAllItemsofSubsubcat(){
           areaname : areavalue.data().name,
           code : areavalue.data().code,
           item : doc.data().item,
-          fqty : qty,
+          fill: fill,
+          excavation : excavation,
+          floor : floor,
+          BlockDPC : BlockDPC,
+          ceiling : ceiling,
+          wall : wall,
+          cornice : cornice,
+          skirting : skirting,
+          block : block,
+          blockbitpaint : blockbitpaint,
+          concrete : concrete,
+          blinding : blinding,
+          formwork : formwork,
+          bitpaint : bitpaint,
+          expansionjoints : expansionjoints,
+          precast : precast,
+          polythene : polythene,
+          steel : steel,
+          individualqty : individualqty,
+          fqty : (fill+excavation+floor+BlockDPC+ceiling+wall+cornice+skirting+block+blockbitpaint+concrete+blinding+formwork+bitpaint+expansionjoints+precast+polythene+steel+individualqty)
        })
       })
     })
@@ -3307,39 +3485,26 @@ getAllItems(){
   this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
-        let qty = this.calculateFinalQuantity(
-          areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,
-          areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage,
-          areavalue.data().exc,doc.data().item.E_Percentage,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,
-          areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,
-          areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor,
-          areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,
-          doc.data().item.blockdpc,0,areavalue.data().areaC,doc.data().item.ceiling,
-          areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,
-          areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,
-          areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,
-          doc.data().item.walls,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,
-          areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,
-          doc.data().item.cornice,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,
-          areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,
-          areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,
-          0,areavalue.data().areaS,
-          0,doc.data().item.skirting,areavalue.data().areaB,doc.data().item.block,areavalue.data().bit,
-          doc.data().item.blockbitumin,
-          areavalue.data().conc,doc.data().item.concrete,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,
-          doc.data().item.Concb_Percentage,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,
-          doc.data().item.ssp4,doc.data().item.ssp2,
-          areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering,doc.data().item.tbp,
-          doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,
-          doc.data().item.bitumin,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,
-          doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,
-          doc.data().item.Exp_Percentage,doc.data().item.itemprecast,areavalue.data().precast,
-          doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,
-          doc.data().item.spp1,areavalue.data().polyth,
-          doc.data().item.spp2,doc.data().item.polythene,areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,
-          areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,
-          doc.data().item.itemsteel,doc.data().item.iqty,doc.data().item.I_FACTOR
-          )
+       
+        var fill  = this.calculateFill(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().fill,areavalue.data().No_of_units,doc.data().item.FILL_Percentage);
+        var excavation = this.calculateExcavation(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().exc,doc.data().item.E_Percentage);
+          var floor =  this.calculateFloor(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaF,doc.data().item.floor);
+          var BlockDPC =  this.calculateBlockDPC(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().areaB,doc.data().item.blockdpc);
+          var ceiling = this.calculateCeiling(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().R,areavalue.data().RO,areavalue.data().Floor_width_1,areavalue.data().Floor_length_1,areavalue.data().Floor_width_2,areavalue.data().Floor_length_2,areavalue.data().Floor_width_3,areavalue.data().Floor_length_3,areavalue.data().Floor_width_4,areavalue.data().Floor_length_4,0,areavalue.data().areaC,doc.data().item.ceiling);
+          var wall = this.calculateWall(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaW,0,doc.data().item.walls);
+          var cornice = this.calculateCornice(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().PCLA,areavalue.data().PCLB,areavalue.data().PCLC,areavalue.data().PCLD,areavalue.data().PCLE,areavalue.data().PCLF,areavalue.data().PCLG,areavalue.data().PCLH,0,areavalue.data().areaCOR,doc.data().item.cornice);
+          var skirting = this.calculateSkirting(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().skirting_per_lengthA,areavalue.data().skirting_per_lengthB,areavalue.data().skirting_per_lengthC,areavalue.data().skirting_per_lengthD,areavalue.data().skirting_per_lengthE,areavalue.data().skirting_per_lengthF,areavalue.data().skirting_per_lengthG,areavalue.data().skirting_per_lengthH,0,areavalue.data().areaS,0,doc.data().item.skirting);
+          var block =  this.calculateBlock(areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().L5,areavalue.data().L6,areavalue.data().L7,areavalue.data().L8,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,areavalue.data().Wall_per_lengthE,areavalue.data().Wall_per_lengthF,areavalue.data().Wall_per_lengthG,areavalue.data().Wall_per_lengthH,0,areavalue.data().areaB,doc.data().item.block);
+          var blockbitpaint = this.calculateBlockbitpaint(areavalue.data().No_of_units,areavalue.data().L1,areavalue.data().L2,areavalue.data().L3,areavalue.data().L4,areavalue.data().Wall_per_lengthA,areavalue.data().Wall_per_lengthB,areavalue.data().Wall_per_lengthC,areavalue.data().Wall_per_lengthD,0,areavalue.data().bit,doc.data().item.blockbitumin);
+           var concrete = this.calculateConcrete(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().conc,doc.data().item.concrete);
+           var blinding = this.calculateBlinding(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,areavalue.data().EXTRACONCBO,areavalue.data().EXTRACONCB,doc.data().item.Concb_Percentage);
+          var formwork = this.calculateFormwork(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,doc.data().item.bsp,doc.data().item.tsp,doc.data().item.ssp3,doc.data().item.ssp4,doc.data().item.ssp2,areavalue.data().shutt,areavalue.data().Unit_width,doc.data().item.ssp1,doc.data().item.shuttering);
+          var bitpaint = this.calculateBitpaint(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().bit,areavalue.data().Unit_width,doc.data().item.tbp,doc.data().item.bbp,doc.data().item.sbp4,doc.data().item.sbp3,doc.data().item.sbp2,doc.data().item.sbp1,doc.data().item.bitumin);
+          var expansionjoints =  this.calculateExpansionjoints(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.bep,doc.data().item.tep,doc.data().item.sep3,doc.data().item.sep4,doc.data().item.sep2,areavalue.data().EXTRAEXP,doc.data().item.sep1,doc.data().item.Exp_Percentage);
+          var precast = this.calculatePrecast(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().No_of_units,doc.data().item.itemprecast,areavalue.data().precast);
+          var polythene =  this.calculatePolythene(areavalue.data().Unit_length,areavalue.data().Unit_width,areavalue.data().Unit_height,areavalue.data().No_of_units,areavalue.data().Unit_width,doc.data().item.tpp,doc.data().item.bpp,doc.data().item.spp4,doc.data().item.spp3,doc.data().item.spp1,areavalue.data().polyth,doc.data().item.spp2,doc.data().item.polythene);
+          var steel = this.calculateSteel(areavalue.data().Y8,areavalue.data().Y10,areavalue.data().Y12,areavalue.data().Y16,areavalue.data().Y20,areavalue.data().Y25,areavalue.data().Y32,areavalue.data().steel,doc.data().item.itemsteel);      
+          var individualqty = this.calculateIndividualqty(areavalue.data().No_of_units,doc.data().item.iqty,doc.data().item.I_FACTOR)
         this.myItemsList.push({
           id: doc.ref.id,
           buildID :  doc.data().buildID,
@@ -3352,7 +3517,26 @@ getAllItems(){
           areaname : areavalue.data().name,
           code : areavalue.data().code,
           item : doc.data().item,
-          fqty : qty
+          fill: fill,
+          excavation : excavation,
+          floor : floor,
+          BlockDPC : BlockDPC,
+          ceiling : ceiling,
+          wall : wall,
+          cornice : cornice,
+          skirting : skirting,
+          block : block,
+          blockbitpaint : blockbitpaint,
+          concrete : concrete,
+          blinding : blinding,
+          formwork : formwork,
+          bitpaint : bitpaint,
+          expansionjoints : expansionjoints,
+          precast : precast,
+          polythene : polythene,
+          steel : steel,
+          individualqty : individualqty,
+          fqty : (fill+excavation+floor+BlockDPC+ceiling+wall+cornice+skirting+block+blockbitpaint+concrete+blinding+formwork+bitpaint+expansionjoints+precast+polythene+steel+individualqty)
        })
       })
     })
@@ -3475,7 +3659,7 @@ getAllVariationsofFloor(){
 }
 
 getAllVariationsofCat(){
-  this.myItemsList=[]
+  this.myvariationsList=[]
   this.afs.collection(`boq/boq/projects/${this.pid}/variations/`, ref => ref.where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
@@ -3532,7 +3716,7 @@ getAllVariationsofCat(){
 }
 
 getAllVariationsofSubcat(){
-  this.myItemsList=[]
+  this.myvariationsList=[]
   this.afs.collection(`boq/boq/projects/${this.pid}/variations/`, ref => ref.where("areasubcatID", "==", this.mySubcatID).where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
@@ -3589,7 +3773,7 @@ getAllVariationsofSubcat(){
 }
 
 getAllVariationsofSubsubcat(){
-  this.myItemsList=[]
+  this.myvariationsList=[]
   this.afs.collection(`boq/boq/projects/${this.pid}/boqitems/`, ref => ref.where("areasubsubcatID", "==", this.mySubsubcatID).where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
@@ -3646,7 +3830,7 @@ getAllVariationsofSubsubcat(){
 }
 
 getAllVariations(){
-  this.myItemsList=[]
+  this.myvariationsList=[]
   this.afs.collection(`boq/boq/projects/${this.pid}/variations/`).get().subscribe(va =>{
     va.docs.forEach(doc =>{
       this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
@@ -3850,58 +4034,156 @@ getAllOpenings(){
     })
 }
 
-calculateFinalQuantity(L,W,H,EXTRA_FILL,N,FILL_PERCENTAGE,
-  EXTRA_EXC,E_PERCENTAGE,R,RO,pww1,psw1,pww2,psw2,pwl1,psl1,
-  pwl2,psl2,Sum_of_Areafloor_p,EXTRA_FLOOR_AREA,F_Percentage,
-  L1,L2,L3,L4,L5,L6,L7,L8,EXTRA_BLOCK_DPC,DPC_PERCENTAGE,SumofAreaCEILING_P,EXTRAceilingAREA,CPercentage,
-  PWLA,PWLB,PWLC,PWLD,PWLE,PWLF,PWLG,PWLH,SumofAreawallp,EXTRAWALLAREA,SUMOFOPENAREA,
-  Wpercentage,PCLA,PCLB,PCLC,PCLD,PCLE,PCLF,PCLG,PCLH,SumofLengthcornicep,EXTRACORNICELENGTH,
-  CORpercentage,PSLA,PSLB,PSLC,PSLD,PSLE,PSLF,PSLG,PSLH,SumofLengthskirtingp,EXTRASKIRTINGLENGTH,
-  sumofOpenwidthtotal,Spercentage,EXTRABLOCKAREA,BPERCENTAGE,EXTRABIT,BBITPERCENTAGE,
-  EXTRACONC,CONCPERCENTAGE,EXTRACONCbO,EXTRACONCb,CONCbPERCENTAGE,BSP,TSP,SSP3,SSP4,SSP2,
-  EXTRASHUTT,w,SSP1,FORMPERCENTAGE,TBP,BBP,SBP4,SBP3,SBP2,SBP1,
-  BITPERCENTAGE,BEP,TEP,SEP3,SEP4,SEP2,EXTRAEXP,SEP1,EXPPERCENTAGE,
-  precastPercentage,EXTRAPRECAST,TpP,BpP,SpP4,SpP3,SpP1,EXTRAPOLYTH,
-  SpP2,polyPERCENTAGE,Y8R,Y10R,Y12R,Y16R,Y20R,Y25R,Y32R,EXTRASTEEL,
-  steelpercentage,QTY,ifactor){
-   return ((((L*W*H)+ EXTRA_FILL)*N*FILL_PERCENTAGE/100)+
-  (((L*W*H)+ EXTRA_EXC)*N*E_PERCENTAGE/100)+
-  
-  (((((W*L+(R*R*RO*(22/7)/100)+(pww1*psw1)+(pww2*psw2)+(pwl1*psl1)+(pwl2*psl2))-(Sum_of_Areafloor_p/100)+EXTRA_FLOOR_AREA)*F_Percentage)*N)/100) +
-  (((L1+L2+L3+L4+L5+L6+L7+L8+EXTRA_BLOCK_DPC)*N*DPC_PERCENTAGE)/100)+
-  
-  ((((W*L+(R*R*RO*(22/7))/100+pww1*psw1+pww2*psw2+pwl1*psl1+pwl2*psl2)-(SumofAreaCEILING_P/100)+EXTRAceilingAREA)*CPercentage)*N/100)+
-  
-  (((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H)/100
-  )+((SumofAreawallp/100))+EXTRAWALLAREA-SUMOFOPENAREA)*Wpercentage*N/100)+
-  
-  (((((L1*PCLA+L2*PCLB+L3*PCLC+L4*PCLD+L5*PCLE+L6*PCLF+L7*PCLG+L8*PCLH)/100)+(SumofLengthcornicep/100)+EXTRACORNICELENGTH)*CORpercentage*N)/100)+
-  
-  (((((L1*PSLA+L2*PSLB+L3*PSLC+L4*PSLD+L5*PSLE+L6*PSLF+L7*PSLG+L8*PSLH)/100)+((SumofLengthskirtingp/100))+EXTRASKIRTINGLENGTH-sumofOpenwidthtotal)*Spercentage*N)/100)+
-  
-  ((((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H)/100)+
-  EXTRABLOCKAREA-SUMOFOPENAREA)*N*BPERCENTAGE)/100)+
-  
-  ((((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD)+ EXTRABIT-SUMOFOPENAREA)*N*BBITPERCENTAGE/(0.5)))/100) +
-  ((((L*W*H)+(EXTRACONC)*N*CONCPERCENTAGE)/100)+
-  
-  ((((L+2*EXTRACONCbO)*(W+2*EXTRACONCbO)+EXTRACONCb)*N*CONCbPERCENTAGE)/100)+
-  
-  (((W*L*(BSP/100)+W*L*(TSP/100)+H*L*(SSP3/100)+H*L*(SSP4/100)+H*W*(SSP2/100)+ w*H*(SSP1/100)+ EXTRASHUTT)*N*FORMPERCENTAGE)/100)+
-  
-  
-  (((W*L*(TBP/100)+W*L*(BBP/100)+H*L*(SBP4/100)+H*L*(SBP3/100)+H*W*(SBP2/100)+ w*H*(SBP1/100)+ EXTRABIT)*N*BITPERCENTAGE)/100)+
-  
-  (((W*L*(BEP/100)+W*L*(TEP/100)+H*L*(SEP3/100)+H*L*(SEP4/100)+H*W*(SEP2/100)+ w*H*(SEP1/100)+ (EXTRAEXP))*N*EXPPERCENTAGE)/100)+  
-  
-  ((((W*L)+ EXTRAPRECAST)*precastPercentage)*N/100)+
-  
-  (((W*L*(TpP/100)+W*L*(BpP/100)+H*L*(SpP4/100)+H*L*(SpP3/100)+H*W*(SpP1/100)+ +w*H*(SpP2/100)+ EXTRAPOLYTH)*N*polyPERCENTAGE)/100 )+
-  (((Y8R/2520)+(Y10R/1596)+(Y12R/1104)+(Y16R/624)+(Y20R/396)+(Y25R/252)+(Y32R/156)+(EXTRASTEEL))*(steelpercentage/100)) +
-  
-  (QTY*N*ifactor)/100)))
-  
+getAllprojectionsofBuilding(){
+  this.myprojectionsList=[]
+  this.afs.collection(`boq/boq/projects/${this.pid}/projections/`, ref => ref.where("buildID", "==", this.myBuildingID)).get().subscribe(va =>{
+    va.docs.forEach(doc =>{
+      this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
+        this.myprojectionsList.push({
+          id: doc.ref.id,
+          buildID :  doc.data().buildID,
+          floorID: doc.data().floorID,
+          areacatID : doc.data().areacatID,
+          areasubcatID : doc.data().areasubcatID,
+          areasubsubcatID : doc.data().areasubsubcatID,
+          projectionID : doc.data().projectionID,
+          areaID : doc.data().areaID,
+          areaname : areavalue.data().name,
+          code : areavalue.data().code,
+          projection : doc.data().projection,
+          projectionno : doc.data().projectionno,
+          projectionper : doc.data().projectionper
+       })
+      })
+    })
+    })
 }
+
+getAllprojectionsofFloor(){
+  this.myprojectionsList=[]
+  this.afs.collection(`boq/boq/projects/${this.pid}/projections/`, ref => ref.where("floorID", "==", this.myFloorID).where("buildID","==",this.myBuildingID)).get().subscribe(va =>{
+    va.docs.forEach(doc =>{
+      this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
+        this.myprojectionsList.push({
+          id: doc.ref.id,
+          buildID :  doc.data().buildID,
+          floorID: doc.data().floorID,
+          areacatID : doc.data().areacatID,
+          areasubcatID : doc.data().areasubcatID,
+          areasubsubcatID : doc.data().areasubsubcatID,
+          projectionID : doc.data().projectionID,
+          areaID : doc.data().areaID,
+          areaname : areavalue.data().name,
+          code : areavalue.data().code,
+          projection : doc.data().projection,
+          projectionno : doc.data().projectionno,
+          projectionper : doc.data().projectionper
+       })
+      })
+    })
+    })
+}
+
+getAllprojectionofCat(){
+  this.myprojectionsList=[]
+  this.afs.collection(`boq/boq/projects/${this.pid}/projections/`, ref => ref.where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
+    va.docs.forEach(doc =>{
+      this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
+        this.myprojectionsList.push({
+          id: doc.ref.id,
+          buildID :  doc.data().buildID,
+          floorID: doc.data().floorID,
+          areacatID : doc.data().areacatID,
+          areasubcatID : doc.data().areasubcatID,
+          areasubsubcatID : doc.data().areasubsubcatID,
+          projectionID : doc.data().projectionID,
+          areaID : doc.data().areaID,
+          areaname : areavalue.data().name,
+          code : areavalue.data().code,
+          projection : doc.data().projection,
+          projectionno : doc.data().projectionno,
+          projectionper : doc.data().projectionper
+       })
+      })
+    })
+    })
+}
+
+getAllprojectionofSubcat(){
+  this.myprojectionsList=[]
+  this.afs.collection(`boq/boq/projects/${this.pid}/projections/`, ref => ref.where("areasubcatID", "==", this.mySubcatID).where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
+    va.docs.forEach(doc =>{
+      this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
+        this.myprojectionsList.push({
+          id: doc.ref.id,
+          buildID :  doc.data().buildID,
+          floorID: doc.data().floorID,
+          areacatID : doc.data().areacatID,
+          areasubcatID : doc.data().areasubcatID,
+          areasubsubcatID : doc.data().areasubsubcatID,
+          projectionID : doc.data().projectionID,
+          areaID : doc.data().areaID,
+          areaname : areavalue.data().name,
+          code : areavalue.data().code,
+          projection : doc.data().projection,
+          projectionno : doc.data().projectionno,
+          projectionper : doc.data().projectionper
+       })
+      })
+    })
+    })
+}
+
+getAllprojectionofSubsubcat(){
+  this.myprojectionsList=[]
+  this.afs.collection(`boq/boq/projects/${this.pid}/projections/`, ref => ref.where("areasubsubcatID", "==", this.mySubsubcatID).where("areacatID", "==", this.myCatID).where("buildID","==",this.myBuildingID).where("floorID", "==", this.myFloorID)).get().subscribe(va =>{
+    va.docs.forEach(doc =>{
+      this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
+        this.myprojectionsList.push({
+          id: doc.ref.id,
+          buildID :  doc.data().buildID,
+          floorID: doc.data().floorID,
+          areacatID : doc.data().areacatID,
+          areasubcatID : doc.data().areasubcatID,
+          areasubsubcatID : doc.data().areasubsubcatID,
+          projectionID : doc.data().projectionID,
+          areaID : doc.data().areaID,
+          areaname : areavalue.data().name,
+          code : areavalue.data().code,
+          projection : doc.data().projection,
+          projectionno : doc.data().projectionno,
+       })
+      })
+    })
+    })
+}
+
+getAllprojections(){
+  this.myprojectionsList=[]
+  this.afs.collection(`boq/boq/projects/${this.pid}/projections/`).get().subscribe(va =>{
+    va.docs.forEach(doc =>{
+      this.afs.doc(`boq/boq/projects/${this.pid}/buildings/${doc.data().buildID}/floors/${doc.data().floorID}/cat/${doc.data().areacatID}/subcat/${doc.data().areasubcatID}/subsubcat/${doc.data().areasubsubcatID}/areas/${doc.data().areaID}`).get().subscribe(areavalue =>{
+        this.myprojectionsList.push({
+          id: doc.ref.id,
+          buildID :  doc.data().buildID,
+          floorID: doc.data().floorID,
+          areacatID : doc.data().areacatID,
+          areasubcatID : doc.data().areasubcatID,
+          areasubsubcatID : doc.data().areasubsubcatID,
+          projectionID : doc.data().projectionID,
+          areaID : doc.data().areaID,
+          areaname : areavalue.data().name,
+          code : areavalue.data().code,
+          projection : doc.data().projection,
+          projectionper : doc.data().projectionper
+       })
+      })
+    })
+    })
+}
+
+
+
 
 
 getAllAreas(){
@@ -5178,6 +5460,16 @@ if(this.myAreaID.includes(item)){
 }
 
 }
+
+addtoitemsList(item){
+  if(this.boqitem.includes(item)){
+    const index = this.myAreaID.findIndex(x => x.id == item.id)
+    this.boqitem.splice(index, 1)
+  }else{
+    this.boqitem.push(item)
+  }
+  
+  }
 selectallAreas(){
 if(this.allareaflag){
   console.log("IF")
@@ -5255,6 +5547,33 @@ async editItem(item){
 
     })
 }
+async gototable(item){
+  const modal = await this.modalController.create({
+    component: FinalqtytablePage,
+    componentProps: {
+       item: item,
+       pid : this.pid
+       }
+    });
+  
+    await modal.present();
+}
+
+async editVariation(item){
+  const modal = await this.modalController.create({
+    component: EditvaritiondetailsPage,
+    componentProps: {
+       item: item,
+       pid : this.pid
+       }
+    });
+  
+    await modal.present();
+    await modal.onDidDismiss().then(()=>{
+     this.refreshVariation()
+
+    })
+}
 
 async delItem(item){
 
@@ -5317,6 +5636,50 @@ this.afs.doc(`boq/boq/projects/${this.pid}/boqitems/${item.id}`).delete()
   await alert.present();
 
 }
+async delVariation(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete is Variation</strong>?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+        
+  const loading = await this.loadingController.create({
+    message: 'Deleting...',
+    duration: 20000,
+    spinner: 'bubbles'
+  });
+  await loading.present();
+this.afs.doc(`boq/boq/projects/${this.pid}/variations/${item.id}`).delete()
+  .then(async ()=>{
+       this.refreshVariation()
+    loading.dismiss();
+      const alert = await this.alertController.create({
+        header: 'Success',
+        message: 'Deleted Successfully!',
+        buttons: ['OK']
+      });
+    
+      await alert.present();
+
+  })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
 
 async delOpen(item){
 
@@ -5360,6 +5723,67 @@ this.afs.doc(`boq/boq/projects/${this.pid}/openings/${item.id}`).delete()
       this.getAllOpeningofSubsubcat()
     }else if(!this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
       this.getAllOpenings()
+    }
+    loading.dismiss();
+      const alert = await this.alertController.create({
+        header: 'Success',
+        message: 'Deleted Successfully!',
+        buttons: ['OK']
+      });
+    
+      await alert.present();
+
+  })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+async delprojection(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete is Item</strong>?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+        
+  const loading = await this.loadingController.create({
+    message: 'Deleting...',
+    duration: 20000,
+    spinner: 'bubbles'
+  });
+  await loading.present();
+this.afs.doc(`boq/boq/projects/${this.pid}/projections/${item.id}`).delete()
+  .then(async ()=>{
+    if(this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+      this.getAllprojectionsofBuilding()
+    }
+    else if(this.myBuildingID && this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+      this.getAllprojectionsofFloor()
+    }
+    else if(this.myBuildingID && this.myFloorID && this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+      this.getAllprojectionofCat()
+    }
+    else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && !this.mySubsubcatID){
+      this.getAllprojectionofSubcat()
+    }
+    else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && this.mySubsubcatID){
+      this.getAllprojectionofSubsubcat()
+    }else if(!this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
+      this.getAllprojections()
     }
     loading.dismiss();
       const alert = await this.alertController.create({
@@ -5460,6 +5884,17 @@ refresharea(){
   }
 }
 
+checkOMM(){
+  if(this.varexisting == "true"){
+    this.varexisting1 = "false"
+  }
+}
+checkOMM1(){
+  if(this.varexisting1 == "true"){
+    this.varexisting = "false"
+  }
+}
+
 refreshVariation(){
   if(this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
     this.getAllVariationsofBuilding()
@@ -5474,9 +5909,108 @@ refreshVariation(){
     this.getAllVariationsofSubcat()
   }
   else if(this.myBuildingID && this.myFloorID && this.myCatID && this.mySubcatID && this.mySubsubcatID){
+    this.getAllVariationsofSubsubcat()
+  }else if(!this.myBuildingID && !this.myFloorID && !this.myCatID && !this.mySubcatID && !this.mySubsubcatID){
     this.getAllVariations()
   }
 }
 
 
+
+calculateFinalQuantity(L,W,H,EXTRA_FILL,N,FILL_PERCENTAGE,
+  EXTRA_EXC,E_PERCENTAGE,R,RO,pww1,psw1,pww2,psw2,pwl1,psl1,
+  pwl2,psl2,Sum_of_Areafloor_p,EXTRA_FLOOR_AREA,F_Percentage,
+  L1,L2,L3,L4,L5,L6,L7,L8,EXTRA_BLOCK_DPC,DPC_PERCENTAGE,SumofAreaCEILING_P,EXTRAceilingAREA,CPercentage,
+  PWLA,PWLB,PWLC,PWLD,PWLE,PWLF,PWLG,PWLH,SumofAreawallp,EXTRAWALLAREA,SUMOFOPENAREA,
+  Wpercentage,PCLA,PCLB,PCLC,PCLD,PCLE,PCLF,PCLG,PCLH,SumofLengthcornicep,EXTRACORNICELENGTH,
+  CORpercentage,PSLA,PSLB,PSLC,PSLD,PSLE,PSLF,PSLG,PSLH,SumofLengthskirtingp,EXTRASKIRTINGLENGTH,
+  sumofOpenwidthtotal,Spercentage,EXTRABLOCKAREA,BPERCENTAGE,EXTRABIT,BBITPERCENTAGE,
+  EXTRACONC,CONCPERCENTAGE,EXTRACONCbO,EXTRACONCb,CONCbPERCENTAGE,BSP,TSP,SSP3,SSP4,SSP2,
+  EXTRASHUTT,w,SSP1,FORMPERCENTAGE,TBP,BBP,SBP4,SBP3,SBP2,SBP1,
+  BITPERCENTAGE,BEP,TEP,SEP3,SEP4,SEP2,EXTRAEXP,SEP1,EXPPERCENTAGE,
+  precastPercentage,EXTRAPRECAST,TpP,BpP,SpP4,SpP3,SpP1,EXTRAPOLYTH,
+  SpP2,polyPERCENTAGE,Y8R,Y10R,Y12R,Y16R,Y20R,Y25R,Y32R,EXTRASTEEL,
+  steelpercentage,QTY,ifactor){
+   return ((((L*W*H)+ EXTRA_FILL)*N*FILL_PERCENTAGE/100)+
+   (((L*W*H)+ EXTRA_EXC)*N*E_PERCENTAGE/100)+
+   (((W*L+(R*R*RO*(22/7)/100)+(pww1*psw1)+(pww2*psw2)+(pwl1*psl1)+(pwl2*psl2))-(Sum_of_Areafloor_p/100)+EXTRA_FLOOR_AREA)*F_Percentage*N/100)+
+   (((L1+L2+L3+L4+L5+L6+L7+L8+EXTRA_BLOCK_DPC)*N*DPC_PERCENTAGE)/100)+
+   ((((W*L+(R*R*RO*(22/7))/100+pww1*psw1+pww2*psw2+pwl1*psl1+pwl2*psl2)-(SumofAreaCEILING_P/100)+EXTRAceilingAREA)*CPercentage)*N/100)+
+   ((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H/100)+(SumofAreawallp/100)+EXTRAWALLAREA-SUMOFOPENAREA)*Wpercentage*N/100)+
+   ((((L1*PCLA+L2*PCLB+L3*PCLC+L4*PCLD+L5*PCLE+L6*PCLF+L7*PCLG+L8*PCLH)/100)+(SumofLengthcornicep/100)+EXTRACORNICELENGTH)*CORpercentage*N/100)+
+   ((((L1*PSLA+L2*PSLB+L3*PSLC+L4*PSLD+L5*PSLE+L6*PSLF+L7*PSLG+L8*PSLH)/100)+(SumofLengthskirtingp/100)+EXTRASKIRTINGLENGTH-sumofOpenwidthtotal)*Spercentage*N/100)+
+   ((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H/100)+EXTRABLOCKAREA-SUMOFOPENAREA)*N*BPERCENTAGE/100)+
+   (((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD)+ EXTRABIT-SUMOFOPENAREA)*N*BBITPERCENTAGE/(0.5)))/100)+
+   ((L*W*H)+(EXTRACONC)*N*CONCPERCENTAGE/100)+
+   (((L+2*EXTRACONCbO)*(W+2*EXTRACONCbO)+EXTRACONCb)*N*CONCbPERCENTAGE/100)+
+   ((W*L*(BSP/100)+W*L*(TSP/100)+H*L*(SSP3/100)+H*L*(SSP4/100)+H*W*(SSP2/100)+ w*H*(SSP1/100)+ EXTRASHUTT)*N*FORMPERCENTAGE/100)+
+   ((W*L*(TBP/100)+W*L*(BBP/100)+H*L*(SBP4/100)+H*L*(SBP3/100)+H*W*(SBP2/100)+ w*H*(SBP1/100)+ EXTRABIT)*N*BITPERCENTAGE/100)+
+   ((W*L*(BEP/100)+W*L*(TEP/100)+H*L*(SEP3/100)+H*L*(SEP4/100)+H*W*(SEP2/100)+ w*H*(SEP1/100)+ EXTRAEXP)*N*EXPPERCENTAGE/100)+
+   (((W*L)+ EXTRAPRECAST)*precastPercentage*N/100)+
+   ((W*L*(TpP/100)+W*L*(BpP/100)+H*L*(SpP4/100)+H*L*(SpP3/100)+H*W*(SpP1/100)+ w*H*(SpP2/100)+ EXTRAPOLYTH)*N*polyPERCENTAGE/100 )+
+   ((Y8R/2520)+(Y10R/1596)+(Y12R/1104)+(Y16R/624)+(Y20R/396)+(Y25R/252)+(Y32R/156)+(EXTRASTEEL))*(steelpercentage/100)+
+   (QTY*N*ifactor/100))
+  
 }
+
+calculateFill(L,W,H,EXTRA_FILL,N,FILL_PERCENTAGE){
+   return (((L*W*H)+ EXTRA_FILL)*N*FILL_PERCENTAGE/100)
+  }
+calculateExcavation(L,W,H,N,EXTRA_EXC,E_PERCENTAGE){
+     return (((L*W*H)+ EXTRA_EXC)*N*E_PERCENTAGE/100)
+  }
+  calculateFloor(L,W,N,R,RO,pww1,psw1,pww2,psw2,pwl1,psl1,pwl2,psl2,Sum_of_Areafloor_p,EXTRA_FLOOR_AREA,F_Percentage){
+     return (((W*L+(R*R*RO*(22/7)/100)+(pww1*psw1)+(pww2*psw2)+(pwl1*psl1)+(pwl2*psl2))-(Sum_of_Areafloor_p/100)+EXTRA_FLOOR_AREA)*F_Percentage*N/100)
+    }
+    calculateBlockDPC(N,L1,L2,L3,L4,L5,L6,L7,L8,EXTRA_BLOCK_DPC,DPC_PERCENTAGE){
+       return (((L1+L2+L3+L4+L5+L6+L7+L8+EXTRA_BLOCK_DPC)*N*DPC_PERCENTAGE)/100)
+      }
+      calculateCeiling(L,W,N,R,RO,pww1,psw1,pww2,psw2,pwl1,psl1,pwl2,psl2,SumofAreaCEILING_P,EXTRAceilingAREA,CPercentage){
+         return ((((W*L+(R*R*RO*(22/7))/100+pww1*psw1+pww2*psw2+pwl1*psl1+pwl2*psl2)-(SumofAreaCEILING_P/100)+EXTRAceilingAREA)*CPercentage)*N/100)
+        }
+        calculateWall(H,N,L1,L2,L3,L4,L5,L6,L7,L8,PWLA,PWLB,PWLC,PWLD,PWLE,PWLF,PWLG,PWLH,SumofAreawallp,EXTRAWALLAREA,SUMOFOPENAREA,Wpercentage){
+           return ((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H/100)+(SumofAreawallp/100)+EXTRAWALLAREA-SUMOFOPENAREA)*Wpercentage*N/100)
+          }
+          calculateCornice(N,L1,L2,L3,L4,L5,L6,L7,L8,PCLA,PCLB,PCLC,PCLD,PCLE,PCLF,PCLG,PCLH,SumofLengthcornicep,EXTRACORNICELENGTH,CORpercentage){
+             return ((((L1*PCLA+L2*PCLB+L3*PCLC+L4*PCLD+L5*PCLE+L6*PCLF+L7*PCLG+L8*PCLH)/100)+(SumofLengthcornicep/100)+EXTRACORNICELENGTH)*CORpercentage*N/100)
+            }
+            calculateSkirting(N,L1,L2,L3,L4,L5,L6,L7,L8,PSLA,PSLB,PSLC,PSLD,PSLE,PSLF,PSLG,PSLH,SumofLengthskirtingp,EXTRASKIRTINGLENGTH,sumofOpenwidthtotal,Spercentage){
+               return ((((L1*PSLA+L2*PSLB+L3*PSLC+L4*PSLD+L5*PSLE+L6*PSLF+L7*PSLG+L8*PSLH)/100)+(SumofLengthskirtingp/100)+EXTRASKIRTINGLENGTH-sumofOpenwidthtotal)*Spercentage*N/100)
+              }
+              calculateBlock(H,N,L1,L2,L3,L4,L5,L6,L7,L8,PWLA,PWLB,PWLC,PWLD,PWLE,PWLF,PWLG,PWLH,SUMOFOPENAREA,EXTRABLOCKAREA,BPERCENTAGE){
+                 return ((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H/100)+EXTRABLOCKAREA-SUMOFOPENAREA)*N*BPERCENTAGE/100)
+                }
+                calculateBlockbitpaint(N,L1,L2,L3,L4,PWLA,PWLB,PWLC,PWLD,SUMOFOPENAREA,EXTRABIT,BBITPERCENTAGE){
+                   return (((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD)+ EXTRABIT-SUMOFOPENAREA)*N*BBITPERCENTAGE/(0.5)))/100)
+                  }
+                  calculateConcrete(L,W,H,N,EXTRACONC,CONCPERCENTAGE){
+                     return (((L*W*H)+EXTRACONC)*N*CONCPERCENTAGE/100)
+                    }
+                    calculateBlinding(L,W,N,EXTRACONCbO,EXTRACONCb,CONCbPERCENTAGE){
+                       return (((L+2*EXTRACONCbO)*(W+2*EXTRACONCbO)+EXTRACONCb)*N*CONCbPERCENTAGE/100)
+                      }
+                      calculateFormwork(L,W,H,N,BSP,TSP,SSP3,SSP4,SSP2,EXTRASHUTT,w,SSP1,FORMPERCENTAGE){
+                         return ((W*L*(BSP/100)+W*L*(TSP/100)+H*L*(SSP3/100)+H*L*(SSP4/100)+H*W*(SSP2/100)+ w*H*(SSP1/100)+ EXTRASHUTT)*N*FORMPERCENTAGE/100)
+                        }
+                        calculateBitpaint(L,W,H,N,EXTRABIT,w,TBP,BBP,SBP4,SBP3,SBP2,SBP1,BITPERCENTAGE){
+                           return ((W*L*(TBP/100)+W*L*(BBP/100)+H*L*(SBP4/100)+H*L*(SBP3/100)+H*W*(SBP2/100)+ w*H*(SBP1/100)+ EXTRABIT)*N*BITPERCENTAGE/100)
+                          }
+                          calculateExpansionjoints(L,W,H,N,w,BEP,TEP,SEP3,SEP4,SEP2,EXTRAEXP,SEP1,EXPPERCENTAGE){
+                             return ((W*L*(BEP/100)+W*L*(TEP/100)+H*L*(SEP3/100)+H*L*(SEP4/100)+H*W*(SEP2/100)+ w*H*(SEP1/100)+ EXTRAEXP)*N*EXPPERCENTAGE/100)
+                            }
+                            calculatePrecast(L,W,N,precastPercentage,EXTRAPRECAST){
+                               return (((W*L)+ EXTRAPRECAST)*precastPercentage*N/100)
+                              }
+                              calculatePolythene(L,W,H,N,w,TpP,BpP,SpP4,SpP3,SpP1,EXTRAPOLYTH,SpP2,polyPERCENTAGE){
+                                 return ((W*L*(TpP/100)+W*L*(BpP/100)+H*L*(SpP4/100)+H*L*(SpP3/100)+H*W*(SpP1/100)+ w*H*(SpP2/100)+ EXTRAPOLYTH)*N*polyPERCENTAGE/100 )
+                                }
+                                calculateSteel(Y8R,Y10R,Y12R,Y16R,Y20R,Y25R,Y32R,EXTRASTEEL,steelpercentage){
+                                   return ((Y8R/2520)+(Y10R/1596)+(Y12R/1104)+(Y16R/624)+(Y20R/396)+(Y25R/252)+(Y32R/156)+(EXTRASTEEL))*(steelpercentage/100)
+                                  }
+                                  calculateIndividualqty(N,QTY,ifactor){
+                                     return (QTY*N*ifactor/100)
+                                    }
+                                
+
+}
+

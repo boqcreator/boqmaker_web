@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { LabourlibPage } from '../labourlib/labourlib.page';
 
 @Component({
   selector: 'app-addlabour',
@@ -40,10 +41,12 @@ export class AddlabourPage implements OnInit {
   supplierID;
 
   supplier = ""
+  supplierAdd=[];
   constructor(private afs : AngularFirestore,
     public loadingController: LoadingController,
     private storage : Storage,
     private modal : ModalController,
+    private modalController: ModalController,
     public alertController: AlertController) { 
       this.storage.get('labourcat').then((value)=>{
         this.CatID = value
@@ -139,7 +142,8 @@ export class AddlabourPage implements OnInit {
               unit : this.unit,
               price : this.price,
               LEXISTING : this.LEXISTING,
-              supplier : this.supplier
+              supplier : this.supplier,
+              additionalsupplier : this.supplierAdd
                   }).then(()=>{
                     this.loadingController.dismiss();
                      this.presentAlert();
@@ -238,4 +242,21 @@ export class AddlabourPage implements OnInit {
   close(){
     this.modal.dismiss();
   }
+
+  async itemlibrary(){
+    const modal = await this.modalController.create({
+    component: LabourlibPage,
+    });
+  
+    await modal.present();
+    
+    const data = await modal.onDidDismiss();
+    if(data){
+      this.sname = data.data.name
+      this.sdes = data.data.des
+      this.unit = data.data.unit
+      this.price = data.data.price
+    }
+ 
+}
 }

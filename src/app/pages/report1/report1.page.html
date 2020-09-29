@@ -194,6 +194,34 @@
     </ion-button>
   </ion-grid>
 
+<div style="text-align: center;">
+  <ion-button class="seg" size="small" (click)="materialModal()">
+    <ion-label>
+    Materials
+    </ion-label>
+  </ion-button>
+  <ion-button class="seg" size="small">
+    <ion-label>
+    Labours
+    </ion-label>
+  </ion-button>
+  <ion-button class="seg" size="small">
+    <ion-label>
+    Equipments
+    </ion-label>
+  </ion-button>
+  <ion-button class="seg" size="small">
+    <ion-label>
+    Subcontractor
+    </ion-label>
+  </ion-button>
+  <ion-button class="seg" size="small">
+    <ion-label>
+    Others
+    </ion-label>
+  </ion-button>
+</div>
+
   <div #keywordsInput id=keywordsInput >
   <div class="limiter">
 		<div class="container-table100">
@@ -209,7 +237,8 @@
 									<th class="cell100 column2">Quantity</th>
 									<th class="cell100 column3">Unit</th>
 									<th [style.display]="showhide"  class="cell100 column4">Rate</th>
-									<th [style.display]="showhide"  class="cell100 column5">Total</th>
+                  <th [style.display]="showhide"  class="cell100 column5">Total</th>
+                  <th  class="cell100 column6">Details</th>
                 </tr>
               </thead>
 						</table>
@@ -220,10 +249,15 @@
 							<tbody>
 							<tr *ngFor="let item of ItemsList"  class="row100 body">
 									<td class="cell100 column1">{{item.name}}</td>
-									<td class="cell100 column2">{{item.qty}}</td>
+									<td class="cell100 column2">{{item.qty | number:'0.0-3'}}</td>
 									<td class="cell100 column3">{{item.unit}}</td>
 									<td [style.display]="showhide" class="cell100 column4">{{item.rate | number:'0.0-3'}}</td>
-									<td [style.display]="showhide" class="cell100 column5">{{item.total | number:'0.0-3'}}</td>
+                  <td [style.display]="showhide" class="cell100 column5">{{item.total | number:'0.0-3'}}</td>
+                  <td  class="cell100 column6" >
+                    <ion-button (click)="openMyModal(item)"  fill="clear" >
+                      <ion-icon slot="start" src="assets/icon/report.svg"></ion-icon>
+                    </ion-button>
+                  </td>
                 </tr>
                 <tr style="text-align: right;" >
                   <td [style.display]="showhide"  colspan="1000" style="text-align: right; padding-right:80px;" >

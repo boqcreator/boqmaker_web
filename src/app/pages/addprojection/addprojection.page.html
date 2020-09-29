@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Add Projection</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment" >
+    <ion-segment-button value="type">
+      <ion-label>Type</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="projection">
+      <ion-label>projection</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+    <div style="margin-top : 10px;" *ngSwitchCase="'type'">
+      <ion-item>
+        <ion-label position="floating">Type code</ion-label>
+        <ion-input [(ngModel)]="code" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Type name</ion-label>
+        <ion-input [(ngModel)]="typename" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Notes:</ion-label>
+        <ion-textarea [(ngModel)]="typenote" placeholder="Enter more information here..."></ion-textarea>
+      </ion-item>
+      <ion-button (click)="addtype()" expand="block" >
+       Add
+      </ion-button>
+    </div>
+
+    <div style="margin-top : 10px;" *ngSwitchCase="'projection'">
+      <ion-item>
+        <ion-label>Type</ion-label>
+        <ion-select [(ngModel)]="selectedtype" placeholder="Select type">
+          <ion-select-option *ngFor="let type of typeList | async" [value]="type">{{type.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input [(ngModel)]="projectionname" type="text"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Code</ion-label>
+            <ion-input [(ngModel)]="projectioncode" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label>Icon</ion-label>
+            <ion-input (change)="onFileSelected1($event)" type="file">
+            </ion-input>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">1st Width</ion-label>
+            <ion-input [(ngModel)]="width1" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">2nd Width</ion-label>
+            <ion-input [(ngModel)]="width2" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Length 1</ion-label>
+            <ion-input [(ngModel)]="length1" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Length 2</ion-label>
+            <ion-input [(ngModel)]="length2" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item>
+        <ion-label position="floating">Height</ion-label>
+        <ion-input [(ngModel)]="height" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Notes:</ion-label>
+        <ion-textarea [(ngModel)]="projectionnote" placeholder="Enter more information here..."></ion-textarea>
+      </ion-item>
+      <ion-button (click)="addprojection()" expand="block" >
+       Add
+      </ion-button>
+    </div>
+    </div>
+
+
+
+</ion-content>

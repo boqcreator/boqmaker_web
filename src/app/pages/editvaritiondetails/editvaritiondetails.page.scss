@@ -1,0 +1,31 @@
+ion-select{
+    white-space: normal !important;
+}
+ion-select-option{
+    white-space: normal !important;
+}
+ion-label , ion-input{
+font-size: small;
+}
+ion-item{
+    font-size: small;
+}
+ion-list{
+    padding: 0px;
+}
+ion-segment-button{
+    ion-label{
+        font-size: 10px;
+    }
+
+}
+
+ion-item{
+    font-size: 12px;
+    --min-height: 28px;
+    --padding-top: 0px;
+    --inner-padding-top: 0px;
+    --padding-bottom: 0px;
+    --inner-padding-bottom: 0px;
+  }
+  
