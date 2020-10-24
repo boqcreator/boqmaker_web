@@ -38,7 +38,21 @@
       </div>
     </nav><!-- #site-navigation -->
   </div><!-- .col-sm-9 -->
+<span style="float: right;margin-top: 8px;margin-right: 10px;">
+  <!-- <span title="Reset">
+    <ion-icon style="cursor: pointer;" (click)="reset()" size="large" slot="start" name="refresh-outline"></ion-icon>
+  </span>  -->
 
+  <span title="graphs">
+    <ion-icon *ngIf="Item.itemID" alt="Graphs" style="cursor: pointer;" (click)="getgraph()" size="large" slot="start" src="assets/icon/graph.svg"></ion-icon>
+  </span> 
+
+  <!-- <span title="Send an Email">
+    <ion-icon style="margin-right: 15px;cursor: pointer;" (click)="sendEmail($event)" size="large" slot="start" name="mail"></ion-icon>
+  </span> -->
+  
+      
+</span>
     <!-- <span title="Send an Email">
       <ion-icon style="margin-right: 15px;cursor: pointer;" (click)="sendEmail($event)" size="large" slot="start" name="mail"></ion-icon>
     </span> -->
@@ -48,386 +62,464 @@
 
 <ion-content>
 
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <ion-item class="leftsideitems">           
-        <ion-label>Projects</ion-label>
-        <ion-select (ionChange)="setProject()" [(ngModel)]="myProjectID" interface="popover" >
-          <ion-select-option *ngFor="let item of myProjectList" value="{{item.pid}}"  > {{ item.name }} </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col size="6">
-      <ion-item  class="leftsideitems">
-        <ion-label>Item Category</ion-label>
-        <ion-select  (ionChange)="getitemsubcat()" [(ngModel)]="IcatID"   placeholder="Select Category">
-          <ion-select-option *ngFor="let icitem of IcatList" [value]="icitem.id" > {{ icitem.name }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item  class="leftsideitems">
-        <ion-label>Item Subcategory</ion-label>
-        <ion-select  (ionChange)="getitemsubsubcat()" [(ngModel)]="IsubcatID"  placeholder="Select Subcategory">
-          <ion-select-option *ngFor="let isitem of IsubcatList" [value]="isitem.id"  > {{ isitem.name }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-col>
-    <ion-col size=6>
-      <ion-item class="leftsideitems">
-        <ion-label>Item Sub-subcategory</ion-label>
-        <ion-select  (ionChange)="getitem()" [(ngModel)]="IsubsubcatID"   placeholder="Select Sub-subcategory">
-          <ion-select-option *ngFor="let issitem of IsubsubcatList" [value]="issitem.id"  > {{ issitem.name }}</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item class="leftsideitems">
-        <ion-label>Items</ion-label>
-        <ion-select  [(ngModel)]="Item"  placeholder="Select Item">
-          <ion-select-option *ngFor="let item of ItemList" [value]="item"  > {{ item.name }} </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  <ion-segment [(ngModel)]="segment" >
+    <ion-segment-button value="boq">
+      <ion-label>BOQ Items</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="excel">
+      <ion-label>Excel Uploaded Items</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <div [ngSwitch]="segment">  
+    <div style="margin-top : 5px;" *ngSwitchCase="'excel'">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item class="leftsideitems">           
+              <ion-label>Projects</ion-label>
+              <ion-select (ionChange)="excelgetcat()" [(ngModel)]="myProjectID" interface="popover" >
+                <ion-select-option *ngFor="let item of myProjectList" value="{{item.pid}}"  > {{ item.name }} </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item  class="leftsideitems">
+              <ion-label>Item Category</ion-label>
+              <ion-select  (ionChange)="excelgetsubcat()" [(ngModel)]="EcatID"   placeholder="Select Category">
+                <ion-select-option *ngFor="let Ecitem of EcatList" [value]="Ecitem.name" > {{ Ecitem.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item  class="leftsideitems">
+              <ion-label>Item Subcategory</ion-label>
+              <ion-select  (ionChange)="excelgetsubsubcat()" [(ngModel)]="EsubcatID"  placeholder="Select Subcategory">
+                <ion-select-option *ngFor="let isitem of EsubcatList" [value]="isitem.name"  > {{ isitem.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size=6>
+            <ion-item class="leftsideitems">
+              <ion-label>Item Sub-subcategory</ion-label>
+              <ion-select  (ionChange)="excelgetitem()" [(ngModel)]="EsubsubcatID"   placeholder="Select Sub-subcategory">
+                <ion-select-option *ngFor="let issitem of EsubsubcatList" [value]="issitem.name"  > {{ issitem.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="leftsideitems">
+              <ion-label>Items</ion-label>
+              <ion-select  [(ngModel)]="EItem"  placeholder="Select Item">
+                <ion-select-option *ngFor="let item of EItemList" [value]="item"  > {{ item.des }} </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-<div #keywordsInput id=keywordsInput >
-<div class="limiter">
-  <div class="container-table100">
-    <div class="wrap-table100">
-      <div class="table100 ver1 m-b-10">
-        <div class="table100-head">
-          <table>
-            <thead>
-              <tr class="row100 head">
-                <th class="cell100 column1">Description</th>
-                <th class="cell100 column2">Quantity</th>
-                <th class="cell100 column3">Unit</th>
-                <th  class="cell100 column4">Rate</th>
-                <th  class="cell100 column5">Total</th>
-              </tr>
-            </thead>
-          </table>
+      <div>
+        <div class="limiter">
+          <div class="container-table100">
+            <div class="wrap-table100">
+              <div class="table100 ver1 m-b-10">
+                <div class="table100-head">
+                  <table>
+                    <thead>
+                      <tr class="row100 head">
+                        <th class="cell100 column1">Description</th>
+                        <th class="cell100 column2">Quantity</th>
+                        <th class="cell100 column3">Unit</th>
+                        <th  class="cell100 column4">Rate</th>
+                        <th  class="cell100 column5">Total</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+        
+                <div class="table100-body js-pscroll">
+                  <table id="excel-table" >
+                    <tbody>
+                      <tr style="text-align: center;" >
+                        <td  colspan="1000" style="text-align: center;" >
+                           <span style="color: maroon;"> Estimated </span> 
+                        </td>
+                      </tr>
+                    <tr  class="row100 body">
+                        <td class="cell100 column1">{{EItem.des}}</td>
+                        <td class="cell100 column2">{{EItem.qty | number:'0.0-3'}}</td>
+                        <td class="cell100 column3">{{EItem.unit}}</td>
+                        <td class="cell100 column4">{{EItem.rate | number:'0.0-3'}}</td>
+                        <td class="cell100 column5">{{EItem.amount | number:'0.0-3'}}</td>
+                      </tr>
+        
+                      <tr style="text-align: center;" >
+                        <td  colspan="1000" style="text-align: center;" >
+                           <span style="color: maroon;"> Actual </span> 
+                        </td>
+                      </tr>
+                    <tr  class="row100 body">
+                        <td class="cell100 column1">{{EItem.des}}</td>
+                        <td class="cell100 column2">
+                        <ion-input type="number" (ionChange)="ExcelcalculateActQty()" [(ngModel)]="EItem.aqty" ></ion-input>
+                        </td>
+                        <td class="cell100 column3">{{EItem.unit}}</td>
+                        <td class="cell100 column4">{{EItem.arate | number:'0.0-3'}}</td>
+                        <td class="cell100 column5">{{EItem.aamount | number:'0.0-3'}}</td>
+                      </tr>
+                      <tr style="text-align: right;" >
+                        <td colspan="1000" style="text-align: right; padding-right:80px;" >
+                          Total Profit : <span style="color: maroon;"> {{ ((EItem.amount-EItem.aamount)/EItem.amount)*100 | number:'0.0-3'}} %</span> 
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <ion-button expand="full" fill="clear" (click)="saveExcelItem()"  >
+                    Save
+                  </ion-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         </div>
 
-        <div class="table100-body js-pscroll">
-          <table id="excel-table" >
-            <tbody>
-              <tr style="text-align: center;" >
-                <td  colspan="1000" style="text-align: center;" >
-                   <span style="color: maroon;"> Estimated </span> 
-                </td>
-              </tr>
-            <tr  class="row100 body">
-                <td class="cell100 column1">{{Item.name}}</td>
-                <td class="cell100 column2">{{Item.qty | number:'0.0-3'}}</td>
-                <td class="cell100 column3">{{Item.unit}}</td>
-                <td class="cell100 column4">{{Item.rate | number:'0.0-3'}}</td>
-                <td class="cell100 column5">{{Item.total | number:'0.0-3'}}</td>
-              </tr>
+        <ion-segment [(ngModel)]="segmentexcel" >
+          <ion-segment-button value="m">
+            <ion-label>Material</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="l">
+            <ion-label>Labour</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="e">
+            <ion-label>Equipment</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="s">
+            <ion-label>Subcontractor</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="o">
+            <ion-label>other</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        
+        <div [ngSwitch]="segmentexcel">
+          <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'m'">
+            <ion-row>
+              <ion-col size="4">
+         <ion-item>
+           <ion-label position="floating">Est Material</ion-label>
+           <ion-input readonly  [(ngModel)]="EItem.material" type="text"></ion-input>
+         </ion-item>
+              </ion-col>
+              <ion-col size="4">
+                <ion-item style="--background: aliceblue;">
+                  <ion-label position="floating">Act Material</ion-label>
+                  <ion-input (ionChange)="ExcelcalculateTotal()"  [(ngModel)]="EItem.amaterial" type="number"></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col size="4">
+                <ion-item>
+                  <ion-label position="floating">Profit%</ion-label>
+                  <ion-input readonly  value="{{ (((EItem.material) - EItem.amaterial)/(EItem.material))*100 | number:'0.0-3'}}" type="text"></ion-input>
+                  
+                </ion-item>
+              </ion-col>
+            </ion-row>
 
-              <tr style="text-align: center;" >
-                <td  colspan="1000" style="text-align: center;" >
-                   <span style="color: maroon;"> Actual </span> 
-                </td>
-              </tr>
-            <tr  class="row100 body">
-                <td class="cell100 column1">{{Item.name}}</td>
-                <td class="cell100 column2">
-                <ion-input type="number" (ionChange)="calculateActQty()" [(ngModel)]="Item.aqty" ></ion-input>
-                </td>
-                <td class="cell100 column3">{{Item.unit}}</td>
-                <td class="cell100 column4">{{Item.arate | number:'0.0-3'}}</td>
-                <td class="cell100 column5">{{Item.Grandtotal | number:'0.0-3'}}</td>
-              </tr>
-              <tr style="text-align: right;" >
-                <td colspan="1000" style="text-align: right; padding-right:80px;" >
-                  Total Profit : <span style="color: maroon;"> {{ ((Item.total-Item.Grandtotal)/Item.total)*100 | number:'0.0-3'}} %</span> 
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <ion-button expand="full" fill="clear" (click)="saveItem()"  >
-            Save
+          <ion-button (click)="UpdateExcelMaterial()" expand="block">
+            Update Material
           </ion-button>
         </div>
+        <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'l'">
+          <ion-row>
+            <ion-col size="4">
+       <ion-item>
+         <ion-label position="floating">Est Labour</ion-label>
+         <ion-input readonly  [(ngModel)]="EItem.labour" type="text"></ion-input>
+       </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item style="--background: aliceblue;">
+                <ion-label position="floating">Act Labour</ion-label>
+                <ion-input (ionChange)="ExcelcalculateTotal()"   [(ngModel)]="EItem.alabour" type="number"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating">Profit%</ion-label>
+                <ion-input readonly  value="{{ (((EItem.labour) - EItem.alabour)/(EItem.labour))*100 | number:'0.0-3'}}" type="text"></ion-input>
+                
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+        <ion-button (click)="UpdateExcellabour()" expand="block">
+          Update Labour
+        </ion-button>
       </div>
-    </div>
-  </div>
-</div>
 
-</div>
+      <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'e'">
+        <ion-row>
+          <ion-col size="4">
+     <ion-item>
+       <ion-label position="floating">Est Equipment</ion-label>
+       <ion-input readonly  [(ngModel)]="EItem.equipment" type="text"></ion-input>
+     </ion-item>
+          </ion-col>
+          <ion-col size="4">
+            <ion-item style="--background: aliceblue;">
+              <ion-label position="floating">Act Equipment</ion-label>
+              <ion-input (ionChange)="ExcelcalculateTotal()"  [(ngModel)]="EItem.aequipment" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4">
+            <ion-item>
+              <ion-label position="floating">Profit%</ion-label>
+              <ion-input readonly  value="{{ (((EItem.equipment) - EItem.aequipment)/(EItem.equipment))*100 | number:'0.0-3'}}" type="text"></ion-input>
+              
+            </ion-item>
+          </ion-col>
+        </ion-row>
 
-
-<ion-segment [(ngModel)]="segment2" >
-  <ion-segment-button value="m">
-    <ion-label>Material</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="l">
-    <ion-label>Labour</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="e">
-    <ion-label>Equipment</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="s">
-    <ion-label>Subcontractor</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="o">
-    <ion-label>other</ion-label>
-  </ion-segment-button>
-</ion-segment>
-
-<div [ngSwitch]="segment2">
-  <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'m'">
-    <ion-row>
-      <ion-col *ngIf="Item.itemID"  size="2">
-      <ion-button (click)="addnewmaterial()" expand="block" >
-        Add new Material
+      <ion-button (click)="UpdateExcelequipment()" expand="block">
+        Update Equipment
       </ion-button>
-      </ion-col>
-      <ion-col size="10">
-        <p style="float:right;margin-right : 20px" >
-         last updated on : {{ Item.updatedon | date }}
-        </p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-   <ion-col>
-    <ion-text color="primary">
-      <h6>Estimated Material total: {{Item.MtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
-    </ion-text> 
-   </ion-col>
-   <ion-col>
-    <ion-text color="primary">
-      <h6>Actual Material total: {{Item.MatotalPrice | number:'0.0-3'}}</h6> 
-    </ion-text> 
-   </ion-col>
-   <ion-col>
-    <ion-text *ngIf="Item.MtotalPrice !== 0" color="primary">
-      <h6>Material profit: {{ (((Item.MtotalPrice*Item.qty) - Item.MatotalPrice)/(Item.MtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
-    </ion-text> 
-    <ion-text *ngIf="Item.MtotalPrice == 0 && Item.MatotalPrice > 0 " color="primary">
-      <h6>Material profit: -100%</h6> 
-    </ion-text> 
-    <ion-text *ngIf="Item.MtotalPrice == 0 && Item.MatotalPrice == 0 " color="primary">
-      <h6>Material profit: 0%</h6> 
-    </ion-text> 
-   </ion-col>
-  </ion-row>
-    <table class="customtable" *ngIf="Item.material.length > 0" > 
-      <tr>
-        <th>Name</th>
-        <th>Est quantity</th>
-        <th>Unit</th>
-        <th>Rate</th>
-        <th>Est total</th>
-        <th>Act quantity</th>
-        <th>Act total</th>
-        <th>Profit%</th>
-      </tr>
-  
-        <tr *ngFor="let mat of Item.material">
-          <td>{{ mat.name }}</td>
-          <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
-          <td>{{ mat.unit }}</td>
-          <td>{{ mat.rate }}</td>
-          <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
-          <td>
-            <ion-input (ionChange)="calculateActTotal();calculateGrandTotal()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
-          </td>
-          <td>
-            {{mat.atotal | number:'0.0-3'}}
-          </td>
-          <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
-        </tr>
-    </table>
-    <ion-button (click)="UpdateMaterial()" expand="block">
-      Update Material
+    </div>
+
+    <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'s'">
+      <ion-row>
+        <ion-col size="4">
+   <ion-item>
+     <ion-label position="floating">Est Subcontractor</ion-label>
+     <ion-input readonly  [(ngModel)]="EItem.subcontractor" type="text"></ion-input>
+   </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item style="--background: aliceblue;">
+            <ion-label position="floating">Act Subcontractor</ion-label>
+            <ion-input (ionChange)="ExcelcalculateTotal()"  [(ngModel)]="EItem.asubcontractor" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+          <ion-item>
+            <ion-label position="floating">Profit%</ion-label>
+            <ion-input readonly  value="{{ (((EItem.subcontractor) - EItem.asubcontractor)/(EItem.subcontractor))*100 | number:'0.0-3'}}" type="text"></ion-input>
+            
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+    <ion-button (click)="UpdateExcelsubcontractor()" expand="block">
+      Update Subcontractor
     </ion-button>
   </div>
 
-  <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'l'">
+  <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'o'">
     <ion-row>
-      <ion-col *ngIf="Item.itemID"  size="2">
-      <ion-button (click)="addnewlabour()" expand="block" >
-        Add new Labour
-      </ion-button>
+      <ion-col size="4">
+ <ion-item>
+   <ion-label position="floating">Est Other</ion-label>
+   <ion-input readonly  [(ngModel)]="EItem.other" type="text"></ion-input>
+ </ion-item>
       </ion-col>
-      <ion-col size="10">
-        <p style="float:right;margin-right : 20px" >
-         last updated on : {{ Item.updatedon | date }}
-        </p>
+      <ion-col size="4">
+        <ion-item style="--background: aliceblue;">
+          <ion-label position="floating">Act Other</ion-label>
+          <ion-input (ionChange)="ExcelcalculateTotal()"  [(ngModel)]="EItem.aother" type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label position="floating">Profit%</ion-label>
+          <ion-input readonly  value="{{ (((EItem.other) - EItem.aother)/(EItem.other))*100 | number:'0.0-3'}}" type="text"></ion-input>
+          
+        </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row>
-     <ion-col>
-      <ion-text color="primary">
-        <h6>Estimated Labour total: {{Item.LtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
-      </ion-text> 
-     </ion-col>
-     <ion-col>
-      <ion-text color="primary">
-        <h6>Actual Labour total: {{Item.LatotalPrice | number:'0.0-3'}}</h6> 
-      </ion-text> 
-     </ion-col>
-     <ion-col>
-      <ion-text *ngIf="Item.LtotalPrice !== 0" color="primary">
-        <h6>Labour profit: {{ (((Item.LtotalPrice*Item.qty) - Item.LatotalPrice)/(Item.LtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
-      </ion-text> 
-      <ion-text *ngIf="Item.LtotalPrice == 0 && Item.LatotalPrice > 0 " color="primary">
-        <h6>Labour profit: -100%</h6> 
-      </ion-text> 
-      <ion-text *ngIf="Item.LtotalPrice == 0 && Item.LatotalPrice == 0 " color="primary">
-        <h6>Labour profit: 0%</h6> 
-      </ion-text> 
-     </ion-col>
-    </ion-row>
-      <table class="customtable" *ngIf="Item.labour.length > 0" > 
-        <tr>
-          <th>Name</th>
-          <th>Est quantity</th>
-          <th>Unit</th>
-          <th>Rate</th>
-          <th>Est total</th>
-          <th>Act quantity</th>
-          <th>Act total</th>
-          <th>Profit%</th>
-        </tr>
-    
-          <tr *ngFor="let mat of Item.labour">
-            <td>{{ mat.name }}</td>
-            <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
-            <td>{{ mat.unit }}</td>
-            <td>{{ mat.rate }}</td>
-            <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
-            <td>
-              <ion-input (ionChange)="LcalculateActTotal();calculateGrandTotal()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
-            </td>
-            <td>
-              {{mat.atotal | number:'0.0-3'}}
-            </td>
-                      <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
-          </tr>
-      <!-- <ion-button (click)="updatematerial()" expand="block">
-        Update Materials
-      </ion-button> -->
-      </table>
-      <ion-button (click)="UpdateLabour()" expand="block">
-        Update Labour
-      </ion-button>
+
+  <ion-button (click)="UpdateExcelother()" expand="block">
+    Update other
+  </ion-button>
+</div>
+
+        </div>  
     </div>
 
-    <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'e'">
-      <ion-row>
-        <ion-col *ngIf="Item.itemID"  size="2">
-        <ion-button (click)="addnewequipment()" expand="block" >
-          Add new Equipment
-        </ion-button>
-        </ion-col>
-        <ion-col size="10">
-          <p style="float:right;margin-right : 20px" >
-           last updated on : {{ Item.updatedon | date }}
-          </p>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-       <ion-col>
-        <ion-text color="primary">
-          <h6>Estimated Equipment total: {{Item.EtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
-        </ion-text> 
-       </ion-col>
-       <ion-col>
-        <ion-text color="primary">
-          <h6>Actual Equipment total: {{Item.EatotalPrice | number:'0.0-3'}}</h6> 
-        </ion-text> 
-       </ion-col>
-       <ion-col>
-        <ion-text *ngIf="Item.EtotalPrice !== 0" color="primary">
-          <h6>Equipment profit: {{ (((Item.EtotalPrice*Item.qty) - Item.EatotalPrice)/(Item.EtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
-        </ion-text> 
-        <ion-text *ngIf="Item.EtotalPrice == 0 && Item.EatotalPrice > 0 " color="primary">
-          <h6>Equipment profit: -100%</h6> 
-        </ion-text> 
-        <ion-text *ngIf="Item.EtotalPrice == 0 && Item.EatotalPrice == 0 " color="primary">
-          <h6>Equipment profit: 0%</h6> 
-        </ion-text> 
-       </ion-col>
-      </ion-row>
-        <table class="customtable" *ngIf="Item.equipment.length > 0" > 
-          <tr>
-            <th>Name</th>
-            <th>Est quantity</th>
-            <th>Unit</th>
-            <th>Rate</th>
-            <th>Est total</th>
-            <th>Act quantity</th>
-            <th>Act total</th>
-            <th>Profit%</th>
-          </tr>
+    <div style="margin-top : 5px;" *ngSwitchCase="'boq'">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item class="leftsideitems">           
+              <ion-label>Projects</ion-label>
+              <ion-select (ionChange)="setProject();getitemCat()" [(ngModel)]="myProjectID" interface="popover" >
+                <ion-select-option *ngFor="let item of myProjectList" value="{{item.pid}}"  > {{ item.name }} </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item  class="leftsideitems">
+              <ion-label>Item Category</ion-label>
+              <ion-select  (ionChange)="getitemsubcat()" [(ngModel)]="IcatID"   placeholder="Select Category">
+                <ion-select-option *ngFor="let icitem of IcatList" [value]="icitem.id" > {{ icitem.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item  class="leftsideitems">
+              <ion-label>Item Subcategory</ion-label>
+              <ion-select  (ionChange)="getitemsubsubcat()" [(ngModel)]="IsubcatID"  placeholder="Select Subcategory">
+                <ion-select-option *ngFor="let isitem of IsubcatList" [value]="isitem.id"  > {{ isitem.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size=6>
+            <ion-item class="leftsideitems">
+              <ion-label>Item Sub-subcategory</ion-label>
+              <ion-select  (ionChange)="getitem()" [(ngModel)]="IsubsubcatID"   placeholder="Select Sub-subcategory">
+                <ion-select-option *ngFor="let issitem of IsubsubcatList" [value]="issitem.id"  > {{ issitem.name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="leftsideitems">
+              <ion-label>Items</ion-label>
+              <ion-select  [(ngModel)]="Item" (ionChange)="getact()"   placeholder="Select Item">
+                <ion-select-option *ngFor="let item of ItemsList" [value]="item"  > {{ item.name }} </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       
-            <tr *ngFor="let mat of Item.equipment">
-              <td>{{ mat.name }}</td>
-              <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
-              <td>{{ mat.unit }}</td>
-              <td>{{ mat.rate }}</td>
-              <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
-              <td>
-                <ion-input (ionChange)="EcalculateActTotal();calculateGrandTotal()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
-              </td>
-              <td>
-                {{mat.atotal | number:'0.0-3'}}
-              </td>
-                        <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
-            </tr>
-        </table>
-        <ion-button (click)="UpdateEquipment()" expand="block">
-          Update Equipemnt
-        </ion-button>
+      <div #keywordsInput id=keywordsInput >
+      <div class="limiter">
+        <div class="container-table100">
+          <div class="wrap-table100">
+            <div class="table100 ver1 m-b-10">
+              <div class="table100-head">
+                <table>
+                  <thead>
+                    <tr class="row100 head">
+                      <th class="cell100 column1">Description</th>
+                      <th style="width: 7.5%;"></th>
+                      <th class="cell100 column2">Quantity</th>
+                      <th class="cell100 column3">Unit</th>
+                      <th  class="cell100 column4">Rate</th>
+                      <th  class="cell100 column5">Total</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+      
+              <div class="table100-body js-pscroll">
+                <table id="excel-table" >
+                  <tbody>
+                    <tr style="text-align: center;border: solid 1px;" >
+                      <td  colspan="1000" style="text-align: center;" >
+                         <span style="color: maroon;"> Estimated </span> 
+                      </td>
+                    </tr>
+                  <tr style="border: solid 1px;"  class="row100 body">
+                      <td class="cell100 column1">{{Item.name}}</td>
+                      <td style="width: 7.5%;"></td>
+                      <td class="cell100 column2" style="padding-left: 5px;">{{Item.qty | number:'0.0-3'}}</td>
+                      <td class="cell100 column3">{{Item.unit}}</td>
+                      <td class="cell100 column4">{{Item.rate | number:'0.0-3'}}</td>
+                      <td style="border-right: solid 1px;"  class="cell100 column5">{{Item.total | number:'0.0-3'}}</td>
+                    </tr>
+                    <br/>
+                    <tr style="text-align: center;border: solid 1px;background-color: white;" >
+                      <td  colspan="1000" style="text-align: center;" >
+                         <span style="color: maroon;"> Actual </span> 
+                      </td>
+                    </tr>
+                  <tr style="border: solid 1px;background-color: #f8f6ff;"  class="row100 body">
+                      <td class="cell100 column1">{{Item.name}}</td>
+                      <td style="width: 7.5%;">
+                        <div style="display: inline-flex;">
+                          <ion-input inputmode="decimal" max="100" maxlength="3" min="0" minlength="1" type="tel" class="percentage" (ionChange)="calculateActPer();checkinput()" placeholder="%" [(ngModel)]="Item.aper" ></ion-input> 
+                            <span class="perMask">%</span>
+                        </div>
+                      
+                    </td>
+                      <td class="cell100 column2">
+                          <b>{{Item.aqty | number:'0.0-3'}}</b>
+                      </td>
+                      <td class="cell100 column3">{{Item.unit}}</td>
+                      <td class="cell100 column4">{{Item.arate | number:'0.0-3'}}</td>
+                      <td style="border-right: solid 1px;" class="cell100 column5">{{Item.Grandtotal | number:'0.0-3'}}</td>
+                    </tr>
+                    <tr style="text-align: right;" >
+                      <td colspan="1000" style="text-align: right; padding-right:80px;" >
+                        Total Profit : <span style="color: maroon;"> {{ ((Item.total-Item.Grandtotal)/Item.total)*100 | number:'0.0-3'}} %</span> 
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <ion-button expand="full" fill="clear" (click)="saveItem()"  >
+                  Save
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'s'">
-        <ion-row>
-          <ion-col *ngIf="Item.itemID"  size="2">
-          <ion-button (click)="addnewsubcontractor()" expand="block" >
-            Add new Subcontractor
-          </ion-button>
-          </ion-col>
-          <ion-col size="10">
-            <p style="float:right;margin-right : 20px" >
-             last updated on : {{ Item.updatedon | date }}
-            </p>
-          </ion-col>
-        </ion-row>
-        <ion-row>
+      
+      </div>
+      
+      
+      <ion-segment [(ngModel)]="segment2" >
+        <ion-segment-button value="m">
+          <ion-label>Material</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="l">
+          <ion-label>Labour</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="e">
+          <ion-label>Equipment</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="s">
+          <ion-label>Subcontractor</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="o">
+          <ion-label>other</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      
+      <div [ngSwitch]="segment2">
+        <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'m'">
+          <ion-row>
+            <ion-col *ngIf="Item.itemID"  size="2">
+            <ion-button (click)="addnewmaterial()" expand="block" >
+              Add new Material
+            </ion-button>
+            </ion-col>
+            <ion-col size="10">
+              <p style="float:right;margin-right : 20px" >
+               last updated on : {{ Item.mupdatedon | date:'short' }}
+              </p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
          <ion-col>
           <ion-text color="primary">
-            <h6>Estimated Subcontractor total: {{Item.StotalPrice*Item.qty | number:'0.0-3'}}</h6> 
+            <h6>Estimated Material total: {{Item.MtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
           </ion-text> 
          </ion-col>
          <ion-col>
           <ion-text color="primary">
-            <h6>Actual Subcontractor total: {{Item.SatotalPrice | number:'0.0-3'}}</h6> 
+            <h6>Actual Material total: {{Item.MatotalPrice | number:'0.0-3'}}</h6> 
           </ion-text> 
          </ion-col>
          <ion-col>
-          <ion-text *ngIf="Item.StotalPrice !== 0" color="primary">
-            <h6>Subcontractor profit: {{ (((Item.StotalPrice*Item.qty) - Item.SatotalPrice)/(Item.StotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
+          <ion-text *ngIf="Item.MtotalPrice !== 0" color="primary">
+            <h6>Material profit: {{ (((Item.MtotalPrice*Item.qty) - Item.MatotalPrice)/(Item.MtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
           </ion-text> 
-          <ion-text *ngIf="Item.StotalPrice == 0 && Item.SatotalPrice > 0 " color="primary">
-            <h6>Subcontractor profit: -100%</h6> 
+          <ion-text *ngIf="Item.MtotalPrice == 0 && Item.MatotalPrice > 0 " color="primary">
+            <h6>Material profit: -100%</h6> 
           </ion-text> 
-          <ion-text *ngIf="Item.StotalPrice == 0 && Item.SatotalPrice == 0 " color="primary">
-            <h6>Subcontractor profit: 0%</h6> 
+          <ion-text *ngIf="Item.MtotalPrice == 0 && Item.MatotalPrice == 0 " color="primary">
+            <h6>Material profit: 0%</h6> 
           </ion-text> 
          </ion-col>
         </ion-row>
-          <table class="customtable" *ngIf="Item.subcontractor.length > 0" > 
+          <table class="customtable" *ngIf="Item.material.length > 0" > 
             <tr>
               <th>Name</th>
               <th>Est quantity</th>
@@ -439,65 +531,65 @@
               <th>Profit%</th>
             </tr>
         
-              <tr *ngFor="let mat of Item.subcontractor">
+              <tr *ngFor="let mat of Item.material">
                 <td>{{ mat.name }}</td>
                 <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
                 <td>{{ mat.unit }}</td>
                 <td>{{ mat.rate }}</td>
                 <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
                 <td>
-                  <ion-input (ionChange)="ScalculateActTotal();calculateGrandTotal()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
+                  <ion-input (ionChange)="calculateActTotal();calculateGrandTotal(); calculateActPer()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
                 </td>
                 <td>
                   {{mat.atotal | number:'0.0-3'}}
                 </td>
-                          <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
+                <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
               </tr>
           </table>
-          <ion-button (click)="UpdateSubcontractor()" expand="block">
-            Update Subcontractor
+          <ion-button (click)="UpdateMaterial()" expand="block">
+            Update Material
           </ion-button>
         </div>
-
-        <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'o'">
+      
+        <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'l'">
           <ion-row>
             <ion-col *ngIf="Item.itemID"  size="2">
-            <ion-button (click)="addnewother()" expand="block" >
-              Add new Other
+            <ion-button (click)="addnewlabour()" expand="block" >
+              Add new Labour
             </ion-button>
             </ion-col>
             <ion-col size="10">
               <p style="float:right;margin-right : 20px" >
-               last updated on : {{ Item.updatedon | date }}
+               last updated on : {{ Item.lupdatedon | date:'short' }}
               </p>
             </ion-col>
           </ion-row>
           <ion-row>
            <ion-col>
             <ion-text color="primary">
-              <h6>Estimated Other total: {{Item.OtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
+              <h6>Estimated Labour total: {{Item.LtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
             </ion-text> 
            </ion-col>
            <ion-col>
             <ion-text color="primary">
-              <h6>Actual Other total: {{Item.OatotalPrice | number:'0.0-3'}}</h6> 
+              <h6>Actual Labour total: {{Item.LatotalPrice | number:'0.0-3'}}</h6> 
             </ion-text> 
            </ion-col>
            <ion-col>
-            <ion-text *ngIf="Item.OtotalPrice !== 0" color="primary">
-              <h6>Other profit: {{ (((Item.OtotalPrice*Item.qty) - Item.OatotalPrice)/(Item.OtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
+            <ion-text *ngIf="Item.LtotalPrice !== 0" color="primary">
+              <h6>Labour profit: {{ (((Item.LtotalPrice*Item.qty) - Item.LatotalPrice)/(Item.LtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
             </ion-text> 
-            <ion-text *ngIf="Item.OtotalPrice == 0 && Item.OatotalPrice > 0 " color="primary">
-              <h6>Other profit: -100%</h6> 
+            <ion-text *ngIf="Item.LtotalPrice == 0 && Item.LatotalPrice > 0 " color="primary">
+              <h6>Labour profit: -100%</h6> 
             </ion-text> 
-            <ion-text *ngIf="Item.OtotalPrice == 0 && Item.OatotalPrice == 0 " color="primary">
-              <h6>Other profit: 0%</h6> 
+            <ion-text *ngIf="Item.LtotalPrice == 0 && Item.LatotalPrice == 0 " color="primary">
+              <h6>Labour profit: 0%</h6> 
             </ion-text> 
            </ion-col>
           </ion-row>
-            <table class="customtable" *ngIf="Item.other.length > 0" > 
+            <table class="customtable" *ngIf="Item.labour.length > 0" > 
               <tr>
                 <th>Name</th>
                 <th>Est quantity</th>
@@ -509,32 +601,247 @@
                 <th>Profit%</th>
               </tr>
           
-                <tr *ngFor="let mat of Item.other">
+                <tr *ngFor="let mat of Item.labour">
                   <td>{{ mat.name }}</td>
                   <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
                   <td>{{ mat.unit }}</td>
                   <td>{{ mat.rate }}</td>
                   <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
                   <td>
-                    <ion-input (ionChange)="OcalculateActTotal();calculateGrandTotal()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
+                    <ion-input (ionChange)="LcalculateActTotal();calculateGrandTotal(); calculateActPer()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
                   </td>
                   <td>
                     {{mat.atotal | number:'0.0-3'}}
                   </td>
                             <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
-          <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
                 </tr>
             <!-- <ion-button (click)="updatematerial()" expand="block">
               Update Materials
             </ion-button> -->
             </table>
-            <ion-button (click)="UpdateOther()" expand="block">
-              Update Other
+            <ion-button (click)="UpdateLabour()" expand="block">
+              Update Labour
             </ion-button>
           </div>
-
-  </div>
-
+      
+          <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'e'">
+            <ion-row>
+              <ion-col *ngIf="Item.itemID"  size="2">
+              <ion-button (click)="addnewequipment()" expand="block" >
+                Add new Equipment
+              </ion-button>
+              </ion-col>
+              <ion-col size="10">
+                <p style="float:right;margin-right : 20px" >
+                 last updated on : {{ Item.eupdatedon | date:'short' }}
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+             <ion-col>
+              <ion-text color="primary">
+                <h6>Estimated Equipment total: {{Item.EtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
+              </ion-text> 
+             </ion-col>
+             <ion-col>
+              <ion-text color="primary">
+                <h6>Actual Equipment total: {{Item.EatotalPrice | number:'0.0-3'}}</h6> 
+              </ion-text> 
+             </ion-col>
+             <ion-col>
+              <ion-text *ngIf="Item.EtotalPrice !== 0" color="primary">
+                <h6>Equipment profit: {{ (((Item.EtotalPrice*Item.qty) - Item.EatotalPrice)/(Item.EtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
+              </ion-text> 
+              <ion-text *ngIf="Item.EtotalPrice == 0 && Item.EatotalPrice > 0 " color="primary">
+                <h6>Equipment profit: -100%</h6> 
+              </ion-text> 
+              <ion-text *ngIf="Item.EtotalPrice == 0 && Item.EatotalPrice == 0 " color="primary">
+                <h6>Equipment profit: 0%</h6> 
+              </ion-text> 
+             </ion-col>
+            </ion-row>
+              <table class="customtable" *ngIf="Item.equipment.length > 0" > 
+                <tr>
+                  <th>Name</th>
+                  <th>Est quantity</th>
+                  <th>Unit</th>
+                  <th>Rate</th>
+                  <th>Est total</th>
+                  <th>Act quantity</th>
+                  <th>Act total</th>
+                  <th>Profit%</th>
+                </tr>
+            
+                  <tr *ngFor="let mat of Item.equipment">
+                    <td>{{ mat.name }}</td>
+                    <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
+                    <td>{{ mat.unit }}</td>
+                    <td>{{ mat.rate }}</td>
+                    <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
+                    <td>
+                      <ion-input (ionChange)="EcalculateActTotal();calculateGrandTotal(); calculateActPer()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
+                    </td>
+                    <td>
+                      {{mat.atotal | number:'0.0-3'}}
+                    </td>
+                              <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
+                  </tr>
+              </table>
+              <ion-button (click)="UpdateEquipment()" expand="block">
+                Update Equipemnt
+              </ion-button>
+            </div>
+      
+            <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'s'">
+              <ion-row>
+                <ion-col *ngIf="Item.itemID"  size="2">
+                <ion-button (click)="addnewsubcontractor()" expand="block" >
+                  Add new Subcontractor
+                </ion-button>
+                </ion-col>
+                <ion-col size="10">
+                  <p style="float:right;margin-right : 20px" >
+                   last updated on : {{ Item.supdatedon | date:'short' }}
+                  </p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+               <ion-col>
+                <ion-text color="primary">
+                  <h6>Estimated Subcontractor total: {{Item.StotalPrice*Item.qty | number:'0.0-3'}}</h6> 
+                </ion-text> 
+               </ion-col>
+               <ion-col>
+                <ion-text color="primary">
+                  <h6>Actual Subcontractor total: {{Item.SatotalPrice | number:'0.0-3'}}</h6> 
+                </ion-text> 
+               </ion-col>
+               <ion-col>
+                <ion-text *ngIf="Item.StotalPrice !== 0" color="primary">
+                  <h6>Subcontractor profit: {{ (((Item.StotalPrice*Item.qty) - Item.SatotalPrice)/(Item.StotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
+                </ion-text> 
+                <ion-text *ngIf="Item.StotalPrice == 0 && Item.SatotalPrice > 0 " color="primary">
+                  <h6>Subcontractor profit: -100%</h6> 
+                </ion-text> 
+                <ion-text *ngIf="Item.StotalPrice == 0 && Item.SatotalPrice == 0 " color="primary">
+                  <h6>Subcontractor profit: 0%</h6> 
+                </ion-text> 
+               </ion-col>
+              </ion-row>
+                <table class="customtable" *ngIf="Item.subcontractor.length > 0" > 
+                  <tr>
+                    <th>Name</th>
+                    <th>Est quantity</th>
+                    <th>Unit</th>
+                    <th>Rate</th>
+                    <th>Est total</th>
+                    <th>Act quantity</th>
+                    <th>Act total</th>
+                    <th>Profit%</th>
+                  </tr>
+              
+                    <tr *ngFor="let mat of Item.subcontractor">
+                      <td>{{ mat.name }}</td>
+                      <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
+                      <td>{{ mat.unit }}</td>
+                      <td>{{ mat.rate }}</td>
+                      <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
+                      <td>
+                        <ion-input (ionChange)="ScalculateActTotal();calculateGrandTotal(); calculateActPer()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
+                      </td>
+                      <td>
+                        {{mat.atotal | number:'0.0-3'}}
+                      </td>
+                                <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
+                    </tr>
+                </table>
+                <ion-button (click)="UpdateSubcontractor()" expand="block">
+                  Update Subcontractor
+                </ion-button>
+              </div>
+      
+              <div style="margin-top : 10px;margin-right: 8px; margin-left: 8px;" *ngSwitchCase="'o'">
+                <ion-row>
+                  <ion-col *ngIf="Item.itemID"  size="2">
+                  <ion-button (click)="addnewother()" expand="block" >
+                    Add new Other
+                  </ion-button>
+                  </ion-col>
+                  <ion-col size="10">
+                    <p style="float:right;margin-right : 20px" >
+                     last updated on : {{ Item.oupdatedon | date:'short' }}
+                    </p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                 <ion-col>
+                  <ion-text color="primary">
+                    <h6>Estimated Other total: {{Item.OtotalPrice*Item.qty | number:'0.0-3'}}</h6> 
+                  </ion-text> 
+                 </ion-col>
+                 <ion-col>
+                  <ion-text color="primary">
+                    <h6>Actual Other total: {{Item.OatotalPrice | number:'0.0-3'}}</h6> 
+                  </ion-text> 
+                 </ion-col>
+                 <ion-col>
+                  <ion-text *ngIf="Item.OtotalPrice !== 0" color="primary">
+                    <h6>Other profit: {{ (((Item.OtotalPrice*Item.qty) - Item.OatotalPrice)/(Item.OtotalPrice*Item.qty))*100 | number:'0.0-3'}}%</h6> 
+                  </ion-text> 
+                  <ion-text *ngIf="Item.OtotalPrice == 0 && Item.OatotalPrice > 0 " color="primary">
+                    <h6>Other profit: -100%</h6> 
+                  </ion-text> 
+                  <ion-text *ngIf="Item.OtotalPrice == 0 && Item.OatotalPrice == 0 " color="primary">
+                    <h6>Other profit: 0%</h6> 
+                  </ion-text> 
+                 </ion-col>
+                </ion-row>
+                  <table class="customtable" *ngIf="Item.other.length > 0" > 
+                    <tr>
+                      <th>Name</th>
+                      <th>Est quantity</th>
+                      <th>Unit</th>
+                      <th>Rate</th>
+                      <th>Est total</th>
+                      <th>Act quantity</th>
+                      <th>Act total</th>
+                      <th>Profit%</th>
+                    </tr>
+                
+                      <tr *ngFor="let mat of Item.other">
+                        <td>{{ mat.name }}</td>
+                        <td> {{ mat.qty*Item.qty | number:'0.0-3' }}</td>
+                        <td>{{ mat.unit }}</td>
+                        <td>{{ mat.rate }}</td>
+                        <td>{{ mat.etotal*Item.qty | number:'0.0-3' }}</td>
+                        <td>
+                          <ion-input (ionChange)="OcalculateActTotal();calculateGrandTotal(); calculateActPer()" type="number" [(ngModel)]="mat.aqty" ></ion-input>
+                        </td>
+                        <td>
+                          {{mat.atotal | number:'0.0-3'}}
+                        </td>
+                                  <td *ngIf="mat.etotal*Item.qty !== 0" > {{ (((mat.etotal*Item.qty)-mat.atotal)/(mat.etotal*Item.qty))*100 | number:'0.0-3' }}  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal > 0" > -100  </td>
+                <td *ngIf="mat.etotal*Item.qty == 0 && mat.atotal == 0" > 0  </td>
+                      </tr>
+                  <!-- <ion-button (click)="updatematerial()" expand="block">
+                    Update Materials
+                  </ion-button> -->
+                  </table>
+                  <ion-button (click)="UpdateOther()" expand="block">
+                    Update Other
+                  </ion-button>
+                </div>
+      
+        </div>
+      
+    </div>
+    </div>
 
 </ion-content>

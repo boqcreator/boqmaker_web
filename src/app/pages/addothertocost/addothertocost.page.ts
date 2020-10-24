@@ -167,10 +167,10 @@ async addother(){
 
   this.Addedother.forEach((element, index, array) =>{
     this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).get().subscribe(value =>{
-     var checker = value.data().other.find(x => x.id == element.id)
+     var checker = value.data().extraother.find(x => x.id == element.id)
      if(!checker){
       this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).update({
-        other : firebase.firestore.FieldValue.arrayUnion({
+        extraother : firebase.firestore.FieldValue.arrayUnion({
           name: element.name,
           id : element.id,
           qty : 0,
@@ -190,6 +190,7 @@ async addother(){
     if (index === array.length -1){
       loading.dismiss();
       this.modal.dismiss()
+      alert("Added Successfully!")
     };
   })
 

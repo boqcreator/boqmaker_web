@@ -13,6 +13,10 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { Router } from '@angular/router';
 import { Report1DetailsPage } from '../report1-details/report1-details.page';
 import { Report1MaterialPage } from '../report1-material/report1-material.page';
+import { Report1LabourPage } from '../report1-labour/report1-labour.page';
+import { Report1EquipmentPage } from '../report1-equipment/report1-equipment.page';
+import { Report1OtherPage } from '../report1-other/report1-other.page';
+import { BoqitemgraphPage } from '../boqitemgraph/boqitemgraph.page';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -290,9 +294,11 @@ export class Report1Page implements OnInit {
                   OatotalPrice : OatotalPrice,
                   StotalPrice : StotalPrice,
                   SatotalPrice : SatotalPrice,
+
                   
                 })
-              }else{
+              }
+              else{
                 this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
                 this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
                 this.ItemsList[mainindex].qty +=qty;
@@ -300,7 +306,6 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                     this.ItemsList[mainindex].material.push({
                       name: mdat.name,
                       id : mdat.id,
@@ -311,14 +316,6 @@ export class Report1Page implements OnInit {
                       aqty : 0,
                       atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                    this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-  
-                    this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                    this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                    this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                   }
 
                  })
@@ -339,14 +336,6 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
@@ -369,14 +358,6 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
@@ -399,14 +380,6 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
@@ -430,14 +403,6 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
@@ -628,9 +593,11 @@ export class Report1Page implements OnInit {
                       OatotalPrice : OatotalPrice,
                       StotalPrice : StotalPrice,
                       SatotalPrice : SatotalPrice,
+    
                       
                     })
-                  }else{
+                  }
+                  else{
                     this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
                     this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
                     this.ItemsList[mainindex].qty +=qty;
@@ -638,7 +605,6 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                         this.ItemsList[mainindex].material.push({
                           name: mdat.name,
                           id : mdat.id,
@@ -649,18 +615,10 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
-  
+    
                      })
-  
+    
                       if(doc.data().item.itemdetails.labours){
                         doc.data().item.itemdetails.labours.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
@@ -677,20 +635,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.equipment){
                         doc.data().item.itemdetails.equipment.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
@@ -707,20 +657,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.other){
                         doc.data().item.itemdetails.other.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
@@ -737,21 +679,13 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
-  
+    
+    
+    
                       if(doc.data().item.itemdetails.subcontractor){
                         doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
@@ -768,14 +702,6 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
@@ -972,9 +898,11 @@ export class Report1Page implements OnInit {
                       OatotalPrice : OatotalPrice,
                       StotalPrice : StotalPrice,
                       SatotalPrice : SatotalPrice,
+    
                       
                     })
-                  }else{
+                  }
+                  else{
                     this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
                     this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
                     this.ItemsList[mainindex].qty +=qty;
@@ -982,7 +910,6 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                         this.ItemsList[mainindex].material.push({
                           name: mdat.name,
                           id : mdat.id,
@@ -993,18 +920,10 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
-  
+    
                      })
-  
+    
                       if(doc.data().item.itemdetails.labours){
                         doc.data().item.itemdetails.labours.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
@@ -1021,20 +940,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.equipment){
                         doc.data().item.itemdetails.equipment.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
@@ -1051,20 +962,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.other){
                         doc.data().item.itemdetails.other.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
@@ -1081,21 +984,13 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
-  
+    
+    
+    
                       if(doc.data().item.itemdetails.subcontractor){
                         doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
@@ -1112,14 +1007,6 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
@@ -1320,9 +1207,11 @@ export class Report1Page implements OnInit {
                       OatotalPrice : OatotalPrice,
                       StotalPrice : StotalPrice,
                       SatotalPrice : SatotalPrice,
+    
                       
                     })
-                  }else{
+                  }
+                  else{
                     this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
                     this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
                     this.ItemsList[mainindex].qty +=qty;
@@ -1330,7 +1219,6 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                         this.ItemsList[mainindex].material.push({
                           name: mdat.name,
                           id : mdat.id,
@@ -1341,18 +1229,10 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
-  
+    
                      })
-  
+    
                       if(doc.data().item.itemdetails.labours){
                         doc.data().item.itemdetails.labours.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
@@ -1369,20 +1249,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.equipment){
                         doc.data().item.itemdetails.equipment.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
@@ -1399,20 +1271,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.other){
                         doc.data().item.itemdetails.other.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
@@ -1429,21 +1293,13 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
-  
+    
+    
+    
                       if(doc.data().item.itemdetails.subcontractor){
                         doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
@@ -1460,14 +1316,6 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
@@ -1667,9 +1515,11 @@ export class Report1Page implements OnInit {
                       OatotalPrice : OatotalPrice,
                       StotalPrice : StotalPrice,
                       SatotalPrice : SatotalPrice,
+    
                       
                     })
-                  }else{
+                  }
+                  else{
                     this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
                     this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
                     this.ItemsList[mainindex].qty +=qty;
@@ -1677,7 +1527,6 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                         this.ItemsList[mainindex].material.push({
                           name: mdat.name,
                           id : mdat.id,
@@ -1688,18 +1537,10 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
-  
+    
                      })
-  
+    
                       if(doc.data().item.itemdetails.labours){
                         doc.data().item.itemdetails.labours.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
@@ -1716,20 +1557,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.equipment){
                         doc.data().item.itemdetails.equipment.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
@@ -1746,20 +1579,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.other){
                         doc.data().item.itemdetails.other.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
@@ -1776,21 +1601,13 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
-  
+    
+    
+    
                       if(doc.data().item.itemdetails.subcontractor){
                         doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
@@ -1807,14 +1624,6 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
@@ -2014,9 +1823,11 @@ export class Report1Page implements OnInit {
                       OatotalPrice : OatotalPrice,
                       StotalPrice : StotalPrice,
                       SatotalPrice : SatotalPrice,
+    
                       
                     })
-                  }else{
+                  }
+                  else{
                     this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
                     this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
                     this.ItemsList[mainindex].qty +=qty;
@@ -2024,7 +1835,6 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                         this.ItemsList[mainindex].material.push({
                           name: mdat.name,
                           id : mdat.id,
@@ -2035,18 +1845,10 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
-  
+    
                      })
-  
+    
                       if(doc.data().item.itemdetails.labours){
                         doc.data().item.itemdetails.labours.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
@@ -2063,20 +1865,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.equipment){
                         doc.data().item.itemdetails.equipment.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
@@ -2093,20 +1887,12 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
+    
+    
                       if(doc.data().item.itemdetails.other){
                         doc.data().item.itemdetails.other.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
@@ -2123,21 +1909,13 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
                       }
-  
-  
-  
+    
+    
+    
                       if(doc.data().item.itemdetails.subcontractor){
                         doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
                           const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
@@ -2154,14 +1932,6 @@ export class Report1Page implements OnInit {
                               aqty : 0,
                               atotal : (mdat.aqty*mdat.price)
                             })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
                           }
       
                          })
@@ -2351,28 +2121,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -2382,138 +2173,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -2699,28 +2430,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -2730,138 +2482,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
                     })
                   })
                 }
@@ -3046,28 +2738,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -3077,138 +2790,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -3393,28 +3046,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -3424,138 +3098,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -3741,28 +3355,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -3772,138 +3407,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -4086,28 +3661,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -4117,138 +3713,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -4428,28 +3964,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -4459,138 +4016,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -4770,28 +4267,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -4801,138 +4319,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -5113,28 +4571,49 @@ export class Report1Page implements OnInit {
                       equipment:equipment,
                       subcontractor:subcontractor,
                       other:other,
-                      MtotalPrice : MtotalPrice,
-                      MatotalPrice : MatotalPrice,
-                      LtotalPrice : LtotalPrice,
-                      LatotalPrice : LatotalPrice,
-                      EtotalPrice : EtotalPrice,
-                      EatotalPrice : EatotalPrice,
-                      OtotalPrice : OtotalPrice,
-                      OatotalPrice : OatotalPrice,
-                      StotalPrice : StotalPrice,
-                      SatotalPrice : SatotalPrice,
-                      
+                  MtotalPrice : MtotalPrice,
+                  MatotalPrice : MatotalPrice,
+                  LtotalPrice : LtotalPrice,
+                  LatotalPrice : LatotalPrice,
+                  EtotalPrice : EtotalPrice,
+                  EatotalPrice : EatotalPrice,
+                  OtotalPrice : OtotalPrice,
+                  OatotalPrice : OatotalPrice,
+                  StotalPrice : StotalPrice,
+                  SatotalPrice : SatotalPrice,
+
+                  
+                })
+              }
+              else{
+                this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
+                this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
+                this.ItemsList[mainindex].qty +=qty;
+                doc.data().item.itemdetails.materials.forEach(mdat =>{
+                  const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  if(index === -1){
+                    this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
+                    this.ItemsList[mainindex].material.push({
+                      name: mdat.name,
+                      id : mdat.id,
+                      qty : mdat.qty,
+                      unit : mdat.unit,
+                      rate : mdat.price,
+                      etotal : (mdat.qty*mdat.price),
+                      aqty : 0,
+                      atotal : (mdat.aqty*mdat.price)
                     })
-                  }else{
-                    this.totalPrice += parseFloat((qty*parseFloat(doc.data().item.itemdetails.price)).toFixed(3))
-                    this.ItemsList[mainindex].total += qty*doc.data().item.itemdetails.price;
-                    this.ItemsList[mainindex].qty +=qty;
-                    doc.data().item.itemdetails.materials.forEach(mdat =>{
-                      const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
+                  }
+
+                 })
+
+                  if(doc.data().item.itemdetails.labours){
+                    doc.data().item.itemdetails.labours.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
                       if(index === -1){
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].labour.push({
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -5144,138 +4623,78 @@ export class Report1Page implements OnInit {
                           aqty : 0,
                           atotal : (mdat.aqty*mdat.price)
                         })
-                      }else{
-                        this.ItemsList[mainindex].material[index].qty += mdat.qty;
-                        this.ItemsList[mainindex].material[index].etotal += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-      
-                        this.ItemsList[mainindex].material[index].aqty += mdat.aqty;
-                        this.ItemsList[mainindex].material[index].atotal += (mdat.aqty*mdat.price)
-                        this.ItemsList[mainindex].MatotalPrice += (mdat.aqty*mdat.price)
                       }
   
                      })
-  
-                      if(doc.data().item.itemdetails.labours){
-                        doc.data().item.itemdetails.labours.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].labour.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].labour.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].labour[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].labour[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].LtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].labour[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].labour[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].LatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.equipment){
-                        doc.data().item.itemdetails.equipment.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].equipment.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].equipment[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].equipment[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].equipment[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].equipment[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-                      if(doc.data().item.itemdetails.other){
-                        doc.data().item.itemdetails.other.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].other.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].other[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].other[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].other[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].other[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
-  
-  
-  
-                      if(doc.data().item.itemdetails.subcontractor){
-                        doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
-                          const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
-                          if(index === -1){
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].subcontractor.push({
-                              name: mdat.name,
-                              id : mdat.id,
-                              qty : mdat.qty,
-                              unit : mdat.unit,
-                              rate : mdat.price,
-                              etotal : (mdat.qty*mdat.price),
-                              aqty : 0,
-                              atotal : (mdat.aqty*mdat.price)
-                            })
-                          }else{
-                            this.ItemsList[mainindex].subcontractor[index].qty += mdat.qty;
-                            this.ItemsList[mainindex].subcontractor[index].etotal += (mdat.qty*mdat.price)
-                            this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
-          
-                            this.ItemsList[mainindex].subcontractor[index].aqty += mdat.aqty;
-                            this.ItemsList[mainindex].subcontractor[index].atotal += (mdat.aqty*mdat.price)
-                            this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
-                          }
-      
-                         })
-                      }
                   }
+
+
+                  if(doc.data().item.itemdetails.equipment){
+                    doc.data().item.itemdetails.equipment.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].equipment.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].EtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].EatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].equipment.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+                  if(doc.data().item.itemdetails.other){
+                    doc.data().item.itemdetails.other.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].other.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].OtotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].OatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].other.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+
+
+
+                  if(doc.data().item.itemdetails.subcontractor){
+                    doc.data().item.itemdetails.subcontractor.forEach(mdat =>{
+                      const index =  this.ItemsList[mainindex].subcontractor.findIndex(x => x.id == mdat.id)
+                      if(index === -1){
+                        this.ItemsList[mainindex].StotalPrice += (mdat.qty*mdat.price)
+                        this.ItemsList[mainindex].SatotalPrice += (mdat.aqty*mdat.price)
+                        this.ItemsList[mainindex].subcontractor.push({
+                          name: mdat.name,
+                          id : mdat.id,
+                          qty : mdat.qty,
+                          unit : mdat.unit,
+                          rate : mdat.price,
+                          etotal : (mdat.qty*mdat.price),
+                          aqty : 0,
+                          atotal : (mdat.aqty*mdat.price)
+                        })
+                      }
+  
+                     })
+                  }
+              }
               })
             })
           }
@@ -5865,6 +5284,49 @@ this.html2canvas.html2canvas(element.firstChild).then((canvas) => {
     return await myModal.present();
   }
 
+  async labourModal(){
+    const myModal = await this.modalController.create({
+      component: Report1LabourPage,
+      componentProps: { itemList: this.ItemsList },
+      cssClass: 'fullscreen'
+    });
+    return await myModal.present();
+  }
+
+  async equipmentModal(){
+    const myModal = await this.modalController.create({
+      component: Report1EquipmentPage,
+      componentProps: { itemList: this.ItemsList },
+      cssClass: 'fullscreen'
+    });
+    return await myModal.present();
+  }
+  async otherModal(){
+    const myModal = await this.modalController.create({
+      component: Report1OtherPage,
+      componentProps: { itemList: this.ItemsList },
+      cssClass: 'fullscreen'
+    });
+    return await myModal.present();
+  }
+
+  async getgraph(item){
+    console.log(item)
+    const modal = await this.modalController.create({
+    component: BoqitemgraphPage,
+    cssClass: 'halfscreen',
+    componentProps: { 
+      EtotalPrice: item.EtotalPrice*item.qty,
+      LtotalPrice: item.LtotalPrice*item.qty,
+      MtotalPrice : item.MtotalPrice*item.qty,
+      OtotalPrice : item.OtotalPrice*item.qty,
+      StotalPrice : item.StotalPrice*item.qty,
+    }
+    });
+  
+    await modal.present();
+
+}
 
 
 

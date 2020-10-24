@@ -75,6 +75,11 @@ import { AddequipmentGPageModule } from './pages/addequipment-g/addequipment-g.m
 import { MateriallibPageModule } from './pages/materiallib/materiallib.module';
 import { Report1DetailsPageModule } from './pages/report1-details/report1-details.module';
 import { Report1MaterialPageModule } from './pages/report1-material/report1-material.module';
+import { Report1LabourPageModule } from './pages/report1-labour/report1-labour.module';
+import { Report1EquipmentPageModule } from './pages/report1-equipment/report1-equipment.module';
+import { Report1OtherPageModule } from './pages/report1-other/report1-other.module';
+import { CalculatorPageModule } from './pages/calculator/calculator.module';
+import { CostgraphPageModule } from './pages/costgraph/costgraph.module';
 
 
 @NgModule({
@@ -141,7 +146,12 @@ import { Report1MaterialPageModule } from './pages/report1-material/report1-mate
     AddequipmentGPageModule,
     MateriallibPageModule,
     Report1DetailsPageModule,
-    Report1MaterialPageModule
+    Report1MaterialPageModule,
+    Report1LabourPageModule,
+    Report1EquipmentPageModule,
+    Report1OtherPageModule,
+    CalculatorPageModule,
+    CostgraphPageModule
     
   ],
   providers: [

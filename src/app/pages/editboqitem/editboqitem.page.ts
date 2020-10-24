@@ -175,6 +175,7 @@ export class EditboqitemPage implements OnInit {
          price2 : doc.payload.doc.data().price2,
          subcatid : doc.payload.doc.data().subcatid,
          supplier : doc.payload.doc.data().supplier,
+         additionalsupplier : doc.payload.doc.data().additionalsupplier,
          unit : doc.payload.doc.data().unit,
          unit1 : doc.payload.doc.data().unit1,
          unit2 : doc.payload.doc.data().unit2
@@ -345,6 +346,7 @@ export class EditboqitemPage implements OnInit {
          price: doc.payload.doc.data().price,
          subcatid : doc.payload.doc.data().subcatid,
          supplier : doc.payload.doc.data().supplier,
+         additionalsupplier : doc.payload.doc.data().additionalsupplier,
          unit : doc.payload.doc.data().unit,
        })
        })
@@ -451,6 +453,7 @@ export class EditboqitemPage implements OnInit {
          price: doc.payload.doc.data().price,
          subcatid : doc.payload.doc.data().subcatid,
          supplier : doc.payload.doc.data().supplier,
+         additionalsupplier : doc.payload.doc.data().additionalsupplier,
          unit : doc.payload.doc.data().unit,
        })
        })
@@ -559,6 +562,7 @@ export class EditboqitemPage implements OnInit {
          price: doc.payload.doc.data().price,
          subcatid : doc.payload.doc.data().subcatid,
          supplier : doc.payload.doc.data().supplier,
+         additionalsupplier : doc.payload.doc.data().additionalsupplier,
          unit : doc.payload.doc.data().unit,
        })
        })

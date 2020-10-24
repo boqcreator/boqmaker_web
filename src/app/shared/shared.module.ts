@@ -22,6 +22,6 @@ import { DelRendererComponent } from '../del-renderer/del-renderer.component';
       libraries: ['places']
     })
   ],
-  exports:[Ng2SearchPipeModule , AgmCoreModule,NgxCurrencyModule, AgGridModule,]
+  exports:[Ng2SearchPipeModule , AgmCoreModule,NgxCurrencyModule, AgGridModule]
 })
 export class SharedModule { }

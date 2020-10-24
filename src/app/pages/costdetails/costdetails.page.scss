@@ -165,7 +165,7 @@ th, td {
 }
 
 .column1 {
-  width: 33%;
+  width: 30%;
   padding-left: 40px;
 }
 
@@ -230,7 +230,7 @@ th, td {
 .table100.ver1 td {
   font-family: Lato-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #505050;
   line-height: 1.4;
 }
 
@@ -286,7 +286,7 @@ th, td {
 .table100.ver2 td {
   font-family: Lato-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #505050;
   line-height: 1.4;
 }
 
@@ -337,7 +337,7 @@ th, td {
 .table100.ver3 td {
   font-family: Lato-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #505050;
   line-height: 1.4;
   background-color: #222222;
 }
@@ -395,7 +395,7 @@ th, td {
 .table100.ver4 td {
   font-family: Lato-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #505050;
   line-height: 1.4;
 }
 
@@ -449,7 +449,7 @@ th, td {
 .table100.ver5 td {
   font-family: Lato-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #505050;
   line-height: 1.4;
 
   background-color: #f7f7f7;
@@ -3529,4 +3529,21 @@ font-size: 12px;
     background-color: #dddddd;
   }
 
+}
+ion-button{
+  font-size: 12px;
+}
+.percentage{
+  border: solid 1px;
+    height: 30px;
+    background: white;
+    border-color: grey;
+    width: 65px;
+}
+
+.perMask{
+  margin-top: 5px;
+  position: absolute;
+  z-index: 1000;
+  margin-left: 38px;
 }

@@ -390,6 +390,11 @@ boq3AO = '';
   
 
   addboqitem(){
+    console.log(this.Addedmaterial)      
+    console.log(this.Addedlabour)
+    console.log(this.Addedequipment)
+    console.log(this.Addedother)
+    console.log(this.Addedsubcontractor)
     let cat = this.catList.find(x => x.id == this.CatID)
     let subcat = this.subcatList.find(x => x.id == this.SubcatID)
     let subsubcat = this.subsubcatList.find(x => x.id == this.SubsubcatID)
@@ -818,7 +823,7 @@ RemoveallMaterial(){
    var index = this.Addedlabour.findIndex(x => x.id == ele.id)
    ele.Per = 100
    ele.qty = 1
-   ele.note = ""
+   ele.note = "null"
    if(index === -1){
      this.Addedlabour.push(ele)
    }
@@ -926,7 +931,7 @@ RemoveallLabour(){
    var index = this.Addedequipment.findIndex(x => x.id == ele.id)
    ele.Per = 100
    ele.qty = 1
-   ele.note = ""
+   ele.note = "null"
    if(index === -1){
      this.Addedequipment.push(ele)
    }
@@ -1020,7 +1025,6 @@ RemoveallEquipment(){
        price: doc.payload.doc.data().price,
        subcatid : doc.payload.doc.data().subcatid,
        supplier : doc.payload.doc.data().supplier,
-       additionalsupplier : doc.payload.doc.data().additionalsupplier,
        unit : doc.payload.doc.data().unit,
      })
      })
@@ -1034,7 +1038,7 @@ RemoveallEquipment(){
    var index = this.Addedother.findIndex(x => x.id == ele.id)
    ele.Per = 100
    ele.qty = 1
-   ele.note = ""
+   ele.note = "null"
    if(index === -1){
      this.Addedother.push(ele)
    }
@@ -1140,7 +1144,7 @@ RemoveallOther(){
    var index = this.Addedsubcontractor.findIndex(x => x.id == ele.id)
    ele.Per = 100
    ele.qty = 1
-   ele.note = ""
+   ele.note = "null"
    if(index === -1){
      this.Addedsubcontractor.push(ele)
    }

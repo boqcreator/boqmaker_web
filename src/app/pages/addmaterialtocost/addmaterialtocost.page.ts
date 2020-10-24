@@ -92,6 +92,7 @@ export class AddmaterialtocostPage implements OnInit {
        price2 : doc.payload.doc.data().price2,
        subcatid : doc.payload.doc.data().subcatid,
        supplier : doc.payload.doc.data().supplier,
+       additionalsupplier : doc.payload.doc.data().additionalsupplier,
        unit : doc.payload.doc.data().unit,
        unit1 : doc.payload.doc.data().unit1,
        unit2 : doc.payload.doc.data().unit2
@@ -108,6 +109,8 @@ export class AddmaterialtocostPage implements OnInit {
    var index = this.Addedmaterial.findIndex(x => x.id == ele.id)
    if(index === -1){
      ele.qty = 1
+     ele.Per = 100
+     ele.WPer = 0
      this.Addedmaterial.push(ele)
    }
   })
@@ -126,6 +129,8 @@ SelectallMaterial(){
       var index = this.Addedmaterial.findIndex(x => x.id == ele.id)
       if(index === -1){
         ele.qty = 1
+        ele.Per = 100
+        ele.WPer = 0
         this.Addedmaterial.push(ele)
       }
      })
@@ -156,6 +161,7 @@ RemoveallMaterial(){
    this.Addedmaterial.forEach(element => {
      if(element.qty){
       this.materialtotal = (parseFloat(this.materialtotal) + (( parseFloat(element.price)  * parseFloat(element.qty))*(element.Per/100))).toFixed(3)
+      this.materialtotal = (parseFloat(this.materialtotal) + ((element.WPer/100))).toFixed(3)
      }
    });
   }
@@ -172,10 +178,10 @@ async addmaterial(){
 
   this.Addedmaterial.forEach((element, index, array) =>{
     this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).get().subscribe(value =>{
-     var checker = value.data().material.find(x => x.id == element.id)
+     var checker = value.data().extramaterial.find(x => x.id == element.id)
      if(!checker){
       this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).update({
-        material : firebase.firestore.FieldValue.arrayUnion({
+        extramaterial : firebase.firestore.FieldValue.arrayUnion({
           name: element.name,
           id : element.id,
           qty : 0,
@@ -185,8 +191,7 @@ async addmaterial(){
           aqty : element.qty,
           atotal : (element.qty*element.price),
         }),
-        MatotalPrice : value.data().MatotalPrice+(element.qty*element.price),
-        updatedon : new Date().toISOString()
+        mupdatedon : new Date().toISOString()
       })
      }else{
        alert(`${element.name} already exist!`)
@@ -194,7 +199,8 @@ async addmaterial(){
     })
     if (index === array.length -1){
       loading.dismiss();
-      this.modal.dismiss()
+      this.modal.dismiss();
+      alert("Added Successfully")
     };
   })
 

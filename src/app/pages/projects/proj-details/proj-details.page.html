@@ -33,6 +33,9 @@
     <ion-segment-button value="variation">
       <ion-label>Variation Details</ion-label>
     </ion-segment-button>
+    <ion-segment-button (click)="gotocostdetails()" >
+      <ion-label>Cost Details</ion-label>
+    </ion-segment-button>
   </ion-segment>
   <ion-grid>
     <ion-row style="margin-bottom: 200px;" >
@@ -425,7 +428,7 @@
        <ion-input [(ngModel)]="areacode" type="text"></ion-input>
      </ion-item>
        <!-- AREA MEASUREMENTS -->
-       <ion-segment [(ngModel)]="Areasegment" >
+       <ion-segment color="primary" mode="ios" [(ngModel)]="Areasegment" >
         <ion-segment-button value="am">
           <ion-label>Area Measurements</ion-label>
         </ion-segment-button>
@@ -434,6 +437,9 @@
         </ion-segment-button>
         <ion-segment-button value="eq">
           <ion-label>Extra quantities</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="sr">
+          <ion-label>Steel reinforcement</ion-label>
         </ion-segment-button>
         <ion-segment-button value="c1">
           <ion-label>Details 1</ion-label>
@@ -452,9 +458,10 @@
           
               <ion-row>
                 <ion-col size="3">
-                  <ion-item  >
+                  <ion-item>
                     <ion-label position="floating">Area Width</ion-label>
                     <ion-input [(ngModel)]="Unit_width" type="number"></ion-input>
+                    <ion-icon (click)="opencalculator('Unit_width')"  style="position: absolute;right:0;bottom:0; cursor: pointer;" size="small" slot="end" src="assets/icon/calculator.svg"></ion-icon>
                   </ion-item>
                 </ion-col>
                 <ion-col size=3 >
@@ -836,92 +843,97 @@
             </ion-list>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col>
-              <ion-item>
-                <ion-label class="ion-text-wrap" >Y6:</ion-label>
-                <ion-input [(ngModel)]="Y6" type="number"></ion-input>
-              </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label class="ion-text-wrap" >Y8:</ion-label>
-              <ion-input [(ngModel)]="Y8" type="number"></ion-input>
-            </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item>
-            <ion-label class="ion-text-wrap" >Y10:</ion-label>
-            <ion-input [(ngModel)]="Y10" type="number"></ion-input>
-          </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label class="ion-text-wrap" >Y12:</ion-label>
-          <ion-input [(ngModel)]="Y12" type="number"></ion-input>
-        </ion-item>
-    </ion-col>
-        </ion-row>
-        <ion-row>
-    <ion-col>
-      <ion-item>
-        <ion-label class="ion-text-wrap" >Y14:</ion-label>
-        <ion-input [(ngModel)]="Y14" type="number"></ion-input>
-      </ion-item>
-  </ion-col>
-   <ion-col>
-    <ion-item>
-      <ion-label class="ion-text-wrap" >Y16:</ion-label>
-      <ion-input [(ngModel)]="Y16" type="number"></ion-input>
-    </ion-item>
-   </ion-col>
-          <ion-col>
-              <ion-item>
-                <ion-label class="ion-text-wrap" >Y18:</ion-label>
-                <ion-input [(ngModel)]="Y18" type="number"></ion-input>
-              </ion-item>
-          </ion-col>
-          <ion-col>
-            <ion-item>
-              <ion-label class="ion-text-wrap" >Y20:</ion-label>
-              <ion-input [(ngModel)]="Y20" type="number"></ion-input>
-            </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label class="ion-text-wrap" >Y22:</ion-label>
-            <ion-input [(ngModel)]="Y22" type="number"></ion-input>
-          </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label class="ion-text-wrap" >Y25:</ion-label>
-          <ion-input [(ngModel)]="Y25" type="number"></ion-input>
-        </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item>
-        <ion-label class="ion-text-wrap" >Y28:</ion-label>
-        <ion-input [(ngModel)]="Y28" type="number"></ion-input>
-      </ion-item>
-  </ion-col>
-  <ion-col>
-    <ion-item>
-      <ion-label class="ion-text-wrap" >Y32:</ion-label>
-      <ion-input [(ngModel)]="Y32" type="number"></ion-input>
-    </ion-item>
-</ion-col>
-<ion-col>
-  <ion-item>
-    <ion-label class="ion-text-wrap" >Y40:</ion-label>
-    <ion-input [(ngModel)]="Y40" type="number"></ion-input>
-  </ion-item>
-</ion-col>
-        </ion-row>
         
       </div>
+
+            <!-- STEEL REIFORCEMENT  -->
+            <div style="margin-top : 5px;" *ngSwitchCase="'sr'">
+              <ion-row>
+                <ion-col class="extrasborders" >
+                    <ion-item>
+                      <ion-label class="ion-text-wrap" >6mm:</ion-label>
+                      <ion-input [(ngModel)]="Y6" type="number"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col class="extrasborders" >
+                  <ion-item>
+                    <ion-label class="ion-text-wrap" >8mm:</ion-label>
+                    <ion-input [(ngModel)]="Y8" type="number"></ion-input>
+                  </ion-item>
+              </ion-col>
+              <ion-col class="extrasborders" >
+                <ion-item>
+                  <ion-label class="ion-text-wrap" >10mm:</ion-label>
+                  <ion-input [(ngModel)]="Y10" type="number"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col class="extrasborders" >
+              <ion-item>
+                <ion-label class="ion-text-wrap" >12mm:</ion-label>
+                <ion-input [(ngModel)]="Y12" type="number"></ion-input>
+              </ion-item>
+          </ion-col>
+              </ion-row>
+              <ion-row>
+          <ion-col class="extrasborders" >
+            <ion-item>
+              <ion-label class="ion-text-wrap" >14mm:</ion-label>
+              <ion-input [(ngModel)]="Y14" type="number"></ion-input>
+            </ion-item>
+        </ion-col>
+         <ion-col class="extrasborders" >
+          <ion-item>
+            <ion-label class="ion-text-wrap" >16mm:</ion-label>
+            <ion-input [(ngModel)]="Y16" type="number"></ion-input>
+          </ion-item>
+         </ion-col>
+                <ion-col class="extrasborders" >
+                    <ion-item>
+                      <ion-label class="ion-text-wrap" >18mm:</ion-label>
+                      <ion-input [(ngModel)]="Y18" type="number"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col class="extrasborders" >
+                  <ion-item>
+                    <ion-label class="ion-text-wrap" >20mm:</ion-label>
+                    <ion-input [(ngModel)]="Y20" type="number"></ion-input>
+                  </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="extrasborders" >
+                <ion-item>
+                  <ion-label class="ion-text-wrap" >22mm:</ion-label>
+                  <ion-input [(ngModel)]="Y22" type="number"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col class="extrasborders" >
+              <ion-item>
+                <ion-label class="ion-text-wrap" >25mm:</ion-label>
+                <ion-input [(ngModel)]="Y25" type="number"></ion-input>
+              </ion-item>
+          </ion-col>
+          <ion-col class="extrasborders" >
+            <ion-item>
+              <ion-label class="ion-text-wrap" >28mm:</ion-label>
+              <ion-input [(ngModel)]="Y28" type="number"></ion-input>
+            </ion-item>
+        </ion-col>
+        <ion-col class="extrasborders" >
+          <ion-item>
+            <ion-label class="ion-text-wrap" >32mm:</ion-label>
+            <ion-input [(ngModel)]="Y32" type="number"></ion-input>
+          </ion-item>
+      </ion-col>
+      <ion-col class="extrasborders" >
+        <ion-item>
+          <ion-label class="ion-text-wrap" >40mm:</ion-label>
+          <ion-input [(ngModel)]="Y40" type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+              </ion-row>
+              
+            </div>
               
 
       <div style="margin-top : 5px;" *ngSwitchCase="'c1'">
@@ -1735,7 +1747,7 @@
          <div style="margin-top : 5px;" *ngSwitchCase="'item'">
           <ion-segment [(ngModel)]="segmentItemDetails" >
             <ion-segment-button value="list">
-              <ion-label>List</ion-label>
+              <ion-label>BOQ Items List</ion-label>
             </ion-segment-button>
             <ion-segment-button value="a2a">
               <ion-label>Add</ion-label>
@@ -1745,1228 +1757,1289 @@
 
           <div [ngSwitch]="segmentItemDetails">  
             <div style="margin-top : 5px;" *ngSwitchCase="'a2a'">
-              <ion-card>
-                <ion-segment [(ngModel)]="itemsegment" >
-                  <ion-segment-button value="finish">
-                    <ion-label>Finishes</ion-label>
-                  </ion-segment-button>
-                  <ion-segment-button value="qty">
-                    <ion-label>Quantity & Progress</ion-label>
-                  </ion-segment-button>
-                  <ion-segment-button value="extra">
-                    <ion-label>Extras</ion-label>
-                  </ion-segment-button>
-                  <ion-segment-button value="c1">
-                    <ion-label>Details 1</ion-label>
-                  </ion-segment-button>
-                  <ion-segment-button value="c2">
-                    <ion-label>Details 2</ion-label>
-                  </ion-segment-button>
-                  <ion-segment-button value="c3">
-                    <ion-label>Details 3</ion-label>
-                  </ion-segment-button>
-                </ion-segment>
-    
-    
-                <div [ngSwitch]="itemsegment">  
-                  <div style="margin-top : 5px;" *ngSwitchCase="'finish'">
-                     <ion-row>
-                       <ion-col>
-                         <ion-item>
-                           <ion-label position="floating">Ceiling%</ion-label>
-                           <ion-input [(ngModel)]="ceiling" type="number"></ion-input>
-                         </ion-item>
-                       </ion-col>
-                       <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">Floor%</ion-label>
-                          <ion-input [(ngModel)]="floor" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">Walls%</ion-label>
-                          <ion-input [(ngModel)]="walls" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                     </ion-row>
-                     <ion-row>
-                      <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Cornice%</ion-label>
-                         <ion-input [(ngModel)]="cornice" type="number"></ion-input>
-                       </ion-item>
-                     </ion-col>
-                     <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Skirting%</ion-label>
-                        <ion-input [(ngModel)]="skirting" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Shuttering%</ion-label>
-                        <ion-input [(ngModel)]="shuttering" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                      <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Block%</ion-label>
-                         <ion-input [(ngModel)]="block" type="number"></ion-input>
-                       </ion-item>
-                     </ion-col>
-                     <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Block DPC%</ion-label>
-                        <ion-input [(ngModel)]="blockdpc" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Concrete%</ion-label>
-                        <ion-input [(ngModel)]="concrete" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                      <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">Polythene%</ion-label>
-                         <ion-input [(ngModel)]="polythene" type="number"></ion-input>
-                       </ion-item>
-                     </ion-col>
-                     <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Bitumin%</ion-label>
-                        <ion-input [(ngModel)]="bitumin" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Steel%</ion-label>
-                        <ion-input [(ngModel)]="itemsteel" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Block bitumin%</ion-label>
-                        <ion-input [(ngModel)]="blockbitumin" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                      <ion-col>
-                       <ion-item>
-                         <ion-label position="floating">FILL_Percentage</ion-label>
-                         <ion-input [(ngModel)]="FILL_Percentage" type="number"></ion-input>
-                       </ion-item>
-                     </ion-col>
-                     <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">E_Percentage</ion-label>
-                        <ion-input [(ngModel)]="E_Percentage" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">I_DIS</ion-label>
-                        <ion-input [(ngModel)]="I_DIS" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">I_FACTOR</ion-label>
-                        <ion-input [(ngModel)]="I_FACTOR" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                     <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Concb_Percentage</ion-label>
-                        <ion-input [(ngModel)]="Concb_Percentage" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label position="floating">Exp_Percentage</ion-label>
-                        <ion-input [(ngModel)]="Exp_Percentage" type="number"></ion-input>
-                      </ion-item>
-                    </ion-col>
-                    </ion-row>
-                  </div>
-    
-                  <div style="margin-top : 5px;" *ngSwitchCase="'qty'">
-                    <ion-row>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">Quantity</ion-label>
-                          <ion-input [(ngModel)]="iqty" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">Percentage%</ion-label>
-                          <ion-input [(ngModel)]="itempercentage" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">Completion%</ion-label>
-                          <ion-input [(ngModel)]="completion" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">Precast</ion-label>
-                          <ion-input [(ngModel)]="itemprecast" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                      <ion-col>
+              <ion-segment [(ngModel)]="itemaddsegment" >
+                <ion-segment-button value="add">
+                  <ion-label>Form</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="excel">
+                  <ion-label>Excel Upload</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+              <div [ngSwitch]="itemaddsegment">  
+                <div style="margin-top : 5px;" *ngSwitchCase="'add'">
+                  <ion-card>
+                    <ion-segment [(ngModel)]="itemsegment" >
+                      <ion-segment-button value="finish">
+                        <ion-label>Finishes</ion-label>
+                      </ion-segment-button>
+                      <ion-segment-button value="qty">
+                        <ion-label>Quantity & Progress</ion-label>
+                      </ion-segment-button>
+                      <ion-segment-button value="extra">
+                        <ion-label>Extras</ion-label>
+                      </ion-segment-button>
+                      <ion-segment-button value="c1">
+                        <ion-label>Details 1</ion-label>
+                      </ion-segment-button>
+                      <ion-segment-button value="c2">
+                        <ion-label>Details 2</ion-label>
+                      </ion-segment-button>
+                      <ion-segment-button value="c3">
+                        <ion-label>Details 3</ion-label>
+                      </ion-segment-button>
+                    </ion-segment>
+        
+        
+                    <div [ngSwitch]="itemsegment">  
+                      <div style="margin-top : 5px;" *ngSwitchCase="'finish'">
+                         <ion-row>
+                           <ion-col>
+                             <ion-item>
+                               <ion-label position="floating">Ceiling%</ion-label>
+                               <ion-input [(ngModel)]="ceiling" type="number"></ion-input>
+                             </ion-item>
+                           </ion-col>
+                           <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">Floor%</ion-label>
+                              <ion-input [(ngModel)]="floor" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">Walls%</ion-label>
+                              <ion-input [(ngModel)]="walls" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                         </ion-row>
+                         <ion-row>
+                          <ion-col>
+                           <ion-item>
+                             <ion-label position="floating">Cornice%</ion-label>
+                             <ion-input [(ngModel)]="cornice" type="number"></ion-input>
+                           </ion-item>
+                         </ion-col>
+                         <ion-col>
                           <ion-item>
-                            <ion-label>EXISTING</ion-label>
-                            <ion-select [(ngModel)]="existing"  interface="popover" placeholder="Select">
+                            <ion-label position="floating">Skirting%</ion-label>
+                            <ion-input [(ngModel)]="skirting" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Shuttering%</ion-label>
+                            <ion-input [(ngModel)]="shuttering" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                          <ion-col>
+                           <ion-item>
+                             <ion-label position="floating">Block%</ion-label>
+                             <ion-input [(ngModel)]="block" type="number"></ion-input>
+                           </ion-item>
+                         </ion-col>
+                         <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Block DPC%</ion-label>
+                            <ion-input [(ngModel)]="blockdpc" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Concrete%</ion-label>
+                            <ion-input [(ngModel)]="concrete" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                          <ion-col>
+                           <ion-item>
+                             <ion-label position="floating">Polythene%</ion-label>
+                             <ion-input [(ngModel)]="polythene" type="number"></ion-input>
+                           </ion-item>
+                         </ion-col>
+                         <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Bitumin%</ion-label>
+                            <ion-input [(ngModel)]="bitumin" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Steel%</ion-label>
+                            <ion-input [(ngModel)]="itemsteel" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Block bitumin%</ion-label>
+                            <ion-input [(ngModel)]="blockbitumin" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                          <ion-col>
+                           <ion-item>
+                             <ion-label position="floating">FILL_Percentage</ion-label>
+                             <ion-input [(ngModel)]="FILL_Percentage" type="number"></ion-input>
+                           </ion-item>
+                         </ion-col>
+                         <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">E_Percentage</ion-label>
+                            <ion-input [(ngModel)]="E_Percentage" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">I_DIS</ion-label>
+                            <ion-input [(ngModel)]="I_DIS" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">I_FACTOR</ion-label>
+                            <ion-input [(ngModel)]="I_FACTOR" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                         <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Concb_Percentage</ion-label>
+                            <ion-input [(ngModel)]="Concb_Percentage" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label position="floating">Exp_Percentage</ion-label>
+                            <ion-input [(ngModel)]="Exp_Percentage" type="number"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        </ion-row>
+                      </div>
+        
+                      <div style="margin-top : 5px;" *ngSwitchCase="'qty'">
+                        <ion-row>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">Quantity</ion-label>
+                              <ion-input [(ngModel)]="iqty" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">Percentage%</ion-label>
+                              <ion-input [(ngModel)]="itempercentage" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">Completion%</ion-label>
+                              <ion-input [(ngModel)]="completion" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">Precast</ion-label>
+                              <ion-input [(ngModel)]="itemprecast" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                          <ion-col>
+                              <ion-item>
+                                <ion-label>EXISTING</ion-label>
+                                <ion-select [(ngModel)]="existing"  interface="popover" placeholder="Select">
+                                  <ion-select-option value=true>Yes</ion-select-option>
+                                  <ion-select-option value=false>No</ion-select-option>
+                                </ion-select>
+                              </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label>EXISTING 1</ion-label>
+                              <ion-select [(ngModel)]="existing1"   interface="popover" placeholder="Select">
+                                <ion-select-option value=true>Yes</ion-select-option>
+                                <ion-select-option value=false>No</ion-select-option>
+                              </ion-select>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col>
+                          <ion-item>
+                            <ion-label>EXISTING 2</ion-label>
+                            <ion-select [(ngModel)]="existing2"  interface="popover" placeholder="Select">
                               <ion-select-option value=true>Yes</ion-select-option>
                               <ion-select-option value=false>No</ion-select-option>
                             </ion-select>
                           </ion-item>
                       </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label>EXISTING 1</ion-label>
-                          <ion-select [(ngModel)]="existing1"   interface="popover" placeholder="Select">
-                            <ion-select-option value=true>Yes</ion-select-option>
-                            <ion-select-option value=false>No</ion-select-option>
-                          </ion-select>
-                        </ion-item>
-                    </ion-col>
-                    <ion-col>
-                      <ion-item>
-                        <ion-label>EXISTING 2</ion-label>
-                        <ion-select [(ngModel)]="existing2"  interface="popover" placeholder="Select">
-                          <ion-select-option value=true>Yes</ion-select-option>
-                          <ion-select-option value=false>No</ion-select-option>
-                        </ion-select>
-                      </ion-item>
-                  </ion-col>
-                    </ion-row>
-                  </div>
-    
-                  <div style="margin-top : 5px;" *ngSwitchCase="'extra'">
-                    <ion-row>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">BSP%</ion-label>
-                          <ion-input [(ngModel)]="bsp" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SSP1%</ion-label>
-                          <ion-input [(ngModel)]="ssp1" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SSP2%</ion-label>
-                          <ion-input [(ngModel)]="ssp2" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SSP3%</ion-label>
-                          <ion-input [(ngModel)]="ssp3" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SSP4%</ion-label>
-                          <ion-input [(ngModel)]="ssp4" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">TSP%</ion-label>
-                          <ion-input [(ngModel)]="tsp" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">BPP%</ion-label>
-                          <ion-input [(ngModel)]="bpp" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SPP1%</ion-label>
-                          <ion-input [(ngModel)]="spp1" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SPP2%</ion-label>
-                          <ion-input [(ngModel)]="spp2" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SPP3%</ion-label>
-                          <ion-input [(ngModel)]="spp3" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SPP4%</ion-label>
-                          <ion-input [(ngModel)]="spp4" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">TPP%</ion-label>
-                          <ion-input [(ngModel)]="tpp" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">BBP%</ion-label>
-                          <ion-input [(ngModel)]="bbp" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SBP1%</ion-label>
-                          <ion-input [(ngModel)]="sbp1" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SBP2%</ion-label>
-                          <ion-input [(ngModel)]="sbp2" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SBP3%</ion-label>
-                          <ion-input [(ngModel)]="sbp3" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SBP4%</ion-label>
-                          <ion-input [(ngModel)]="sbp4" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">TEP%</ion-label>
-                          <ion-input [(ngModel)]="tep" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">TBP%</ion-label>
-                          <ion-input [(ngModel)]="tbp" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">BEP%</ion-label>
-                          <ion-input [(ngModel)]="bep" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-    
-                    <ion-row>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SEP1%</ion-label>
-                          <ion-input [(ngModel)]="sep1" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SEP2%</ion-label>
-                          <ion-input [(ngModel)]="sep2" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SEP3%</ion-label>
-                          <ion-input [(ngModel)]="sep3" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col>
-                        <ion-item>
-                          <ion-label position="floating">SEP4%</ion-label>
-                          <ion-input [(ngModel)]="sep4" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                  
-                  
-                  </div>
-    
-                  <div style="margin-top : 5px;" *ngSwitchCase="'c1'">
-    
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1A</ion-label>
-                          <ion-input [(ngModel)]="ich1A" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1B</ion-label>
-                          <ion-input [(ngModel)]="ich1B" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1C</ion-label>
-                          <ion-input [(ngModel)]="ich1C" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1D</ion-label>
-                          <ion-input [(ngModel)]="ich1D" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1E</ion-label>
-                          <ion-input [(ngModel)]="ich1E" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1F</ion-label>
-                          <ion-input [(ngModel)]="ich1F" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1G</ion-label>
-                          <ion-input [(ngModel)]="ich1G" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1H</ion-label>
-                          <ion-input [(ngModel)]="ich1H" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1I</ion-label>
-                          <ion-input [(ngModel)]="ich1I" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1J</ion-label>
-                          <ion-input [(ngModel)]="ich1J" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1K</ion-label>
-                          <ion-input [(ngModel)]="ich1K" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1L</ion-label>
-                          <ion-input [(ngModel)]="ich1L" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1M</ion-label>
-                          <ion-input [(ngModel)]="ich1M" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1N</ion-label>
-                          <ion-input [(ngModel)]="ich1N" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1O</ion-label>
-                          <ion-input [(ngModel)]="ich1O" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1P</ion-label>
-                          <ion-input [(ngModel)]="ich1P" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1Q</ion-label>
-                          <ion-input [(ngModel)]="ich1Q" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1R</ion-label>
-                          <ion-input [(ngModel)]="ich1R" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1S</ion-label>
-                          <ion-input [(ngModel)]="ich1S" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1T</ion-label>
-                          <ion-input [(ngModel)]="ich1T" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1U</ion-label>
-                          <ion-input [(ngModel)]="ich1U" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1V</ion-label>
-                          <ion-input [(ngModel)]="ich1V" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1W</ion-label>
-                          <ion-input [(ngModel)]="ich1W" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1X</ion-label>
-                          <ion-input [(ngModel)]="ich1X" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1Y</ion-label>
-                          <ion-input [(ngModel)]="ich1Y" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1Z</ion-label>
-                          <ion-input [(ngModel)]="ich1Z" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AA</ion-label>
-                          <ion-input [(ngModel)]="ich1AA" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AB</ion-label>
-                          <ion-input [(ngModel)]="ich1AB" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AC</ion-label>
-                          <ion-input [(ngModel)]="ich1AC" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AD</ion-label>
-                          <ion-input [(ngModel)]="ich1AD" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AE</ion-label>
-                          <ion-input [(ngModel)]="ich1Y" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AF</ion-label>
-                          <ion-input [(ngModel)]="ich1Z" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AG</ion-label>
-                          <ion-input [(ngModel)]="ich1AG" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AH</ion-label>
-                          <ion-input [(ngModel)]="ich1AH" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AI</ion-label>
-                          <ion-input [(ngModel)]="ich1AI" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AJ</ion-label>
-                          <ion-input [(ngModel)]="ich1AJ" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AK</ion-label>
-                          <ion-input [(ngModel)]="ich1AK" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AL</ion-label>
-                          <ion-input [(ngModel)]="ich1AL" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AM</ion-label>
-                          <ion-input [(ngModel)]="ich1AM" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AN</ion-label>
-                          <ion-input [(ngModel)]="ich1AN" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich1AO</ion-label>
-                          <ion-input [(ngModel)]="ich1AO" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                  </div>
-            
-            
-                  <div style="margin-top : 5px;" *ngSwitchCase="'c2'">
-            
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2A</ion-label>
-                          <ion-input [(ngModel)]="ich2A" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2B</ion-label>
-                          <ion-input [(ngModel)]="ich2B" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2C</ion-label>
-                          <ion-input [(ngModel)]="ich2C" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2D</ion-label>
-                          <ion-input [(ngModel)]="ich2D" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2E</ion-label>
-                          <ion-input [(ngModel)]="ich2E" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2F</ion-label>
-                          <ion-input [(ngModel)]="ich2F" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2G</ion-label>
-                          <ion-input [(ngModel)]="ich2G" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2H</ion-label>
-                          <ion-input [(ngModel)]="ich2H" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2I</ion-label>
-                          <ion-input [(ngModel)]="ich2I" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2J</ion-label>
-                          <ion-input [(ngModel)]="ich2J" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2K</ion-label>
-                          <ion-input [(ngModel)]="ich2K" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2L</ion-label>
-                          <ion-input [(ngModel)]="ich2L" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2M</ion-label>
-                          <ion-input [(ngModel)]="ich2M" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2N</ion-label>
-                          <ion-input [(ngModel)]="ich2N" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2O</ion-label>
-                          <ion-input [(ngModel)]="ich2O" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2P</ion-label>
-                          <ion-input [(ngModel)]="ich2P" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2Q</ion-label>
-                          <ion-input [(ngModel)]="ich2Q" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2R</ion-label>
-                          <ion-input [(ngModel)]="ich2R" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2S</ion-label>
-                          <ion-input [(ngModel)]="ich2S" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2T</ion-label>
-                          <ion-input [(ngModel)]="ich2T" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2U</ion-label>
-                          <ion-input [(ngModel)]="ich2U" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2V</ion-label>
-                          <ion-input [(ngModel)]="ich2V" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2W</ion-label>
-                          <ion-input [(ngModel)]="ich2W" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2X</ion-label>
-                          <ion-input [(ngModel)]="ich2X" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2Y</ion-label>
-                          <ion-input [(ngModel)]="ich2Y" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2Z</ion-label>
-                          <ion-input [(ngModel)]="ich2Z" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AA</ion-label>
-                          <ion-input [(ngModel)]="ich2AA" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AB</ion-label>
-                          <ion-input [(ngModel)]="ich2AB" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AC</ion-label>
-                          <ion-input [(ngModel)]="ich2AC" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AD</ion-label>
-                          <ion-input [(ngModel)]="ich2AD" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AE</ion-label>
-                          <ion-input [(ngModel)]="ich2Y" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AF</ion-label>
-                          <ion-input [(ngModel)]="ich2Z" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AG</ion-label>
-                          <ion-input [(ngModel)]="ich2AG" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AH</ion-label>
-                          <ion-input [(ngModel)]="ich2AH" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AI</ion-label>
-                          <ion-input [(ngModel)]="ich2AI" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AJ</ion-label>
-                          <ion-input [(ngModel)]="ich2AJ" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AK</ion-label>
-                          <ion-input [(ngModel)]="ich2AK" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AL</ion-label>
-                          <ion-input [(ngModel)]="ich2AL" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AM</ion-label>
-                          <ion-input [(ngModel)]="ich2AM" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AN</ion-label>
-                          <ion-input [(ngModel)]="ich2AN" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich2AO</ion-label>
-                          <ion-input [(ngModel)]="ich2AO" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                  </div>
-            
-            
-                  <div style="margin-top : 5px;" *ngSwitchCase="'c3'">
-            
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3A</ion-label>
-                          <ion-input [(ngModel)]="ich3A" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3B</ion-label>
-                          <ion-input [(ngModel)]="ich3B" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3C</ion-label>
-                          <ion-input [(ngModel)]="ich3C" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3D</ion-label>
-                          <ion-input [(ngModel)]="ich3D" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3E</ion-label>
-                          <ion-input [(ngModel)]="ich3E" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3F</ion-label>
-                          <ion-input [(ngModel)]="ich3F" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3G</ion-label>
-                          <ion-input [(ngModel)]="ich3G" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3H</ion-label>
-                          <ion-input [(ngModel)]="ich3H" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3I</ion-label>
-                          <ion-input [(ngModel)]="ich3I" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3J</ion-label>
-                          <ion-input [(ngModel)]="ich3J" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3K</ion-label>
-                          <ion-input [(ngModel)]="ich3K" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3L</ion-label>
-                          <ion-input [(ngModel)]="ich3L" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3M</ion-label>
-                          <ion-input [(ngModel)]="ich3M" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3N</ion-label>
-                          <ion-input [(ngModel)]="ich3N" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3O</ion-label>
-                          <ion-input [(ngModel)]="ich3O" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3P</ion-label>
-                          <ion-input [(ngModel)]="ich3P" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3Q</ion-label>
-                          <ion-input [(ngModel)]="ich3Q" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3R</ion-label>
-                          <ion-input [(ngModel)]="ich3R" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3S</ion-label>
-                          <ion-input [(ngModel)]="ich3S" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3T</ion-label>
-                          <ion-input [(ngModel)]="ich3T" type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3U</ion-label>
-                          <ion-input [(ngModel)]="ich3U" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3V</ion-label>
-                          <ion-input [(ngModel)]="ich3V" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3W</ion-label>
-                          <ion-input [(ngModel)]="ich3W" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3X</ion-label>
-                          <ion-input [(ngModel)]="ich3X" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3Y</ion-label>
-                          <ion-input [(ngModel)]="ich3Y" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3Z</ion-label>
-                          <ion-input [(ngModel)]="ich3Z" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AA</ion-label>
-                          <ion-input [(ngModel)]="ich3AA" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AB</ion-label>
-                          <ion-input [(ngModel)]="ich3AB" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AC</ion-label>
-                          <ion-input [(ngModel)]="ich3AC" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AD</ion-label>
-                          <ion-input [(ngModel)]="ich3AD" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AE</ion-label>
-                          <ion-input [(ngModel)]="ich3Y" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AF</ion-label>
-                          <ion-input [(ngModel)]="ich3Z" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AG</ion-label>
-                          <ion-input [(ngModel)]="ich3AG" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AH</ion-label>
-                          <ion-input [(ngModel)]="ich3AH" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AI</ion-label>
-                          <ion-input [(ngModel)]="ich3AI" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AJ</ion-label>
-                          <ion-input [(ngModel)]="ich3AJ" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AK</ion-label>
-                          <ion-input [(ngModel)]="ich3AK" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AL</ion-label>
-                          <ion-input [(ngModel)]="ich3AL" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AM</ion-label>
-                          <ion-input [(ngModel)]="ich3AM" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AN</ion-label>
-                          <ion-input [(ngModel)]="ich3AN" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size=2>
-                        <ion-item>
-                          <ion-label position="floating" >ich3AO</ion-label>
-                          <ion-input [(ngModel)]="ich3AO" type="text"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                    </ion-row>
-                  </div>
-    
-                  </div>
-    
-              </ion-card>
-            <ion-button expand="block" (click)="addItem()" >Add</ion-button>
+                        </ion-row>
+                      </div>
+        
+                      <div style="margin-top : 5px;" *ngSwitchCase="'extra'">
+                        <ion-row>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">BSP%</ion-label>
+                              <ion-input [(ngModel)]="bsp" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SSP1%</ion-label>
+                              <ion-input [(ngModel)]="ssp1" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SSP2%</ion-label>
+                              <ion-input [(ngModel)]="ssp2" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SSP3%</ion-label>
+                              <ion-input [(ngModel)]="ssp3" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SSP4%</ion-label>
+                              <ion-input [(ngModel)]="ssp4" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">TSP%</ion-label>
+                              <ion-input [(ngModel)]="tsp" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">BPP%</ion-label>
+                              <ion-input [(ngModel)]="bpp" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SPP1%</ion-label>
+                              <ion-input [(ngModel)]="spp1" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SPP2%</ion-label>
+                              <ion-input [(ngModel)]="spp2" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SPP3%</ion-label>
+                              <ion-input [(ngModel)]="spp3" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SPP4%</ion-label>
+                              <ion-input [(ngModel)]="spp4" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">TPP%</ion-label>
+                              <ion-input [(ngModel)]="tpp" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">BBP%</ion-label>
+                              <ion-input [(ngModel)]="bbp" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SBP1%</ion-label>
+                              <ion-input [(ngModel)]="sbp1" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SBP2%</ion-label>
+                              <ion-input [(ngModel)]="sbp2" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SBP3%</ion-label>
+                              <ion-input [(ngModel)]="sbp3" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SBP4%</ion-label>
+                              <ion-input [(ngModel)]="sbp4" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">TEP%</ion-label>
+                              <ion-input [(ngModel)]="tep" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">TBP%</ion-label>
+                              <ion-input [(ngModel)]="tbp" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">BEP%</ion-label>
+                              <ion-input [(ngModel)]="bep" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+        
+                        <ion-row>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SEP1%</ion-label>
+                              <ion-input [(ngModel)]="sep1" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SEP2%</ion-label>
+                              <ion-input [(ngModel)]="sep2" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SEP3%</ion-label>
+                              <ion-input [(ngModel)]="sep3" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col>
+                            <ion-item>
+                              <ion-label position="floating">SEP4%</ion-label>
+                              <ion-input [(ngModel)]="sep4" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                      
+                      
+                      </div>
+        
+                      <div style="margin-top : 5px;" *ngSwitchCase="'c1'">
+        
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1A</ion-label>
+                              <ion-input [(ngModel)]="ich1A" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1B</ion-label>
+                              <ion-input [(ngModel)]="ich1B" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1C</ion-label>
+                              <ion-input [(ngModel)]="ich1C" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1D</ion-label>
+                              <ion-input [(ngModel)]="ich1D" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1E</ion-label>
+                              <ion-input [(ngModel)]="ich1E" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1F</ion-label>
+                              <ion-input [(ngModel)]="ich1F" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1G</ion-label>
+                              <ion-input [(ngModel)]="ich1G" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1H</ion-label>
+                              <ion-input [(ngModel)]="ich1H" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1I</ion-label>
+                              <ion-input [(ngModel)]="ich1I" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1J</ion-label>
+                              <ion-input [(ngModel)]="ich1J" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1K</ion-label>
+                              <ion-input [(ngModel)]="ich1K" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1L</ion-label>
+                              <ion-input [(ngModel)]="ich1L" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1M</ion-label>
+                              <ion-input [(ngModel)]="ich1M" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1N</ion-label>
+                              <ion-input [(ngModel)]="ich1N" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1O</ion-label>
+                              <ion-input [(ngModel)]="ich1O" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1P</ion-label>
+                              <ion-input [(ngModel)]="ich1P" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1Q</ion-label>
+                              <ion-input [(ngModel)]="ich1Q" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1R</ion-label>
+                              <ion-input [(ngModel)]="ich1R" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1S</ion-label>
+                              <ion-input [(ngModel)]="ich1S" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1T</ion-label>
+                              <ion-input [(ngModel)]="ich1T" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1U</ion-label>
+                              <ion-input [(ngModel)]="ich1U" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1V</ion-label>
+                              <ion-input [(ngModel)]="ich1V" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1W</ion-label>
+                              <ion-input [(ngModel)]="ich1W" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1X</ion-label>
+                              <ion-input [(ngModel)]="ich1X" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1Y</ion-label>
+                              <ion-input [(ngModel)]="ich1Y" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1Z</ion-label>
+                              <ion-input [(ngModel)]="ich1Z" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AA</ion-label>
+                              <ion-input [(ngModel)]="ich1AA" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AB</ion-label>
+                              <ion-input [(ngModel)]="ich1AB" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AC</ion-label>
+                              <ion-input [(ngModel)]="ich1AC" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AD</ion-label>
+                              <ion-input [(ngModel)]="ich1AD" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AE</ion-label>
+                              <ion-input [(ngModel)]="ich1Y" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AF</ion-label>
+                              <ion-input [(ngModel)]="ich1Z" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AG</ion-label>
+                              <ion-input [(ngModel)]="ich1AG" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AH</ion-label>
+                              <ion-input [(ngModel)]="ich1AH" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AI</ion-label>
+                              <ion-input [(ngModel)]="ich1AI" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AJ</ion-label>
+                              <ion-input [(ngModel)]="ich1AJ" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AK</ion-label>
+                              <ion-input [(ngModel)]="ich1AK" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AL</ion-label>
+                              <ion-input [(ngModel)]="ich1AL" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AM</ion-label>
+                              <ion-input [(ngModel)]="ich1AM" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AN</ion-label>
+                              <ion-input [(ngModel)]="ich1AN" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich1AO</ion-label>
+                              <ion-input [(ngModel)]="ich1AO" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                      </div>
+                
+                
+                      <div style="margin-top : 5px;" *ngSwitchCase="'c2'">
+                
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2A</ion-label>
+                              <ion-input [(ngModel)]="ich2A" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2B</ion-label>
+                              <ion-input [(ngModel)]="ich2B" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2C</ion-label>
+                              <ion-input [(ngModel)]="ich2C" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2D</ion-label>
+                              <ion-input [(ngModel)]="ich2D" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2E</ion-label>
+                              <ion-input [(ngModel)]="ich2E" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2F</ion-label>
+                              <ion-input [(ngModel)]="ich2F" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2G</ion-label>
+                              <ion-input [(ngModel)]="ich2G" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2H</ion-label>
+                              <ion-input [(ngModel)]="ich2H" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2I</ion-label>
+                              <ion-input [(ngModel)]="ich2I" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2J</ion-label>
+                              <ion-input [(ngModel)]="ich2J" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2K</ion-label>
+                              <ion-input [(ngModel)]="ich2K" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2L</ion-label>
+                              <ion-input [(ngModel)]="ich2L" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2M</ion-label>
+                              <ion-input [(ngModel)]="ich2M" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2N</ion-label>
+                              <ion-input [(ngModel)]="ich2N" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2O</ion-label>
+                              <ion-input [(ngModel)]="ich2O" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2P</ion-label>
+                              <ion-input [(ngModel)]="ich2P" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2Q</ion-label>
+                              <ion-input [(ngModel)]="ich2Q" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2R</ion-label>
+                              <ion-input [(ngModel)]="ich2R" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2S</ion-label>
+                              <ion-input [(ngModel)]="ich2S" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2T</ion-label>
+                              <ion-input [(ngModel)]="ich2T" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2U</ion-label>
+                              <ion-input [(ngModel)]="ich2U" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2V</ion-label>
+                              <ion-input [(ngModel)]="ich2V" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2W</ion-label>
+                              <ion-input [(ngModel)]="ich2W" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2X</ion-label>
+                              <ion-input [(ngModel)]="ich2X" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2Y</ion-label>
+                              <ion-input [(ngModel)]="ich2Y" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2Z</ion-label>
+                              <ion-input [(ngModel)]="ich2Z" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AA</ion-label>
+                              <ion-input [(ngModel)]="ich2AA" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AB</ion-label>
+                              <ion-input [(ngModel)]="ich2AB" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AC</ion-label>
+                              <ion-input [(ngModel)]="ich2AC" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AD</ion-label>
+                              <ion-input [(ngModel)]="ich2AD" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AE</ion-label>
+                              <ion-input [(ngModel)]="ich2Y" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AF</ion-label>
+                              <ion-input [(ngModel)]="ich2Z" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AG</ion-label>
+                              <ion-input [(ngModel)]="ich2AG" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AH</ion-label>
+                              <ion-input [(ngModel)]="ich2AH" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AI</ion-label>
+                              <ion-input [(ngModel)]="ich2AI" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AJ</ion-label>
+                              <ion-input [(ngModel)]="ich2AJ" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AK</ion-label>
+                              <ion-input [(ngModel)]="ich2AK" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AL</ion-label>
+                              <ion-input [(ngModel)]="ich2AL" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AM</ion-label>
+                              <ion-input [(ngModel)]="ich2AM" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AN</ion-label>
+                              <ion-input [(ngModel)]="ich2AN" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich2AO</ion-label>
+                              <ion-input [(ngModel)]="ich2AO" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                      </div>
+                
+                
+                      <div style="margin-top : 5px;" *ngSwitchCase="'c3'">
+                
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3A</ion-label>
+                              <ion-input [(ngModel)]="ich3A" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3B</ion-label>
+                              <ion-input [(ngModel)]="ich3B" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3C</ion-label>
+                              <ion-input [(ngModel)]="ich3C" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3D</ion-label>
+                              <ion-input [(ngModel)]="ich3D" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3E</ion-label>
+                              <ion-input [(ngModel)]="ich3E" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3F</ion-label>
+                              <ion-input [(ngModel)]="ich3F" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3G</ion-label>
+                              <ion-input [(ngModel)]="ich3G" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3H</ion-label>
+                              <ion-input [(ngModel)]="ich3H" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3I</ion-label>
+                              <ion-input [(ngModel)]="ich3I" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3J</ion-label>
+                              <ion-input [(ngModel)]="ich3J" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3K</ion-label>
+                              <ion-input [(ngModel)]="ich3K" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3L</ion-label>
+                              <ion-input [(ngModel)]="ich3L" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3M</ion-label>
+                              <ion-input [(ngModel)]="ich3M" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3N</ion-label>
+                              <ion-input [(ngModel)]="ich3N" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3O</ion-label>
+                              <ion-input [(ngModel)]="ich3O" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3P</ion-label>
+                              <ion-input [(ngModel)]="ich3P" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3Q</ion-label>
+                              <ion-input [(ngModel)]="ich3Q" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3R</ion-label>
+                              <ion-input [(ngModel)]="ich3R" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3S</ion-label>
+                              <ion-input [(ngModel)]="ich3S" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3T</ion-label>
+                              <ion-input [(ngModel)]="ich3T" type="number"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3U</ion-label>
+                              <ion-input [(ngModel)]="ich3U" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3V</ion-label>
+                              <ion-input [(ngModel)]="ich3V" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3W</ion-label>
+                              <ion-input [(ngModel)]="ich3W" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3X</ion-label>
+                              <ion-input [(ngModel)]="ich3X" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3Y</ion-label>
+                              <ion-input [(ngModel)]="ich3Y" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3Z</ion-label>
+                              <ion-input [(ngModel)]="ich3Z" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AA</ion-label>
+                              <ion-input [(ngModel)]="ich3AA" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AB</ion-label>
+                              <ion-input [(ngModel)]="ich3AB" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AC</ion-label>
+                              <ion-input [(ngModel)]="ich3AC" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AD</ion-label>
+                              <ion-input [(ngModel)]="ich3AD" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AE</ion-label>
+                              <ion-input [(ngModel)]="ich3Y" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AF</ion-label>
+                              <ion-input [(ngModel)]="ich3Z" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AG</ion-label>
+                              <ion-input [(ngModel)]="ich3AG" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AH</ion-label>
+                              <ion-input [(ngModel)]="ich3AH" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AI</ion-label>
+                              <ion-input [(ngModel)]="ich3AI" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AJ</ion-label>
+                              <ion-input [(ngModel)]="ich3AJ" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                        <ion-row>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AK</ion-label>
+                              <ion-input [(ngModel)]="ich3AK" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AL</ion-label>
+                              <ion-input [(ngModel)]="ich3AL" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AM</ion-label>
+                              <ion-input [(ngModel)]="ich3AM" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AN</ion-label>
+                              <ion-input [(ngModel)]="ich3AN" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                          <ion-col size=2>
+                            <ion-item>
+                              <ion-label position="floating" >ich3AO</ion-label>
+                              <ion-input [(ngModel)]="ich3AO" type="text"></ion-input>
+                            </ion-item>
+                          </ion-col>
+                        </ion-row>
+                      </div>
+        
+                      </div>
+        
+                  </ion-card>
+                <ion-button expand="block" (click)="addItem()" >Add</ion-button>
+                </div>
+                <div style="margin-top : 5px;" *ngSwitchCase="'excel'">
+                  <ion-item>
+                    <ion-label>Choose excel .XLSX file to import items</ion-label>
+                    <input type="file" (change)="onFileChange($event)" multiple="false" />
+                  </ion-item>
+                  <ion-button expand="block" (click)="Uploadexcel()" >Upload</ion-button>
+                </div>
+                </div>
 
             </div>
 
             <div style="margin-top : 5px;" *ngSwitchCase="'list'">
-              <ion-searchbar [(ngModel)]="termId" placeholder="Search" ></ion-searchbar>
-              <table style="width:100%">
-                <tr>
-                  <th>Name</th>
-                  <th>Code</th>
-                  <th>Area</th>
-                  <th>Quantity</th>
-                  <th>Unit</th>
-                  <th>Price</th>
-                  <th>Action</th>
-                </tr>
-                <tr *ngFor="let item of myItemsList | filter:termId" >
-                  <td>
-                    <ion-row>
-                      <ion-col size="3">
-                        <ion-avatar style="--border-radius: 10px; height: 30px;width: 30px;">
-                          <img [src]="item.item.itemdetails.image" />
-                        </ion-avatar>
-                      </ion-col>
-                      <ion-col size="9">
-                        <ion-label style="font-size: smaller;" > {{ item.item.itemdetails.name }}</ion-label>
-                      </ion-col>
-                    </ion-row>
-                  </td>
-                  
-                  <td>{{ item.item.itemdetails.code }}</td>
-                  <td> {{item.areaname+"("+item.code+")"  }} </td>
-                  <td style="cursor: pointer;"  (click)="gototable(item)" >{{ item.fqty }}</td>
-                  <td>{{ item.item.itemdetails.unit }}</td>
-                  <td>{{ item.item.itemdetails.price*item.fqty | number:'0.0-3' }}</td>
-                  <td style="text-align: center; align-items: center;" >
-                    <ion-button class="editbtn1" (click)="editItem(item)" fill="clear">
-                      <ion-icon slot="icon-only" name="create"></ion-icon>
-                    </ion-button>
-                    <ion-button class="editbtn1" (click)="delItem(item)" color="danger" fill="clear">
-                      <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
-                    </ion-button>
-                     </td>
-                </tr>
-              </table>
+              <ion-segment [(ngModel)]="segmentlist" >
+                <ion-segment-button value="form">
+                  <ion-label>BOQ Items</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="excel">
+                  <ion-label>Excel Uploaded Items</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+              <div [ngSwitch]="segmentlist">  
+                <div style="margin-top : 5px;" *ngSwitchCase="'form'">
+                  <ion-searchbar [(ngModel)]="termId" placeholder="Search" ></ion-searchbar>
+                  <table style="width:100%">
+                    <tr>
+                      <th>Name</th>
+                      <th>Code</th>
+                      <th>Area</th>
+                      <th>Quantity</th>
+                      <th>Unit</th>
+                      <th>Price</th>
+                      <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let item of myItemsList | filter:termId" >
+                      <td>
+                        <ion-row>
+                          <ion-col size="3">
+                            <ion-avatar style="--border-radius: 10px; height: 30px;width: 30px;">
+                              <img [src]="item.item.itemdetails.image" />
+                            </ion-avatar>
+                          </ion-col>
+                          <ion-col size="9">
+                            <ion-label style="font-size: smaller;" > {{ item.item.itemdetails.name }}</ion-label>
+                          </ion-col>
+                        </ion-row>
+                      </td>
+                      
+                      <td>{{ item.item.itemdetails.code }}</td>
+                      <td> {{item.areaname+"("+item.code+")"  }} </td>
+                      <td style="cursor: pointer;"  (click)="gototable(item)" >{{ item.fqty }}</td>
+                      <td>{{ item.item.itemdetails.unit }}</td>
+                      <td>{{ item.item.itemdetails.price*item.fqty | number:'0.0-3' }}</td>
+                      <td style="text-align: center; align-items: center;" >
+                        <ion-button class="editbtn1" (click)="editItem(item)" fill="clear">
+                          <ion-icon slot="icon-only" name="create"></ion-icon>
+                        </ion-button>
+                        <ion-button class="editbtn1" (click)="delItem(item)" color="danger" fill="clear">
+                          <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+                        </ion-button>
+                         </td>
+                    </tr>
+                  </table>
+                </div>
+                <div style="margin-top : 5px;" *ngSwitchCase="'excel'">
+                  <ion-searchbar [(ngModel)]="termexcel" placeholder="Search" ></ion-searchbar>
+                  <table style="width:100%">
+                    <tr>
+                      <th>Des</th>
+                      <th>Code</th>
+                      <th>Quantity</th>
+                      <th>Unit</th>
+                      <th>Rate</th>
+                      <th>Amount</th>
+                      <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let item of excelitemList | filter:termexcel" >
+                      <td>{{item.des}}</td>
+                      <td>{{ item.code }}</td>
+                      <td> {{item.qty  }} </td>
+                      <td> {{item.unit  }} </td>
+                      <td> {{item.rate  }} </td>
+                      <td> {{item.amount  }} </td>
+                      <td style="text-align: center; align-items: center;" >
+                        <ion-button class="editbtn1" (click)="editexcelItem(item)" fill="clear">
+                          <ion-icon slot="icon-only" name="create"></ion-icon>
+                        </ion-button>
+                        <ion-button class="editbtn1" (click)="delexcelItem(item)" color="danger" fill="clear">
+                          <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+                        </ion-button>
+                         </td>
+                    </tr>
+                  </table>
+                </div>
+                </div>
             </div>
 
             </div>
@@ -4544,7 +4617,7 @@
                          </ion-chip>
                         </td>
                         <td>{{ aitem.unit }}</td>
-                        <td>{{ aitem.price }}</td>
+                        <td>{{ aitem.price | number:'0.0-3' }}</td>
                       </tr>
         
                     </table>

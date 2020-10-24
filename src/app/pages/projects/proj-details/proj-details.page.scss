@@ -37,6 +37,10 @@ th ,td {
     border: solid 1px blue;
 }
 
+.extrasbordersmm{
+  border: solid 1px rgb(218, 177, 74);
+}
+
 ion-list-header{
     ion-label{
         font-weight: bolder;
@@ -117,7 +121,7 @@ input[type=text], select, textarea{
   }
   ion-segment-button{
       ion-label{
-          font-size: 10px;
+          font-size: 9px;
       }
 
   }

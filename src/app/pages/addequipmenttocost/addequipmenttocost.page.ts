@@ -105,6 +105,7 @@ export class AddequipmenttocostPage implements OnInit {
   this.equipment.forEach(ele =>{
    var index = this.Addedequipment.findIndex(x => x.id == ele.id)
    ele.qty = 1
+   ele.Per = 100
    if(index === -1){
      this.Addedequipment.push(ele)
    }
@@ -124,6 +125,7 @@ SelectallEquipment(){
       var index = this.Addedequipment.findIndex(x => x.id == ele.id)
       if(index === -1){
         ele.qty = 1
+        ele.Per = 100
         this.Addedequipment.push(ele)
       }
      })
@@ -166,10 +168,10 @@ async addequipment(){
 
   this.Addedequipment.forEach((element, index, array) =>{
     this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).get().subscribe(value =>{
-     var checker = value.data().equipment.find(x => x.id == element.id)
+     var checker = value.data().extraequipment.find(x => x.id == element.id)
      if(!checker){
       this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).update({
-        equipment : firebase.firestore.FieldValue.arrayUnion({
+        extraequipment : firebase.firestore.FieldValue.arrayUnion({
           name: element.name,
           id : element.id,
           qty : 0,
@@ -189,6 +191,7 @@ async addequipment(){
     if (index === array.length -1){
       loading.dismiss();
       this.modal.dismiss()
+      alert("Added Successfully!")
     };
   })
 

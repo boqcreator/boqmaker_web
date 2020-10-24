@@ -1,9 +1,70 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>report1Equipment</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Equipment report</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <h3 style="text-align: center;" >Sorted by Suppliers</h3>
+  <table *ngFor="let item of sortSupplier">
+    <tbody>
+        <tr>
+          <th *ngIf="item.additionalsupplier" style="background-color: rgb(218, 177, 74);text-align: center;" colspan="2" >
+            Main Supplier<br/>
+           name: {{item.sname}}&nbsp;
+                     no: {{item.sno}}&nbsp;
+
+                       <ion-button class="sendmail" color="secondary" fill="clear" size="small" (click)="sendmail(item)">
+                         <ion-label>Send mail</ion-label>
+                         <ion-icon (click)="sendmail(item)" slot="start" name="mail"></ion-icon>
+                       </ion-button>
+          </th>
+          <th *ngIf="!item.additionalsupplier" style="background-color: rgb(218, 177, 74);text-align: center;" colspan="5" >
+            Main Supplier<br/>
+           name: {{item.sname}}&nbsp;
+                     no: {{item.sno}}&nbsp;
+
+                       <ion-button class="sendmail" color="secondary" fill="clear" size="small" (click)="sendmail(item)">
+                         <ion-label>Send mail</ion-label>
+                         <ion-icon (click)="sendmail(item)" slot="start" name="mail"></ion-icon>
+                       </ion-button>
+          </th>
+          <th *ngIf="item.additionalsupplier" style="background-color: rgb(164, 222, 240);text-align: center;" colspan="3">
+            Additional Suppliers<br/>
+            <span style="height: 18px;" *ngFor="let supp of item.additionalsupplier">
+              name: {{supp.name}} &nbsp;
+              email :
+                <ion-button class="sendmail" color="secondary" fill="clear" size="small" (click)="sendmail(item)">
+                  <ion-label>Send mail</ion-label>
+                  <ion-icon (click)="sendmail(item)" slot="start" name="mail"></ion-icon>
+                </ion-button><br/>
+            </span>
+          </th>
+        </tr>
+        <tr>
+          <th style="text-align: center;" colspan="5">Equipments</th>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Rate</th>
+          <th>Total</th>
+        </tr>
+        <tr *ngFor="let mat of item.equipments">
+          <td>{{mat.name}}</td>
+          <td>{{mat.qty | number:'0.0-3'}}</td>
+          <td>{{mat.unit}}</td>
+          <td>{{mat.price}}</td>
+          <td>{{mat.qty*mat.price | number:'0.0-3'}}</td>
+        </tr>
+    </tbody>
+  </table>
 
 </ion-content>

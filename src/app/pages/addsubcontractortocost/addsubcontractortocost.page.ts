@@ -122,7 +122,7 @@ SelectallSubcontractor(){
       if(index === -1){
         ele.Per = 100
         ele.qty = 1
-        ele.WPer = 0
+        ele.note = ""
         this.Addedsubcontractor.push(ele)
       }
      })
@@ -164,10 +164,10 @@ async addsubcontractor(){
 
   this.Addedsubcontractor.forEach((element, index, array) =>{
     this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).get().subscribe(value =>{
-     var checker = value.data().subcontractor.find(x => x.id == element.id)
+     var checker = value.data().extrasubcontractor.find(x => x.id == element.id)
      if(!checker){
       this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).update({
-        subcontractor : firebase.firestore.FieldValue.arrayUnion({
+        extrasubcontractor : firebase.firestore.FieldValue.arrayUnion({
           name: element.name,
           id : element.id,
           qty : 0,
@@ -186,7 +186,9 @@ async addsubcontractor(){
     })
     if (index === array.length -1){
       loading.dismiss();
-      this.modal.dismiss()
+      this.modal.dismiss();
+      alert("Added Successfully!")
+
     };
   })
 

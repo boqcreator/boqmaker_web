@@ -89,6 +89,7 @@ export class AddlabourtocostPage implements OnInit {
        price: doc.payload.doc.data().price,
        subcatid : doc.payload.doc.data().subcatid,
        supplier : doc.payload.doc.data().supplier,
+       additionalsupplier : doc.payload.doc.data().additionalsupplier,
        unit : doc.payload.doc.data().unit,
      })
      })
@@ -122,7 +123,6 @@ SelectallLabour(){
       if(index === -1){
         ele.Per = 100
         ele.qty = 1
-        ele.WPer = 0
         this.Addedlabour.push(ele)
       }
      })
@@ -164,10 +164,10 @@ async addlabour(){
 
   this.Addedlabour.forEach((element, index, array) =>{
     this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).get().subscribe(value =>{
-     var checker = value.data().labour.find(x => x.id == element.id)
+     var checker = value.data().extralabour.find(x => x.id == element.id)
      if(!checker){
       this.afs.doc(`boq/boq/projects/${this.myProjectID}/actboqitems/${this.itemID}`).update({
-        labour : firebase.firestore.FieldValue.arrayUnion({
+        extralabour : firebase.firestore.FieldValue.arrayUnion({
           name: element.name,
           id : element.id,
           qty : 0,
@@ -177,8 +177,7 @@ async addlabour(){
           aqty : element.qty,
           atotal : (element.qty*element.price),
         }),
-        LatotalPrice : value.data().LatotalPrice+(element.qty*element.price),
-        updatedon : new Date().toISOString()
+        lupdatedon : new Date().toISOString()
       })
      }else{
        alert(`${element.name} already exist!`)
@@ -186,7 +185,8 @@ async addlabour(){
     })
     if (index === array.length -1){
       loading.dismiss();
-      this.modal.dismiss()
+      this.modal.dismiss();
+      alert("Added Successfully")
     };
   })
 }

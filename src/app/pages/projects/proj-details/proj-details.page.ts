@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { MenuController, LoadingController, ModalController, AlertController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { snapshotChanges } from '@angular/fire/database';
 import * as firebase from 'firebase'
@@ -12,6 +12,8 @@ import { element } from 'protractor';
 import { EdititemsPage } from '../../edititems/edititems.page';
 import { EditvaritiondetailsPage } from '../../editvaritiondetails/editvaritiondetails.page';
 import { FinalqtytablePage } from '../../finalqtytable/finalqtytable.page';
+import * as XLSX from 'xlsx';
+import { CalculatorPage } from '../../calculator/calculator.page';
 declare var google: any;
 
 @Component({
@@ -23,6 +25,9 @@ export class ProjDetailsPage implements OnInit {
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
+  datatable = [];
+  termexcel = ''
+  data: [][];
   areapanel = true;
   areapanelsize = 3
   itempanel = true;
@@ -33,7 +38,9 @@ export class ProjDetailsPage implements OnInit {
   segment = "project"
   Areasegment ="am"
   itemsegment = "finish"
-  segmentItemDetails = "list"
+  segmentlist="form"
+  segmentItemDetails = "a2a"
+  itemaddsegment = "add"
   firstloadedFloor = false
   firstloadedCat= false
   firstloadedSubcat = false
@@ -752,7 +759,7 @@ varich3AM = '';
 varich3AN = '';
 varich3AO = '';
 
-
+excelitemList = [];
 
 // floorstoadd = [
 //   {no : -1 , name: "Basement 1"},
@@ -869,6 +876,7 @@ varich3AO = '';
 
   constructor(private menu : MenuController,private route: ActivatedRoute,
     private afs :AngularFirestore,
+    private router : Router,
     private mapsAPILoader: MapsAPILoader,
     private modalController: ModalController,
     private alertController: AlertController,
@@ -912,6 +920,7 @@ varich3AO = '';
       this.getopentype();
       this.getprojectiontype();
       this.getGboqitemcat();
+      this.getexcelitems();
     }
     hidearea(){
       if(this.areapanel && this.itempanel){
@@ -2089,25 +2098,11 @@ this.storage.get(`${this.pid}GloblecatList`).then(value=>{
         this.storage.get(`${this.pid}GloblesubsubcatID`).then(value =>{
           if(value !== null){
             this.GloblesubsubcatID = value
+            this.getGlobleareas()
           }
         })
       }
     })
-  }).then(()=>{
-    this.storage.get(`${this.pid}GlobleareaList`).then(value=>{
-      if(value !== null){
-        this.GlobleareaList = value
-        this.storage.get(`${this.pid}GlobleareaID`).then(value =>{
-          if(value !== null){
-            this.GlobleareaID = value
-            this.assigning()
-          }
-        })
-      }
-    })
-    
-
-
   })
   
 })
@@ -2181,6 +2176,7 @@ getGsubsubcat(){
 }
 
 getGlobleareas(){
+  console.log("getGlobleareas() running")
   this.storage.set(`${this.pid}GloblesubsubcatList`, this.GloblesubsubcatList).then(()=>{
     this.storage.set(`${this.pid}GloblesubsubcatID`, this.GloblesubsubcatID)
   })
@@ -2192,14 +2188,26 @@ getGlobleareas(){
 
   this.afs.collection<any>(`boq/boq/Areas/${this.GloblecatID}/cat/${this.GloblesubcatID}/subcat/${this.GloblesubsubcatID}/items`).snapshotChanges().subscribe(value =>{
     value.forEach(doc=>{
-    this.pushToArray(this.GlobleareaList,
-       {
-         name : doc.payload.doc.data().name ,
-          id : doc.payload.doc.id,
-          image : doc.payload.doc.data().image,
-          attributes : doc.payload.doc.data().attributes
-        
-        })
+      var img  = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+      if( doc.payload.doc.data().image){
+        this.pushToArray(this.GlobleareaList,
+          {
+            name : doc.payload.doc.data().name ,
+             id : doc.payload.doc.id,
+             image : doc.payload.doc.data().image,
+             attributes : doc.payload.doc.data().attributes
+           
+           })
+      }else{
+        this.pushToArray(this.GlobleareaList,
+          {
+            name : doc.payload.doc.data().name ,
+             id : doc.payload.doc.id,
+             image : img,
+             attributes : doc.payload.doc.data().attributes
+           
+           })
+      }
     })
    
   })
@@ -2864,6 +2872,133 @@ async addItem(){
               ich3AO : this.ich3AO,
             
             }
+             }).then(()=>{
+              this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}`).get().subscribe(act =>{
+                if(act.exists){
+                  if(itemEle.materials.length > 0){
+                    itemEle.materials.forEach(element => {
+                      this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/materials/${element.id}`).get().subscribe(actmat =>{
+                        if(!actmat.exists){
+                          this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/materials/${element.id}`).set({
+                            aqty : 0,
+                            atotal : 0,
+                          })
+                        }
+                      })
+                    });
+                  }
+
+                  if(itemEle.equipment.length > 0){
+                    itemEle.equipment.forEach(element => {
+                      this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/equipment/${element.id}`).get().subscribe(actmat =>{
+                        if(!actmat.exists){
+                          this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/equipment/${element.id}`).set({
+                            aqty : 0,
+                            atotal : 0,
+                          })
+                        }
+                      })
+                    });
+                  }
+
+                  if(itemEle.labours.length > 0){
+                    itemEle.labours.forEach(element => {
+                      this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/labours/${element.id}`).get().subscribe(actmat =>{
+                        if(!actmat.exists){
+                          this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/labours/${element.id}`).set({
+                            aqty : 0,
+                            atotal : 0,
+                          })
+                        }
+                      })
+                    });
+                  }
+
+                  if(itemEle.other.length > 0){
+                    itemEle.other.forEach(element => {
+                      this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/other/${element.id}`).get().subscribe(actmat =>{
+                        if(!actmat.exists){
+                          this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/other/${element.id}`).set({
+                            aqty : 0,
+                            atotal : 0,
+                          })
+                        }
+                      })
+                    });
+                  }
+
+                  if(itemEle.subcontractor.length > 0){
+                    itemEle.subcontractor.forEach(element => {
+                      this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/subcontractor/${element.id}`).get().subscribe(actmat =>{
+                        if(!actmat.exists){
+                          this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/subcontractor/${element.id}`).set({
+                            aqty : 0,
+                            atotal : 0,
+                          })
+                        }
+                      })
+                    });
+                  }
+                }
+
+                else{
+                  this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}`).set({
+                    name:itemEle.name,
+                    id: itemEle.id,
+                    extramaterial : [],
+                    extralabour : [],
+                    extraequipment: [],
+                    extraother : [],
+                    extrasubcontractor : [],
+
+                  }).then(()=>{
+                    if(itemEle.materials.length > 0){
+                      itemEle.materials.forEach(element => {
+                        this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/materials/${element.id}`).set({
+                          aqty : 0,
+                          atotal : 0,
+                        })
+                      });
+                    }
+  
+                    if(itemEle.equipment.length > 0){
+                      itemEle.equipment.forEach(element => {
+                        this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/equipment/${element.id}`).set({
+                          aqty : 0,
+                          atotal : 0,
+                        })
+                      });
+                    }
+  
+                    if(itemEle.labours.length > 0){
+                      itemEle.labours.forEach(element => {
+                        this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/labours/${element.id}`).set({
+                          aqty : 0,
+                          atotal : 0,
+                        })
+                      });
+                    }
+  
+                    if(itemEle.other.length > 0){
+                      itemEle.other.forEach(element => {
+                        this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/other/${element.id}`).set({
+                          aqty : 0,
+                          atotal : 0,
+                        })
+                      });
+                    }
+  
+                    if(itemEle.subcontractor.length > 0){
+                      itemEle.subcontractor.forEach(element => {
+                        this.afs.doc(`boq/boq/projects/${this.pid}/actboqitems/${itemEle.id}/subcontractor/${element.id}`).set({
+                          aqty : 0,
+                          atotal : 0,
+                        })
+                      });
+                    }
+                  })
+                }
+              })
              }).then(()=>{
               var cat = this.boqitemcatList.find(x => x.id == itemEle.CatID)
               this.afs.doc(`boq/boq/projects/${this.pid}/boqitemsCat/${itemEle.CatID}`).set({
@@ -5931,8 +6066,8 @@ calculateFinalQuantity(L,W,H,EXTRA_FILL,N,FILL_PERCENTAGE,
   precastPercentage,EXTRAPRECAST,TpP,BpP,SpP4,SpP3,SpP1,EXTRAPOLYTH,
   SpP2,polyPERCENTAGE,Y8R,Y10R,Y12R,Y16R,Y20R,Y25R,Y32R,EXTRASTEEL,
   steelpercentage,QTY,ifactor){
-   return ((((L*W*H)+ EXTRA_FILL)*N*FILL_PERCENTAGE/100)+
-   (((L*W*H)+ EXTRA_EXC)*N*E_PERCENTAGE/100)+
+   return (((L*W*H)+ EXTRA_FILL)*N*FILL_PERCENTAGE/100) +
+   (((L*W*H)+ EXTRA_EXC)*N*E_PERCENTAGE/100) +
    (((W*L+(R*R*RO*(22/7)/100)+(pww1*psw1)+(pww2*psw2)+(pwl1*psl1)+(pwl2*psl2))-(Sum_of_Areafloor_p/100)+EXTRA_FLOOR_AREA)*F_Percentage*N/100)+
    (((L1+L2+L3+L4+L5+L6+L7+L8+EXTRA_BLOCK_DPC)*N*DPC_PERCENTAGE)/100)+
    ((((W*L+(R*R*RO*(22/7))/100+pww1*psw1+pww2*psw2+pwl1*psl1+pwl2*psl2)-(SumofAreaCEILING_P/100)+EXTRAceilingAREA)*CPercentage)*N/100)+
@@ -5941,7 +6076,7 @@ calculateFinalQuantity(L,W,H,EXTRA_FILL,N,FILL_PERCENTAGE,
    ((((L1*PSLA+L2*PSLB+L3*PSLC+L4*PSLD+L5*PSLE+L6*PSLF+L7*PSLG+L8*PSLH)/100)+(SumofLengthskirtingp/100)+EXTRASKIRTINGLENGTH-sumofOpenwidthtotal)*Spercentage*N/100)+
    ((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD+L5*PWLE+L6*PWLF+L7*PWLG+L8*PWLH)*H/100)+EXTRABLOCKAREA-SUMOFOPENAREA)*N*BPERCENTAGE/100)+
    (((((L1*PWLA+L2*PWLB+L3*PWLC+L4*PWLD)+ EXTRABIT-SUMOFOPENAREA)*N*BBITPERCENTAGE/(0.5)))/100)+
-   ((L*W*H)+(EXTRACONC)*N*CONCPERCENTAGE/100)+
+   (((L*W*H)+EXTRACONC)*N*CONCPERCENTAGE/100)+
    (((L+2*EXTRACONCbO)*(W+2*EXTRACONCbO)+EXTRACONCb)*N*CONCbPERCENTAGE/100)+
    ((W*L*(BSP/100)+W*L*(TSP/100)+H*L*(SSP3/100)+H*L*(SSP4/100)+H*W*(SSP2/100)+ w*H*(SSP1/100)+ EXTRASHUTT)*N*FORMPERCENTAGE/100)+
    ((W*L*(TBP/100)+W*L*(BBP/100)+H*L*(SBP4/100)+H*L*(SBP3/100)+H*W*(SBP2/100)+ w*H*(SBP1/100)+ EXTRABIT)*N*BITPERCENTAGE/100)+
@@ -5949,7 +6084,7 @@ calculateFinalQuantity(L,W,H,EXTRA_FILL,N,FILL_PERCENTAGE,
    (((W*L)+ EXTRAPRECAST)*precastPercentage*N/100)+
    ((W*L*(TpP/100)+W*L*(BpP/100)+H*L*(SpP4/100)+H*L*(SpP3/100)+H*W*(SpP1/100)+ w*H*(SpP2/100)+ EXTRAPOLYTH)*N*polyPERCENTAGE/100 )+
    ((Y8R/2520)+(Y10R/1596)+(Y12R/1104)+(Y16R/624)+(Y20R/396)+(Y25R/252)+(Y32R/156)+(EXTRASTEEL))*(steelpercentage/100)+
-   (QTY*N*ifactor/100))
+   (QTY*N*ifactor/100)
   
 }
 
@@ -6010,7 +6145,218 @@ calculateExcavation(L,W,H,N,EXTRA_EXC,E_PERCENTAGE){
                                   calculateIndividualqty(N,QTY,ifactor){
                                      return (QTY*N*ifactor/100)
                                     }
-                                
+gotocostdetails(){
+  this.router.navigate(['costdetails'])
+                }
+                async Uploadexcel(){
+                  if(this.datatable.length >0){
+                    const loading = await this.loadingController.create({
+                      message: 'Adding...',
+                      duration: 20000,
+                      spinner: 'bubbles'
+                    });
+                    await loading.present();
+                    this.datatable.forEach(ele =>{
+                      const id = this.afs.createId()
+                      this.afs.doc(`boq/boq/projects/${this.pid}/excelboqitems/${id}`).set({
+                        id: id,
+                        code : ele[0],
+                        cat : ele[1].toUpperCase(),
+                        subcat : ele[2].toUpperCase(),
+                        subsubcat : ele[3].toUpperCase(),
+                        des: ele[4],
+                        qty: ele[5],
+                        unit: ele[6],
+                        rate: ele[7],
+                        amount: ele[8],
+                        material: ele[9],
+                        labour: ele[10],
+                        equipment: ele[11],
+                        subcontractor: ele[12],
+                        other: ele[13],
+                        arate : 0,
+                        aamount :0,
+                        amaterial : 0,
+                        alabour : 0,
+                        aequipment : 0,
+                        asubcontractor : 0,
+                        aother : 0,
+                        aqty : 0,
+                      }).then((value)=>{
+                        var cat = ele[1].toUpperCase();
+                        this.afs.collection(`boq/boq/projects/${this.pid}/excelboqitemscat`, ref => ref.where("name","==", cat)).get().subscribe(value=>{
+                          if(value.docs.length <= 0){
+                            this.afs.collection(`boq/boq/projects/${this.pid}/excelboqitemscat`).add({
+                              name : cat
+                            })
+                          }
+                        })
+
+                      }).then(()=>{
+                        var subcat = ele[2].toUpperCase();
+                        this.afs.collection(`boq/boq/projects/${this.pid}/excelboqitemssubcat`, ref => ref.where("name","==", subcat)).get().subscribe(value=>{
+                          if(value.docs.length <= 0){
+                            this.afs.collection(`boq/boq/projects/${this.pid}/excelboqitemssubcat`).add({
+                              name : subcat,
+                              cat : ele[1].toUpperCase()
+                            })
+                          }
+                        })
+                      }).then(()=>{
+                        var subsubcat = ele[3].toUpperCase();
+                        this.afs.collection(`boq/boq/projects/${this.pid}/excelboqitemssubsubcat`, ref => ref.where("name","==", subsubcat)).get().subscribe(value=>{
+                          if(value.docs.length <= 0){
+                            this.afs.collection(`boq/boq/projects/${this.pid}/excelboqitemssubsubcat`).add({
+                              name : subsubcat,
+                              cat : ele[1].toUpperCase(),
+                              subcat : ele[2].toUpperCase()
+                            })
+                          }
+                        })
+                      }).catch(async err =>{
+                        const alert = await this.alertController.create({
+                          header: 'Error',
+                          message: err,
+                          buttons: ['OK']
+                        });
+                      
+                        await alert.present();
+                      })
+                    }) 
+                    loading.dismiss()
+                      const alert = await this.alertController.create({
+                        header: 'Added',
+                        message: 'Successfully Added!.',
+                        buttons: ['OK']
+                      });
+                    
+                      await alert.present();
+                     this.getexcelitems()
+                  }else{
+                    alert("No data to upload, Please add File to upload data.")
+                  }
+                }
+              
+              
+                onFileChange(evt: any) {
+                  const target : DataTransfer =  <DataTransfer>(evt.target);
+                  
+                  if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+              
+                  const reader: FileReader = new FileReader();
+              
+                  reader.onload = (e: any) => {
+                    const bstr: string = e.target.result;
+              
+                    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+              
+                    const wsname : string = wb.SheetNames[0];
+              
+                    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+              
+                    console.log(ws);
+              
+                    this.data = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+              
+                    console.log(this.data);
+              
+                    this.datatable = this.data.slice(1);
+                
+              
+                  };
+              
+                  reader.readAsBinaryString(target.files[0]);
+              
+                }
+
+                getexcelitems(){
+                  this.excelitemList = [];
+                  this.afs.collection(`boq/boq/projects/${this.pid}/excelboqitems`).get().subscribe(value =>{
+                     value.docs.forEach(element =>{
+                       this.excelitemList.push({
+                        id : element.data().id,
+                        code  : element.data().code ,
+                        cat  : element.data().cat ,
+                        subcat  : element.data().subcat ,
+                        subsubcat  : element.data().subsubcat ,
+                        des : element.data().des,
+                        qty : element.data().qty,
+                        unit : element.data().unit,
+                        rate : element.data().rate,
+                        amount : element.data().amount,
+                        material : element.data().material,
+                        labour : element.data().labour,
+                        equipment : element.data().equipment,
+                        subcontractor : element.data().subcontractor,
+                        other : element.data().other,
+                       })
+                     })
+                  })
+                }
+async delexcelItem(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Item</strong>?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+        
+  const loading = await this.loadingController.create({
+    message: 'Deleting...',
+    duration: 20000,
+    spinner: 'bubbles'
+  });
+  await loading.present();
+this.afs.doc(`boq/boq/projects/${this.pid}/excelboqitems/${item.id}`).delete()
+  .then(async ()=>{
+    this.getexcelitems();
+    loading.dismiss();
+      const alert = await this.alertController.create({
+        header: 'Success',
+        message: 'Deleted Successfully!',
+        buttons: ['OK']
+      });
+    
+      await alert.present();
+
+  })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}  
+editexcelItem(item){
+  
+}
+
+async opencalculator(variable){
+  const modal = await this.modalController.create({
+  component: CalculatorPage,
+  componentProps: { usedvar: variable }
+  });
+
+  await modal.present();
+
+  const data = await modal.onDidDismiss();
+  console.log(data)
+  if(data.data.value != 0){
+    if(data.data.variable == "Unit_width"){
+      this.Unit_width = data.data.value
+    }
+  }
+}
 
 }
 

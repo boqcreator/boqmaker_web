@@ -98,6 +98,12 @@
                <ion-input (ionChange)="calculate()" [(ngModel)]="mat.qty" value=1 type="number"></ion-input>
              </ion-item>
             </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Percentage</ion-label>
+                <ion-input (ionChange)="calculate()" [(ngModel)]="mat.Per" value=100 type="number"></ion-input>
+              </ion-item>
+             </ion-col>
           </ion-row>
 
        </ion-card>

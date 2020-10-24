@@ -373,6 +373,26 @@ const routes: Routes = [
   {
     path: 'report1-equipment',
     loadChildren: () => import('./pages/report1-equipment/report1-equipment.module').then( m => m.Report1EquipmentPageModule)
+  },
+  {
+    path: 'report1-other',
+    loadChildren: () => import('./pages/report1-other/report1-other.module').then( m => m.Report1OtherPageModule)
+  },
+  {
+    path: 'costdetails-excel',
+    loadChildren: () => import('./pages/costdetails-excel/costdetails-excel.module').then( m => m.CostdetailsExcelPageModule)
+  },
+  {
+    path: 'calculator',
+    loadChildren: () => import('./pages/calculator/calculator.module').then( m => m.CalculatorPageModule)
+  },
+  {
+    path: 'costgraph',
+    loadChildren: () => import('./pages/costgraph/costgraph.module').then( m => m.CostgraphPageModule)
+  },
+  {
+    path: 'boqitemgraph',
+    loadChildren: () => import('./pages/boqitemgraph/boqitemgraph.module').then( m => m.BoqitemgraphPageModule)
   }
 ];
 

@@ -13,6 +13,7 @@ export class Report1MaterialPage implements OnInit {
     private alertController: AlertController) { }
 
   ngOnInit() {
+    console.log(this.itemList)
     if(this.itemList){
       this.itemList.forEach(element => {
         console.log(element)
