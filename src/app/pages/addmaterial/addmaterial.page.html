@@ -145,6 +145,21 @@
                 <ion-input type="text" [(ngModel)]="sdes" placeholder="Enter contact number here..."></ion-input>
               </ion-item>
             </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Buy online(website)<ion-text color="danger">*</ion-text></ion-label>
+                <ion-input type="text" [(ngModel)]="website" placeholder="Enter contact number here..."></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Icon</ion-label>
+                <ion-input (change)="onFileSelected1($event)" type="file">
+                </ion-input>
+            </ion-item>
+            </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
@@ -190,6 +205,69 @@
               </ion-item>
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Origin</ion-label>
+              <ion-input type="text" [(ngModel)]="origin" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Diameter</ion-label>
+                <ion-input type="number" [(ngModel)]="diameter"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Color</ion-label>
+              <ion-input type="text" [(ngModel)]="color" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Grad</ion-label>
+                <ion-input type="text" [(ngModel)]="grad"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Brand</ion-label>
+              <ion-input type="text" [(ngModel)]="brand" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Thickness</ion-label>
+                <ion-input type="number" [(ngModel)]="thickness"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Width</ion-label>
+              <ion-input type="number" [(ngModel)]="width" ></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Length</ion-label>
+                <ion-input type="number" [(ngModel)]="length"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label>Wastage</ion-label>
+            <ion-input type="number" [(ngModel)]="wastage"></ion-input>
+          </ion-item>
         </ion-list>
         <ion-button [disabled]="sname.length > 0 && unit && CatID && SubcatID ? false : true" (click)="addmaterial()" expand="block">
           Add

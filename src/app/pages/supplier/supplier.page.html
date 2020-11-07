@@ -105,8 +105,11 @@
         <p *ngFor="let item of supplierList | filter:term3" >
           <ion-item>
             <ion-label>{{item.name}}</ion-label>
-            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
-              <ion-icon slot="icon-only" name="create"></ion-icon>
+            <ion-button (click)="editmat(item)" slot="end" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="delmat(item)" size="small" slot="end" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
             </ion-button>
           </ion-item>
            </p> 
@@ -152,8 +155,11 @@
         <p *ngFor="let item of LsupplierList | filter:term3" >
           <ion-item>
             <ion-label>{{item.name}}</ion-label>
-            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
-              <ion-icon slot="icon-only" name="create"></ion-icon>
+            <ion-button (click)="editlab(item)" slot="end" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="dellab(item)" size="small" slot="end" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
             </ion-button>
           </ion-item>
            </p> 
@@ -199,8 +205,11 @@
         <p *ngFor="let item of EsupplierEist | filter:term3" >
           <ion-item>
             <ion-label>{{item.name}}</ion-label>
-            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
-              <ion-icon slot="icon-only" name="create"></ion-icon>
+            <ion-button (click)="editeq(item)" slot="end" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="deleq(item)" size="small" slot="end" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
             </ion-button>
           </ion-item>
            </p> 
@@ -246,8 +255,11 @@
         <p *ngFor="let item of OsupplierOist | filter:term3" >
           <ion-item>
             <ion-label>{{item.name}}</ion-label>
-            <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
-              <ion-icon slot="icon-only" name="create"></ion-icon>
+            <ion-button (click)="edito(item)" slot="end" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="delo(item)" size="small" slot="end" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
             </ion-button>
           </ion-item>
            </p> 

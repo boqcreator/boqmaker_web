@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, NavController, AlertController } from '@ionic/angular';
+import { MenuController, NavController, AlertController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Storage } from '@ionic/storage';
@@ -7,6 +7,7 @@ import {GridOptions} from "ag-grid-community";
 import 'ag-grid-enterprise';
 import 'ag-grid-enterprise/chartsModule';
 import { TwobuttonRendererComponent } from 'src/app/renderer/twobutton-renderer.component';
+import { ManageboqPage } from '../manageboq/manageboq.page';
 
 @Component({
   selector: 'app-boqitem',
@@ -37,6 +38,7 @@ export class BoqitemPage implements OnInit {
   constructor(private menu : MenuController,
     private afs : AngularFirestore,
     private alertController: AlertController,
+    private modalController: ModalController,
     private navCtrl : NavController,
     private storage  : Storage,
     private router : Router) { 
@@ -181,6 +183,14 @@ export class BoqitemPage implements OnInit {
   }
   edititem(item){
     this.router.navigate(['editboqitem/'+ item.rowData.id.split('/')[0]]);
+  }
+
+  async manage(){
+    const modal = await this.modalController.create({
+      component: ManageboqPage,
+      });
+    
+      await modal.present();
   }
 
   async deleteitem(item){

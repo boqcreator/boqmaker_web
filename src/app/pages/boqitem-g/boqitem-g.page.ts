@@ -6,6 +6,7 @@ import {GridOptions} from "ag-grid-community";
 import 'ag-grid-enterprise';
 import 'ag-grid-enterprise/chartsModule';
 import { DelRendererComponent } from 'src/app/del-renderer/del-renderer.component';
+import { ManageboqPage } from '../manageboq/manageboq.page';
 
 @Component({
   selector: 'app-boqitem-g',
@@ -132,9 +133,11 @@ export class BoqitemGPage implements OnInit {
       });
     
       await modal.present();
-    
- 
+  
   }
+
+
+
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Loading data',

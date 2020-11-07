@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>BOQ Items</ion-title>
+    <ion-button slot="end" fill="clear" (click)="manage()">
+      <ion-icon slot="icon-only" src="assets/icon/manager.svg"></ion-icon>
+      <ion-label> Manage </ion-label>
+    </ion-button>
     <ion-button slot="end" fill="clear" (click)="addnew()">
       <ion-icon slot="icon-only" name="add"></ion-icon>
       <ion-label> Add new </ion-label>

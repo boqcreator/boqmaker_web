@@ -1,0 +1,156 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Material</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-input [(ngModel)]="item.name" type="text" placeholder="Enter name here..."></ion-input>
+        <ion-icon slot="end" (click)="itemlibrary()" size="small" src="assets/icon/book.svg"></ion-icon>   
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Description<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input type="text" [(ngModel)]="item.des" placeholder="Enter description..."></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Buy online(link)<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input type="text" [(ngModel)]="item.website" placeholder="Enter contact number here..."></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Icon</ion-label>
+        <ion-input (change)="onFileSelected1($event)" type="file">
+        </ion-input>
+    </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit</ion-label>
+        <ion-select [(ngModel)]="item.unit" placeholder="Select Unit">
+          <ion-select-option *ngFor="let item of units" [value]="item">{{ item }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit price</ion-label>
+        <input currencyMask [(ngModel)]="item.price" [options]="{ prefix: 'BHD ', thousands: ',', decimal: '.', precision: '3',align: 'left' }"/>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit1</ion-label>
+      <ion-input type="text" [(ngModel)]="item.unit1" placeholder="Enter unit"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit 1 price</ion-label>
+        <input currencyMask [(ngModel)]="item.price1" [options]="{ prefix: 'BHD ', thousands: ',', decimal: '.', precision: '3',align: 'left' }"/>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit1</ion-label>
+      <ion-input type="text" [(ngModel)]="item.unit1" placeholder="Enter unit"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit 1 price</ion-label>
+        <input currencyMask [(ngModel)]="item.price1" [options]="{ prefix: 'BHD ', thousands: ',', decimal: '.', precision: '3',align: 'left' }"/>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Origin</ion-label>
+      <ion-input type="text" [(ngModel)]="item.origin" ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Diameter</ion-label>
+        <ion-input type="number" [(ngModel)]="item.diameter"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Color</ion-label>
+      <ion-input type="text" [(ngModel)]="item.color" ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Grad</ion-label>
+        <ion-input type="text" [(ngModel)]="item.grad"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Brand</ion-label>
+      <ion-input type="text" [(ngModel)]="item.brand" ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Thickness</ion-label>
+        <ion-input type="number" [(ngModel)]="item.thickness"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Width</ion-label>
+      <ion-input type="number" [(ngModel)]="item.width" ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Length</ion-label>
+        <ion-input type="number" [(ngModel)]="item.length"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-item>
+    <ion-label>Wastage</ion-label>
+    <ion-input type="number" [(ngModel)]="item.wastage"></ion-input>
+  </ion-item>
+
+<ion-button (click)="update()" expand="block">
+  Update
+</ion-button>
+
+</ion-content>

@@ -80,6 +80,10 @@ import { Report1EquipmentPageModule } from './pages/report1-equipment/report1-eq
 import { Report1OtherPageModule } from './pages/report1-other/report1-other.module';
 import { CalculatorPageModule } from './pages/calculator/calculator.module';
 import { CostgraphPageModule } from './pages/costgraph/costgraph.module';
+import { ManageboqPageModule } from './pages/manageboq/manageboq.module';
+import { EditmaterialPageModule } from './pages/editmaterial/editmaterial.module';
+import { TypespicPageModule } from './pages/typespic/typespic.module';
+import { EditsuppliermatPageModule } from './pages/editsuppliermat/editsuppliermat.module';
 
 
 @NgModule({
@@ -151,7 +155,11 @@ import { CostgraphPageModule } from './pages/costgraph/costgraph.module';
     Report1EquipmentPageModule,
     Report1OtherPageModule,
     CalculatorPageModule,
-    CostgraphPageModule
+    CostgraphPageModule,
+    ManageboqPageModule,
+    EditmaterialPageModule,
+    TypespicPageModule,
+    EditsuppliermatPageModule
     
   ],
   providers: [

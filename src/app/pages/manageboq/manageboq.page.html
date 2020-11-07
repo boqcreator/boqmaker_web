@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Manage BOQ Items</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-segment [(ngModel)]="segment" >
+    <ion-segment-button value="cat">
+      <ion-label>Category</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="sub">
+      <ion-label>Subcategory</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="subsub">
+      <ion-label>Sub subcategory</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+    <div style="margin-top : 10px;" *ngSwitchCase="'cat'">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 10%;">Delete</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of catlist | async" >
+            <td style="width: 10%;" ><ion-button (click)="delete(item.payload.doc.ref.id,'boqitemscat')" fill="clear" >
+             <ion-icon name="trash"></ion-icon>
+            </ion-button></td>
+            <td>
+              <ion-input style="background: #ffffff8f;" (ionChange)="update(item,$event,'boqitemscat')" type="text" [(ngModel)]="item.payload.doc.data().name" ></ion-input></td>
+          </tr>
+      </table>
+      </div>
+      <div style="margin-top : 10px;" *ngSwitchCase="'sub'">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 10%;">Delete</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of subcatlist | async" >
+              <td style="width: 10%;" ><ion-button (click)="delete(item.payload.doc.ref.id,'boqitemssubcat')" fill="clear" >
+               <ion-icon name="trash"></ion-icon>
+              </ion-button></td>
+              <td>
+                <ion-input style="background: #ffffff8f;" (ionChange)="update(item,$event,'boqitemssubcat')" type="text" [(ngModel)]="item.payload.doc.data().name" ></ion-input></td>
+            </tr>
+        </table>
+        </div>
+        <div style="margin-top : 10px;" *ngSwitchCase="'subsub'">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 10%;">Delete</th>
+                <th>Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of subsubcatlist | async" >
+                <td style="width: 10%;" ><ion-button (click)="delete(item.payload.doc.ref.id,'boqitemssubsubcat')" fill="clear" >
+                 <ion-icon name="trash"></ion-icon>
+                </ion-button></td>
+                <td>
+                  <ion-input style="background: #ffffff8f;" (ionChange)="update(item,$event,'boqitemssubsubcat')" type="text" [(ngModel)]="item.payload.doc.data().name" ></ion-input></td>
+              </tr>
+          </table>
+          </div>
+      </div>
+
+</ion-content>

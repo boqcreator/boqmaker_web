@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { LoadingController, ModalController, AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { MateriallibPage } from '../materiallib/materiallib.page';
+import * as firebase from "firebase"
 
 @Component({
   selector: 'app-addmaterial',
@@ -15,6 +16,7 @@ export class AddmaterialPage implements OnInit {
   catDes = "null"
   subcatName = '';
   subcatDes = "null"
+  pic;
 
   catList=[]
   CatID = ""
@@ -34,7 +36,16 @@ export class AddmaterialPage implements OnInit {
 
   unit2 = "";
   price2= 0.000;
-
+  website = "";
+  origin="";
+  diameter=0;
+  color="";
+  grad = "";
+  brand ="";
+  thickness = 0;
+  width = 0;
+  length = 0;
+  wastage = 0;
 
   ScatList=[];
   SsubcatList= [];
@@ -151,8 +162,39 @@ export class AddmaterialPage implements OnInit {
               unit2 : this.unit2,
               price2 : this.price2,
               supplier : this.supplier,
-              additionalsupplier : this.supplierAdd
-                  }).then(()=>{
+              additionalsupplier : this.supplierAdd,
+              website  : this.website,
+              origin : this.origin,
+              diameter : this.diameter,
+              color : this.color,
+              grad  : this.grad,
+              brand  : this.brand ,
+              thickness  : this.thickness,
+              width  : this.width,
+              length  : this.length,
+              wastage  : this.wastage,
+                  }).then((value)=>{
+                    if(this.pic){
+                     var imagepath
+                     imagepath =  `materials/${value.id}/${this.sname}`;
+                 
+                      var storageRef =  firebase.storage().ref(imagepath);
+                 
+                          storageRef.put(this.pic).then(()=>{
+                            firebase.storage().ref(imagepath).getDownloadURL().then(url =>{
+                                this.afs.doc(`boq/boq/materialscat/${this.CatID}/subcat/${this.SubcatID}/materials/${value.id}`).update({
+                                 image : url
+                                });
+                                });
+                 
+                          });
+                    }else{
+                     this.afs.doc(`boq/boq/materialscat/${this.CatID}/subcat/${this.SubcatID}/materials/${value.id}`).update({
+                       image : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+                      });
+                    }
+                  })
+                  .then(()=>{
                     this.loadingController.dismiss();
                      this.presentAlert();
                      this.sname= "";
@@ -266,5 +308,9 @@ export class AddmaterialPage implements OnInit {
       this.price = data.data.price
     }
  
+}
+
+onFileSelected1(event){
+  this.pic = event.target.files[0];
 }
 }

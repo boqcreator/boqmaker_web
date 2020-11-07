@@ -393,6 +393,34 @@ const routes: Routes = [
   {
     path: 'boqitemgraph',
     loadChildren: () => import('./pages/boqitemgraph/boqitemgraph.module').then( m => m.BoqitemgraphPageModule)
+  },
+  {
+    path: 'manageboq',
+    loadChildren: () => import('./pages/manageboq/manageboq.module').then( m => m.ManageboqPageModule)
+  },
+  {
+    path: 'editmaterial',
+    loadChildren: () => import('./pages/editmaterial/editmaterial.module').then( m => m.EditmaterialPageModule)
+  },
+  {
+    path: 'typespic',
+    loadChildren: () => import('./pages/typespic/typespic.module').then( m => m.TypespicPageModule)
+  },
+  {
+    path: 'editsuppliermat',
+    loadChildren: () => import('./pages/editsuppliermat/editsuppliermat.module').then( m => m.EditsuppliermatPageModule)
+  },
+  {
+    path: 'editsupplierlab',
+    loadChildren: () => import('./pages/editsupplierlab/editsupplierlab.module').then( m => m.EditsupplierlabPageModule)
+  },
+  {
+    path: 'editsuppliereq',
+    loadChildren: () => import('./pages/editsuppliereq/editsuppliereq.module').then( m => m.EditsuppliereqPageModule)
+  },
+  {
+    path: 'editsuppliero',
+    loadChildren: () => import('./pages/editsuppliero/editsuppliero.module').then( m => m.EditsupplieroPageModule)
   }
 ];
 

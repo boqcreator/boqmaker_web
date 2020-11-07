@@ -13,10 +13,8 @@ export class Report1MaterialPage implements OnInit {
     private alertController: AlertController) { }
 
   ngOnInit() {
-    console.log(this.itemList)
     if(this.itemList){
       this.itemList.forEach(element => {
-        console.log(element)
         element.material.forEach(elementMat => {
           var index = this.sortSupplier.findIndex(x => x.sid == elementMat.supplier.id)
           if(index === -1){
@@ -26,12 +24,14 @@ export class Report1MaterialPage implements OnInit {
               semail : elementMat.supplier.email,
               sno : elementMat.supplier.no,
               additionalsupplier : elementMat.additionalsupplier,
+              website : elementMat.supplier.website,
               materials : [{
                 name : elementMat.name,
                 qty :elementMat.qty*element.qty,
                 price : elementMat.rate,
                 unit : elementMat.unit,
-                id :elementMat.id
+                id :elementMat.id,
+                website : elementMat.website
               }]
              })
           }else{

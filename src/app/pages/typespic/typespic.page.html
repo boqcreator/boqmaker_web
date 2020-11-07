@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Shape Pictues</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-segment [(ngModel)]="segment">
+  <ion-segment-button value="t1">
+    <ion-label>Shape Types</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="ring">
+    <ion-label>Ring shape</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<div [ngSwitch]="segment">  
+  <div style="margin-top : 5px;" *ngSwitchCase="'t1'">
+    <ion-img src="assets/t2.png"></ion-img>
+  </div>
+  <div style="margin-top : 5px;" *ngSwitchCase="'ring'">
+    <ion-img src="assets/t5.png"></ion-img>
+  </div>
+
+</div>
+
+</ion-content>

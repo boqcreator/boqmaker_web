@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Labour Supplier</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Supplier Name<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="item.name" type="text" placeholder="Enter category name here..."></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Phone no<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input type="text" [(ngModel)]="item.no" placeholder="Enter contact number here..."></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Tele no</ion-label>
+        <ion-input [(ngModel)]="item.tele" type="text" placeholder="Enter Telephone number here..."></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Fax no</ion-label>
+        <ion-input type="text" [(ngModel)]="item.fax" placeholder="Enter Fax number here..."></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">E-mail<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="item.email" type="email" placeholder="Enter email..."></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Website</ion-label>
+        <ion-input type="text" [(ngModel)]="item.website" placeholder="Enter website here..."></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+       <ion-item>
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea type="text" [(ngModel)]="item.des" placeholder="Write description here..."></ion-textarea>
+    </ion-item>
+    </ion-col>
+  </ion-row>
+
+<ion-button (click)="update()" expand="block">
+  Update
+</ion-button>
+
+</ion-content>

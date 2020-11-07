@@ -50,9 +50,15 @@
     <ion-radio-group *ngIf="materialList" >
     <p *ngFor="let item of materialList | filter:term3" >
       <ion-item>
+        <ion-avatar *ngIf="item.image">
+          <img [src]="item.image" />
+        </ion-avatar>
         <ion-label>{{item.name}}</ion-label>
-        <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
-          <ion-icon slot="icon-only" name="create"></ion-icon>
+        <ion-button (click)="edit(item)" slot="end" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+          <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button (click)="del(item)" size="small" slot="end" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+          <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
         </ion-button>
       </ion-item>
        </p> 

@@ -641,7 +641,17 @@ boq3AO = '';
        additionalsupplier : doc.payload.doc.data().additionalsupplier,
        unit : doc.payload.doc.data().unit,
        unit1 : doc.payload.doc.data().unit1,
-       unit2 : doc.payload.doc.data().unit2
+       unit2 : doc.payload.doc.data().unit2,
+       website  : doc.payload.doc.data().website,
+       origin : doc.payload.doc.data().origin,
+       diameter : doc.payload.doc.data().diameter,
+       color : doc.payload.doc.data().color,
+       grad  : doc.payload.doc.data().grad,
+       brand  : doc.payload.doc.data().brand ,
+       thickness  : doc.payload.doc.data().thickness,
+       width  : doc.payload.doc.data().width,
+       length  : doc.payload.doc.data().length,
+       wastage  : doc.payload.doc.data().wastage,
 
      })
      })

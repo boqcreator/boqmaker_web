@@ -14,6 +14,7 @@ import { EditvaritiondetailsPage } from '../../editvaritiondetails/editvaritiond
 import { FinalqtytablePage } from '../../finalqtytable/finalqtytable.page';
 import * as XLSX from 'xlsx';
 import { CalculatorPage } from '../../calculator/calculator.page';
+import { TypespicPage } from '../../typespic/typespic.page';
 declare var google: any;
 
 @Component({
@@ -202,6 +203,9 @@ export class ProjDetailsPage implements OnInit {
   Y28 = 0;
   Y32 = 0;
   Y40 = 0;
+  totalfinalorderinKg = 0;
+  totalfinalorderinTon = 0;
+
   extraworkqqty = 0;
   extraexpansionjointqty=0;
   extrablkqty = 0;
@@ -247,16 +251,16 @@ ch1Q = 0;
 ch1R = 0;
 ch1S = 0;
 ch1T = 0;
-ch1U = '';
-ch1V = '';
-ch1W = '';
-ch1X = '';
-ch1Y = '';
-ch1Z = '';
-ch1AA = '';
-ch1AB = '';
-ch1AC = '';
-ch1AD = '';
+ch1U = 0;
+ch1V = 0;
+ch1W = 0;
+ch1X = 0;
+ch1Y = 0;
+ch1Z = 0;
+ch1AA = 0;
+ch1AB = 0;
+ch1AC = 0;
+ch1AD = 0;
 ch1AE = '';
 ch1AF = '';
 ch1AG = '';
@@ -760,6 +764,49 @@ varich3AN = '';
 varich3AO = '';
 
 excelitemList = [];
+
+
+
+shape1 = 0;
+shape2 = 0;
+shape3 = 0;
+shape4 = 0;
+shape5 = 0;
+shape6 = 0;
+shape7 = 0;
+shape8 = 0;
+Totallengthofrings = 0;
+NoofringsMIDDLETHIRD = 0;
+NoofringsOTHERTHIRDRIGHTLEFT = 0;
+c19 = 0;
+c21 = 0;
+c27 = 0;
+c29 = 0;
+c31 = 0;
+c33 = 0;
+c35 = 0;
+c37 = 0;
+c39 = 0;
+c41 = 0;
+c43 = 0;
+f27 = 0;
+f29 = 0;
+f31 = 0;
+f33 = 0;
+f35 = 0;
+f37 = 0;
+f39 = 0;
+f41 = 0;
+f43 = 0;
+
+ConcQtym3 = 0;
+SteelAllkg = 0;
+Steelringonlykg = 0;
+Mainsteelonlykg = 0;
+persteelkgm3 = 0;
+persteelringkgm3 = 0;
+permainsteelkgm3 = 0;
+
 
 // floorstoadd = [
 //   {no : -1 , name: "Basement 1"},
@@ -6357,6 +6404,4528 @@ async opencalculator(variable){
     }
   }
 }
+
+async openShapePics(){
+    const modal = await this.modalController.create({
+    component: TypespicPage,
+    });
+  
+    await modal.present();
+  
+}
+
+async openRingShapePics(){
+  const modal = await this.modalController.create({
+  component: TypespicPage,
+  componentProps: { segment: "ring" }
+  });
+
+  await modal.present();
+
+}
+
+calculationFloorBeam(){
+  var shape1 = 0;
+  var shape2 = 0;
+  var shape3 = 0;
+  var shape4 = 0;
+  var shape5 = 0;
+  var shape6 = 0;
+  var shape7 = 0;
+  var shape8 = 0;
+  var Totallengthofrings = 0;
+  var NoofringsMIDDLETHIRD = 0;
+  var NoofringsOTHERTHIRDRIGHTLEFT = 0;
+  var c19 = 0;
+  var c21 = 0;
+  var c27 = 0;
+  var c29 = 0;
+  var c31 = 0;
+  var c33 = 0;
+  var c35 = 0;
+  var c37 = 0;
+  var c39 = 0;
+  var c41 = 0;
+  var c43 = 0;
+  var f27 = 0;
+  var f29 = 0;
+  var f31 = 0;
+  var f33 = 0;
+  var f35 = 0;
+  var f37 = 0;
+  var f39 = 0;
+  var f41 = 0;
+  var f43 = 0;
+  var p1_1 = 0;
+  var p1_2 = 0;
+  var p1_3 = 0;
+  var p1_4 = 0;
+  var p1_5 = 0;
+  var p1_6 = 0;
+  var p1_7 = 0;
+  var p1_8 = 0;
+  var p1_9 = 0;
+  var p1_10 = 0;
+  var p1_11 = 0;
+  var p1_12 = 0;
+  var p1_13 = 0;
+  var p1_14 = 0;
+  var p1_15 = 0;
+  var p1_16 = 0;
+  var p1_17 = 0;
+  var p1_18 = 0;
+  var p1_19 = 0;
+  var p1_20 = 0;
+  var p1_21 = 0;
+  var p1_22 = 0;
+  var p1_23 = 0;
+  var p1_24 = 0;
+  var p1_25 = 0;
+
+  var p2_1 = 0;
+  var p2_2 = 0;
+  var p2_3 = 0;
+  var p2_4 = 0;
+  var p2_5 = 0;
+  var p2_6 = 0;
+  var p2_7 = 0;
+  var p2_8 = 0;
+  var p2_9 = 0;
+  var p2_10 = 0;
+  var p2_11 = 0;
+  var p2_12 = 0;
+  var p2_13 = 0;
+  var p2_14 = 0;
+  var p2_15 = 0;
+  var p2_16 = 0;
+  var p2_17 = 0;
+  var p2_18 = 0;
+  var p2_19 = 0;
+  var p2_20 = 0;
+  var p2_21 = 0;
+  var p2_22 = 0;
+  var p2_23 = 0;
+  var p2_24 = 0;
+  var p2_25 = 0;
+
+  var SteelringatcenterI19 = 0;
+  var SteelringatcenterJ19 = 0;
+  var SteelringatcenterK19 = 0;
+  var SteelringatcenterL19 = 0;
+  var SteelringatcenterM19 = 0;
+  var SteelringatcenterN19 = 0;
+  var SteelringatcenterO19 = 0;
+  var SteelringatcenterP19 = 0;
+  var SteelringatcenterQ19 = 0;
+  var SteelringatcenterR19 = 0;
+  var SteelringatcenterS19 = 0;
+  var SteelringatcenterT19 = 0;
+  var SteelringatcenterU19 = 0;
+
+  var SteelringatthirdI21 = 0;
+  var SteelringatthirdJ21 = 0;
+  var SteelringatthirdK21 = 0;
+  var SteelringatthirdL21 = 0;
+  var SteelringatthirdM21 = 0;
+  var SteelringatthirdN21 = 0;
+  var SteelringatthirdO21 = 0;
+  var SteelringatthirdP21 = 0;
+  var SteelringatthirdQ21 = 0;
+  var SteelringatthirdR21 = 0;
+  var SteelringatthirdS21 = 0;
+  var SteelringatthirdT21 = 0;
+  var SteelringatthirdU21 = 0;
+
+  var presumSteelringI = 0;
+  var presumSteelringJ = 0;
+  var presumSteelringK = 0;
+  var presumSteelringL = 0;
+  var presumSteelringM = 0;
+  var presumSteelringN = 0;
+  var presumSteelringO = 0;
+  var presumSteelringP = 0;
+  var presumSteelringQ = 0;
+  var presumSteelringR = 0;
+  var presumSteelringS = 0;
+  var presumSteelringT = 0;
+  var presumSteelringU = 0;
+  var sumSteelring = 0;
+
+  var pre6 = 0;
+  var pre8 = 0;
+  var pre10 = 0;
+  var pre12 = 0;
+  var pre14 = 0;
+  var pre16 = 0;
+  var pre18 = 0;
+  var pre20 = 0;
+  var pre22 = 0;
+  var pre25 = 0;
+  var pre28 = 0;
+  var pre32 = 0;
+  var pre40 = 0;
+
+  var type1 = 0;
+  var type2 = 0;
+  var type3 = 0;
+  var type4 = 0;
+
+  var type1_6 = 0;
+  var type1_8 = 0;
+  var type1_10 = 0;
+  var type1_12 = 0;
+  var type1_14 = 0;
+  var type1_16 = 0;
+  var type1_18 = 0;
+  var type1_20 = 0;
+  var type1_22 = 0;
+  var type1_25 = 0;
+  var type1_28 = 0;
+  var type1_32 = 0;
+  var type1_40 = 0;
+
+  var type2_6 = 0;
+  var type2_8 = 0;
+  var type2_10 = 0;
+  var type2_12 = 0;
+  var type2_14 = 0;
+  var type2_16 = 0;
+  var type2_18 = 0;
+  var type2_20 = 0;
+  var type2_22 = 0;
+  var type2_25 = 0;
+  var type2_28 = 0;
+  var type2_32 = 0;
+  var type2_40 = 0;
+
+  var type3_6 = 0;
+  var type3_8 = 0;
+  var type3_10 = 0;
+  var type3_12 = 0;
+  var type3_14 = 0;
+  var type3_16 = 0;
+  var type3_18 = 0;
+  var type3_20 = 0;
+  var type3_22 = 0;
+  var type3_25 = 0;
+  var type3_28 = 0;
+  var type3_32 = 0;
+  var type3_40 = 0;
+
+  var type4_6 = 0;
+  var type4_8 = 0;
+  var type4_10 = 0;
+  var type4_12 = 0;
+  var type4_14 = 0;
+  var type4_16 = 0;
+  var type4_18 = 0;
+  var type4_20 = 0;
+  var type4_22 = 0;
+  var type4_25 = 0;
+  var type4_28 = 0;
+  var type4_32 = 0;
+  var type4_40 = 0;
+
+
+
+  var ExtraI = 0;
+  var ExtraJ = 0;
+  var ExtraK = 0;
+  var ExtraL = 0;
+  var ExtraM = 0;
+  var ExtraN = 0;
+  var ExtraO = 0;
+  var ExtraP = 0;
+  var ExtraQ = 0;
+  var ExtraR = 0;
+  var ExtraS = 0;
+  var ExtraT = 0;
+  var ExtraU = 0;
+
+
+  var part2_type1_6 = 0;
+  var part2_type1_8 = 0;
+  var part2_type1_10 = 0;
+  var part2_type1_12 = 0;
+  var part2_type1_14 = 0;
+  var part2_type1_16 = 0;
+  var part2_type1_18 = 0;
+  var part2_type1_20 = 0;
+  var part2_type1_22 = 0;
+  var part2_type1_25 = 0;
+  var part2_type1_28 = 0;
+  var part2_type1_32 = 0;
+  var part2_type1_40 = 0;
+
+  var part2_type2_6 = 0;
+  var part2_type2_8 = 0;
+  var part2_type2_10 = 0;
+  var part2_type2_12 = 0;
+  var part2_type2_14 = 0;
+  var part2_type2_16 = 0;
+  var part2_type2_18 = 0;
+  var part2_type2_20 = 0;
+  var part2_type2_22 = 0;
+  var part2_type2_25 = 0;
+  var part2_type2_28 = 0;
+  var part2_type2_32 = 0;
+  var part2_type2_40 = 0;
+
+  var part2_type3_6 = 0;
+  var part2_type3_8 = 0;
+  var part2_type3_10 = 0;
+  var part2_type3_12 = 0;
+  var part2_type3_14 = 0;
+  var part2_type3_16 = 0;
+  var part2_type3_18 = 0;
+  var part2_type3_20 = 0;
+  var part2_type3_22 = 0;
+  var part2_type3_25 = 0;
+  var part2_type3_28 = 0;
+  var part2_type3_32 = 0;
+  var part2_type3_40 = 0;
+
+  var part2_type4_6 = 0;
+  var part2_type4_8 = 0;
+  var part2_type4_10 = 0;
+  var part2_type4_12 = 0;
+  var part2_type4_14 = 0;
+  var part2_type4_16 = 0;
+  var part2_type4_18 = 0;
+  var part2_type4_20 = 0;
+  var part2_type4_22 = 0;
+  var part2_type4_25 = 0;
+  var part2_type4_28 = 0;
+  var part2_type4_32 = 0;
+  var part2_type4_40 = 0;
+
+
+
+  var ExtraY = 0;
+  var ExtraZ = 0;
+  var ExtraAA = 0;
+  var ExtraAB = 0;
+  var ExtraAC = 0;
+  var ExtraAD = 0;
+  var ExtraAE = 0;
+  var ExtraAF = 0;
+  var ExtraAG = 0;
+  var ExtraAH = 0;
+  var ExtraAI = 0;
+  var ExtraAJ = 0;
+  var ExtraAK = 0;
+
+  var I = 0.222;
+  var J = 0.395;
+  var K = 0.616;
+  var L = 0.888;
+  var M = 1.208;
+  var N = 1.579;
+  var O = 1.997;
+  var P = 2.466;
+  var Q = 2.984;
+  var R = 3.854;
+  var S = 4.833;
+  var T = 6.313;
+  var U = 9.864;
+
+
+  if(this.Unit_width > 0 && this.Unit_height>0 && this.Unit_length && this.ch1C>0){
+    shape1 = (this.Unit_width+this.Unit_height+this.Unit_width+this.Unit_height-0.15)*1
+  }
+  if(this.Unit_width > 0 && this.Unit_height>0 && this.Unit_length && this.ch1C>0){
+    shape2 = (this.Unit_width+this.Unit_height+2*this.Unit_width+this.Unit_height-0.08)*1
+  }
+  if(this.Unit_width > 0 && this.Unit_height>0 && this.Unit_length && this.ch1C>0){
+    shape3 = (1.7*this.Unit_height+4*this.Unit_width+this.Unit_height-0.15)*1
+  }
+  if(this.Unit_width > 0 && this.Unit_height>0 && this.Unit_length && this.ch1C>0){
+    shape4 = (1.7*this.Unit_width+2*this.Unit_height+this.Unit_height-0.05)*1
+  }
+  if(this.Unit_width > 0 && this.Unit_height>0 && this.Unit_length && this.ch1C>0){
+    shape5 = (5*this.Unit_width+4*this.Unit_height-0.08)*1
+  }
+  if(this.Unit_width > 0 && this.Unit_height>0 && this.Unit_length && this.ch1C>0){
+    shape6 = (5*this.Unit_width+5*this.Unit_height-0.08)*1
+  }
+  if(this.Unit_width > 0 && this.Unit_height>0 && this.Unit_length && this.ch1C>0){
+    shape7 = (6*this.Unit_width+5.6*this.Unit_height-0.08)*1
+  }
+  if(this.No_of_units > 0 && this.Unit_height>0 && this.Unit_width>0 && this.Unit_length && this.ch1H>0&&this.ch1I>0&&this.ch1J>0){
+    shape8 = ((((this.No_of_units/this.ch1H) * (this.Unit_width-0.08))+ ((this.Unit_width/this.ch1I)+1)*(this.No_of_units-0.08))+0.08*this.ch1J)*1
+  }
+  if(this.ch1G == 1){
+    Totallengthofrings =shape1
+  }
+  else if(this.ch1G == 2){
+    Totallengthofrings =shape2
+  }
+  else if(this.ch1G == 3){
+    Totallengthofrings =shape3
+  }
+  else if(this.ch1G == 4){
+    Totallengthofrings =shape4
+  }
+  else if(this.ch1G == 5){
+    Totallengthofrings =shape5
+  }
+  else if(this.ch1G == 6){
+    Totallengthofrings =shape6
+  }
+  else if(this.ch1G == 7){
+    Totallengthofrings =shape7
+  }
+  else if(this.ch1G == 8){
+    Totallengthofrings =shape8
+  }
+
+  if(this.Unit_width>0&&this.Unit_length>0&&this.Unit_height>0&&this.ch1C>0){
+    NoofringsMIDDLETHIRD = 1000/this.ch1C
+  }
+  if(this.Unit_width>0&&this.Unit_length>0&&this.Unit_height>0&&this.ch1E>0){
+    NoofringsOTHERTHIRDRIGHTLEFT = 1000/this.ch1E
+  }
+
+  // ##############C19#############
+  if(this.ch1D == 6){
+    c19=0.222
+  }
+  else if(this.ch1D == 8){
+   c19=0.395
+  }
+  else if(this.ch1D == 10){
+    c19=0.617
+   }
+   else if(this.ch1D == 12){
+    c19=0.858
+   }
+   else if(this.ch1D == 14){
+    c19=1.209
+   }
+   else if(this.ch1D == 16){
+    c19=1.579
+   }
+   else if(this.ch1D == 18){
+    c19=1.998
+   }
+   else if(this.ch1D == 20){
+    c19=2.467
+   } 
+   else if(this.ch1D == 22){
+    c19=2.985
+   }
+   else if(this.ch1D == 25){
+    c19=3.855
+   }
+   else if(this.ch1D == 28){
+    c19=4.836
+   }
+   else if(this.ch1D == 32){
+    c19=6.316
+   }
+   else if(this.ch1D == 40){
+    c19=9.869
+   }
+
+     // ##############C21#############
+  if(this.ch1F == 6){
+    c21=0.222
+  }
+  else if(this.ch1F == 8){
+   c21=0.395
+  }
+  else if(this.ch1F == 10){
+    c21=0.617
+   }
+   else if(this.ch1F == 12){
+    c21=0.858
+   }
+   else if(this.ch1F == 14){
+    c21=1.209
+   }
+   else if(this.ch1F == 16){
+    c21=1.579
+   }
+   else if(this.ch1F == 18){
+    c21=1.998
+   }
+   else if(this.ch1F == 20){
+    c21=2.467
+   } 
+   else if(this.ch1F == 22){
+    c21=2.985
+   }
+   else if(this.ch1F == 25){
+    c21=3.855
+   }
+   else if(this.ch1F == 28){
+    c21=4.836
+   }
+   else if(this.ch1F == 32){
+    c21=6.316
+   }
+   else if(this.ch1F == 40){
+    c21=9.869
+   }
+
+
+        // ##############C27#############
+  if(this.ch1L == 6){
+    c27=0.222
+  }
+  else if(this.ch1L == 8){
+   c27=0.395
+  }
+  else if(this.ch1L == 10){
+    c27=0.617
+   }
+   else if(this.ch1L == 12){
+    c27=0.858
+   }
+   else if(this.ch1L == 14){
+    c27=1.209
+   }
+   else if(this.ch1L == 16){
+    c27=1.579
+   }
+   else if(this.ch1L == 18){
+    c27=1.998
+   }
+   else if(this.ch1L == 20){
+    c27=2.467
+   } 
+   else if(this.ch1L == 22){
+    c27=2.985
+   }
+   else if(this.ch1L == 25){
+    c27=3.855
+   }
+   else if(this.ch1L == 28){
+    c27=4.836
+   }
+   else if(this.ch1L == 32){
+    c27=6.316
+   }
+   else if(this.ch1L == 40){
+    c27=9.869
+   }
+
+   // ##############C29#############
+  if(this.ch1N == 6){
+    c29=0.222
+  }
+  else if(this.ch1N == 8){
+   c29=0.395
+  }
+  else if(this.ch1N == 10){
+    c29=0.617
+   }
+   else if(this.ch1N == 12){
+    c29=0.858
+   }
+   else if(this.ch1N == 14){
+    c29=1.209
+   }
+   else if(this.ch1N == 16){
+    c29=1.579
+   }
+   else if(this.ch1N == 18){
+    c29=1.998
+   }
+   else if(this.ch1N == 20){
+    c29=2.467
+   } 
+   else if(this.ch1N == 22){
+    c29=2.985
+   }
+   else if(this.ch1N == 25){
+    c29=3.855
+   }
+   else if(this.ch1N == 28){
+    c29=4.836
+   }
+   else if(this.ch1N == 32){
+    c29=6.316
+   }
+   else if(this.ch1N == 40){
+    c29=9.869
+   }
+
+      // ##############C31#############
+  if(this.ch1P == 6){
+    c31=0.222
+  }
+  else if(this.ch1P == 8){
+   c31=0.395
+  }
+  else if(this.ch1P == 10){
+    c31=0.617
+   }
+   else if(this.ch1P == 12){
+    c31=0.858
+   }
+   else if(this.ch1P == 14){
+    c31=1.209
+   }
+   else if(this.ch1P == 16){
+    c31=1.579
+   }
+   else if(this.ch1P == 18){
+    c31=1.998
+   }
+   else if(this.ch1P == 20){
+    c31=2.467
+   } 
+   else if(this.ch1P == 22){
+    c31=2.985
+   }
+   else if(this.ch1P == 25){
+    c31=3.855
+   }
+   else if(this.ch1P == 28){
+    c31=4.836
+   }
+   else if(this.ch1P == 32){
+    c31=6.316
+   }
+   else if(this.ch1P == 40){
+    c31=9.869
+   }
+
+   // ##############C33#############
+  if(this.ch1R == 6){
+    c33=0.222
+  }
+  else if(this.ch1R == 8){
+   c33=0.395
+  }
+  else if(this.ch1R == 10){
+    c33=0.617
+   }
+   else if(this.ch1R == 12){
+    c33=0.858
+   }
+   else if(this.ch1R == 14){
+    c33=1.209
+   }
+   else if(this.ch1R == 16){
+    c33=1.579
+   }
+   else if(this.ch1R == 18){
+    c33=1.998
+   }
+   else if(this.ch1R == 20){
+    c33=2.467
+   } 
+   else if(this.ch1R == 22){
+    c33=2.985
+   }
+   else if(this.ch1R == 25){
+    c33=3.855
+   }
+   else if(this.ch1R == 28){
+    c33=4.836
+   }
+   else if(this.ch1R == 32){
+    c33=6.316
+   }
+   else if(this.ch1R == 40){
+    c33=9.869
+   }
+
+      // ##############C35#############
+  if(this.ch1T == 6){
+    c35=0.222
+  }
+  else if(this.ch1T == 8){
+   c35=0.395
+  }
+  else if(this.ch1T == 10){
+    c35=0.617
+   }
+   else if(this.ch1T == 12){
+    c35=0.858
+   }
+   else if(this.ch1T == 14){
+    c35=1.209
+   }
+   else if(this.ch1T == 16){
+    c35=1.579
+   }
+   else if(this.ch1T == 18){
+    c35=1.998
+   }
+   else if(this.ch1T == 20){
+    c35=2.467
+   } 
+   else if(this.ch1T == 22){
+    c35=2.985
+   }
+   else if(this.ch1T == 25){
+    c35=3.855
+   }
+   else if(this.ch1T == 28){
+    c35=4.836
+   }
+   else if(this.ch1T == 32){
+    c35=6.316
+   }
+   else if(this.ch1T == 40){
+    c35=9.869
+   }
+
+// ##############C37#############
+if(this.ch1V == 6){
+  c37=0.222
+}
+else if(this.ch1V == 8){
+ c37=0.395
+}
+else if(this.ch1V == 10){
+  c37=0.617
+ }
+ else if(this.ch1V == 12){
+  c37=0.858
+ }
+ else if(this.ch1V == 14){
+  c37=1.209
+ }
+ else if(this.ch1V == 16){
+  c37=1.579
+ }
+ else if(this.ch1V == 18){
+  c37=1.998
+ }
+ else if(this.ch1V == 20){
+  c37=2.467
+ } 
+ else if(this.ch1V == 22){
+  c37=2.985
+ }
+ else if(this.ch1V == 25){
+  c37=3.855
+ }
+ else if(this.ch1V == 28){
+  c37=4.836
+ }
+ else if(this.ch1V == 32){
+  c37=6.316
+ }
+ else if(this.ch1V == 40){
+  c37=9.869
+ }
+
+ // ##############C39#############
+if(this.ch1X == 6){
+  c39=0.222
+}
+else if(this.ch1X == 8){
+ c39=0.395
+}
+else if(this.ch1X == 10){
+  c39=0.617
+ }
+ else if(this.ch1X == 12){
+  c39=0.858
+ }
+ else if(this.ch1X == 14){
+  c39=1.209
+ }
+ else if(this.ch1X == 16){
+  c39=1.579
+ }
+ else if(this.ch1X == 18){
+  c39=1.998
+ }
+ else if(this.ch1X == 20){
+  c39=2.467
+ } 
+ else if(this.ch1X == 22){
+  c39=2.985
+ }
+ else if(this.ch1X == 25){
+  c39=3.855
+ }
+ else if(this.ch1X == 28){
+  c39=4.836
+ }
+ else if(this.ch1X == 32){
+  c39=6.316
+ }
+ else if(this.ch1X == 40){
+  c39=9.869
+ }
+
+ // ##############C41#############
+if(this.ch1Z == 6){
+  c41=0.222
+}
+else if(this.ch1Z == 8){
+ c41=0.395
+}
+else if(this.ch1Z == 10){
+  c41=0.617
+ }
+ else if(this.ch1Z == 12){
+  c41=0.858
+ }
+ else if(this.ch1Z == 14){
+  c41=1.209
+ }
+ else if(this.ch1Z == 16){
+  c41=1.579
+ }
+ else if(this.ch1Z == 18){
+  c41=1.998
+ }
+ else if(this.ch1Z == 20){
+  c41=2.467
+ } 
+ else if(this.ch1Z == 22){
+  c41=2.985
+ }
+ else if(this.ch1Z == 25){
+  c41=3.855
+ }
+ else if(this.ch1Z == 28){
+  c41=4.836
+ }
+ else if(this.ch1Z == 32){
+  c41=6.316
+ }
+ else if(this.ch1Z == 40){
+  c41=9.869
+ }
+
+ // ##############C43#############
+if(this.ch1AB == 6){
+  c43=0.222
+}
+else if(this.ch1AB == 8){
+ c43=0.395
+}
+else if(this.ch1AB == 10){
+  c43=0.617
+ }
+ else if(this.ch1AB == 12){
+  c43=0.858
+ }
+ else if(this.ch1AB == 14){
+  c43=1.209
+ }
+ else if(this.ch1AB == 16){
+  c43=1.579
+ }
+ else if(this.ch1AB == 18){
+  c43=1.998
+ }
+ else if(this.ch1AB == 20){
+  c43=2.467
+ } 
+ else if(this.ch1AB == 22){
+  c43=2.985
+ }
+ else if(this.ch1AB == 25){
+  c43=3.855
+ }
+ else if(this.ch1AB == 28){
+  c43=4.836
+ }
+ else if(this.ch1AB == 32){
+  c43=6.316
+ }
+ else if(this.ch1AB == 40){
+  c43=9.869
+ }
+
+
+   // ##############C27#############
+   if(this.ch2A == 6){
+    f27=0.222
+  }
+  else if(this.ch2A == 8){
+   f27=0.395
+  }
+  else if(this.ch2A == 10){
+    f27=0.617
+   }
+   else if(this.ch2A == 12){
+    f27=0.858
+   }
+   else if(this.ch2A == 14){
+    f27=1.209
+   }
+   else if(this.ch2A == 16){
+    f27=1.579
+   }
+   else if(this.ch2A == 18){
+    f27=1.998
+   }
+   else if(this.ch2A == 20){
+    f27=2.467
+   } 
+   else if(this.ch2A == 22){
+    f27=2.985
+   }
+   else if(this.ch2A == 25){
+    f27=3.855
+   }
+   else if(this.ch2A == 28){
+    f27=4.836
+   }
+   else if(this.ch2A == 32){
+    f27=6.316
+   }
+   else if(this.ch2A == 40){
+    f27=9.869
+   }
+
+   // ##############C29#############
+  if(this.ch2C == 6){
+    f29=0.222
+  }
+  else if(this.ch2C == 8){
+   f29=0.395
+  }
+  else if(this.ch2C == 10){
+    f29=0.617
+   }
+   else if(this.ch2C == 12){
+    f29=0.858
+   }
+   else if(this.ch2C == 14){
+    f29=1.209
+   }
+   else if(this.ch2C == 16){
+    f29=1.579
+   }
+   else if(this.ch2C == 18){
+    f29=1.998
+   }
+   else if(this.ch2C == 20){
+    f29=2.467
+   } 
+   else if(this.ch2C == 22){
+    f29=2.985
+   }
+   else if(this.ch2C == 25){
+    f29=3.855
+   }
+   else if(this.ch2C == 28){
+    f29=4.836
+   }
+   else if(this.ch2C == 32){
+    f29=6.316
+   }
+   else if(this.ch2C == 40){
+    f29=9.869
+   }
+
+      // ##############C31#############
+  if(this.ch2E == 6){
+    f31=0.222
+  }
+  else if(this.ch2E == 8){
+   f31=0.395
+  }
+  else if(this.ch2E == 10){
+    f31=0.617
+   }
+   else if(this.ch2E == 12){
+    f31=0.858
+   }
+   else if(this.ch2E == 14){
+    f31=1.209
+   }
+   else if(this.ch2E == 16){
+    f31=1.579
+   }
+   else if(this.ch2E == 18){
+    f31=1.998
+   }
+   else if(this.ch2E == 20){
+    f31=2.467
+   } 
+   else if(this.ch2E == 22){
+    f31=2.985
+   }
+   else if(this.ch2E == 25){
+    f31=3.855
+   }
+   else if(this.ch2E == 28){
+    f31=4.836
+   }
+   else if(this.ch2E == 32){
+    f31=6.316
+   }
+   else if(this.ch2E == 40){
+    f31=9.869
+   }
+
+   // ##############C33#############
+  if(this.ch2G == 6){
+    f33=0.222
+  }
+  else if(this.ch2G == 8){
+   f33=0.395
+  }
+  else if(this.ch2G == 10){
+    f33=0.617
+   }
+   else if(this.ch2G == 12){
+    f33=0.858
+   }
+   else if(this.ch2G == 14){
+    f33=1.209
+   }
+   else if(this.ch2G == 16){
+    f33=1.579
+   }
+   else if(this.ch2G == 18){
+    f33=1.998
+   }
+   else if(this.ch2G == 20){
+    f33=2.467
+   } 
+   else if(this.ch2G == 22){
+    f33=2.985
+   }
+   else if(this.ch2G == 25){
+    f33=3.855
+   }
+   else if(this.ch2G == 28){
+    f33=4.836
+   }
+   else if(this.ch2G == 32){
+    f33=6.316
+   }
+   else if(this.ch2G == 40){
+    f33=9.869
+   }
+
+      // ##############C35#############
+  if(this.ch2I == 6){
+    f35=0.222
+  }
+  else if(this.ch2I == 8){
+   f35=0.395
+  }
+  else if(this.ch2I == 10){
+    f35=0.617
+   }
+   else if(this.ch2I == 12){
+    f35=0.858
+   }
+   else if(this.ch2I == 14){
+    f35=1.209
+   }
+   else if(this.ch2I == 16){
+    f35=1.579
+   }
+   else if(this.ch2I == 18){
+    f35=1.998
+   }
+   else if(this.ch2I == 20){
+    f35=2.467
+   } 
+   else if(this.ch2I == 22){
+    f35=2.985
+   }
+   else if(this.ch2I == 25){
+    f35=3.855
+   }
+   else if(this.ch2I == 28){
+    f35=4.836
+   }
+   else if(this.ch2I == 32){
+    f35=6.316
+   }
+   else if(this.ch2I == 40){
+    f35=9.869
+   }
+
+// ##############C37#############
+if(this.ch2K == 6){
+  f37=0.222
+}
+else if(this.ch2K == 8){
+ f37=0.395
+}
+else if(this.ch2K == 10){
+  f37=0.617
+ }
+ else if(this.ch2K == 12){
+  f37=0.858
+ }
+ else if(this.ch2K == 14){
+  f37=1.209
+ }
+ else if(this.ch2K == 16){
+  f37=1.579
+ }
+ else if(this.ch2K == 18){
+  f37=1.998
+ }
+ else if(this.ch2K == 20){
+  f37=2.467
+ } 
+ else if(this.ch2K == 22){
+  f37=2.985
+ }
+ else if(this.ch2K == 25){
+  f37=3.855
+ }
+ else if(this.ch2K == 28){
+  f37=4.836
+ }
+ else if(this.ch2K == 32){
+  f37=6.316
+ }
+ else if(this.ch2K == 40){
+  f37=9.869
+ }
+
+ // ##############C39#############
+if(this.ch2M == 6){
+  f39=0.222
+}
+else if(this.ch2M == 8){
+ f39=0.395
+}
+else if(this.ch2M == 10){
+  f39=0.617
+ }
+ else if(this.ch2M == 12){
+  f39=0.858
+ }
+ else if(this.ch2M == 14){
+  f39=1.209
+ }
+ else if(this.ch2M == 16){
+  f39=1.579
+ }
+ else if(this.ch2M == 18){
+  f39=1.998
+ }
+ else if(this.ch2M == 20){
+  f39=2.467
+ } 
+ else if(this.ch2M == 22){
+  f39=2.985
+ }
+ else if(this.ch2M == 25){
+  f39=3.855
+ }
+ else if(this.ch2M == 28){
+  f39=4.836
+ }
+ else if(this.ch2M == 32){
+  f39=6.316
+ }
+ else if(this.ch2M == 40){
+  f39=9.869
+ }
+
+ // ##############C41#############
+if(this.ch2O == 6){
+  f41=0.222
+}
+else if(this.ch2O == 8){
+ f41=0.395
+}
+else if(this.ch2O == 10){
+  f41=0.617
+ }
+ else if(this.ch2O == 12){
+  f41=0.858
+ }
+ else if(this.ch2O == 14){
+  f41=1.209
+ }
+ else if(this.ch2O == 16){
+  f41=1.579
+ }
+ else if(this.ch2O == 18){
+  f41=1.998
+ }
+ else if(this.ch2O == 20){
+  f41=2.467
+ } 
+ else if(this.ch2O == 22){
+  f41=2.985
+ }
+ else if(this.ch2O == 25){
+  f41=3.855
+ }
+ else if(this.ch2O == 28){
+  f41=4.836
+ }
+ else if(this.ch2O == 32){
+  f41=6.316
+ }
+ else if(this.ch2O == 40){
+  f41=9.869
+ }
+
+ // ##############C43#############
+if(this.ch2Q == 6){
+  f43=0.222
+}
+else if(this.ch2Q == 8){
+ f43=0.395
+}
+else if(this.ch2Q == 10){
+  f43=0.617
+ }
+ else if(this.ch2Q == 12){
+  f43=0.858
+ }
+ else if(this.ch2Q == 14){
+  f43=1.209
+ }
+ else if(this.ch2Q == 16){
+  f43=1.579
+ }
+ else if(this.ch2Q == 18){
+  f43=1.998
+ }
+ else if(this.ch2Q == 20){
+  f43=2.467
+ } 
+ else if(this.ch2Q == 22){
+  f43=2.985
+ }
+ else if(this.ch2Q == 25){
+  f43=3.855
+ }
+ else if(this.ch2Q == 28){
+  f43=4.836
+ }
+ else if(this.ch2Q == 32){
+  f43=6.316
+ }
+ else if(this.ch2Q == 40){
+  f43=9.869
+ }
+
+ p1_1 = (0.33*this.Unit_length+this.ch1A+this.Unit_height+0.35)* this.ch1M*c27;
+ p1_2 =(0.33*this.Unit_length+this.ch1B+this.Unit_height+0.35)*this.ch1Q*c31;
+ p1_3=(0.8+0.67*this.Unit_length)*this.ch1U*c35;
+ p1_4 =(this.Unit_length+this.ch1A+this.ch1B-0.2+2*this.Unit_height)*this.ch1W*c37;
+ p1_5 =(0.84*this.Unit_length+0.1)*this.ch1Y*c39;
+ p1_6 =this.Unit_length*this.ch1AA*c41;
+ p1_7 =this.ch1M*(0.4+this.Unit_height+this.ch1A-0.05+this.Unit_length+(50*this.ch1L*this.ch1L*3.14/4000))*c27;
+ p1_8 =this.ch1O*(0.33*this.Unit_length+this.ch1A+this.Unit_height+0.35)*c29;
+ p1_9 =this.ch1Q*(0.4+this.Unit_height+this.ch1A-0.05+this.Unit_length+(50*this.ch1L*this.ch1L*3.14/4000))*c31;
+ p1_10 =((this.ch1S)*1*1*(0.67*this.Unit_length+this.ch1B))*c33;
+ p1_11 =((this.ch1W)*1*1*(this.Unit_length+this.ch1A+this.Unit_height+this.ch1B-0.1))*c37;
+ p1_12 =((this.ch1Y)*1*1*(0.6*this.Unit_length+0.1))*c39;
+ p1_13 =this.Unit_length*this.ch1AA*c41;
+ p1_14 =this.ch1M*(this.Unit_length+0.5*this.ch1A+0.5*this.ch1B+(100*this.ch1L*this.ch1L*3.14/4000))*c27;
+ p1_15 =(this.ch1O*(0.05+0.5*this.ch1A+0.33*this.Unit_length))*c29;
+ p1_16 =this.ch1Q*(this.Unit_length+0.5*this.ch1A+0.5*this.ch1B+(100*this.ch1L*this.ch1L*3.14/4000))*c31;
+ p1_17 =(this.ch1O*(0.05+0.5*this.ch1B+0.33*this.Unit_length))*c33;
+ p1_18 =(this.ch1W*(this.ch1A+this.Unit_length+this.ch1B))*c37;
+ p1_19 =(this.ch1Y*(0.6*this.Unit_length+0.1))*c39;
+ p1_20 =this.Unit_length*this.ch1AA*c41;
+ p1_21 =(this.ch1M*(this.Unit_length+this.Unit_height+this.ch1A))*c27;
+ p1_22 =(this.ch1O*(2.5*this.Unit_length+this.ch1A+this.Unit_height))*c29;
+ p1_23 =(this.ch1W*(this.Unit_height+this.ch1A+this.Unit_length))*c37;
+ p1_24 =this.Unit_length*this.ch1AA*c41;
+ p1_25 =this.ch1AC*c43;
+
+ p2_1 =(0.33*this.Unit_length+this.ch1A+this.Unit_height+0.35)*this.ch2B*f27;
+ p2_2 =(0.33*this.Unit_length+this.ch1B+this.Unit_height+0.35)*this.ch2F*f31;
+ p2_3 =(0.8+0.67*this.Unit_length)*this.ch2J*f35;
+ p2_4 =(this.Unit_length+this.ch1A+this.ch1B-0.2+2*this.Unit_height)*this.ch2L*f37;
+ p2_5 =(0.84*this.Unit_length+0.1)*this.ch2N*f39;
+ p2_6 =this.Unit_length*this.ch2P*f41;
+ p2_7 =this.ch2B*(0.4+this.Unit_height+this.ch1A-0.05+this.Unit_length+(50*this.ch2A*this.ch2A*3.14/4000))*f27;
+ p2_8 =this.ch2D*(0.33*this.Unit_length+this.ch1A+this.Unit_height+0.35)*f29;
+ p2_9 =this.ch2F*(0.4+this.Unit_height+this.ch1A-0.05+this.Unit_length+(50*this.ch2A*this.ch2A*3.14/4000))*f31;
+ p2_10 =((this.ch2H)*1*1*(0.67*this.Unit_length+this.ch1B))*f33;
+ p2_11 =((this.ch2L)*1*1*(this.Unit_length+this.ch1A+this.Unit_height+this.ch1B-0.1))*f37;
+ p2_12 =((this.ch2N)*1*1*(0.6*this.Unit_length+0.1))*f39;
+ p2_13 =this.Unit_length*this.ch2P*f41;
+ p2_14 =this.ch2B*(this.Unit_length+0.5*this.ch1A+0.5*this.ch1B+(100*this.ch2A*this.ch2A*3.14/4000))*f27;
+ p2_15 =(this.ch2D*(0.05+0.5*this.ch1A+0.33*this.Unit_length))*f29;
+ p2_16 =this.ch2F*(this.Unit_length+0.5*this.ch1A+0.5*this.ch1B+(100*this.ch2A*this.ch2A*3.14/4000))*f31;
+ p2_17 =(this.ch2D*(0.05+0.5*this.ch1B+0.33*this.Unit_length))*f33;
+ p2_18 =(this.ch2L*(this.ch1A+this.Unit_length+this.ch1B))*f37;
+ p2_19 =(this.ch2N*(0.6*this.Unit_length+0.1))*f39;
+ p2_20 =this.Unit_length*this.ch2P*f41;
+ p2_21 =(this.ch2B*(this.Unit_length+this.Unit_height+this.ch1A))*f27;
+ p2_22 =(this.ch2D*(2.5*this.Unit_length+this.ch1A+this.Unit_height))*f29;
+ p2_23 =(this.ch2L*(this.Unit_height+this.ch1A+this.Unit_length))*f37;
+ p2_24 =this.Unit_length*this.ch2P*f41;
+ p2_25 =this.ch2R*f43;
+
+ if(c19 == 0.222){
+  SteelringatcenterI19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 0.395){
+  SteelringatcenterJ19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 0.616){
+  SteelringatcenterK19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 0.888){
+  SteelringatcenterL19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 1.208){
+  SteelringatcenterM19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 1.579){
+  SteelringatcenterN19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 1.997){
+  SteelringatcenterO19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 2.466){
+  SteelringatcenterP19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 2.984){
+  SteelringatcenterQ19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 3.854){
+  SteelringatcenterR19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 4.833){
+  SteelringatcenterS19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 6.313){
+  SteelringatcenterT19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+ if(c19 == 9.864){
+  SteelringatcenterU19 =(NoofringsMIDDLETHIRD*this.Unit_length*0.33)*Totallengthofrings*c19
+ }
+
+
+
+ if(c21 == 0.222){
+  SteelringatthirdI21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 0.395){
+  SteelringatthirdJ21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 0.616){
+  SteelringatthirdK21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 0.888){
+  SteelringatthirdL21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 1.208){
+  SteelringatthirdM21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 1.579){
+  SteelringatthirdN21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 1.997){
+  SteelringatthirdO21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 2.466){
+  SteelringatthirdP21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 2.984){
+  SteelringatthirdQ21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 3.854){
+  SteelringatthirdR21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 4.833){
+  SteelringatthirdS21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 6.313){
+  SteelringatthirdT21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+ if(c21 == 9.864){
+  SteelringatthirdU21 =(NoofringsOTHERTHIRDRIGHTLEFT*this.Unit_length*0.67*1)*c21*Totallengthofrings
+ }
+
+ presumSteelringI = SteelringatcenterI19+SteelringatthirdI21;
+ presumSteelringJ = SteelringatcenterJ19+SteelringatthirdJ21;
+ presumSteelringK = SteelringatcenterK19+SteelringatthirdK21;
+ presumSteelringL = SteelringatcenterL19+SteelringatthirdL21;
+ presumSteelringM = SteelringatcenterM19+SteelringatthirdM21;
+ presumSteelringN = SteelringatcenterN19+SteelringatthirdN21;
+ presumSteelringO = SteelringatcenterO19+SteelringatthirdO21;
+ presumSteelringP = SteelringatcenterP19+SteelringatthirdP21;
+ presumSteelringQ = SteelringatcenterQ19+SteelringatthirdQ21;
+ presumSteelringR = SteelringatcenterR19+SteelringatthirdR21;
+ presumSteelringS = SteelringatcenterS19+SteelringatthirdS21;
+ presumSteelringT = SteelringatcenterT19+SteelringatthirdT21;
+ presumSteelringU = SteelringatcenterU19+SteelringatthirdU21;
+ sumSteelring = presumSteelringI+presumSteelringJ+presumSteelringK+presumSteelringL+presumSteelringM+presumSteelringN+presumSteelringO+presumSteelringP+presumSteelringQ+presumSteelringR+presumSteelringS+presumSteelringT+presumSteelringU;
+
+
+ pre6 = presumSteelringI*this.No_of_units;
+ pre8 = presumSteelringJ*this.No_of_units;
+ pre10 = presumSteelringK*this.No_of_units;
+ pre12 = presumSteelringL*this.No_of_units;
+ pre14 = presumSteelringM*this.No_of_units;
+ pre16 = presumSteelringN*this.No_of_units;
+ pre18 = presumSteelringO*this.No_of_units;
+ pre20 = presumSteelringP*this.No_of_units;
+ pre22 = presumSteelringQ*this.No_of_units;
+ pre25 = presumSteelringR*this.No_of_units;
+ pre28 = presumSteelringS*this.No_of_units;
+ pre32 = presumSteelringT*this.No_of_units;
+ pre40 = presumSteelringU*this.No_of_units;
+
+
+  if(this.ch1K == 1){
+    type1 = 1
+  }
+
+  if(this.ch1K == 2){
+    type2 = 1
+  }
+
+  if(this.ch1K == 3){
+    type3 = 1
+  }
+
+  if(this.ch1K == 4){
+    type4 = 1
+  }
+
+  if(type1 > 0){
+    var I46 = 0;
+    var I47= 0;
+    var I48= 0;
+    var I49= 0;
+    var I50= 0;
+    var I51= 0;
+
+    if(c27 == 0.222){
+      I46 = p1_1
+    }
+    if(c31 == 0.222){
+      I47 = p1_2
+    }
+    if(c35 == 0.222){
+      I48 = p1_3
+    }
+    if(c37 == 0.222){
+      I49 = p1_4
+    }
+    if(c39 == 0.222){
+      I50 = p1_5
+    }
+    if(c41 == 0.222){
+      I51 = p1_6
+    }
+   type1_6 = (I46+I47+I48+I49+I50+I51)*type1
+
+
+
+    var J46 = 0;
+    var J47= 0;
+    var J48= 0;
+    var J49= 0;
+    var J50= 0;
+    var J51= 0;
+
+    if(c27 == 0.395){
+      J46 = p1_1
+    }
+    if(c31 == 0.395){
+      J47 = p1_2
+    }
+    if(c35 == 0.395){
+      J48 = p1_3
+    }
+    if(c37 == 0.395){
+      J49 = p1_4
+    }
+    if(c39 == 0.395){
+      J50 = p1_5
+    }
+    if(c41 == 0.395){
+      J51 = p1_6
+    }
+   type1_8 = (J46+J47+J48+J49+J50+J51)*type1
+
+
+
+
+
+    var K46 = 0;
+    var K47= 0;
+    var K48= 0;
+    var K49= 0;
+    var K50= 0;
+    var K51= 0;
+
+    if(c27 == 0.616){
+      K46 = p1_1
+    }
+    if(c31 == 0.616){
+      K47 = p1_2
+    }
+    if(c35 == 0.616){
+      K48 = p1_3
+    }
+    if(c37 == 0.616){
+      K49 = p1_4
+    }
+    if(c39 == 0.616){
+      K50 = p1_5
+    }
+    if(c41 == 0.616){
+      K51 = p1_6
+    }
+   type1_10 = (K46+K47+K48+K49+K50+K51)*type1
+
+
+    var L46 = 0;
+    var L47= 0;
+    var L48= 0;
+    var L49= 0;
+    var L50= 0;
+    var L51= 0;
+
+    if(c27 == 0.888){
+      L46 = p1_1
+    }
+    if(c31 == 0.888){
+      L47 = p1_2
+    }
+    if(c35 == 0.888){
+      L48 = p1_3
+    }
+    if(c37 == 0.888){
+      L49 = p1_4
+    }
+    if(c39 == 0.888){
+      L50 = p1_5
+    }
+    if(c41 == 0.888){
+      L51 = p1_6
+    }
+   type1_12 = (L46+L47+L48+L49+L50+L51)*type1
+
+
+
+    var M46 = 0;
+    var M47= 0;
+    var M48= 0;
+    var M49= 0;
+    var M50= 0;
+    var M51= 0;
+
+    if(c27 == 1.208){
+      M46 = p1_1
+    }
+    if(c31 == 1.208){
+      M47 = p1_2
+    }
+    if(c35 == 1.208){
+      M48 = p1_3
+    }
+    if(c37 == 1.208){
+      M49 = p1_4
+    }
+    if(c39 == 1.208){
+      M50 = p1_5
+    }
+    if(c41 == 1.208){
+      M51 = p1_6
+    }
+   type1_14 = (M46+M47+M48+M49+M50+M51)*type1
+
+
+    var N46 = 0;
+    var N47= 0;
+    var N48= 0;
+    var N49= 0;
+    var N50= 0;
+    var N51= 0;
+
+    if(c27 == 1.579){
+      N46 = p1_1
+    }
+    if(c31 == 1.579){
+      N47 = p1_2
+    }
+    if(c35 == 1.579){
+      N48 = p1_3
+    }
+    if(c37 == 1.579){
+      N49 = p1_4
+    }
+    if(c39 == 1.579){
+      N50 = p1_5
+    }
+    if(c41 == 1.579){
+      N51 = p1_6
+    }
+   type1_16 = (N46+N47+N48+N49+N50+N51)*type1
+
+
+    var O46 = 0;
+    var O47= 0;
+    var O48= 0;
+    var O49= 0;
+    var O50= 0;
+    var O51= 0;
+
+    if(c27 == 1.997){
+      O46 = p1_1
+    }
+    if(c31 == 1.997){
+      O47 = p1_2
+    }
+    if(c35 == 1.997){
+      O48 = p1_3
+    }
+    if(c37 == 1.997){
+      O49 = p1_4
+    }
+    if(c39 == 1.997){
+      O50 = p1_5
+    }
+    if(c41 == 1.997){
+      O51 = p1_6
+    }
+   type1_18 = (O46+O47+O48+O49+O50+O51)*type1
+
+
+
+    var P46 = 0;
+    var P47= 0;
+    var P48= 0;
+    var P49= 0;
+    var P50= 0;
+    var P51= 0;
+
+    if(c27 == 2.466){
+      P46 = p1_1
+    }
+    if(c31 == 2.466){
+      P47 = p1_2
+    }
+    if(c35 == 2.466){
+      P48 = p1_3
+    }
+    if(c37 == 2.466){
+      P49 = p1_4
+    }
+    if(c39 == 2.466){
+      P50 = p1_5
+    }
+    if(c41 == 2.466){
+      P51 = p1_6
+    }
+   type1_20 = (P46+P47+P48+P49+P50+P51)*type1
+
+
+    var Q46 = 0;
+    var Q47= 0;
+    var Q48= 0;
+    var Q49= 0;
+    var Q50= 0;
+    var Q51= 0;
+
+    if(c27 == 2.984){
+      Q46 = p1_1
+    }
+    if(c31 == 2.984){
+      Q47 = p1_2
+    }
+    if(c35 == 2.984){
+      Q48 = p1_3
+    }
+    if(c37 == 2.984){
+      Q49 = p1_4
+    }
+    if(c39 == 2.984){
+      Q50 = p1_5
+    }
+    if(c41 == 2.984){
+      Q51 = p1_6
+    }
+   type1_22 = (Q46+Q47+Q48+Q49+Q50+Q51)*type1
+
+
+    var R46 = 0;
+    var R47= 0;
+    var R48= 0;
+    var R49= 0;
+    var R50= 0;
+    var R51= 0;
+
+    if(c27 == 3.854){
+      R46 = p1_1
+    }
+    if(c31 == 3.854){
+      R47 = p1_2
+    }
+    if(c35 == 3.854){
+      R48 = p1_3
+    }
+    if(c37 == 3.854){
+      R49 = p1_4
+    }
+    if(c39 == 3.854){
+      R50 = p1_5
+    }
+    if(c41 == 3.854){
+      R51 = p1_6
+    }
+   type1_25 = (R46+R47+R48+R49+R50+R51)*type1
+
+
+   var S46 = 0;
+    var S47= 0;
+    var S48= 0;
+    var S49= 0;
+    var S50= 0;
+    var S51= 0;
+
+    if(c27 == 4.833){
+      S46 = p1_1
+    }
+    if(c31 == 4.833){
+      S47 = p1_2
+    }
+    if(c35 == 4.833){
+      S48 = p1_3
+    }
+    if(c37 == 4.833){
+      S49 = p1_4
+    }
+    if(c39 == 4.833){
+      S50 = p1_5
+    }
+    if(c41 == 4.833){
+      S51 = p1_6
+    }
+   type1_28 = (S46+S47+S48+S49+S50+S51)*type1
+
+
+
+    var T46 = 0;
+    var T47= 0;
+    var T48= 0;
+    var T49= 0;
+    var T50= 0;
+    var T51= 0;
+
+    if(c27 == 6.313){
+      T46 = p1_1
+    }
+    if(c31 == 6.313){
+      T47 = p1_2
+    }
+    if(c35 == 6.313){
+      T48 = p1_3
+    }
+    if(c37 == 6.313){
+      T49 = p1_4
+    }
+    if(c39 == 6.313){
+      T50 = p1_5
+    }
+    if(c41 == 6.313){
+      T51 = p1_6
+    }
+   type1_32 = (T46+T47+T48+T49+T50+T51)*type1
+
+
+    var U46 = 0;
+    var U47= 0;
+    var U48= 0;
+    var U49= 0;
+    var U50= 0;
+    var U51= 0;
+
+    if(c27 == 9.864){
+      U46 = p1_1
+    }
+    if(c31 == 9.864){
+      U47 = p1_2
+    }
+    if(c35 == 9.864){
+      U48 = p1_3
+    }
+    if(c37 == 9.864){
+      U49 = p1_4
+    }
+    if(c39 == 9.864){
+      U50 = p1_5
+    }
+    if(c41 == 9.864){
+      U51 = p1_6
+    }
+   type1_40 = (U46+U47+U48+U49+U50+U51)*type1
+
+  }
+
+  if(type2 > 0){
+    var I52 = 0;
+    var I53= 0;
+    var I54= 0;
+    var I55= 0;
+    var I56= 0;
+    var I57= 0;
+    var I58= 0;
+
+    if(c27 == 0.222){
+      I52 = p1_7
+    }
+    if(c29 == 0.222){
+      I53 = p1_8
+    }
+    if(c31 == 0.222){
+      I54 = p1_9
+    }
+    if(c33 == 0.222){
+      I55 = p1_10
+    }
+    if(c37 == 0.222){
+      I56 = p1_11
+    }
+    if(c39 == 0.222){
+      I57 = p1_12
+    }
+    if(c41 == 0.222){
+      I58 = p1_13
+    }
+    type2_6 =(I52+I53+I54+I55+I56+I57+I58)*type2
+
+
+    var J52 = 0;
+    var J53= 0;
+    var J54= 0;
+    var J55= 0;
+    var J56= 0;
+    var J57= 0;
+    var J58= 0;
+
+    if(c27 == 0.395){
+      J52 = p1_7
+    }
+    if(c29 == 0.395){
+      J53 = p1_8
+    }
+    if(c31 == 0.395){
+      J54 = p1_9
+    }
+    if(c33 == 0.395){
+      J55 = p1_10
+    }
+    if(c37 == 0.395){
+      J56 = p1_11
+    }
+    if(c39 == 0.395){
+      J57 = p1_12
+    }
+    if(c41 == 0.395){
+      J58 = p1_13
+    }
+    type2_8 =(J52+J53+J54+J55+J56+J57+J58)*type2
+
+
+    var K52 = 0;
+    var K53= 0;
+    var K54= 0;
+    var K55= 0;
+    var K56= 0;
+    var K57= 0;
+    var K58= 0;
+
+    if(c27 == 0.616){
+      K52 = p1_7
+    }
+    if(c29 == 0.616){
+      K53 = p1_8
+    }
+    if(c31 == 0.616){
+      K54 = p1_9
+    }
+    if(c33 == 0.616){
+      K55 = p1_10
+    }
+    if(c37 == 0.616){
+      K56 = p1_11
+    }
+    if(c39 == 0.616){
+      K57 = p1_12
+    }
+    if(c41 == 0.616){
+      K58 = p1_13
+    }
+    type2_10 =(K52+K53+K54+K55+K56+K57+K58)*type2
+
+
+
+    var L52 = 0;
+    var L53= 0;
+    var L54= 0;
+    var L55= 0;
+    var L56= 0;
+    var L57= 0;
+    var L58= 0;
+
+    if(c27 == 0.888){
+      L52 = p1_7
+    }
+    if(c29 == 0.888){
+      L53 = p1_8
+    }
+    if(c31 == 0.888){
+      L54 = p1_9
+    }
+    if(c33 == 0.888){
+      L55 = p1_10
+    }
+    if(c37 == 0.888){
+      L56 = p1_11
+    }
+    if(c39 == 0.888){
+      L57 = p1_12
+    }
+    if(c41 == 0.888){
+      L58 = p1_13
+    }
+    type2_12 =(L52+L53+L54+L55+L56+L57+L58)*type2
+
+
+    var M52 = 0;
+    var M53= 0;
+    var M54= 0;
+    var M55= 0;
+    var M56= 0;
+    var M57= 0;
+    var M58= 0;
+
+    if(c27 == 1.208){
+      M52 = p1_7
+    }
+    if(c29 == 1.208){
+      M53 = p1_8
+    }
+    if(c31 == 1.208){
+      M54 = p1_9
+    }
+    if(c33 == 1.208){
+      M55 = p1_10
+    }
+    if(c37 == 1.208){
+      M56 = p1_11
+    }
+    if(c39 == 1.208){
+      M57 = p1_12
+    }
+    if(c41 == 1.208){
+      M58 = p1_13
+    }
+    type2_14 =(M52+M53+M54+M55+M56+M57+M58)*type2
+
+
+    var N52 = 0;
+    var N53= 0;
+    var N54= 0;
+    var N55= 0;
+    var N56= 0;
+    var N57= 0;
+    var N58= 0;
+
+    if(c27 == 1.579){
+      N52 = p1_7
+    }
+    if(c29 == 1.579){
+      N53 = p1_8
+    }
+    if(c31 == 1.579){
+      N54 = p1_9
+    }
+    if(c33 == 1.579){
+      N55 = p1_10
+    }
+    if(c37 == 1.579){
+      N56 = p1_11
+    }
+    if(c39 == 1.579){
+      N57 = p1_12
+    }
+    if(c41 == 1.579){
+      N58 = p1_13
+    }
+    type2_16 =(N52+N53+N54+N55+N56+N57+N58)*type2
+
+
+    var O52 = 0;
+    var O53= 0;
+    var O54= 0;
+    var O55= 0;
+    var O56= 0;
+    var O57= 0;
+    var O58= 0;
+
+    if(c27 == 1.997){
+      O52 = p1_7
+    }
+    if(c29 == 1.997){
+      O53 = p1_8
+    }
+    if(c31 == 1.997){
+      O54 = p1_9
+    }
+    if(c33 == 1.997){
+      O55 = p1_10
+    }
+    if(c37 == 1.997){
+      O56 = p1_11
+    }
+    if(c39 == 1.997){
+      O57 = p1_12
+    }
+    if(c41 == 1.997){
+      O58 = p1_13
+    }
+    type2_18 =(O52+O53+O54+O55+O56+O57+O58)*type2
+
+
+
+    var P52 = 0;
+    var P53= 0;
+    var P54= 0;
+    var P55= 0;
+    var P56= 0;
+    var P57= 0;
+    var P58= 0;
+
+    if(c27 == 2.466){
+      P52 = p1_7
+    }
+    if(c29 == 2.466){
+      P53 = p1_8
+    }
+    if(c31 == 2.466){
+      P54 = p1_9
+    }
+    if(c33 == 2.466){
+      P55 = p1_10
+    }
+    if(c37 == 2.466){
+      P56 = p1_11
+    }
+    if(c39 == 2.466){
+      P57 = p1_12
+    }
+    if(c41 == 2.466){
+      P58 = p1_13
+    }
+    type2_20 =(P52+P53+P54+P55+P56+P57+P58)*type2
+
+
+    var Q52 = 0;
+    var Q53= 0;
+    var Q54= 0;
+    var Q55= 0;
+    var Q56= 0;
+    var Q57= 0;
+    var Q58= 0;
+
+    if(c27 == 2.984){
+      Q52 = p1_7
+    }
+    if(c29 == 2.984){
+      Q53 = p1_8
+    }
+    if(c31 == 2.984){
+      Q54 = p1_9
+    }
+    if(c33 == 2.984){
+      Q55 = p1_10
+    }
+    if(c37 == 2.984){
+      Q56 = p1_11
+    }
+    if(c39 == 2.984){
+      Q57 = p1_12
+    }
+    if(c41 == 2.984){
+      Q58 = p1_13
+    }
+    type2_22 =(Q52+Q53+Q54+Q55+Q56+Q57+Q58)*type2
+
+
+    var R52 = 0;
+    var R53= 0;
+    var R54= 0;
+    var R55= 0;
+    var R56= 0;
+    var R57= 0;
+    var R58= 0;
+
+    if(c27 == 3.854){
+      R52 = p1_7
+    }
+    if(c29 == 3.854){
+      R53 = p1_8
+    }
+    if(c31 == 3.854){
+      R54 = p1_9
+    }
+    if(c33 == 3.854){
+      R55 = p1_10
+    }
+    if(c37 == 3.854){
+      R56 = p1_11
+    }
+    if(c39 == 3.854){
+      R57 = p1_12
+    }
+    if(c41 == 3.854){
+      R58 = p1_13
+    }
+    type2_25 =(R52+R53+R54+R55+R56+R57+R58)*type2
+
+
+    var S52 = 0;
+    var S53= 0;
+    var S54= 0;
+    var S55= 0;
+    var S56= 0;
+    var S57= 0;
+    var S58= 0;
+
+    if(c27 == 4.833){
+      S52 = p1_7
+    }
+    if(c29 == 4.833){
+      S53 = p1_8
+    }
+    if(c31 == 4.833){
+      S54 = p1_9
+    }
+    if(c33 == 4.833){
+      S55 = p1_10
+    }
+    if(c37 == 4.833){
+      S56 = p1_11
+    }
+    if(c39 == 4.833){
+      S57 = p1_12
+    }
+    if(c41 == 4.833){
+      S58 = p1_13
+    }
+    type2_28 =(S52+S53+S54+S55+S56+S57+S58)*type2
+
+
+    var T52 = 0;
+    var T53= 0;
+    var T54= 0;
+    var T55= 0;
+    var T56= 0;
+    var T57= 0;
+    var T58= 0;
+
+    if(c27 == 6.313){
+      T52 = p1_7
+    }
+    if(c29 == 6.313){
+      T53 = p1_8
+    }
+    if(c31 == 6.313){
+      T54 = p1_9
+    }
+    if(c33 == 6.313){
+      T55 = p1_10
+    }
+    if(c37 == 6.313){
+      T56 = p1_11
+    }
+    if(c39 == 6.313){
+      T57 = p1_12
+    }
+    if(c41 == 6.313){
+      T58 = p1_13
+    }
+    type2_32 =(T52+T53+T54+T55+T56+T57+T58)*type2
+
+
+
+    var U52 = 0;
+    var U53= 0;
+    var U54= 0;
+    var U55= 0;
+    var U56= 0;
+    var U57= 0;
+    var U58= 0;
+
+    if(c27 == 9.864){
+      U52 = p1_7
+    }
+    if(c29 == 9.864){
+      U53 = p1_8
+    }
+    if(c31 == 9.864){
+      U54 = p1_9
+    }
+    if(c33 == 9.864){
+      U55 = p1_10
+    }
+    if(c37 == 9.864){
+      U56 = p1_11
+    }
+    if(c39 == 9.864){
+      U57 = p1_12
+    }
+    if(c41 == 9.864){
+      U58 = p1_13
+    }
+    type2_40 =(U52+U53+U54+U55+U56+U57+U58)*type2
+
+  }
+
+
+  if(type3 > 0){
+    var I59 = 0;
+    var I60 = 0;
+    var I61 = 0;
+    var I62 = 0;
+    var I63 = 0;
+    var I64 = 0;
+    var I65 = 0;
+    
+    if(c27 == 0.222){
+      I59 = p1_14;
+    }
+    if(c29 == 0.222){
+      I60 = p1_15;
+    }
+    if(c31 == 0.222){
+      I61 = p1_16;
+    }
+    if(c33 == 0.222){
+      I62 = p1_17;
+    }
+    if(c37 == 0.222){
+      I63 = p1_18;
+    }
+    if(c39 == 0.222){
+      I64 = p1_19;
+    }
+    if(c41 == 0.222){
+      I65 = p1_20;
+    }
+    type3_6 =(I59+I60+I61+I62+I63+I64+I65)*type3
+
+
+
+
+    var J59 = 0;
+    var J60 = 0;
+    var J61 = 0;
+    var J62 = 0;
+    var J63 = 0;
+    var J64 = 0;
+    var J65 = 0;
+    
+    if(c27 == 0.395){
+      J59 = p1_14;
+    }
+    if(c29 == 0.395){
+      J60 = p1_15;
+    }
+    if(c31 == 0.395){
+      J61 = p1_16;
+    }
+    if(c33 == 0.395){
+      J62 = p1_17;
+    }
+    if(c37 == 0.395){
+      J63 = p1_18;
+    }
+    if(c39 == 0.395){
+      J64 = p1_19;
+    }
+    if(c41 == 0.395){
+      J65 = p1_20;
+    }
+    type3_8 =(J59+J60+J61+J62+J63+J64+J65)*type3
+
+
+
+    var K59 = 0;
+    var K60 = 0;
+    var K61 = 0;
+    var K62 = 0;
+    var K63 = 0;
+    var K64 = 0;
+    var K65 = 0;
+    
+    if(c27 == 0.616){
+      K59 = p1_14;
+    }
+    if(c29 == 0.616){
+      K60 = p1_15;
+    }
+    if(c31 == 0.616){
+      K61 = p1_16;
+    }
+    if(c33 == 0.616){
+      K62 = p1_17;
+    }
+    if(c37 == 0.616){
+      K63 = p1_18;
+    }
+    if(c39 == 0.616){
+      K64 = p1_19;
+    }
+    if(c41 == 0.616){
+      K65 = p1_20;
+    }
+    type3_10 =(K59+K60+K61+K62+K63+K64+K65)*type3
+
+
+
+    var L59 = 0;
+    var L60 = 0;
+    var L61 = 0;
+    var L62 = 0;
+    var L63 = 0;
+    var L64 = 0;
+    var L65 = 0;
+    
+    if(c27 == 0.888){
+      L59 = p1_14;
+    }
+    if(c29 == 0.888){
+      L60 = p1_15;
+    }
+    if(c31 == 0.888){
+      L61 = p1_16;
+    }
+    if(c33 == 0.888){
+      L62 = p1_17;
+    }
+    if(c37 == 0.888){
+      L63 = p1_18;
+    }
+    if(c39 == 0.888){
+      L64 = p1_19;
+    }
+    if(c41 == 0.888){
+      L65 = p1_20;
+    }
+    type3_12 =(L59+L60+L61+L62+L63+L64+L65)*type3
+
+     var M59 = 0;
+    var M60 = 0;
+    var M61 = 0;
+    var M62 = 0;
+    var M63 = 0;
+    var M64 = 0;
+    var M65 = 0;
+    
+    if(c27 == 1.208){
+      M59 = p1_14;
+    }
+    if(c29 == 1.208){
+      M60 = p1_15;
+    }
+    if(c31 == 1.208){
+      M61 = p1_16;
+    }
+    if(c33 == 1.208){
+      M62 = p1_17;
+    }
+    if(c37 == 1.208){
+      M63 = p1_18;
+    }
+    if(c39 == 1.208){
+      M64 = p1_19;
+    }
+    if(c41 == 1.208){
+      M65 = p1_20;
+    }
+    type3_14 =(M59+M60+M61+M62+M63+M64+M65)*type3
+
+
+
+    var N59 = 0;
+    var N60 = 0;
+    var N61 = 0;
+    var N62 = 0;
+    var N63 = 0;
+    var N64 = 0;
+    var N65 = 0;
+    
+    if(c27 == 1.579){
+      N59 = p1_14;
+    }
+    if(c29 == 1.579){
+      N60 = p1_15;
+    }
+    if(c31 == 1.579){
+      N61 = p1_16;
+    }
+    if(c33 == 1.579){
+      N62 = p1_17;
+    }
+    if(c37 == 1.579){
+      N63 = p1_18;
+    }
+    if(c39 == 1.579){
+      N64 = p1_19;
+    }
+    if(c41 == 1.579){
+      N65 = p1_20;
+    }
+    type3_16 =(N59+N60+N61+N62+N63+N64+N65)*type3
+
+
+
+    var O59 = 0;
+    var O60 = 0;
+    var O61 = 0;
+    var O62 = 0;
+    var O63 = 0;
+    var O64 = 0;
+    var O65 = 0;
+    
+    if(c27 == 1.997){
+      O59 = p1_14;
+    }
+    if(c29 == 1.997){
+      O60 = p1_15;
+    }
+    if(c31 == 1.997){
+      O61 = p1_16;
+    }
+    if(c33 == 1.997){
+      O62 = p1_17;
+    }
+    if(c37 == 1.997){
+      O63 = p1_18;
+    }
+    if(c39 == 1.997){
+      O64 = p1_19;
+    }
+    if(c41 == 1.997){
+      O65 = p1_20;
+    }
+    type3_18 =(O59+O60+O61+O62+O63+O64+O65)*type3
+
+
+
+    var P59 = 0;
+    var P60 = 0;
+    var P61 = 0;
+    var P62 = 0;
+    var P63 = 0;
+    var P64 = 0;
+    var P65 = 0;
+    
+    if(c27 == 2.466){
+      P59 = p1_14;
+    }
+    if(c29 == 2.466){
+      P60 = p1_15;
+    }
+    if(c31 == 2.466){
+      P61 = p1_16;
+    }
+    if(c33 == 2.466){
+      P62 = p1_17;
+    }
+    if(c37 == 2.466){
+      P63 = p1_18;
+    }
+    if(c39 == 2.466){
+      P64 = p1_19;
+    }
+    if(c41 == 2.466){
+      P65 = p1_20;
+    }
+    type3_20 =(P59+P60+P61+P62+P63+P64+P65)*type3
+
+
+    var Q59 = 0;
+    var Q60 = 0;
+    var Q61 = 0;
+    var Q62 = 0;
+    var Q63 = 0;
+    var Q64 = 0;
+    var Q65 = 0;
+    
+    if(c27 == 2.984){
+      Q59 = p1_14;
+    }
+    if(c29 == 2.984){
+      Q60 = p1_15;
+    }
+    if(c31 == 2.984){
+      Q61 = p1_16;
+    }
+    if(c33 == 2.984){
+      Q62 = p1_17;
+    }
+    if(c37 == 2.984){
+      Q63 = p1_18;
+    }
+    if(c39 == 2.984){
+      Q64 = p1_19;
+    }
+    if(c41 == 2.984){
+      Q65 = p1_20;
+    }
+    type3_22 =(Q59+Q60+Q61+Q62+Q63+Q64+Q65)*type3
+
+
+    var R59 = 0;
+    var R60 = 0;
+    var R61 = 0;
+    var R62 = 0;
+    var R63 = 0;
+    var R64 = 0;
+    var R65 = 0;
+    
+    if(c27 == 3.854){
+      R59 = p1_14;
+    }
+    if(c29 == 3.854){
+      R60 = p1_15;
+    }
+    if(c31 == 3.854){
+      R61 = p1_16;
+    }
+    if(c33 == 3.854){
+      R62 = p1_17;
+    }
+    if(c37 == 3.854){
+      R63 = p1_18;
+    }
+    if(c39 == 3.854){
+      R64 = p1_19;
+    }
+    if(c41 == 3.854){
+      R65 = p1_20;
+    }
+    type3_25 =(R59+R60+R61+R62+R63+R64+R65)*type3
+
+
+
+    var S59 = 0;
+    var S60 = 0;
+    var S61 = 0;
+    var S62 = 0;
+    var S63 = 0;
+    var S64 = 0;
+    var S65 = 0;
+    
+    if(c27 == 4.833){
+      S59 = p1_14;
+    }
+    if(c29 == 4.833){
+      S60 = p1_15;
+    }
+    if(c31 == 4.833){
+      S61 = p1_16;
+    }
+    if(c33 == 4.833){
+      S62 = p1_17;
+    }
+    if(c37 == 4.833){
+      S63 = p1_18;
+    }
+    if(c39 == 4.833){
+      S64 = p1_19;
+    }
+    if(c41 == 4.833){
+      S65 = p1_20;
+    }
+    type3_28 =(S59+S60+S61+S62+S63+S64+S65)*type3
+
+    var T59 = 0;
+    var T60 = 0;
+    var T61 = 0;
+    var T62 = 0;
+    var T63 = 0;
+    var T64 = 0;
+    var T65 = 0;
+    
+    if(c27 == 6.313){
+      T59 = p1_14;
+    }
+    if(c29 == 6.313){
+      T60 = p1_15;
+    }
+    if(c31 == 6.313){
+      T61 = p1_16;
+    }
+    if(c33 == 6.313){
+      T62 = p1_17;
+    }
+    if(c37 == 6.313){
+      T63 = p1_18;
+    }
+    if(c39 == 6.313){
+      T64 = p1_19;
+    }
+    if(c41 == 6.313){
+      T65 = p1_20;
+    }
+    type3_32 =(T59+T60+T61+T62+T63+T64+T65)*type3
+
+    var U59 = 0;
+    var U60 = 0;
+    var U61 = 0;
+    var U62 = 0;
+    var U63 = 0;
+    var U64 = 0;
+    var U65 = 0;
+    
+    if(c27 == 9.864){
+      U59 = p1_14;
+    }
+    if(c29 == 9.864){
+      U60 = p1_15;
+    }
+    if(c31 == 9.864){
+      U61 = p1_16;
+    }
+    if(c33 == 9.864){
+      U62 = p1_17;
+    }
+    if(c37 == 9.864){
+      U63 = p1_18;
+    }
+    if(c39 == 9.864){
+      U64 = p1_19;
+    }
+    if(c41 == 9.864){
+      U65 = p1_20;
+    }
+    type3_40 =(U59+U60+U61+U62+U63+U64+U65)*type3
+    
+
+  }
+
+
+  if(type4 > 0){
+   var I66 = 0;
+   var I67 = 0;
+   var I68 = 0;
+   var I69 = 0;
+
+   if(c27 == 0.222){
+     I66 = p1_21;
+   }
+   if(c29 == 0.222){
+     I67 = p1_22;
+   }
+   if(c37 == 0.222){
+     I68 = p1_23;
+   }
+   if(c41 == 0.222){
+     I69 = p1_24;
+   }
+   type4_6 =(I66+I67+I68+I69)*type4
+
+
+
+   var J66 = 0;
+   var J67 = 0;
+   var J68 = 0;
+   var J69 = 0;
+
+   if(c27 == 0.395){
+     J66 = p1_21;
+   }
+   if(c29 == 0.395){
+     J67 = p1_22;
+   }
+   if(c37 == 0.395){
+     J68 = p1_23;
+   }
+   if(c41 == 0.395){
+     J69 = p1_24;
+   }
+   type4_8 =(J66+J67+J68+J69)*type4
+
+   var K66 = 0;
+   var K67 = 0;
+   var K68 = 0;
+   var K69 = 0;
+
+   if(c27 == 0.616){
+     K66 = p1_21;
+   }
+   if(c29 == 0.616){
+     K67 = p1_22;
+   }
+   if(c37 == 0.616){
+     K68 = p1_23;
+   }
+   if(c41 == 0.616){
+     K69 = p1_24;
+   }
+   type4_10 =(K66+K67+K68+K69)*type4
+
+
+   var L66 = 0;
+   var L67 = 0;
+   var L68 = 0;
+   var L69 = 0;
+
+   if(c27 == 0.888){
+     L66 = p1_21;
+   }
+   if(c29 == 0.888){
+     L67 = p1_22;
+   }
+   if(c37 == 0.888){
+     L68 = p1_23;
+   }
+   if(c41 == 0.888){
+     L69 = p1_24;
+   }
+   type4_12 =(L66+L67+L68+L69)*type4
+
+   var M66 = 0;
+   var M67 = 0;
+   var M68 = 0;
+   var M69 = 0;
+
+   if(c27 == 1.208){
+     M66 = p1_21;
+   }
+   if(c29 == 1.208){
+     M67 = p1_22;
+   }
+   if(c37 == 1.208){
+     M68 = p1_23;
+   }
+   if(c41 == 1.208){
+     M69 = p1_24;
+   }
+   type4_14 =(M66+M67+M68+M69)*type4
+
+
+   var N66 = 0; 
+   var N67 = 0;
+   var N68 = 0;
+   var N69 = 0;
+
+   if(c27 == 1.579){
+     N66 = p1_21;
+   }
+   if(c29 == 1.579){
+     N67 = p1_22;
+   }
+   if(c37 == 1.579){
+     N68 = p1_23;
+   }
+   if(c41 == 1.579){
+     N69 = p1_24;
+   }
+   type4_16 =(N66+N67+N68+N69)*type4
+
+
+   var O66 = 0; 
+   var O67 = 0;
+   var O68 = 0;
+   var O69 = 0;
+
+   if(c27 == 1.997){
+     O66 = p1_21;
+   }
+   if(c29 == 1.997){
+     O67 = p1_22;
+   }
+   if(c37 == 1.997){
+     O68 = p1_23;
+   }
+   if(c41 == 1.997){
+     O69 = p1_24;
+   }
+   type4_18 =(O66+O67+O68+O69)*type4
+
+
+   var P66 = 0; 
+   var P67 = 0;
+   var P68 = 0;
+   var P69 = 0;
+
+   if(c27 == 2.466){
+     P66 = p1_21;
+   }
+   if(c29 == 2.466){
+     P67 = p1_22;
+   }
+   if(c37 == 2.466){
+     P68 = p1_23;
+   }
+   if(c41 == 2.466){
+     P69 = p1_24;
+   }
+   type4_20 =(P66+P67+P68+P69)*type4
+
+
+
+   var Q66 = 0; 
+   var Q67 = 0;
+   var Q68 = 0;
+   var Q69 = 0;
+
+   if(c27 == 2.984){
+     Q66 = p1_21;
+   }
+   if(c29 == 2.984){
+     Q67 = p1_22;
+   }
+   if(c37 == 2.984){
+     Q68 = p1_23;
+   }
+   if(c41 == 2.984){
+     Q69 = p1_24;
+   }
+   type4_22 =(Q66+Q67+Q68+Q69)*type4
+
+   var R66 = 0; 
+   var R67 = 0;
+   var R68 = 0;
+   var R69 = 0;
+
+   if(c27 == 3.854){
+     R66 = p1_21;
+   }
+   if(c29 == 3.854){
+     R67 = p1_22;
+   }
+   if(c37 == 3.854){
+     R68 = p1_23;
+   }
+   if(c41 == 3.854){
+     R69 = p1_24;
+   }
+   type4_25 =(R66+R67+R68+R69)*type4
+
+
+   var S66 = 0; 
+   var S67 = 0;
+   var S68 = 0;
+   var S69 = 0;
+
+   if(c27 == 4.833){
+     S66 = p1_21;
+   }
+   if(c29 == 4.833){
+     S67 = p1_22;
+   }
+   if(c37 == 4.833){
+     S68 = p1_23;
+   }
+   if(c41 == 4.833){
+     S69 = p1_24;
+   }
+   type4_28 =(S66+S67+S68+S69)*type4
+
+
+   var T66 = 0; 
+   var T67 = 0;
+   var T68 = 0;
+   var T69 = 0;
+
+   if(c27 == 6.313){
+     T66 = p1_21;
+   }
+   if(c29 == 6.313){
+     T67 = p1_22;
+   }
+   if(c37 == 6.313){
+     T68 = p1_23;
+   }
+   if(c41 == 6.313){
+     T69 = p1_24;
+   }
+   type4_32 =(T66+T67+T68+T69)*type4
+
+
+   var U66 = 0; 
+   var U67 = 0;
+   var U68 = 0;
+   var U69 = 0;
+
+   if(c27 == 9.864){
+     U66 = p1_21;
+   }
+   if(c29 == 9.864){
+     U67 = p1_22;
+   }
+   if(c37 == 9.864){
+     U68 = p1_23;
+   }
+   if(c41 == 9.864){
+     U69 = p1_24;
+   }
+   type4_40 =(U66+U67+U68+U69)*type4
+
+  }
+  
+  if(c43 == 0.222){
+   ExtraI = p1_25 *this.No_of_units;
+  }
+  if(c43 == J){
+   ExtraJ = p1_25 *this.No_of_units;
+  }
+  if(c43 == K){
+   ExtraK = p1_25 *this.No_of_units;
+  }
+  if(c43 == L){
+   ExtraL = p1_25 *this.No_of_units;
+  }
+  if(c43 == M){
+   ExtraM = p1_25 *this.No_of_units;
+  }
+  if(c43 == N){
+   ExtraN = p1_25 *this.No_of_units;
+  }
+  if(c43 == O){
+   ExtraO = p1_25 *this.No_of_units;
+  }
+  if(c43 == P){
+   ExtraP = p1_25 *this.No_of_units;
+  }
+  if(c43 == Q){
+   ExtraQ = p1_25 *this.No_of_units;
+  }
+  if(c43 == R){
+   ExtraR = p1_25 *this.No_of_units;
+  }
+  if(c43 == S){
+   ExtraS = p1_25 *this.No_of_units;
+  }
+  if(c43 == T){
+   ExtraT = p1_25 *this.No_of_units;
+  }
+  if(c43 == U){
+   ExtraU = p1_25 *this.No_of_units;
+  }
+
+
+
+  if(type1 > 0){
+    var Y46 = 0;
+    var Y47= 0;
+    var Y48= 0;
+    var Y49= 0;
+    var Y50= 0;
+    var Y51= 0;
+
+    if(f27 == 0.222){
+      Y46 = p2_1
+    }
+    if(f31 == 0.222){
+      Y47 = p2_2
+    }
+    if(f35 == 0.222){
+      Y48 = p2_3
+    }
+    if(f37 == 0.222){
+      Y49 = p2_4
+    }
+    if(f39 == 0.222){
+      Y50 = p2_5
+    }
+    if(f41 == 0.222){
+      Y51 = p2_6
+    }
+   part2_type1_6 = (Y46+Y47+Y48+Y49+Y50+Y51)*type1
+
+
+
+    var Z46 = 0;
+    var Z47= 0;
+    var Z48= 0;
+    var Z49= 0;
+    var Z50= 0;
+    var Z51= 0;
+
+    if(f27 == 0.395){
+      Z46 = p2_1
+    }
+    if(f31 == 0.395){
+      Z47 = p2_2
+    }
+    if(f35 == 0.395){
+      Z48 = p2_3
+    }
+    if(f37 == 0.395){
+      Z49 = p2_4
+    }
+    if(f39 == 0.395){
+      Z50 = p2_5
+    }
+    if(f41 == 0.395){
+      Z51 = p2_6
+    }
+   part2_type1_8 = (Z46+Z47+Z48+Z49+Z50+Z51)*type1
+
+
+
+
+
+    var AA46 = 0;
+    var AA47= 0;
+    var AA48= 0;
+    var AA49= 0;
+    var AA50= 0;
+    var AA51= 0;
+
+    if(f27 == 0.616){
+      AA46 = p2_1
+    }
+    if(f31 == 0.616){
+      AA47 = p2_2
+    }
+    if(f35 == 0.616){
+      AA48 = p2_3
+    }
+    if(f37 == 0.616){
+      AA49 = p2_4
+    }
+    if(f39 == 0.616){
+      AA50 = p2_5
+    }
+    if(f41 == 0.616){
+      AA51 = p2_6
+    }
+   part2_type1_10 = (AA46+AA47+AA48+AA49+AA50+AA51)*type1
+
+
+    var AB46 = 0;
+    var AB47= 0;
+    var AB48= 0;
+    var AB49= 0;
+    var AB50= 0;
+    var AB51= 0;
+
+    if(f27 == 0.888){
+      AB46 = p2_1
+    }
+    if(f31 == 0.888){
+      AB47 = p2_2
+    }
+    if(f35 == 0.888){
+      AB48 = p2_3
+    }
+    if(f37 == 0.888){
+      AB49 = p2_4
+    }
+    if(f39 == 0.888){
+      AB50 = p2_5
+    }
+    if(f41 == 0.888){
+      AB51 = p2_6
+    }
+   part2_type1_12 = (AB46+AB47+AB48+AB49+AB50+AB51)*type1
+
+
+
+    var AC46 = 0;
+    var AC47= 0;
+    var AC48= 0;
+    var AC49= 0;
+    var AC50= 0;
+    var AC51= 0;
+
+    if(f27 == 1.208){
+      AC46 = p2_1
+    }
+    if(f31 == 1.208){
+      AC47 = p2_2
+    }
+    if(f35 == 1.208){
+      AC48 = p2_3
+    }
+    if(f37 == 1.208){
+      AC49 = p2_4
+    }
+    if(f39 == 1.208){
+      AC50 = p2_5
+    }
+    if(f41 == 1.208){
+      AC51 = p2_6
+    }
+   part2_type1_14 = (AC46+AC47+AC48+AC49+AC50+AC51)*type1
+
+
+    var AD46 = 0;
+    var AD47= 0;
+    var AD48= 0;
+    var AD49= 0;
+    var AD50= 0;
+    var AD51= 0;
+
+    if(f27 == 1.579){
+      AD46 = p2_1
+    }
+    if(f31 == 1.579){
+      AD47 = p2_2
+    }
+    if(f35 == 1.579){
+      AD48 = p2_3
+    }
+    if(f37 == 1.579){
+      AD49 = p2_4
+    }
+    if(f39 == 1.579){
+      AD50 = p2_5
+    }
+    if(f41 == 1.579){
+      AD51 = p2_6
+    }
+   part2_type1_16 = (AD46+AD47+AD48+AD49+AD50+AD51)*type1
+
+
+    var AE46 = 0;
+    var AE47= 0;
+    var AE48= 0;
+    var AE49= 0;
+    var AE50= 0;
+    var AE51= 0;
+
+    if(f27 == 1.997){
+      AE46 = p2_1
+    }
+    if(f31 == 1.997){
+      AE47 = p2_2
+    }
+    if(f35 == 1.997){
+      AE48 = p2_3
+    }
+    if(f37 == 1.997){
+      AE49 = p2_4
+    }
+    if(f39 == 1.997){
+      AE50 = p2_5
+    }
+    if(f41 == 1.997){
+      AE51 = p2_6
+    }
+   part2_type1_18 = (AE46+AE47+AE48+AE49+AE50+AE51)*type1
+
+
+
+    var AF46 = 0;
+    var AF47= 0;
+    var AF48= 0;
+    var AF49= 0;
+    var AF50= 0;
+    var AF51= 0;
+
+    if(f27 == 2.466){
+      AF46 = p2_1
+    }
+    if(f31 == 2.466){
+      AF47 = p2_2
+    }
+    if(f35 == 2.466){
+      AF48 = p2_3
+    }
+    if(f37 == 2.466){
+      AF49 = p2_4
+    }
+    if(f39 == 2.466){
+      AF50 = p2_5
+    }
+    if(f41 == 2.466){
+      AF51 = p2_6
+    }
+   part2_type1_20 = (AF46+AF47+AF48+AF49+AF50+AF51)*type1
+
+
+    var AG46 = 0;
+    var AG47= 0;
+    var AG48= 0;
+    var AG49= 0;
+    var AG50= 0;
+    var AG51= 0;
+
+    if(f27 == 2.984){
+      AG46 = p2_1
+    }
+    if(f31 == 2.984){
+      AG47 = p2_2
+    }
+    if(f35 == 2.984){
+      AG48 = p2_3
+    }
+    if(f37 == 2.984){
+      AG49 = p2_4
+    }
+    if(f39 == 2.984){
+      AG50 = p2_5
+    }
+    if(f41 == 2.984){
+      AG51 = p2_6
+    }
+   part2_type1_22 = (AG46+AG47+AG48+AG49+AG50+AG51)*type1
+
+
+    var AH46 = 0;
+    var AH47= 0;
+    var AH48= 0;
+    var AH49= 0;
+    var AH50= 0;
+    var AH51= 0;
+
+    if(f27 == 3.854){
+      AH46 = p2_1
+    }
+    if(f31 == 3.854){
+      AH47 = p2_2
+    }
+    if(f35 == 3.854){
+      AH48 = p2_3
+    }
+    if(f37 == 3.854){
+      AH49 = p2_4
+    }
+    if(f39 == 3.854){
+      AH50 = p2_5
+    }
+    if(f41 == 3.854){
+      AH51 = p2_6
+    }
+   part2_type1_25 = (AH46+AH47+AH48+AH49+AH50+AH51)*type1
+
+
+   var AI46 = 0;
+    var AI47= 0;
+    var AI48= 0;
+    var AI49= 0;
+    var AI50= 0;
+    var AI51= 0;
+
+    if(f27 == 4.833){
+      AI46 = p2_1
+    }
+    if(f31 == 4.833){
+      AI47 = p2_2
+    }
+    if(f35 == 4.833){
+      AI48 = p2_3
+    }
+    if(f37 == 4.833){
+      AI49 = p2_4
+    }
+    if(f39 == 4.833){
+      AI50 = p2_5
+    }
+    if(f41 == 4.833){
+      AI51 = p2_6
+    }
+   part2_type1_28 = (AI46+AI47+AI48+AI49+AI50+AI51)*type1
+
+
+
+    var AJ46 = 0;
+    var AJ47= 0;
+    var AJ48= 0;
+    var AJ49= 0;
+    var AJ50= 0;
+    var AJ51= 0;
+
+    if(f27 == 6.313){
+      AJ46 = p2_1
+    }
+    if(f31 == 6.313){
+      AJ47 = p2_2
+    }
+    if(f35 == 6.313){
+      AJ48 = p2_3
+    }
+    if(f37 == 6.313){
+      AJ49 = p2_4
+    }
+    if(f39 == 6.313){
+      AJ50 = p2_5
+    }
+    if(f41 == 6.313){
+      AJ51 = p2_6
+    }
+   part2_type1_32 = (AJ46+AJ47+AJ48+AJ49+AJ50+AJ51)*type1
+
+
+    var AK46 = 0;
+    var AK47= 0;
+    var AK48= 0;
+    var AK49= 0;
+    var AK50= 0;
+    var AK51= 0;
+
+    if(f27 == 9.864){
+      AK46 = p2_1
+    }
+    if(f31 == 9.864){
+      AK47 = p2_2
+    }
+    if(f35 == 9.864){
+      AK48 = p2_3
+    }
+    if(f37 == 9.864){
+      AK49 = p2_4
+    }
+    if(f39 == 9.864){
+      AK50 = p2_5
+    }
+    if(f41 == 9.864){
+      AK51 = p2_6
+    }
+   part2_type1_40 = (AK46+AK47+AK48+AK49+AK50+AK51)*type1
+
+  }
+
+  if(type2 > 0){
+    var Y52 = 0;
+    var Y53= 0;
+    var Y54= 0;
+    var Y55= 0;
+    var Y56= 0;
+    var Y57= 0;
+    var Y58= 0;
+
+    if(f27 == 0.222){
+      Y52 = p2_7
+    }
+    if(f29 == 0.222){
+      Y53 = p2_8
+    }
+    if(f31 == 0.222){
+      Y54 = p2_9
+    }
+    if(f33 == 0.222){
+      Y55 = p2_10
+    }
+    if(f37 == 0.222){
+      Y56 = p2_11
+    }
+    if(f39 == 0.222){
+      Y57 = p2_12
+    }
+    if(f41 == 0.222){
+      Y58 = p2_13
+    }
+    part2_type2_6 =(Y52+Y53+Y54+Y55+Y56+Y57+Y58)*type2
+
+
+    var Z52 = 0;
+    var Z53= 0;
+    var Z54= 0;
+    var Z55= 0;
+    var Z56= 0;
+    var Z57= 0;
+    var Z58= 0;
+
+    if(f27 == 0.395){
+      Z52 = p2_7
+    }
+    if(f29 == 0.395){
+      Z53 = p2_8
+    }
+    if(f31 == 0.395){
+      Z54 = p2_9
+    }
+    if(f33 == 0.395){
+      Z55 = p2_10
+    }
+    if(f37 == 0.395){
+      Z56 = p2_11
+    }
+    if(f39 == 0.395){
+      Z57 = p2_12
+    }
+    if(f41 == 0.395){
+      Z58 = p2_13
+    }
+    part2_type2_8 =(Z52+Z53+Z54+Z55+Z56+Z57+Z58)*type2
+
+
+    var AA52 = 0;
+    var AA53= 0;
+    var AA54= 0;
+    var AA55= 0;
+    var AA56= 0;
+    var AA57= 0;
+    var AA58= 0;
+
+    if(f27 == 0.616){
+      AA52 = p2_7
+    }
+    if(f29 == 0.616){
+      AA53 = p2_8
+    }
+    if(f31 == 0.616){
+      AA54 = p2_9
+    }
+    if(f33 == 0.616){
+      AA55 = p2_10
+    }
+    if(f37 == 0.616){
+      AA56 = p2_11
+    }
+    if(f39 == 0.616){
+      AA57 = p2_12
+    }
+    if(f41 == 0.616){
+      AA58 = p2_13
+    }
+    part2_type2_10 =(AA52+AA53+AA54+AA55+AA56+AA57+AA58)*type2
+
+
+
+    var AB52 = 0;
+    var AB53= 0;
+    var AB54= 0;
+    var AB55= 0;
+    var AB56= 0;
+    var AB57= 0;
+    var AB58= 0;
+
+    if(f27 == 0.888){
+      AB52 = p2_7
+    }
+    if(f29 == 0.888){
+      AB53 = p2_8
+    }
+    if(f31 == 0.888){
+      AB54 = p2_9
+    }
+    if(f33 == 0.888){
+      AB55 = p2_10
+    }
+    if(f37 == 0.888){
+      AB56 = p2_11
+    }
+    if(f39 == 0.888){
+      AB57 = p2_12
+    }
+    if(f41 == 0.888){
+      AB58 = p2_13
+    }
+    part2_type2_12 =(AB52+AB53+AB54+AB55+AB56+AB57+AB58)*type2
+
+
+    var AC52 = 0;
+    var AC53= 0;
+    var AC54= 0;
+    var AC55= 0;
+    var AC56= 0;
+    var AC57= 0;
+    var AC58= 0;
+
+    if(f27 == 1.208){
+      AC52 = p2_7
+    }
+    if(f29 == 1.208){
+      AC53 = p2_8
+    }
+    if(f31 == 1.208){
+      AC54 = p2_9
+    }
+    if(f33 == 1.208){
+      AC55 = p2_10
+    }
+    if(f37 == 1.208){
+      AC56 = p2_11
+    }
+    if(f39 == 1.208){
+      AC57 = p2_12
+    }
+    if(f41 == 1.208){
+      AC58 = p2_13
+    }
+    part2_type2_14 =(AC52+AC53+AC54+AC55+AC56+AC57+AC58)*type2
+
+
+    var AD52 = 0;
+    var AD53= 0;
+    var AD54= 0;
+    var AD55= 0;
+    var AD56= 0;
+    var AD57= 0;
+    var AD58= 0;
+
+    if(f27 == 1.579){
+      AD52 = p2_7
+    }
+    if(f29 == 1.579){
+      AD53 = p2_8
+    }
+    if(f31 == 1.579){
+      AD54 = p2_9
+    }
+    if(f33 == 1.579){
+      AD55 = p2_10
+    }
+    if(f37 == 1.579){
+      AD56 = p2_11
+    }
+    if(f39 == 1.579){
+      AD57 = p2_12
+    }
+    if(f41 == 1.579){
+      AD58 = p2_13
+    }
+    part2_type2_16 =(AD52+AD53+AD54+AD55+AD56+AD57+AD58)*type2
+
+
+    var AE52 = 0;
+    var AE53= 0;
+    var AE54= 0;
+    var AE55= 0;
+    var AE56= 0;
+    var AE57= 0;
+    var AE58= 0;
+
+    if(f27 == 1.997){
+      AE52 = p2_7
+    }
+    if(f29 == 1.997){
+      AE53 = p2_8
+    }
+    if(f31 == 1.997){
+      AE54 = p2_9
+    }
+    if(f33 == 1.997){
+      AE55 = p2_10
+    }
+    if(f37 == 1.997){
+      AE56 = p2_11
+    }
+    if(f39 == 1.997){
+      AE57 = p2_12
+    }
+    if(f41 == 1.997){
+      AE58 = p2_13
+    }
+    part2_type2_18 =(AE52+AE53+AE54+AE55+AE56+AE57+AE58)*type2
+
+
+
+    var AF52 = 0;
+    var AF53= 0;
+    var AF54= 0;
+    var AF55= 0;
+    var AF56= 0;
+    var AF57= 0;
+    var AF58= 0;
+
+    if(f27 == 2.466){
+      AF52 = p2_7
+    }
+    if(f29 == 2.466){
+      AF53 = p2_8
+    }
+    if(f31 == 2.466){
+      AF54 = p2_9
+    }
+    if(f33 == 2.466){
+      AF55 = p2_10
+    }
+    if(f37 == 2.466){
+      AF56 = p2_11
+    }
+    if(f39 == 2.466){
+      AF57 = p2_12
+    }
+    if(f41 == 2.466){
+      AF58 = p2_13
+    }
+    part2_type2_20 =(AF52+AF53+AF54+AF55+AF56+AF57+AF58)*type2
+
+
+    var AG52 = 0;
+    var AG53= 0;
+    var AG54= 0;
+    var AG55= 0;
+    var AG56= 0;
+    var AG57= 0;
+    var AG58= 0;
+
+    if(f27 == 2.984){
+      AG52 = p2_7
+    }
+    if(f29 == 2.984){
+      AG53 = p2_8
+    }
+    if(f31 == 2.984){
+      AG54 = p2_9
+    }
+    if(f33 == 2.984){
+      AG55 = p2_10
+    }
+    if(f37 == 2.984){
+      AG56 = p2_11
+    }
+    if(f39 == 2.984){
+      AG57 = p2_12
+    }
+    if(f41 == 2.984){
+      AG58 = p2_13
+    }
+    part2_type2_22 =(AG52+AG53+AG54+AG55+AG56+AG57+AG58)*type2
+
+
+    var AH52 = 0;
+    var AH53= 0;
+    var AH54= 0;
+    var AH55= 0;
+    var AH56= 0;
+    var AH57= 0;
+    var AH58= 0;
+
+    if(f27 == 3.854){
+      AH52 = p2_7
+    }
+    if(f29 == 3.854){
+      AH53 = p2_8
+    }
+    if(f31 == 3.854){
+      AH54 = p2_9
+    }
+    if(f33 == 3.854){
+      AH55 = p2_10
+    }
+    if(f37 == 3.854){
+      AH56 = p2_11
+    }
+    if(f39 == 3.854){
+      AH57 = p2_12
+    }
+    if(f41 == 3.854){
+      AH58 = p2_13
+    }
+    part2_type2_25 =(AH52+AH53+AH54+AH55+AH56+AH57+AH58)*type2
+
+
+    var AI52 = 0;
+    var AI53= 0;
+    var AI54= 0;
+    var AI55= 0;
+    var AI56= 0;
+    var AI57= 0;
+    var AI58= 0;
+
+    if(f27 == 4.833){
+      AI52 = p2_7
+    }
+    if(f29 == 4.833){
+      AI53 = p2_8
+    }
+    if(f31 == 4.833){
+      AI54 = p2_9
+    }
+    if(f33 == 4.833){
+      AI55 = p2_10
+    }
+    if(f37 == 4.833){
+      AI56 = p2_11
+    }
+    if(f39 == 4.833){
+      AI57 = p2_12
+    }
+    if(f41 == 4.833){
+      AI58 = p2_13
+    }
+    part2_type2_28 =(AI52+AI53+AI54+AI55+AI56+AI57+AI58)*type2
+
+
+    var AJ52 = 0;
+    var AJ53= 0;
+    var AJ54= 0;
+    var AJ55= 0;
+    var AJ56= 0;
+    var AJ57= 0;
+    var AJ58= 0;
+
+    if(f27 == 6.313){
+      AJ52 = p2_7
+    }
+    if(f29 == 6.313){
+      AJ53 = p2_8
+    }
+    if(f31 == 6.313){
+      AJ54 = p2_9
+    }
+    if(f33 == 6.313){
+      AJ55 = p2_10
+    }
+    if(f37 == 6.313){
+      AJ56 = p2_11
+    }
+    if(f39 == 6.313){
+      AJ57 = p2_12
+    }
+    if(f41 == 6.313){
+      AJ58 = p2_13
+    }
+    part2_type2_32 =(AJ52+AJ53+AJ54+AJ55+AJ56+AJ57+AJ58)*type2
+
+
+
+    var AK52 = 0;
+    var AK53= 0;
+    var AK54= 0;
+    var AK55= 0;
+    var AK56= 0;
+    var AK57= 0;
+    var AK58= 0;
+
+    if(f27 == 9.864){
+      AK52 = p2_7
+    }
+    if(f29 == 9.864){
+      AK53 = p2_8
+    }
+    if(f31 == 9.864){
+      AK54 = p2_9
+    }
+    if(f33 == 9.864){
+      AK55 = p2_10
+    }
+    if(f37 == 9.864){
+      AK56 = p2_11
+    }
+    if(f39 == 9.864){
+      AK57 = p2_12
+    }
+    if(f41 == 9.864){
+      AK58 = p2_13
+    }
+    part2_type2_40 =(AK52+AK53+AK54+AK55+AK56+AK57+AK58)*type2
+
+  }
+
+
+  if(type3 > 0){
+    var Y59 = 0;
+    var Y60 = 0;
+    var Y61 = 0;
+    var Y62 = 0;
+    var Y63 = 0;
+    var Y64 = 0;
+    var Y65 = 0;
+    
+    if(f27 == 0.222){
+      Y59 = p2_14;
+    }
+    if(f29 == 0.222){
+      Y60 = p2_15;
+    }
+    if(f31 == 0.222){
+      Y61 = p2_16;
+    }
+    if(f33 == 0.222){
+      Y62 = p2_17;
+    }
+    if(f37 == 0.222){
+      Y63 = p2_18;
+    }
+    if(f39 == 0.222){
+      Y64 = p2_19;
+    }
+    if(f41 == 0.222){
+      Y65 = p2_20;
+    }
+    part2_type3_6 =(Y59+Y60+Y61+Y62+Y63+Y64+Y65)*type3
+
+
+
+
+    var Z59 = 0;
+    var Z60 = 0;
+    var Z61 = 0;
+    var Z62 = 0;
+    var Z63 = 0;
+    var Z64 = 0;
+    var Z65 = 0;
+    
+    if(f27 == 0.395){
+      Z59 = p2_14;
+    }
+    if(f29 == 0.395){
+      Z60 = p2_15;
+    }
+    if(f31 == 0.395){
+      Z61 = p2_16;
+    }
+    if(f33 == 0.395){
+      Z62 = p2_17;
+    }
+    if(f37 == 0.395){
+      Z63 = p2_18;
+    }
+    if(f39 == 0.395){
+      Z64 = p2_19;
+    }
+    if(f41 == 0.395){
+      Z65 = p2_20;
+    }
+    part2_type3_8 =(Z59+Z60+Z61+Z62+Z63+Z64+Z65)*type3
+
+
+
+    var AA59 = 0;
+    var AA60 = 0;
+    var AA61 = 0;
+    var AA62 = 0;
+    var AA63 = 0;
+    var AA64 = 0;
+    var AA65 = 0;
+    
+    if(f27 == 0.616){
+      AA59 = p2_14;
+    }
+    if(f29 == 0.616){
+      AA60 = p2_15;
+    }
+    if(f31 == 0.616){
+      AA61 = p2_16;
+    }
+    if(f33 == 0.616){
+      AA62 = p2_17;
+    }
+    if(f37 == 0.616){
+      AA63 = p2_18;
+    }
+    if(f39 == 0.616){
+      AA64 = p2_19;
+    }
+    if(f41 == 0.616){
+      AA65 = p2_20;
+    }
+    part2_type3_10 =(AA59+AA60+AA61+AA62+AA63+AA64+AA65)*type3
+
+
+
+    var AB59 = 0;
+    var AB60 = 0;
+    var AB61 = 0;
+    var AB62 = 0;
+    var AB63 = 0;
+    var AB64 = 0;
+    var AB65 = 0;
+    
+    if(f27 == 0.888){
+      AB59 = p2_14;
+    }
+    if(f29 == 0.888){
+      AB60 = p2_15;
+    }
+    if(f31 == 0.888){
+      AB61 = p2_16;
+    }
+    if(f33 == 0.888){
+      AB62 = p2_17;
+    }
+    if(f37 == 0.888){
+      AB63 = p2_18;
+    }
+    if(f39 == 0.888){
+      AB64 = p2_19;
+    }
+    if(f41 == 0.888){
+      AB65 = p2_20;
+    }
+    part2_type3_12 =(AB59+AB60+AB61+AB62+AB63+AB64+AB65)*type3
+
+     var AC59 = 0;
+    var AC60 = 0;
+    var AC61 = 0;
+    var AC62 = 0;
+    var AC63 = 0;
+    var AC64 = 0;
+    var AC65 = 0;
+    
+    if(f27 == 1.208){
+      AC59 = p2_14;
+    }
+    if(f29 == 1.208){
+      AC60 = p2_15;
+    }
+    if(f31 == 1.208){
+      AC61 = p2_16;
+    }
+    if(f33 == 1.208){
+      AC62 = p2_17;
+    }
+    if(f37 == 1.208){
+      AC63 = p2_18;
+    }
+    if(f39 == 1.208){
+      AC64 = p2_19;
+    }
+    if(f41 == 1.208){
+      AC65 = p2_20;
+    }
+    part2_type3_14 =(AC59+AC60+AC61+AC62+AC63+AC64+AC65)*type3
+
+
+
+    var AD59 = 0;
+    var AD60 = 0;
+    var AD61 = 0;
+    var AD62 = 0;
+    var AD63 = 0;
+    var AD64 = 0;
+    var AD65 = 0;
+    
+    if(f27 == 1.579){
+      AD59 = p2_14;
+    }
+    if(f29 == 1.579){
+      AD60 = p2_15;
+    }
+    if(f31 == 1.579){
+      AD61 = p2_16;
+    }
+    if(f33 == 1.579){
+      AD62 = p2_17;
+    }
+    if(f37 == 1.579){
+      AD63 = p2_18;
+    }
+    if(f39 == 1.579){
+      AD64 = p2_19;
+    }
+    if(f41 == 1.579){
+      AD65 = p2_20;
+    }
+    part2_type3_16 =(AD59+AD60+AD61+AD62+AD63+AD64+AD65)*type3
+
+
+
+    var AE59 = 0;
+    var AE60 = 0;
+    var AE61 = 0;
+    var AE62 = 0;
+    var AE63 = 0;
+    var AE64 = 0;
+    var AE65 = 0;
+    
+    if(f27 == 1.997){
+      AE59 = p2_14;
+    }
+    if(f29 == 1.997){
+      AE60 = p2_15;
+    }
+    if(f31 == 1.997){
+      AE61 = p2_16;
+    }
+    if(f33 == 1.997){
+      AE62 = p2_17;
+    }
+    if(f37 == 1.997){
+      AE63 = p2_18;
+    }
+    if(f39 == 1.997){
+      AE64 = p2_19;
+    }
+    if(f41 == 1.997){
+      AE65 = p2_20;
+    }
+    part2_type3_18 =(AE59+AE60+AE61+AE62+AE63+AE64+AE65)*type3
+
+
+
+    var AF59 = 0;
+    var AF60 = 0;
+    var AF61 = 0;
+    var AF62 = 0;
+    var AF63 = 0;
+    var AF64 = 0;
+    var AF65 = 0;
+    
+    if(f27 == 2.466){
+      AF59 = p2_14;
+    }
+    if(f29 == 2.466){
+      AF60 = p2_15;
+    }
+    if(f31 == 2.466){
+      AF61 = p2_16;
+    }
+    if(f33 == 2.466){
+      AF62 = p2_17;
+    }
+    if(f37 == 2.466){
+      AF63 = p2_18;
+    }
+    if(f39 == 2.466){
+      AF64 = p2_19;
+    }
+    if(f41 == 2.466){
+      AF65 = p2_20;
+    }
+    part2_type3_20 =(AF59+AF60+AF61+AF62+AF63+AF64+AF65)*type3
+
+
+    var AG59 = 0;
+    var AG60 = 0;
+    var AG61 = 0;
+    var AG62 = 0;
+    var AG63 = 0;
+    var AG64 = 0;
+    var AG65 = 0;
+    
+    if(f27 == 2.984){
+      AG59 = p2_14;
+    }
+    if(f29 == 2.984){
+      AG60 = p2_15;
+    }
+    if(f31 == 2.984){
+      AG61 = p2_16;
+    }
+    if(f33 == 2.984){
+      AG62 = p2_17;
+    }
+    if(f37 == 2.984){
+      AG63 = p2_18;
+    }
+    if(f39 == 2.984){
+      AG64 = p2_19;
+    }
+    if(f41 == 2.984){
+      AG65 = p2_20;
+    }
+    part2_type3_22 =(AG59+AG60+AG61+AG62+AG63+AG64+AG65)*type3
+
+
+    var AH59 = 0;
+    var AH60 = 0;
+    var AH61 = 0;
+    var AH62 = 0;
+    var AH63 = 0;
+    var AH64 = 0;
+    var AH65 = 0;
+    
+    if(f27 == 3.854){
+      AH59 = p2_14;
+    }
+    if(f29 == 3.854){
+      AH60 = p2_15;
+    }
+    if(f31 == 3.854){
+      AH61 = p2_16;
+    }
+    if(f33 == 3.854){
+      AH62 = p2_17;
+    }
+    if(f37 == 3.854){
+      AH63 = p2_18;
+    }
+    if(f39 == 3.854){
+      AH64 = p2_19;
+    }
+    if(f41 == 3.854){
+      AH65 = p2_20;
+    }
+    part2_type3_25 =(AH59+AH60+AH61+AH62+AH63+AH64+AH65)*type3
+
+
+
+    var AI59 = 0;
+    var AI60 = 0;
+    var AI61 = 0;
+    var AI62 = 0;
+    var AI63 = 0;
+    var AI64 = 0;
+    var AI65 = 0;
+    
+    if(f27 == 4.833){
+      AI59 = p2_14;
+    }
+    if(f29 == 4.833){
+      AI60 = p2_15;
+    }
+    if(f31 == 4.833){
+      AI61 = p2_16;
+    }
+    if(f33 == 4.833){
+      AI62 = p2_17;
+    }
+    if(f37 == 4.833){
+      AI63 = p2_18;
+    }
+    if(f39 == 4.833){
+      AI64 = p2_19;
+    }
+    if(f41 == 4.833){
+      AI65 = p2_20;
+    }
+    part2_type3_28 =(AI59+AI60+AI61+AI62+AI63+AI64+AI65)*type3
+
+    var AJ59 = 0;
+    var AJ60 = 0;
+    var AJ61 = 0;
+    var AJ62 = 0;
+    var AJ63 = 0;
+    var AJ64 = 0;
+    var AJ65 = 0;
+    
+    if(f27 == 6.313){
+      AJ59 = p2_14;
+    }
+    if(f29 == 6.313){
+      AJ60 = p2_15;
+    }
+    if(f31 == 6.313){
+      AJ61 = p2_16;
+    }
+    if(f33 == 6.313){
+      AJ62 = p2_17;
+    }
+    if(f37 == 6.313){
+      AJ63 = p2_18;
+    }
+    if(f39 == 6.313){
+      AJ64 = p2_19;
+    }
+    if(f41 == 6.313){
+      AJ65 = p2_20;
+    }
+    part2_type3_32 =(AJ59+AJ60+AJ61+AJ62+AJ63+AJ64+AJ65)*type3
+
+    var AK59 = 0;
+    var AK60 = 0;
+    var AK61 = 0;
+    var AK62 = 0;
+    var AK63 = 0;
+    var AK64 = 0;
+    var AK65 = 0;
+    
+    if(f27 == 9.864){
+      AK59 = p2_14;
+    }
+    if(f29 == 9.864){
+      AK60 = p2_15;
+    }
+    if(f31 == 9.864){
+      AK61 = p2_16;
+    }
+    if(f33 == 9.864){
+      AK62 = p2_17;
+    }
+    if(f37 == 9.864){
+      AK63 = p2_18;
+    }
+    if(f39 == 9.864){
+      AK64 = p2_19;
+    }
+    if(f41 == 9.864){
+      AK65 = p2_20;
+    }
+    part2_type3_40 =(AK59+AK60+AK61+AK62+AK63+AK64+AK65)*type3
+    
+
+  }
+
+
+  if(type4 > 0){
+   var Y66 = 0;
+   var Y67 = 0;
+   var Y68 = 0;
+   var Y69 = 0;
+
+   if(f27 == 0.222){
+     Y66 = p2_21;
+   }
+   if(f29 == 0.222){
+     Y67 = p2_22;
+   }
+   if(f37 == 0.222){
+     Y68 = p2_23;
+   }
+   if(f41 == 0.222){
+     Y69 = p2_24;
+   }
+   part2_type4_6 =(Y66+Y67+Y68+Y69)*type4
+
+
+
+   var Z66 = 0;
+   var Z67 = 0;
+   var Z68 = 0;
+   var Z69 = 0;
+
+   if(f27 == 0.395){
+     Z66 = p2_21;
+   }
+   if(f29 == 0.395){
+     Z67 = p2_22;
+   }
+   if(f37 == 0.395){
+     Z68 = p2_23;
+   }
+   if(f41 == 0.395){
+     Z69 = p2_24;
+   }
+   part2_type4_8 =(Z66+Z67+Z68+Z69)*type4
+
+   var AA66 = 0;
+   var AA67 = 0;
+   var AA68 = 0;
+   var AA69 = 0;
+
+   if(f27 == 0.616){
+     AA66 = p2_21;
+   }
+   if(f29 == 0.616){
+     AA67 = p2_22;
+   }
+   if(f37 == 0.616){
+     AA68 = p2_23;
+   }
+   if(f41 == 0.616){
+     AA69 = p2_24;
+   }
+   part2_type4_10 =(AA66+AA67+AA68+AA69)*type4
+
+
+   var AB66 = 0;
+   var AB67 = 0;
+   var AB68 = 0;
+   var AB69 = 0;
+
+   if(f27 == 0.888){
+     AB66 = p2_21;
+   }
+   if(f29 == 0.888){
+     AB67 = p2_22;
+   }
+   if(f37 == 0.888){
+     AB68 = p2_23;
+   }
+   if(f41 == 0.888){
+     AB69 = p2_24;
+   }
+   part2_type4_12 =(AB66+AB67+AB68+AB69)*type4
+
+   var AC66 = 0;
+   var AC67 = 0;
+   var AC68 = 0;
+   var AC69 = 0;
+
+   if(f27 == 1.208){
+     AC66 = p2_21;
+   }
+   if(f29 == 1.208){
+     AC67 = p2_22;
+   }
+   if(f37 == 1.208){
+     AC68 = p2_23;
+   }
+   if(f41 == 1.208){
+     AC69 = p2_24;
+   }
+   part2_type4_14 =(AC66+AC67+AC68+AC69)*type4
+
+
+   var AD66 = 0; 
+   var AD67 = 0;
+   var AD68 = 0;
+   var AD69 = 0;
+
+   if(f27 == 1.579){
+     AD66 = p2_21;
+   }
+   if(f29 == 1.579){
+     AD67 = p2_22;
+   }
+   if(f37 == 1.579){
+     AD68 = p2_23;
+   }
+   if(f41 == 1.579){
+     AD69 = p2_24;
+   }
+   part2_type4_16 =(AD66+AD67+AD68+AD69)*type4
+
+
+   var AE66 = 0; 
+   var AE67 = 0;
+   var AE68 = 0;
+   var AE69 = 0;
+
+   if(f27 == 1.997){
+     AE66 = p2_21;
+   }
+   if(f29 == 1.997){
+     AE67 = p2_22;
+   }
+   if(f37 == 1.997){
+     AE68 = p2_23;
+   }
+   if(f41 == 1.997){
+     AE69 = p2_24;
+   }
+   part2_type4_18 =(AE66+AE67+AE68+AE69)*type4
+
+
+   var AF66 = 0; 
+   var AF67 = 0;
+   var AF68 = 0;
+   var AF69 = 0;
+
+   if(f27 == 2.466){
+     AF66 = p2_21;
+   }
+   if(f29 == 2.466){
+     AF67 = p2_22;
+   }
+   if(f37 == 2.466){
+     AF68 = p2_23;
+   }
+   if(f41 == 2.466){
+     AF69 = p2_24;
+   }
+   part2_type4_20 =(AF66+AF67+AF68+AF69)*type4
+
+
+
+   var AG66 = 0; 
+   var AG67 = 0;
+   var AG68 = 0;
+   var AG69 = 0;
+
+   if(f27 == 2.984){
+     AG66 = p2_21;
+   }
+   if(f29 == 2.984){
+     AG67 = p2_22;
+   }
+   if(f37 == 2.984){
+     AG68 = p2_23;
+   }
+   if(f41 == 2.984){
+     AG69 = p2_24;
+   }
+   part2_type4_22 =(AG66+AG67+AG68+AG69)*type4
+
+   var AH66 = 0; 
+   var AH67 = 0;
+   var AH68 = 0;
+   var AH69 = 0;
+
+   if(f27 == 3.854){
+     AH66 = p2_21;
+   }
+   if(f29 == 3.854){
+     AH67 = p2_22;
+   }
+   if(f37 == 3.854){
+     AH68 = p2_23;
+   }
+   if(f41 == 3.854){
+     AH69 = p2_24;
+   }
+   part2_type4_25 =(AH66+AH67+AH68+AH69)*type4
+
+
+   var AI66 = 0; 
+   var AI67 = 0;
+   var AI68 = 0;
+   var AI69 = 0;
+
+   if(f27 == 4.833){
+     AI66 = p2_21;
+   }
+   if(f29 == 4.833){
+     AI67 = p2_22;
+   }
+   if(f37 == 4.833){
+     AI68 = p2_23;
+   }
+   if(f41 == 4.833){
+     AI69 = p2_24;
+   }
+   part2_type4_28 =(AI66+AI67+AI68+AI69)*type4
+
+
+   var AJ66 = 0; 
+   var AJ67 = 0;
+   var AJ68 = 0;
+   var AJ69 = 0;
+
+   if(f27 == 6.313){
+     AJ66 = p2_21;
+   }
+   if(f29 == 6.313){
+     AJ67 = p2_22;
+   }
+   if(f37 == 6.313){
+     AJ68 = p2_23;
+   }
+   if(f41 == 6.313){
+     AJ69 = p2_24;
+   }
+   part2_type4_32 =(AJ66+AJ67+AJ68+AJ69)*type4
+
+
+   var AK66 = 0; 
+   var AK67 = 0;
+   var AK68 = 0;
+   var AK69 = 0;
+
+   if(f27 == 9.864){
+     AK66 = p2_21;
+   }
+   if(f29 == 9.864){
+     AK67 = p2_22;
+   }
+   if(f37 == 9.864){
+     AK68 = p2_23;
+   }
+   if(f41 == 9.864){
+     AK69 = p2_24;
+   }
+   part2_type4_40 =(AK66+AK67+AK68+AK69)*type4
+
+  }
+
+  if(f43 == 0.222){
+    ExtraY = p2_25*this.No_of_units;
+   }
+   if(f43 == J){
+    ExtraZ = p2_25*this.No_of_units;
+   }
+   if(f43 == K){
+    ExtraAA = p2_25*this.No_of_units;
+   }
+   if(f43 == L){
+    ExtraAB = p2_25*this.No_of_units;
+   }
+   if(f43 == M){
+    ExtraAC = p2_25*this.No_of_units;
+   }
+   if(f43 == N){
+    ExtraAD = p2_25*this.No_of_units;
+   }
+   if(f43 == O){
+    ExtraAE = p2_25*this.No_of_units;
+   }
+   if(f43 == P){
+    ExtraAF = p2_25*this.No_of_units;
+   }
+   if(f43 == Q){
+    ExtraAG = p2_25*this.No_of_units;
+   }
+   if(f43 == R){
+    ExtraAH = p2_25*this.No_of_units;
+   }
+   if(f43 == S){
+    ExtraAI = p2_25*this.No_of_units;
+   }
+   if(f43 == T){
+    ExtraAJ = p2_25*this.No_of_units;
+   }
+   if(f43 == U){
+    ExtraAK = p2_25*this.No_of_units;
+   }
+
+
+  let pt1_ringSum =  pre6 +pre8 +pre10 +pre12 +pre14 +pre16 +pre18 +pre20 +pre22 +pre25 +pre28 +pre32 +pre40;
+  let mainsteelI = ((type1_6+type2_6+type3_6+type4_6)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelJ = ((type1_8+type2_8+type3_8+type4_8)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelK = ((type1_10+type2_10+type3_10+type4_10)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelL = ((type1_12+type2_12+type3_12+type4_12)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelM = ((type1_14+type2_14+type3_14+type4_14)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelN = ((type1_16+type2_16+type3_16+type4_16)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelO = ((type1_18+type2_18+type3_18+type4_18)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelP = ((type1_20+type2_20+type3_20+type4_20)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelQ = ((type1_22+type2_22+type3_22+type4_22)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelR = ((type1_25+type2_25+type3_25+type4_25)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelS = ((type1_28+type2_28+type3_28+type4_28)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelT = ((type1_32+type2_32+type3_32+type4_32)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelU = ((type1_40+type2_40+type3_40+type4_40)*(1+this.ch1AD))*this.No_of_units;
+
+
+  let mainsteelY = ((part2_type1_6+part2_type2_6+part2_type3_6+part2_type4_6)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelZ = ((part2_type1_8+part2_type2_8+part2_type3_8+part2_type4_8)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAA = ((part2_type1_10+part2_type2_10+part2_type3_10+part2_type4_10)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAB = ((part2_type1_12+part2_type2_12+part2_type3_12+part2_type4_12)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAC = ((part2_type1_14+part2_type2_14+part2_type3_14+part2_type4_14)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAD = ((part2_type1_16+part2_type2_16+part2_type3_16+part2_type4_16)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAE = ((part2_type1_18+part2_type2_18+part2_type3_18+part2_type4_18)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAF = ((part2_type1_20+part2_type2_20+part2_type3_20+part2_type4_20)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAG = ((part2_type1_22+part2_type2_22+part2_type3_22+part2_type4_22)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAH = ((part2_type1_25+part2_type2_25+part2_type3_25+part2_type4_25)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAI = ((part2_type1_28+part2_type2_28+part2_type3_28+part2_type4_28)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAJ = ((part2_type1_32+part2_type2_32+part2_type3_32+part2_type4_32)*(1+this.ch1AD))*this.No_of_units;
+  let mainsteelAK = ((part2_type1_40+part2_type2_40+part2_type3_40+part2_type4_40)*(1+this.ch1AD))*this.No_of_units;
+
+  let orderI = pre6+ExtraI+mainsteelI;
+  let orderJ = pre8+ExtraJ+mainsteelJ;
+  let orderK = pre10+ExtraK+mainsteelK;
+  let orderL = pre12+ExtraL+mainsteelL;
+  let orderM = pre14+ExtraM+mainsteelM;
+  let orderN = pre16+ExtraN+mainsteelN;
+  let orderO = pre18+ExtraO+mainsteelO;
+  let orderP = pre20+ExtraP+mainsteelP;
+  let orderQ = pre22+ExtraQ+mainsteelQ;
+  let orderR = pre25+ExtraR+mainsteelR;
+  let orderS = pre28+ExtraS+mainsteelS;
+  let orderT = pre32+ExtraT+mainsteelT;
+  let orderU = pre40+ExtraU+mainsteelU;
+
+
+  let orderY  = ExtraY+mainsteelY;
+  let orderZ  = ExtraZ+mainsteelZ;
+  let orderAA = ExtraAA+mainsteelAA;
+  let orderAB = ExtraAB+mainsteelAB;
+  let orderAC = ExtraAC+mainsteelAC;
+  let orderAD = ExtraAD+mainsteelAD;
+  let orderAE = ExtraAE+mainsteelAE;
+  let orderAF = ExtraAF+mainsteelAF;
+  let orderAG = ExtraAG+mainsteelAG;
+  let orderAH = ExtraAH+mainsteelAH;
+  let orderAI = ExtraAI+mainsteelAI;
+  let orderAJ = ExtraAJ+mainsteelAJ;
+  let orderAK = ExtraAK+mainsteelAK;
+
+  this.Y6  = orderI+orderY;
+  this.Y8  = orderJ+orderZ;
+  this.Y10 = orderK+orderAA;
+  this.Y12 = orderL+orderAB;
+  this.Y14 = orderM+orderAC;
+  this.Y16 = orderN+orderAD;
+  this.Y18 = orderO+orderAE;
+  this.Y20 = orderP+orderAF;
+  this.Y22 = orderQ+orderAG;
+  this.Y25 = orderR+orderAH;
+  this.Y28 = orderS+orderAI;
+  this.Y32 = orderT+orderAJ;
+  this.Y40 = orderU+orderAK;
+
+  this.totalfinalorderinKg = this.Y6+this.Y8 +this.Y10+this.Y12+this.Y14+this.Y16+this.Y18+this.Y20+this.Y22+this.Y25+this.Y28+this.Y32+this.Y40;
+  this.totalfinalorderinTon = (this.Y6/1000)+(this.Y8/1000) +(this.Y10/1000)+(this.Y12/1000)+(this.Y14/1000)+(this.Y16/1000)+(this.Y18/1000)+(this.Y20/1000)+(this.Y22/1000)+(this.Y25/1000)+(this.Y28/1000)+(this.Y32/1000)+(this.Y40/1000);
+
+    this.ConcQtym3 =this.Unit_width*this.Unit_length*this.Unit_height*this.No_of_units;
+    this.Steelringonlykg = pt1_ringSum;
+    this.Mainsteelonlykg = this.totalfinalorderinKg-this.Steelringonlykg;
+    if(this.ConcQtym3 > 0){
+      this.persteelkgm3 = this.totalfinalorderinKg-this.ConcQtym3;
+    }
+    if(Totallengthofrings>0){
+      this.persteelringkgm3 = this.Steelringonlykg-this.ConcQtym3;
+    }   
+    this.permainsteelkgm3 = this.Mainsteelonlykg/this.ConcQtym3;
+
+}
+
+
+
+
 
 }
 

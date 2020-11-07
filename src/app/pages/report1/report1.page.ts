@@ -183,6 +183,7 @@ export class Report1Page implements OnInit {
                       id : ele.id,
                       qty : ele.qty,
                       unit : ele.unit,
+                      website : ele.website,
                       rate : ele.price,
                       etotal : (ele.qty*ele.price),
                       supplier : ele.supplier,
@@ -306,7 +307,8 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ 
+                      website : mdat.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -477,7 +479,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -605,7 +607,8 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].material.push({ 
+                          website : mdat.website,
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -782,7 +785,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -910,7 +913,7 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].material.push({ website : ele.website,
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -1091,7 +1094,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -1219,7 +1222,7 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].material.push({ website : ele.website,
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -1399,7 +1402,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -1527,7 +1530,7 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].material.push({ website : ele.website,
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -1707,7 +1710,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -1835,7 +1838,7 @@ export class Report1Page implements OnInit {
                       const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                       if(index === -1){
                         this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                        this.ItemsList[mainindex].material.push({
+                        this.ItemsList[mainindex].material.push({ website : ele.website,
                           name: mdat.name,
                           id : mdat.id,
                           qty : mdat.qty,
@@ -2015,7 +2018,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -2143,7 +2146,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : ele.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -2324,7 +2327,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -2452,7 +2455,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : ele.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -2632,7 +2635,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -2760,7 +2763,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : ele.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -2940,7 +2943,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -3068,7 +3071,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : ele.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -3249,7 +3252,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -3377,7 +3380,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : ele.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -3555,7 +3558,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -3683,7 +3686,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : mdat.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -3858,7 +3861,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -3986,7 +3989,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : mdat.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -4161,7 +4164,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -4289,7 +4292,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : mdat.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,
@@ -4465,7 +4468,7 @@ export class Report1Page implements OnInit {
                 doc.data().item.itemdetails.materials.forEach(ele =>{
                   MtotalPrice += (ele.qty*ele.price)
                   MatotalPrice += (0*ele.price)
-                    material.push({
+                    material.push({ website : ele.website,
                       name: ele.name,
                       id : ele.id,
                       qty : ele.qty,
@@ -4593,7 +4596,7 @@ export class Report1Page implements OnInit {
                   const index =  this.ItemsList[mainindex].material.findIndex(x => x.id == mdat.id)
                   if(index === -1){
                     this.ItemsList[mainindex].MtotalPrice += (mdat.qty*mdat.price)
-                    this.ItemsList[mainindex].material.push({
+                    this.ItemsList[mainindex].material.push({ website : mdat.website,
                       name: mdat.name,
                       id : mdat.id,
                       qty : mdat.qty,

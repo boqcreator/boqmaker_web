@@ -39,6 +39,7 @@
           <th>Unit</th>
           <th>Total</th>
           <th>Supplier</th>
+          <th>Buy online</th>
         </tr>
         <tr *ngFor="let myitem of item.material">
           <td>{{myitem.name}}</td>
@@ -47,6 +48,10 @@
           <td>{{myitem.etotal*item.qty | number:'0.0-3'}}</td>
           <td>{{myitem.supplier.name}} <br/>
             <a href="mailto:{{myitem.supplier.email}}?body=Dear%20{{myitem.supplier.name}}%2C%0D%0A%0D%0AI%20would%20like%20to%20request%20a%20quote%20for%20a%20{{myitem.name}}.%20I%20have%20seen%20that%20your%20company%20sells%20several%20items%2C%20but%20since%20the%20quantity%20I%20need%20is%20{{myitem.qty*item.qty | number:'0.0-3'}}.%0D%0A%0D%0AI%20would%20also%20know%20how%20long%20it%20would%20take%20to%20deliver%20the%20_______%20to%20%5Bplace%20where%20you%20live%5D.%0D%0A%0D%0AThanks%20in%20advance%2C%0D%0A%0D%0ABOQ%20Maker">{{myitem.supplier.email}}</a>
+          </td>
+          <td>
+             <ion-label *ngIf="!myitem.website">No link</ion-label>
+            <a *ngIf="myitem.website" href="{{myitem.website}}" target="_blank">Link</a>
           </td>
         </tr>
       </table>
