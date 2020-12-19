@@ -76,6 +76,12 @@
         <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="CatID">
         <p *ngFor="let item of catList | filter:term1" >
           <ion-item>
+            <ion-button (click)="Meditcat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Mdelcat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{item.name}}</ion-label>
             <ion-radio slot="end" [value]="item.id"></ion-radio>
           </ion-item>
@@ -90,6 +96,12 @@
         <ion-radio-group (ionChange)="getsuppliers()" [(ngModel)]="SubcatID">
         <p *ngFor="let sitem of subcatList | filter:term2" >
           <ion-item>
+            <ion-button (click)="Meditsubcat(sitem)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Mdelsubcat(sitem)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{sitem.name}}</ion-label>
             <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
           </ion-item>
@@ -126,6 +138,12 @@
         <ion-radio-group (ionChange)="Lgetsubcat()" [(ngModel)]="LCatID">
         <p *ngFor="let item of LcatList | filter:Lterm1" >
           <ion-item>
+            <ion-button (click)="Leditcat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Ldelcat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{item.name}}</ion-label>
             <ion-radio slot="end" [value]="item.id"></ion-radio>
           </ion-item>
@@ -140,6 +158,12 @@
         <ion-radio-group (ionChange)="Lgetsuppliers()" [(ngModel)]="LSubcatID">
         <p *ngFor="let sitem of LsubcatList | filter:Lterm2" >
           <ion-item>
+            <ion-button (click)="Leditsubcat(sitem)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Ldelsubcat(sitem)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{sitem.name}}</ion-label>
             <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
           </ion-item>
@@ -176,6 +200,12 @@
         <ion-radio-group (ionChange)="Egetsubcat()" [(ngModel)]="ECatID">
         <p *ngFor="let item of EcatEist | filter:Eterm1" >
           <ion-item>
+            <ion-button (click)="Eeditcat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Edelcat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{item.name}}</ion-label>
             <ion-radio slot="end" [value]="item.id"></ion-radio>
           </ion-item>
@@ -190,6 +220,12 @@
         <ion-radio-group (ionChange)="Egetsuppliers()" [(ngModel)]="ESubcatID">
         <p *ngFor="let sitem of EsubcatEist | filter:Eterm2" >
           <ion-item>
+            <ion-button (click)="Eeditsubcat(sitem)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Edelsubcat(sitem)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{sitem.name}}</ion-label>
             <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
           </ion-item>
@@ -226,6 +262,12 @@
         <ion-radio-group (ionChange)="Ogetsubcat()" [(ngModel)]="OCatID">
         <p *ngFor="let item of OcatOist | filter:Oterm1" >
           <ion-item>
+            <ion-button (click)="Oeditcat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Odelcat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{item.name}}</ion-label>
             <ion-radio slot="end" [value]="item.id"></ion-radio>
           </ion-item>
@@ -240,6 +282,12 @@
         <ion-radio-group (ionChange)="Ogetsuppliers()" [(ngModel)]="OSubcatID">
         <p *ngFor="let sitem of OsubcatOist | filter:Oterm2" >
           <ion-item>
+            <ion-button (click)="Oeditsubcat(sitem)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+              <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+            </ion-button>
+            <ion-button (click)="Odelsubcat(sitem)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+              <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
             <ion-label>{{sitem.name}}</ion-label>
             <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
           </ion-item>

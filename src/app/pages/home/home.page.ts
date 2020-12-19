@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ReportFinalPricedBillPage } from '../report-final-priced-bill/report-final-priced-bill.page';
+import { UnitPage } from '../unit/unit.page';
+import { ConsultantPage } from '../consultant/consultant.page';
 
 @Component({
   selector: 'app-home',
@@ -125,6 +127,29 @@ export class HomePage implements OnInit {
   addProj(){
     this.router.navigate(['addproject'])
    }
+   gotoclient(){
+    this.router.navigate(['client'])
+   }
+
+   async gotounit(){
+       const modal = await this.modalController.create({
+       component: UnitPage,
+       });
+     
+       await modal.present();
+  
+      
+   }
+
+   async gotoconsultant(){
+    const modal = await this.modalController.create({
+    component: ConsultantPage,
+    });
+  
+    await modal.present();
+
+   
+}
 
   async presentModal(type) {
     const modal = await this.modalController.create({

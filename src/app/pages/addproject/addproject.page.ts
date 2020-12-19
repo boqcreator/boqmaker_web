@@ -21,7 +21,7 @@ export class AddprojectPage implements OnInit {
   id
   name
   no = ""
-  client = ""
+  client = "";
   con = ""
   access
   start = ""
@@ -55,6 +55,9 @@ export class AddprojectPage implements OnInit {
   typeList;
   selectedType;
   code = "";
+  listOfClients;
+  listOfConsultants;
+  selectedClient;
   country = "Bahrain";
   currency = "BHD";
   @ViewChild('search')
@@ -75,6 +78,8 @@ export class AddprojectPage implements OnInit {
      this.id =  this.afs.createId()
 
      this.typeList = this.afs.collection(`boq/boq/projecttypes`).valueChanges()
+     this.listOfClients = this.afs.collection(`boq/boq/client`).snapshotChanges()
+     this.listOfConsultants =  this.afs.collection(`boq/boq/consultants`, ref => ref.orderBy("name" , "asc")).snapshotChanges()
 
     this.fs.read_contractors().subscribe(value =>{
       value.forEach(doc =>{
@@ -115,6 +120,12 @@ export class AddprojectPage implements OnInit {
       });
      
       
+  }
+  setClient(event){
+    this.client = event.target.value.data().name;
+    this.caddress = event.target.value.data().address;
+    this.cemail = event.target.value.data().email;
+    this.cphoneno = event.target.value.data().phone;
   }
 
      // Get Current Location Coordinates

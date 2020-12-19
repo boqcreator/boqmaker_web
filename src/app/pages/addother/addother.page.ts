@@ -24,7 +24,7 @@ export class AddotherPage implements OnInit {
   sname= "";
   sdes = "";
 
-  units = ['DAY','Hour','Month','Week','Year','no','l.s']
+  units ;
   unit ="";
   price= 0.000;
 
@@ -45,6 +45,7 @@ export class AddotherPage implements OnInit {
     private storage : Storage,
     private modal : ModalController,
     public alertController: AlertController) { 
+      this.units =  this.afs.collection(`boq/boq/units`, ref => ref.orderBy("name" , "asc")).snapshotChanges()
       this.storage.get('othercat').then((value)=>{
         this.CatID = value
       })

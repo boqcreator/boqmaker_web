@@ -35,7 +35,7 @@ export class AddboqitemPage implements OnInit {
    
   itemname = "";
   itemcode = "";
-  units = ['m','m2','m3','mm','kg','no','pr','doz','roll','load','sheet','tin','litre','gallon','item','pair','set','l.s','ton','kilo','pr']
+  units;
   unit="";
   price= 0.000;
 
@@ -250,6 +250,7 @@ boq3AO = '';
     private menu : MenuController,
     public alertController: AlertController) {
     this.menu.enable(false)
+    this.units =  this.afs.collection(`boq/boq/units`, ref => ref.orderBy("name" , "asc")).snapshotChanges()
 
     this.storage.get('boqitemcat').then((value)=>{
       if(value !== null){

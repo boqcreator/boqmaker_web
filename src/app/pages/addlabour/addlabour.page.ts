@@ -25,7 +25,7 @@ export class AddlabourPage implements OnInit {
   sname= "";
   sdes = "";
 
-  units = ['DAY','Hour','Month','Week','Year','no']
+  units;
   unit ="";
   price= 0.000;
 
@@ -48,6 +48,7 @@ export class AddlabourPage implements OnInit {
     private modal : ModalController,
     private modalController: ModalController,
     public alertController: AlertController) { 
+      this.units =  this.afs.collection(`boq/boq/units`, ref => ref.orderBy("name" , "asc")).snapshotChanges()
       this.storage.get('labourcat').then((value)=>{
         this.CatID = value
       })

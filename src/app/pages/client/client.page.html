@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar
+    ><ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Client</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Name <ion-text color="danger">*</ion-text></ion-label>
+          <ion-input required [(ngModel)]="name" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Address</ion-label>
+          <ion-input [(ngModel)]="address" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input [(ngModel)]="email" type="email"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Phone no</ion-label>
+          <ion-input [(ngModel)]="phone" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-button [disabled] = " name ? false : true "  (click)="addClient()"  expand="block" >
+      Add new
+    </ion-button>
+  </ion-grid>
+
+
+  <table>
+    <tr>
+      <th>Action</th>
+      <th>Name</th>
+      <th>Adress</th>
+      <th>Email</th>
+      <th>Phone no</th>
+    </tr>
+    <tr *ngFor="let client of listOfClients | async">
+      <td>
+        <ion-button fill="clear" (click)="delete(client.payload.doc)">
+          <ion-icon slot="start" name="trash" color="danger"></ion-icon>
+        </ion-button>
+      </td>
+      <td> <ion-input (ionBlur)="updateName($event , client.payload.doc)" value="{{ client.payload.doc.data().name }}" type="text" ></ion-input></td>
+      <td><ion-input (ionBlur)="updateAddress($event , client.payload.doc)" value="{{ client.payload.doc.data().address }}" type="text" ></ion-input></td>
+      <td><ion-input (ionBlur)="updateEmail($event , client.payload.doc)" value="{{ client.payload.doc.data().email }}" type="text" ></ion-input></td>
+      <td><ion-input (ionBlur)="updatePhone($event , client.payload.doc)" value="{{ client.payload.doc.data().phone }}" type="text" ></ion-input></td>
+    </tr>
+  </table>
+</ion-content>

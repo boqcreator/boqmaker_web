@@ -22,6 +22,12 @@
     <ion-radio-group (ionChange)="getsubcat()" [(ngModel)]="CatID">
     <p *ngFor="let item of catList | filter:term1" >
       <ion-item>
+        <ion-button (click)="editCat(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+          <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button (click)="delCat(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+          <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
         <ion-label>{{item.name}}</ion-label>
         <ion-radio slot="end" [value]="item.id"></ion-radio>
       </ion-item>
@@ -36,6 +42,12 @@
     <ion-radio-group (ionChange)="getequipments()" [(ngModel)]="SubcatID">
     <p *ngFor="let sitem of subcatList | filter:term2" >
       <ion-item>
+        <ion-button (click)="editSubcat(sitem)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+          <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+        </ion-button>
+        <ion-button (click)="delSubcat(sitem)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+          <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
         <ion-label>{{sitem.name}}</ion-label>
         <ion-radio slot="end" [value]="sitem.id" ></ion-radio>
       </ion-item>
@@ -50,10 +62,13 @@
     <ion-radio-group *ngIf="equipmentList" >
     <p *ngFor="let item of equipmentList | filter:term3" >
       <ion-item>
-        <ion-label>{{item.name}}</ion-label>
-        <ion-button (click)="edit(item)" style="--padding-end: 0px;" fill="clear">
-          <ion-icon slot="icon-only" name="create"></ion-icon>
+        <ion-button (click)="edit(item)" slot="start" size="small" style="--padding-end: 0px;margin: 0px;" fill="clear">
+          <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
         </ion-button>
+        <ion-button (click)="del(item)" size="small" slot="start" style="--padding-end: 0px;margin: 0px;" color="danger" fill="clear">
+          <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
+        <ion-label>{{item.name}}</ion-label>
       </ion-item>
        </p> 
       </ion-radio-group>

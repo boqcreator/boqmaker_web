@@ -1,0 +1,164 @@
+ul {
+    list-style-type: none ; 
+    cursor: pointer;
+    padding-bottom: 0px;
+padding-left: 10px;
+}
+
+.b{
+    padding-left: 0px;
+}
+ion-select{
+    white-space: normal !important;
+}
+ion-select-option{
+    white-space: normal !important;
+}
+ion-label , ion-input{
+font-size: small;
+}
+ion-item{
+    font-size: small;
+}
+ion-list{
+    padding: 0px;
+}
+th ,td {
+    margin: 0px;
+    padding: 0px;
+}
+
+.areatabelinput{
+    --padding-top: 0px;
+    --padding-bottom: 0px;
+}
+
+.extrasborders{
+    border: solid 1px blue;
+}
+
+.extrasbordersmm{
+  border: solid 1px rgb(218, 177, 74);
+}
+
+ion-list-header{
+    ion-label{
+        font-weight: bolder;
+    }
+}
+
+.leftsideitems{
+font-size: x-small;
+height: 40px;
+}
+
+
+.title_box { 
+    border: #3171e0 2px solid;
+    margin-top:10px;
+    font-family: 'Times New Roman', Times, serif;
+ 
+}
+
+.title_box #title { 
+    position: relative; 
+    top : -0.75em;
+    margin-left: 1.2em;
+    display: inline; 
+    background-color: white;
+    font-weight: bolder;
+    color:#3171e0; 
+    font-size:15px;    
+}
+
+
+#map_canvas {
+  width: 90%;
+  height: 80%;
+  border: 1px solid #3171e0;
+}
+ 
+ 
+#address {
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+ 
+#map {
+  width: 60px;
+  height: 50vh;
+}
+ 
+.map-wrapper {
+  position: relative;
+ 
+  #map_center {
+    position: absolute;
+    z-index: 99;
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    left: 50%;
+    margin-left: -21px;
+    margin-top: -41px;
+  }
+}
+agm-map {
+  display: block;
+  margin-left: auto;
+  margin-right:auto;
+    height: 200px;
+    width: 100%;
+}
+input[type=text], select, textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+  ion-segment-button{
+      ion-label{
+          font-size: 9px;
+      }
+
+  }
+
+  table, th, td {
+    border: 1px solid grey;
+    border-spacing: 5px;
+    color: black;
+  }
+  th, td {
+    padding: 3px;
+    text-align: left;
+    font-size: smaller;
+  }
+  tr:nth-child(even) {
+    background-color: #deeaeb;
+  }
+
+  .ex1 {
+    height: 450px;
+    width: 100%;
+    overflow-y: scroll;
+    display: inline-block;
+    border: solid 1px grey;
+  }
+  ion-content{
+    display: table;
+}
+.editbtn{
+    --padding-end: 0px;
+    --padding-start: 0px;
+    height: 14px;
+    width: 14px;
+}
+.editbtn1{
+    --padding-end: 0px;
+    --padding-start: 0px;
+    height: 18px;
+    width: 18px;
+}

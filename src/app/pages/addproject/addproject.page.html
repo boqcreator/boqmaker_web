@@ -37,10 +37,12 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item>
-            <ion-label position="floating">Consultant</ion-label>
-            <ion-input type="text" [(ngModel)]="con" name="con"></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-label>Consultant</ion-label>
+              <ion-select [(ngModel)]="con" >
+                <ion-select-option *ngFor="let consultant of listOfConsultants | async" [value]="consultant.payload.doc.data().name">{{ consultant.payload.doc.data().name }}</ion-select-option>
+              </ion-select>
+            </ion-item>
         </ion-col>
       </ion-row>
   
@@ -216,6 +218,13 @@
       <div class="title_box" id="bill_to">
         <div id="title"> Client Info</div>
         <div id="contents">
+
+          <ion-item>
+            <ion-label>Clients</ion-label>
+            <ion-select (ionChange)="setClient($event)" [(ngModel)]="selectedClient"  multiple="false" placeholder="Select client">
+              <ion-select-option *ngFor="let client of listOfClients | async" [value]="client.payload.doc">{{ client.payload.doc.data().name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
 
           <ion-row>
             <ion-col>

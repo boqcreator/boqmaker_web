@@ -11,32 +11,16 @@ import * as firebase from "firebase"
 })
 export class EditmaterialPage implements OnInit {
   item;
-  sname= "";
-  sdes = "";
   pic;
-  units = ['m','m2','m3','mm','kg','no','pr','doz','roll','load','sheet','tin','litre','gallon','item','pair','set','l.s','ton','kilo','pr']
+  units;
   unit ="";
   price= 0.000;
 
-  unit1 = "";
-  price1= 0.000;
-
-  unit2 = "";
-  price2= 0.000;
-  website = "";
-  origin="";
-  diameter=0;
-  color="";
-  grad = "";
-  brand ="";
-  thickness = 0;
-  width = 0;
-  length = 0;
-  wastage = 0;
-
   constructor(private afs : AngularFirestore,
     private modalController: ModalController,
-    private loadingController: LoadingController) { }
+    private loadingController: LoadingController) {
+      this.units =  this.afs.collection(`boq/boq/units`, ref => ref.orderBy("name" , "asc")).snapshotChanges()
+     }
 
   ngOnInit() {
     console.log(this.item)

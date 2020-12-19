@@ -27,7 +27,7 @@ export class AddmaterialPage implements OnInit {
   sname= "";
   sdes = "";
 
-  units = ['m','m2','m3','mm','kg','no','pr','doz','roll','load','sheet','tin','litre','gallon','item','pair','set','l.s','ton','kilo','pr']
+  units ;
   unit ="";
   price= 0.000;
 
@@ -64,6 +64,7 @@ export class AddmaterialPage implements OnInit {
     private modal : ModalController,
     private modalController: ModalController,
     public alertController: AlertController) { 
+      this.units =  this.afs.collection(`boq/boq/units`, ref => ref.orderBy("name" , "asc")).snapshotChanges()
       this.storage.get('materialcat').then((value)=>{
         this.CatID = value
       })

@@ -12,6 +12,7 @@ import { EditsuppliermatPage } from '../editsuppliermat/editsuppliermat.page';
 import { EditsupplierlabPage } from '../editsupplierlab/editsupplierlab.page';
 import { EditsuppliereqPage } from '../editsuppliereq/editsuppliereq.page';
 import { EditsupplieroPage } from '../editsuppliero/editsuppliero.page';
+import { UpdatesupplierPage } from '../updatesupplier/updatesupplier.page';
 
 @Component({
   selector: 'app-supplier',
@@ -568,9 +569,423 @@ export class SupplierPage implements OnInit {
 
   }
 
+  async Meditcat(item){
+      const modal = await this.modalController.create({
+      component: UpdatesupplierPage,
+      componentProps: { firelink: `/boq/boq/supplierscat/${item.id}`}
+      });
+    
+      await modal.present();
+  }
+
+  async Meditsubcat(item){
+    const modal = await this.modalController.create({
+    component: UpdatesupplierPage,
+    componentProps: { firelink: `boq/boq/supplierscat/${this.CatID}/subcat/${item.id}`}
+    });
+  
+    await modal.present();
+}
+
+  async Leditcat(item){
+    const modal = await this.modalController.create({
+    component: UpdatesupplierPage,
+    componentProps: { firelink: `/boq/boq/Laboursupplierscat/${item.id}`}
+    });
+  
+    await modal.present();
+}
+async Leditsubcat(item){
+  const modal = await this.modalController.create({
+  component: UpdatesupplierPage,
+  componentProps: { firelink: `boq/boq/Laboursupplierscat/${this.LCatID}/subcat/${item.id}`}
+  });
+
+  await modal.present();
+}
+async Eeditcat(item){
+  const modal = await this.modalController.create({
+  component: UpdatesupplierPage,
+  componentProps: { firelink: `/boq/boq/equipmentsupplierscat/${item.id}`}
+  });
+
+  await modal.present();
+
+}
+async Eeditsubcat(item){
+  const modal = await this.modalController.create({
+  component: UpdatesupplierPage,
+  componentProps: { firelink: `boq/boq/equipmentsupplierscat/${this.ECatID}/subcat/${item.id}`}
+  });
+
+  await modal.present();
+}
+async Oeditcat(item){
+  const modal = await this.modalController.create({
+  component: UpdatesupplierPage,
+  componentProps: { firelink: `/boq/boq/othersupplierscat/${item.id}`}
+  });
+
+  await modal.present();
+
+}
+async Oeditsubcat(item){
+  const modal = await this.modalController.create({
+  component: UpdatesupplierPage,
+  componentProps: { firelink: `boq/boq/othersupplierscat/${this.OCatID}/subcat/${item.id}`}
+  });
+
+  await modal.present();
+}
 
 
 
+async Mdelcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`/boq/boq/supplierscat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+async Mdelsubcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`boq/boq/supplierscat/${this.CatID}/subcat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+async Ldelcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`/boq/boq/Laboursupplierscat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+async Ldelsubcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`boq/boq/Laboursupplierscat/${this.LCatID}/subcat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+
+
+async Edelcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`/boq/boq/equipmentsupplierscat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+async Edelsubcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`boq/boq/equipmentsupplierscat/${this.ECatID}/subcat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+
+async Odelcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`/boq/boq/othersupplierscat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
+
+async Odelsubcat(item){
+
+  const alert = await this.alertController.create({
+    header: 'Confirm!',
+    message: '<strong>Are you sure you want to delete this Category?</strong>',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+        handler: () => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Okay',
+        handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Deleting',
+              duration: 2000,
+              spinner: 'bubbles'
+            });
+            await loading.present();
+
+            this.afs.doc(`boq/boq/othersupplierscat/${this.OCatID}/subcat/${item.id}`).delete().then(async()=>{
+           loading.dismiss();
+             const alert = await this.alertController.create({
+               header: 'Success',
+               message: 'Deleted successfully!',
+               buttons: ['OK']
+             });
+           
+             await alert.present();
+
+          })
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+
+}
 
 
 

@@ -1,0 +1,386 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Shape Calculator</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="s1">
+      <ion-label>Shape 1</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s2">
+      <ion-label>Shape2</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s3">
+      <ion-label>Shape3</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s4">
+      <ion-label>Shape4</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s5">
+      <ion-label>Shape5</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="s6">
+      <ion-label>Shape6</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s7">
+      <ion-label>Shape7</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s8">
+      <ion-label>Shape8</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s9">
+      <ion-label>Shape9</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s10">
+      <ion-label>Shape10</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="s11">
+      <ion-label>Shape11</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-row>
+    <ion-col size="6">
+<ion-label>Area : {{ areaResult }}</ion-label>
+    </ion-col>
+    <ion-col size="6">
+      <ion-label>Parameter : {{ parameterResult }}</ion-label>
+          </ion-col>
+    <ion-col size="6">
+
+    </ion-col>
+  </ion-row>
+
+  <div style="padding-bottom: 100px;" [ngSwitch]="segment">
+    <div style="margin-top: 5px" *ngSwitchCase="'s1'">
+      <div style="text-align: center">
+        <ion-item>
+          <ion-label position="floating">A</ion-label>
+          <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="A" type="number"></ion-input>
+        </ion-item>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+
+    <div style="margin-top: 5px" *ngSwitchCase="'s2'">
+      <div style="text-align: center">
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">B</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="B" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">C</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="C" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+
+    <div style="margin-top: 5px" *ngSwitchCase="'s3'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+
+          </ion-col>
+          <ion-col size="6">
+            
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">D</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="D" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">E</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="E" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s4'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">F</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="F" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">G</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="G" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-item>
+            <ion-label position="floating">AM</ion-label>
+            <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AM" type="number"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s5'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">H</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="H" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">I</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="I" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AN</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AN" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AO</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AO" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s6'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">K</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="K" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">L</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="L" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">M</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="M" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">N</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="N" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">O</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="O" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">P</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="P" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s7'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Q</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="Q" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">R</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="R" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">S</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="S" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">T</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="T" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">U</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="U" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">V</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="V" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">W</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="W" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">X</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="X" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s8'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Y</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="Y" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">Z</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="Z" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s9'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AA</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AA" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AB</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AB" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s10'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AC</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AC" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AD</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AD" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AE</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AE" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AF</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AF" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AG</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AG" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AH</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AH" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+       <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+    <div style="margin-top: 5px" *ngSwitchCase="'s11'">
+      <div style="text-align: center">
+                <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AK</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AK" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AI</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AI" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AL</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AL" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label position="floating">AJ</ion-label>
+              <ion-input (ionChange)="onChangeShapeInput()" [(ngModel)]="AJ" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-button (click)="onSubmit()" expand="full" >Submit</ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

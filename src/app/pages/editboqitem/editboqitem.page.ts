@@ -28,7 +28,7 @@ export class EditboqitemPage implements OnInit {
   equipmenttotal = "0" ;
   othertotal = "0" ;
   subcontractortotal = "0" ;
-  units = ['m','m2','m3','mm','kg','no','pr','doz','roll','load','sheet','tin','litre','gallon','item','pair','set','l.s','ton','kilo','pr']
+  units;
   segment2 = "m"
 
 
@@ -91,6 +91,7 @@ export class EditboqitemPage implements OnInit {
        public loadingController: LoadingController,
        ) {
     menu.enable(false)
+    this.units =  this.afs.collection(`boq/boq/units`, ref => ref.orderBy("name" , "asc")).snapshotChanges()
     this.getmaterialCat()
     this.getlabourCat()
     this.getequipmentCat()

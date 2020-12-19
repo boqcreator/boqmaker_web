@@ -421,6 +421,46 @@ const routes: Routes = [
   {
     path: 'editsuppliero',
     loadChildren: () => import('./pages/editsuppliero/editsuppliero.module').then( m => m.EditsupplieroPageModule)
+  },
+  {
+    path: 'updatesupplier',
+    loadChildren: () => import('./pages/updatesupplier/updatesupplier.module').then( m => m.UpdatesupplierPageModule)
+  },
+  {
+    path: 'unit',
+    loadChildren: () => import('./pages/unit/unit.module').then( m => m.UnitPageModule)
+  },
+  {
+    path: 'client',
+    loadChildren: () => import('./pages/client/client.module').then( m => m.ClientPageModule)
+  },
+  {
+    path: 'consultant',
+    loadChildren: () => import('./pages/consultant/consultant.module').then( m => m.ConsultantPageModule)
+  },
+  {
+    path: 'edit-labour',
+    loadChildren: () => import('./pages/edit-labour/edit-labour.module').then( m => m.EditLabourPageModule)
+  },
+  {
+    path: 'editequipment',
+    loadChildren: () => import('./pages/editequipment/editequipment.module').then( m => m.EditequipmentPageModule)
+  },
+  {
+    path: 'edit-subcontractor',
+    loadChildren: () => import('./pages/edit-subcontractor/edit-subcontractor.module').then( m => m.EditSubcontractorPageModule)
+  },
+  {
+    path: 'edit-other',
+    loadChildren: () => import('./pages/edit-other/edit-other.module').then( m => m.EditOtherPageModule)
+  },
+  {
+    path: 'editcontractor',
+    loadChildren: () => import('./pages/editcontractor/editcontractor.module').then( m => m.EditcontractorPageModule)
+  },
+  {
+    path: 'shape-calculator',
+    loadChildren: () => import('./pages/shape-calculator/shape-calculator.module').then( m => m.ShapeCalculatorPageModule)
   }
 ];
 

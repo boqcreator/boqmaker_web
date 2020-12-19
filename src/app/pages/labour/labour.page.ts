@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AddlabourPage } from '../addlabour/addlabour.page';
+import { UpdatesupplierPage } from '../updatesupplier/updatesupplier.page';
+import { EditLabourPage } from '../edit-labour/edit-labour.page';
 
 @Component({
   selector: 'app-labour',
@@ -25,6 +27,8 @@ export class LabourPage implements OnInit {
   constructor(private menu : MenuController,
     private modalController: ModalController,
     private storage : Storage,
+    private alertController: AlertController,
+    private loadingController: LoadingController,
      private router : Router,
      private afs : AngularFirestore) {
       this.menu.enable(false)
@@ -75,12 +79,12 @@ export class LabourPage implements OnInit {
          this.labourList.push({
          name : doc.payload.doc.data().name, 
          id : doc.payload.doc.id,
-         no: doc.payload.doc.data().no,
-         tele: doc.payload.doc.data().tele,
-         fax: doc.payload.doc.data().fax,
-         email: doc.payload.doc.data().email,
-         website: doc.payload.doc.data().website,
-         des: doc.payload.doc.data().des,
+         des : doc.payload.doc.data().des,
+         unit : doc.payload.doc.data().unit,
+        price : doc.payload.doc.data().price, 
+        LEXISTING : doc.payload.doc.data().LEXISTING,
+        catid : doc.payload.doc.data().catid,
+        subcatid : doc.payload.doc.data().subcatid,
  
        })
        })
@@ -89,10 +93,155 @@ export class LabourPage implements OnInit {
  
    }
  
-   edit(item){
-     
+   async editCat(item){
+    const modal = await this.modalController.create({
+      component: UpdatesupplierPage,
+      componentProps: { firelink: `boq/boq/labourscat/${item.id}`}
+      });
+    
+      await modal.present();
+   }
+
+   async delCat(item){
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete this Category?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: async () => {
+              const loading = await this.loadingController.create({
+                message: 'Deleting',
+                duration: 2000,
+                spinner: 'bubbles'
+              });
+              await loading.present();
+  
+              this.afs.doc(`boq/boq/labourscat/${item.id}`).delete().then(async()=>{
+             loading.dismiss();
+               const alert = await this.alertController.create({
+                 header: 'Success',
+                 message: 'Deleted successfully!',
+                 buttons: ['OK']
+               });
+             
+               await alert.present();
+
+            })
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
    }
  
+
+   async editSubcat(item){
+    const modal = await this.modalController.create({
+      component: UpdatesupplierPage,
+      componentProps: { firelink: `boq/boq/labourscat/${this.CatID}/subcat/${item.id}`}
+      });
+    
+      await modal.present();
+   }
+
+   async delSubcat(item){
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete this Subcategory?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: async () => {
+              const loading = await this.loadingController.create({
+                message: 'Deleting',
+                duration: 2000,
+                spinner: 'bubbles'
+              });
+              await loading.present();
+  
+              this.afs.doc(`boq/boq/labourscat/${this.CatID}/subcat/${item.id}`).delete().then(async()=>{
+             loading.dismiss();
+               const alert = await this.alertController.create({
+                 header: 'Success',
+                 message: 'Deleted successfully!',
+                 buttons: ['OK']
+               });
+             
+               await alert.present();
+
+            })
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+   }
+
+   async edit(item){
+    const modal = await this.modalController.create({
+      component: EditLabourPage,
+      componentProps: { item: item }
+      });
+    
+      await modal.present();
+   }
+   async del(item){
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete this Material?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: async () => {
+              const loading = await this.loadingController.create({
+                message: 'Deleting',
+                duration: 2000,
+                spinner: 'bubbles'
+              });
+              await loading.present();
+  
+              this.afs.doc(`boq/boq/labourscat/${item.catid}/subcat/${item.subcatid}/labours/${item.id}`).delete().then(async()=>{
+             loading.dismiss();
+               const alert = await this.alertController.create({
+                 header: 'Success',
+                 message: 'Deleted successfully!',
+                 buttons: ['OK']
+               });
+             
+               await alert.present();
+
+            })
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+   }
  
  
    async addnew(){

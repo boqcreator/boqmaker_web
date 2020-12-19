@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit Equipment</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Name<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input [(ngModel)]="item.name" type="text" placeholder="Enter category name here..."></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Description</ion-label>
+        <ion-input type="text" [(ngModel)]="item.des" placeholder="Enter contact number here..."></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit</ion-label>
+        <select [(ngModel)]="item.unit" class="form-control">
+          <option *ngFor="let item of units | async" [value]="item.payload.doc.data().name" >{{ item.payload.doc.data().name }}</option>
+        </select>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label>Unit price</ion-label>
+        <input currencyMask [(ngModel)]="item.price" [options]="{ prefix: 'BHD ', thousands: ',', decimal: '.', precision: '3',align: 'left' }"/>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label>EXISTING</ion-label>
+        <ion-checkbox [(ngModel)]="item.LEXISTING" ></ion-checkbox>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+<ion-button [disabled]="item.name.length > 0 && item.unit ? false : true" (click)="update()" expand="block">
+  Update
+</ion-button>
+
+</ion-content>

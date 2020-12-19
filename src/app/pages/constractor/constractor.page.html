@@ -1,19 +1,24 @@
-<ion-header color="primary" >
+<ion-header color="primary">
   <ion-toolbar color="primary">
-    <ion-title>Constractor</ion-title>
+    <ion-title>Contractor</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-row>
-  <ion-button (click)="addcont()" color="primary">Add Category</ion-button>
-  <ion-button (click)="addcat()" color="primary">Add Contractor</ion-button>
-</ion-row>
+  <ion-row>
+    <ion-button (click)="addcont()" color="primary">Add Category</ion-button>
+    <ion-button (click)="addcat()" color="primary">Add Contractor</ion-button>
+  </ion-row>
   <!-- Searchbar with a cancel button and custom cancel button text -->
-  <ion-searchbar [(ngModel)]="term" showCancelButton="focus" cancelButtonText="Custom Cancel"></ion-searchbar>
+  <ion-searchbar
+    [(ngModel)]="term"
+    showCancelButton="focus"
+    cancelButtonText="Custom Cancel"
+  ></ion-searchbar>
   <table>
     <thead>
       <tr>
+        <th>Action</th>
         <th>Categoey</th>
         <th>Name</th>
         <th>Email</th>
@@ -24,7 +29,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of contractorList | filter:term" >
+      <tr *ngFor="let item of contractorList | filter:term">
+        <td>
+          <ion-button (click)="edit(item)" style="--padding-end: 0px" fill="clear">
+            <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+          </ion-button>
+          <ion-button (click)="del(item)" style="--padding-end: 0px" color="danger" fill="clear">
+            <ion-icon size="small" color="danger" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </td>
         <td>{{ item.cat }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.email }}</td>
@@ -33,7 +46,6 @@
         <td>{{ item.mob }}</td>
         <!-- <td>{{ item.payload.doc.data().email }}</td> -->
       </tr>
+    </tbody>
   </table>
-
-
 </ion-content>

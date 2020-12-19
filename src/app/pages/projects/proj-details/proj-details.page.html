@@ -461,7 +461,6 @@
                   <ion-item>
                     <ion-label position="floating">Area Width</ion-label>
                     <ion-input [(ngModel)]="Unit_width" type="number"></ion-input>
-                    <ion-icon (click)="opencalculator('Unit_width')"  style="position: absolute;right:0;bottom:0; cursor: pointer;" size="small" slot="end" src="assets/icon/calculator.svg"></ion-icon>
                   </ion-item>
                 </ion-col>
                 <ion-col size=3 >
@@ -480,6 +479,22 @@
                 <ion-item  >
                     <ion-label position="floating">No of areas</ion-label>
                     <ion-input [(ngModel)]="No_of_units" type="number"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating">Area Shape</ion-label>
+                    <ion-input [(ngModel)]="areaShape" type="number"></ion-input>
+                    <ion-icon (click)="opencalculator()"  style="position: absolute;right:0;bottom:0; cursor: pointer;" size="small" slot="end" src="assets/icon/calculator.svg"></ion-icon>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item>
+                    <ion-label position="floating">Parameter Shape</ion-label>
+                    <ion-input [(ngModel)]="parameterShape" type="number"></ion-input>
+                    <ion-icon (click)="opencalculator()"  style="position: absolute;right:0;bottom:0; cursor: pointer;" size="small" slot="end" src="assets/icon/calculator.svg"></ion-icon>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -991,6 +1006,328 @@
                 </ion-col>
               </ion-row>
 
+              <!-- {{ "shape1 "+ shape1 }} <br/>
+{{ "shape2 "+ shape2 }} <br/>
+{{ "shape3 "+ shape3 }} <br/>
+{{ "shape4 "+ shape4 }} <br/>
+{{ "shape5 "+ shape5 }} <br/>
+{{ "shape6 "+ shape6 }} <br/>
+{{ "shape7 "+ shape7 }} <br/>
+{{ "shape8 "+ shape8 }} <br/>
+{{ "Totallengthofrings "+ Totallengthofrings }} <br/>
+{{ "NoofringsMIDDLETHIRD "+ NoofringsMIDDLETHIRD }} <br/>
+{{ "NoofringsOTHERTHIRDRIGHTLEFT "+ NoofringsOTHERTHIRDRIGHTLEFT }} <br/>
+{{ "c19 "+ c19 }} <br/>
+{{ "c21 "+ c21 }} <br/>
+{{ "c27 "+ c27 }} <br/>
+{{ "c29 "+ c29 }} <br/>
+{{ "c31 "+ c31 }} <br/>
+{{ "c33 "+ c33 }} <br/>
+{{ "c35 "+ c35 }} <br/>
+{{ "c37 "+ c37 }} <br/>
+{{ "c39 "+ c39 }} <br/>
+{{ "c41 "+ c41 }} <br/>
+{{ "c43 "+ c43 }} <br/>
+{{ "f27 "+ f27 }} <br/>
+{{ "f29 "+ f29 }} <br/>
+{{ "f31 "+ f31 }} <br/>
+{{ "f33 "+ f33 }} <br/>
+{{ "f35 "+ f35 }} <br/>
+{{ "f37 "+ f37 }} <br/>
+{{ "f39 "+ f39 }} <br/>
+{{ "f41 "+ f41 }} <br/>
+{{ "f43 "+ f43 }} <br/>
+
+{{"p1_1 "+  p1_1}}<br/>
+{{"p1_2 "+  p1_2}}<br/>
+{{"p1_3 "+  p1_3}}<br/>
+{{"p1_4 "+  p1_4}}<br/>
+{{"p1_5 "+  p1_5}}<br/>
+{{"p1_6 "+  p1_6}}<br/>
+{{"p1_7 "+  p1_7}}<br/>
+{{"p1_8 "+  p1_8}}<br/>
+{{"p1_9 "+  p1_9}}<br/>
+{{"p1_10 "+  p1_10}}<br/>
+{{"p1_11 "+  p1_11}}<br/>
+{{"p1_12 "+  p1_12}}<br/>
+{{"p1_13 "+  p1_13}}<br/>
+{{"p1_14 "+  p1_14}}<br/>
+{{"p1_15 "+  p1_15}}<br/>
+{{"p1_16 "+  p1_16}}<br/>
+{{"p1_17 "+  p1_17}}<br/>
+{{"p1_18 "+  p1_18}}<br/>
+{{"p1_19 "+  p1_19}}<br/>
+{{"p1_20 "+  p1_20}}<br/>
+{{"p1_21 "+  p1_21}}<br/>
+{{"p1_22 "+  p1_22}}<br/>
+{{"p1_23 "+  p1_23}}<br/>
+{{"p1_24 "+  p1_24}}<br/>
+{{"p1_25 "+  p1_25}}<br/>
+{{"p2_1 "+  p2_1}}<br/>
+{{"p2_2 "+  p2_2}}<br/>
+{{"p2_3 "+  p2_3}}<br/>
+{{"p2_4 "+  p2_4}}<br/>
+{{"p2_5 "+  p2_5}}<br/>
+{{"p2_6 "+  p2_6}}<br/>
+{{"p2_7 "+  p2_7}}<br/>
+{{"p2_8 "+  p2_8}}<br/>
+{{"p2_9 "+  p2_9}}<br/>
+{{"p2_10 "+  p2_10}}<br/>
+{{"p2_11 "+  p2_11}}<br/>
+{{"p2_12 "+  p2_12}}<br/>
+{{"p2_13 "+  p2_13}}<br/>
+{{"p2_14 "+  p2_14}}<br/>
+{{"p2_15 "+  p2_15}}<br/>
+{{"p2_16 "+  p2_16}}<br/>
+{{"p2_17 "+  p2_17}}<br/>
+{{"p2_18 "+  p2_18}}<br/>
+{{"p2_19 "+  p2_19}}<br/>
+{{"p2_20 "+  p2_20}}<br/>
+{{"p2_21 "+  p2_21}}<br/>
+{{"p2_22 "+  p2_22}}<br/>
+{{"p2_23 "+  p2_23}}<br/>
+{{"p2_24 "+  p2_24}}<br/>
+{{"p2_25 "+  p2_25}}<br/>
+{{"SteelringatcenterI19 "+  SteelringatcenterI19}}<br/>
+{{"SteelringatcenterJ19 "+  SteelringatcenterJ19}}<br/>
+{{"SteelringatcenterK19 "+  SteelringatcenterK19}}<br/>
+{{"SteelringatcenterL19 "+  SteelringatcenterL19}}<br/>
+{{"SteelringatcenterM19 "+  SteelringatcenterM19}}<br/>
+{{"SteelringatcenterN19 "+  SteelringatcenterN19}}<br/>
+{{"SteelringatcenterO19 "+  SteelringatcenterO19}}<br/>
+{{"SteelringatcenterP19 "+  SteelringatcenterP19}}<br/>
+{{"SteelringatcenterQ19 "+  SteelringatcenterQ19}}<br/>
+{{"SteelringatcenterR19 "+  SteelringatcenterR19}}<br/>
+{{"SteelringatcenterS19 "+  SteelringatcenterS19}}<br/>
+{{"SteelringatcenterT19 "+  SteelringatcenterT19}}<br/>
+{{"SteelringatcenterU19 "+  SteelringatcenterU19}}<br/>
+{{"SteelringatthirdI21 "+  SteelringatthirdI21}}<br/>
+{{"SteelringatthirdJ21 "+  SteelringatthirdJ21}}<br/>
+{{"SteelringatthirdK21 "+  SteelringatthirdK21}}<br/>
+{{"SteelringatthirdL21 "+  SteelringatthirdL21}}<br/>
+{{"SteelringatthirdM21 "+  SteelringatthirdM21}}<br/>
+{{"SteelringatthirdN21 "+  SteelringatthirdN21}}<br/>
+{{"SteelringatthirdO21 "+  SteelringatthirdO21}}<br/>
+{{"SteelringatthirdP21 "+  SteelringatthirdP21}}<br/>
+{{"SteelringatthirdQ21 "+  SteelringatthirdQ21}}<br/>
+{{"SteelringatthirdR21 "+  SteelringatthirdR21}}<br/>
+{{"SteelringatthirdS21 "+  SteelringatthirdS21}}<br/>
+{{"SteelringatthirdT21 "+  SteelringatthirdT21}}<br/>
+{{"SteelringatthirdU21 "+  SteelringatthirdU21}}<br/>
+{{"presumSteelringI "+  presumSteelringI}}<br/>
+{{"presumSteelringJ "+  presumSteelringJ}}<br/>
+{{"presumSteelringK "+  presumSteelringK}}<br/>
+{{"presumSteelringL "+  presumSteelringL}}<br/>
+{{"presumSteelringM "+  presumSteelringM}}<br/>
+{{"presumSteelringN "+  presumSteelringN}}<br/>
+{{"presumSteelringO "+  presumSteelringO}}<br/>
+{{"presumSteelringP "+  presumSteelringP}}<br/>
+{{"presumSteelringQ "+  presumSteelringQ}}<br/>
+{{"presumSteelringR "+  presumSteelringR}}<br/>
+{{"presumSteelringS "+  presumSteelringS}}<br/>
+{{"presumSteelringT "+  presumSteelringT}}<br/>
+{{"presumSteelringU "+  presumSteelringU}}<br/>
+{{"sumSteelring "+  sumSteelring}}<br/>
+{{"pre6 "+  pre6}}<br/>
+{{"pre8 "+  pre8}}<br/>
+{{"pre10 "+  pre10}}<br/>
+{{"pre12 "+  pre12}}<br/>
+{{"pre14 "+  pre14}}<br/>
+{{"pre16 "+  pre16}}<br/>
+{{"pre18 "+  pre18}}<br/>
+{{"pre20 "+  pre20}}<br/>
+{{"pre22 "+  pre22}}<br/>
+{{"pre25 "+  pre25}}<br/>
+{{"pre28 "+  pre28}}<br/>
+{{"pre32 "+  pre32}}<br/>
+{{"pre40 "+  pre40}}<br/>
+{{"type1 "+  type1}}<br/>
+{{"type2 "+  type2}}<br/>
+{{"type3 "+  type3}}<br/>
+{{"type4 "+  type4}}<br/>
+{{"type1_6 "+  type1_6}}<br/>
+{{"type1_8 "+  type1_8}}<br/>
+{{"type1_10 "+  type1_10}}<br/>
+{{"type1_12 "+  type1_12}}<br/>
+{{"type1_14 "+  type1_14}}<br/>
+{{"type1_16 "+  type1_16}}<br/>
+{{"type1_18 "+  type1_18}}<br/>
+{{"type1_20 "+  type1_20}}<br/>
+{{"type1_22 "+  type1_22}}<br/>
+{{"type1_25 "+  type1_25}}<br/>
+{{"type1_28 "+  type1_28}}<br/>
+{{"type1_32 "+  type1_32}}<br/>
+{{"type1_40 "+  type1_40}}<br/>
+{{"type2_6 "+  type2_6}}<br/>
+{{"type2_8 "+  type2_8}}<br/>
+{{"type2_10 "+  type2_10}}<br/>
+{{"type2_12 "+  type2_12}}<br/>
+{{"type2_14 "+  type2_14}}<br/>
+{{"type2_16 "+  type2_16}}<br/>
+{{"type2_18 "+  type2_18}}<br/>
+{{"type2_20 "+  type2_20}}<br/>
+{{"type2_22 "+  type2_22}}<br/>
+{{"type2_25 "+  type2_25}}<br/>
+{{"type2_28 "+  type2_28}}<br/>
+{{"type2_32 "+  type2_32}}<br/>
+{{"type2_40 "+  type2_40}}<br/>
+{{"type3_6 "+  type3_6}}<br/>
+{{"type3_8 "+  type3_8}}<br/>
+{{"type3_10 "+  type3_10}}<br/>
+{{"type3_12 "+  type3_12}}<br/>
+{{"type3_14 "+  type3_14}}<br/>
+{{"type3_16 "+  type3_16}}<br/>
+{{"type3_18 "+  type3_18}}<br/>
+{{"type3_20 "+  type3_20}}<br/>
+{{"type3_22 "+  type3_22}}<br/>
+{{"type3_25 "+  type3_25}}<br/>
+{{"type3_28 "+  type3_28}}<br/>
+{{"type3_32 "+  type3_32}}<br/>
+{{"type3_40 "+  type3_40}}<br/>
+{{"type4_6 "+  type4_6}}<br/>
+{{"type4_8 "+  type4_8}}<br/>
+{{"type4_10 "+  type4_10}}<br/>
+{{"type4_12 "+  type4_12}}<br/>
+{{"type4_14 "+  type4_14}}<br/>
+{{"type4_16 "+  type4_16}}<br/>
+{{"type4_18 "+  type4_18}}<br/>
+{{"type4_20 "+  type4_20}}<br/>
+{{"type4_22 "+  type4_22}}<br/>
+{{"type4_25 "+  type4_25}}<br/>
+{{"type4_28 "+  type4_28}}<br/>
+{{"type4_32 "+  type4_32}}<br/>
+{{"type4_40 "+  type4_40}}<br/>
+{{"ExtraI "+  ExtraI}}<br/>
+{{"ExtraJ "+  ExtraJ}}<br/>
+{{"ExtraK "+  ExtraK}}<br/>
+{{"ExtraL "+  ExtraL}}<br/>
+{{"ExtraM "+  ExtraM}}<br/>
+{{"ExtraN "+  ExtraN}}<br/>
+{{"ExtraO "+  ExtraO}}<br/>
+{{"ExtraP "+  ExtraP}}<br/>
+{{"ExtraQ "+  ExtraQ}}<br/>
+{{"ExtraR "+  ExtraR}}<br/>
+{{"ExtraS "+  ExtraS}}<br/>
+{{"ExtraT "+  ExtraT}}<br/>
+{{"ExtraU "+  ExtraU}}<br/>
+{{"part2_type1_6 "+  part2_type1_6}}<br/>
+{{"part2_type1_8 "+  part2_type1_8}}<br/>
+{{"part2_type1_10 "+  part2_type1_10}}<br/>
+{{"part2_type1_12 "+  part2_type1_12}}<br/>
+{{"part2_type1_14 "+  part2_type1_14}}<br/>
+{{"part2_type1_16 "+  part2_type1_16}}<br/>
+{{"part2_type1_18 "+  part2_type1_18}}<br/>
+{{"part2_type1_20 "+  part2_type1_20}}<br/>
+{{"part2_type1_22 "+  part2_type1_22}}<br/>
+{{"part2_type1_25 "+  part2_type1_25}}<br/>
+{{"part2_type1_28 "+  part2_type1_28}}<br/>
+{{"part2_type1_32 "+  part2_type1_32}}<br/>
+{{"part2_type1_40 "+  part2_type1_40}}<br/>
+{{"part2_type2_6 "+  part2_type2_6}}<br/>
+{{"part2_type2_8 "+  part2_type2_8}}<br/>
+{{"part2_type2_10 "+  part2_type2_10}}<br/>
+{{"part2_type2_12 "+  part2_type2_12}}<br/>
+{{"part2_type2_14 "+  part2_type2_14}}<br/>
+{{"part2_type2_16 "+  part2_type2_16}}<br/>
+{{"part2_type2_18 "+  part2_type2_18}}<br/>
+{{"part2_type2_20 "+  part2_type2_20}}<br/>
+{{"part2_type2_22 "+  part2_type2_22}}<br/>
+{{"part2_type2_25 "+  part2_type2_25}}<br/>
+{{"part2_type2_28 "+  part2_type2_28}}<br/>
+{{"part2_type2_32 "+  part2_type2_32}}<br/>
+{{"part2_type2_40 "+  part2_type2_40}}<br/>
+{{"part2_type3_6 "+  part2_type3_6}}<br/>
+{{"part2_type3_8 "+  part2_type3_8}}<br/>
+{{"part2_type3_10 "+  part2_type3_10}}<br/>
+{{"part2_type3_12 "+  part2_type3_12}}<br/>
+{{"part2_type3_14 "+  part2_type3_14}}<br/>
+{{"part2_type3_16 "+  part2_type3_16}}<br/>
+{{"part2_type3_18 "+  part2_type3_18}}<br/>
+{{"part2_type3_20 "+  part2_type3_20}}<br/>
+{{"part2_type3_22 "+  part2_type3_22}}<br/>
+{{"part2_type3_25 "+  part2_type3_25}}<br/>
+{{"part2_type3_28 "+  part2_type3_28}}<br/>
+{{"part2_type3_32 "+  part2_type3_32}}<br/>
+{{"part2_type3_40 "+  part2_type3_40}}<br/>
+{{"part2_type4_6 "+  part2_type4_6}}<br/>
+{{"part2_type4_8 "+  part2_type4_8}}<br/>
+{{"part2_type4_10 "+  part2_type4_10}}<br/>
+{{"part2_type4_12 "+  part2_type4_12}}<br/>
+{{"part2_type4_14 "+  part2_type4_14}}<br/>
+{{"part2_type4_16 "+  part2_type4_16}}<br/>
+{{"part2_type4_18 "+  part2_type4_18}}<br/>
+{{"part2_type4_20 "+  part2_type4_20}}<br/>
+{{"part2_type4_22 "+  part2_type4_22}}<br/>
+{{"part2_type4_25 "+  part2_type4_25}}<br/>
+{{"part2_type4_28 "+  part2_type4_28}}<br/>
+{{"part2_type4_32 "+  part2_type4_32}}<br/>
+{{"part2_type4_40 "+  part2_type4_40}}<br/>
+{{"ExtraY "+  ExtraY}}<br/>
+{{"ExtraZ "+  ExtraZ}}<br/>
+{{"ExtraAA "+  ExtraAA}}<br/>
+{{"ExtraAB "+  ExtraAB}}<br/>
+{{"ExtraAC "+  ExtraAC}}<br/>
+{{"ExtraAD "+  ExtraAD}}<br/>
+{{"ExtraAE "+  ExtraAE}}<br/>
+{{"ExtraAF "+  ExtraAF}}<br/>
+{{"ExtraAG "+  ExtraAG}}<br/>
+{{"ExtraAH "+  ExtraAH}}<br/>
+{{"ExtraAI "+  ExtraAI}}<br/>
+{{"ExtraAJ "+  ExtraAJ}}<br/>
+{{"ExtraAK "+  ExtraAK}} <br/>
+{{ "pt1_ringSum "+ pt1_ringSum}}<br/>
+{{ "mainsteelI "+ mainsteelI}}<br/>
+{{ "mainsteelJ "+ mainsteelJ}}<br/>
+{{ "mainsteelK "+ mainsteelK}}<br/>
+{{ "mainsteelL "+ mainsteelL}}<br/>
+{{ "mainsteelM "+ mainsteelM}}<br/>
+{{ "mainsteelN "+ mainsteelN}}<br/>
+{{ "mainsteelO "+ mainsteelO}}<br/>
+{{ "mainsteelP "+ mainsteelP}}<br/>
+{{ "mainsteelQ "+ mainsteelQ}}<br/>
+{{ "mainsteelR "+ mainsteelR}}<br/>
+{{ "mainsteelS "+ mainsteelS}}<br/>
+{{ "mainsteelT "+ mainsteelT}}<br/>
+{{ "mainsteelU "+ mainsteelU}}<br/>
+{{ "mainsteelY "+ mainsteelY}}<br/>
+{{ "mainsteelZ "+ mainsteelZ}}<br/>
+{{ "mainsteelAA "+ mainsteelAA}}<br/>
+{{ "mainsteelAB "+ mainsteelAB}}<br/>
+{{ "mainsteelAC "+ mainsteelAC}}<br/>
+{{ "mainsteelAD "+ mainsteelAD}}<br/>
+{{ "mainsteelAE "+ mainsteelAE}}<br/>
+{{ "mainsteelAF "+ mainsteelAF}}<br/>
+{{ "mainsteelAG "+ mainsteelAG}}<br/>
+{{ "mainsteelAH "+ mainsteelAH}}<br/>
+{{ "mainsteelAI "+ mainsteelAI}}<br/>
+{{ "mainsteelAJ "+ mainsteelAJ}}<br/>
+{{ "mainsteelAK "+ mainsteelAK}}<br/>
+{{ "orderI "+ orderI}}<br/>
+{{ "orderJ "+ orderJ}}<br/>
+{{ "orderK "+ orderK}}<br/>
+{{ "orderL "+ orderL}}<br/>
+{{ "orderM "+ orderM}}<br/>
+{{ "orderN "+ orderN}}<br/>
+{{ "orderO "+ orderO}}<br/>
+{{ "orderP "+ orderP}}<br/>
+{{ "orderQ "+ orderQ}}<br/>
+{{ "orderR "+ orderR}}<br/>
+{{ "orderS "+ orderS}}<br/>
+{{ "orderT "+ orderT}}<br/>
+{{ "orderU "+ orderU}}<br/>
+{{ "orderY  "+ orderY }}<br/>
+{{ "orderZ  "+ orderZ }}<br/>
+{{ "orderAA "+ orderAA}}<br/>
+{{ "orderAB "+ orderAB}}<br/>
+{{ "orderAC "+ orderAC}}<br/>
+{{ "orderAD "+ orderAD}}<br/>
+{{ "orderAE "+ orderAE}}<br/>
+{{ "orderAF "+ orderAF}}<br/>
+{{ "orderAG "+ orderAG}}<br/>
+{{ "orderAH "+ orderAH}}<br/>
+{{ "orderAI "+ orderAI}}<br/>
+{{ "orderAJ "+ orderAJ}}<br/>
+{{ "orderAK "+ orderAK}}<br/> -->
               
             </div>
               
@@ -1020,20 +1357,20 @@
             <ion-item>
               <ion-label position="floating" >Steel ring middle span</ion-label>
                 <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1D">
-                  <ion-select-option value="0">0</ion-select-option>
-                  <ion-select-option value="6">6</ion-select-option>
-                  <ion-select-option value="8">8</ion-select-option>
-                  <ion-select-option value="10">10</ion-select-option>
-                  <ion-select-option value="12">12</ion-select-option>
-                  <ion-select-option value="14">14</ion-select-option>
-                  <ion-select-option value="16">16</ion-select-option>
-                  <ion-select-option value="18">18</ion-select-option>
-                  <ion-select-option value="20">20</ion-select-option>
-                  <ion-select-option value="22">22</ion-select-option>
-                  <ion-select-option value="25">25</ion-select-option>
-                  <ion-select-option value="28">28</ion-select-option>
-                  <ion-select-option value="32">32</ion-select-option>
-                  <ion-select-option value="40">40</ion-select-option>
+                  <ion-select-option [value]=0>0</ion-select-option>
+                  <ion-select-option [value]=6>6</ion-select-option>
+                  <ion-select-option [value]=8>8</ion-select-option>
+                  <ion-select-option [value]=10>10</ion-select-option>
+                  <ion-select-option [value]=12>12</ion-select-option>
+                  <ion-select-option [value]=14>14</ion-select-option>
+                  <ion-select-option [value]=16>16</ion-select-option>
+                  <ion-select-option [value]=18>18</ion-select-option>
+                  <ion-select-option [value]=20>20</ion-select-option>
+                  <ion-select-option [value]=22>22</ion-select-option>
+                  <ion-select-option [value]=25>25</ion-select-option>
+                  <ion-select-option [value]=28>28</ion-select-option>
+                  <ion-select-option [value]=32>32</ion-select-option>
+                  <ion-select-option [value]=40>40</ion-select-option>
                 </ion-select>
             </ion-item>
           </ion-col>
@@ -1047,20 +1384,20 @@
             <ion-item>
               <ion-label position="floating" >Steel ring third span</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1F">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
@@ -1070,14 +1407,14 @@
             <ion-item>
               <ion-label position="floating" >RING SHAPE</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1G">
-                <ion-select-option value="1">1</ion-select-option>
-                <ion-select-option value="2">2</ion-select-option>
-                <ion-select-option value="3">3</ion-select-option>
-                <ion-select-option value="4">4</ion-select-option>
-                <ion-select-option value="5">5</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="7">7</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
+                <ion-select-option [value]=1>1</ion-select-option>
+                <ion-select-option [value]=2>2</ion-select-option>
+                <ion-select-option [value]=3>3</ion-select-option>
+                <ion-select-option [value]=4>4</ion-select-option>
+                <ion-select-option [value]=5>5</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=7>7</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
               </ion-select>
               <ion-button slot="end" title="Shapes pictures"  (click)="openRingShapePics()" style="--padding-start : 0px;margin: 0px;margin-top: 30px;" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" name="shapes"></ion-icon>     
@@ -1106,10 +1443,10 @@
             <ion-item>
               <ion-label position="floating" >BEAM SHAPE</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1K">
-                <ion-select-option value="1">1</ion-select-option>
-                <ion-select-option value="2">2</ion-select-option>
-                <ion-select-option value="3">3</ion-select-option>
-                <ion-select-option value="4">4</ion-select-option>
+                <ion-select-option [value]=1>1</ion-select-option>
+                <ion-select-option [value]=2>2</ion-select-option>
+                <ion-select-option [value]=3>3</ion-select-option>
+                <ion-select-option [value]=4>4</ion-select-option>
               </ion-select>
               <ion-button slot="end" title="Shapes pictures"  (click)="openShapePics()" style="--padding-start : 0px;margin: 0px;margin-top: 30px;" class="addbtn" fill="clear" >
                 <ion-icon size="small" slot="icon-only" name="shapes"></ion-icon>     
@@ -1120,20 +1457,20 @@
             <ion-item>
               <ion-label position="floating" >T1 top steel continuous A</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1L">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-col>
@@ -1149,20 +1486,20 @@
             <ion-item>
               <ion-label position="floating" >T1e top steel at left hand A</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1N">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select>   
             </ion-item>
           </ion-col>
@@ -1176,20 +1513,20 @@
             <ion-item>
               <ion-label position="floating" >T2A</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1P">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select>  
             </ion-item>
           </ion-col>
@@ -1203,20 +1540,20 @@
             <ion-item>
               <ion-label position="floating" >T2eA</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1R">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1232,74 +1569,74 @@
             <ion-item>
               <ion-label position="floating" >T3A</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1T">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
           <ion-col >
             <ion-item>
               <ion-label position="floating" >No.A</ion-label>
-              <ion-input (ionChange)="calculationFloorBeam()" [(ngModel)]="ch1U" type="text"></ion-input>
+              <ion-input (ionChange)="calculationFloorBeam()" [(ngModel)]="ch1U" type="number"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col >
             <ion-item>
               <ion-label position="floating" >B1 bottom steel continuousA</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1V">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
           <ion-col >
             <ion-item>
               <ion-label position="floating" >No.A</ion-label>
-              <ion-input (ionChange)="calculationFloorBeam()" [(ngModel)]="ch1W" type="text"></ion-input>
+              <ion-input (ionChange)="calculationFloorBeam()" [(ngModel)]="ch1W" type="number"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col >
             <ion-item>
               <ion-label position="floating" >B2 bottom steel at centerA</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1X">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1315,20 +1652,20 @@
             <ion-item>
               <ion-label position="floating" >Face steelA</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1Z">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1342,20 +1679,20 @@
             <ion-item>
               <ion-label position="floating" >Extra starter bars if anyA</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch1AB">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1368,7 +1705,7 @@
           <ion-col >
             <ion-item>
               <ion-label position="floating" >Extra % main bars</ion-label>
-              <ion-input (ionChange)="calculationFloorBeam()" inputmode="decimal" max="100" maxlength="3" min="0" minlength="1" type="tel" [(ngModel)]="ch1AD" type="number"></ion-input>
+              <ion-input (ionChange)="calculationFloorBeam()" [(ngModel)]="ch1AD" type="number"></ion-input>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -1376,7 +1713,7 @@
           <ion-col >
             <ion-item>
               <ion-label position="floating" >ch1AE</ion-label>
-              <ion-input (ionChange)="calculationFloorBeam()" [(ngModel)]="ch1Y" type="text"></ion-input>
+              <ion-input (ionChange)="calculationFloorBeam()" [(ngModel)]="ch1Y" type="number"></ion-input>
             </ion-item>
           </ion-col>
           <ion-col >
@@ -1452,20 +1789,20 @@
             <ion-item>
               <ion-label position="floating" >T1 top steel continuous B</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2A">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1479,20 +1816,20 @@
             <ion-item>
               <ion-label position="floating" >T1e top steel at left hand B</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2C">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1506,20 +1843,20 @@
             <ion-item>
               <ion-label position="floating" >T2B</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2E">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1535,20 +1872,20 @@
             <ion-item>
               <ion-label position="floating" >T2eB</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2G">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1562,20 +1899,20 @@
             <ion-item>
               <ion-label position="floating" >T3B</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2I">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1589,20 +1926,20 @@
             <ion-item>
               <ion-label position="floating" >B1 bottom steel continuousB</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2K">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1618,20 +1955,20 @@
             <ion-item>
               <ion-label position="floating" >B2 bottom steel at centerB</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2M">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1645,20 +1982,20 @@
             <ion-item>
               <ion-label position="floating" >Face steelB</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2O">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>
@@ -1672,20 +2009,20 @@
             <ion-item>
               <ion-label position="floating" >Extra starter bars if anyB</ion-label>
               <ion-select (ionChange)="calculationFloorBeam()" interface="popup" [(ngModel)]="ch2Q">
-                <ion-select-option value="0">0</ion-select-option>
-                <ion-select-option value="6">6</ion-select-option>
-                <ion-select-option value="8">8</ion-select-option>
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="12">12</ion-select-option>
-                <ion-select-option value="14">14</ion-select-option>
-                <ion-select-option value="16">16</ion-select-option>
-                <ion-select-option value="18">18</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="22">22</ion-select-option>
-                <ion-select-option value="25">25</ion-select-option>
-                <ion-select-option value="28">28</ion-select-option>
-                <ion-select-option value="32">32</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
+                <ion-select-option [value]=0>0</ion-select-option>
+                <ion-select-option [value]=6>6</ion-select-option>
+                <ion-select-option [value]=8>8</ion-select-option>
+                <ion-select-option [value]=10>10</ion-select-option>
+                <ion-select-option [value]=12>12</ion-select-option>
+                <ion-select-option [value]=14>14</ion-select-option>
+                <ion-select-option [value]=16>16</ion-select-option>
+                <ion-select-option [value]=18>18</ion-select-option>
+                <ion-select-option [value]=20>20</ion-select-option>
+                <ion-select-option [value]=22>22</ion-select-option>
+                <ion-select-option [value]=25>25</ion-select-option>
+                <ion-select-option [value]=28>28</ion-select-option>
+                <ion-select-option [value]=32>32</ion-select-option>
+                <ion-select-option [value]=40>40</ion-select-option>
               </ion-select> 
             </ion-item>
           </ion-col>

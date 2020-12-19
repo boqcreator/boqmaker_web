@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AddmaterialPage } from '../addmaterial/addmaterial.page';
 import { EditmaterialPage } from '../editmaterial/editmaterial.page';
+import { UpdatesupplierPage } from '../updatesupplier/updatesupplier.page';
 
 @Component({
   selector: 'app-material',
@@ -40,6 +41,7 @@ export class MaterialPage implements OnInit {
       })
 
       this.afs.collection<any>(`boq/boq/materialscat/`).snapshotChanges().subscribe(value =>{
+        this.catList = [];
         value.forEach(doc =>{
           this.catList.push({
             name : doc.payload.doc.data().name,
@@ -139,6 +141,106 @@ export class MaterialPage implements OnInit {
               await loading.present();
   
               this.afs.doc(`boq/boq/materialscat/${item.catid}/subcat/${item.subcatid}/materials/${item.id}`).delete().then(async()=>{
+             loading.dismiss();
+               const alert = await this.alertController.create({
+                 header: 'Success',
+                 message: 'Deleted successfully!',
+                 buttons: ['OK']
+               });
+             
+               await alert.present();
+
+            })
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+   }
+
+   async editCat(item){
+    const modal = await this.modalController.create({
+      component: UpdatesupplierPage,
+      componentProps: { firelink: `boq/boq/materialscat/${item.id}`}
+      });
+    
+      await modal.present();
+   }
+
+   async delCat(item){
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete this Category?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: async () => {
+              const loading = await this.loadingController.create({
+                message: 'Deleting',
+                duration: 2000,
+                spinner: 'bubbles'
+              });
+              await loading.present();
+  
+              this.afs.doc(`boq/boq/materialscat/${item.id}`).delete().then(async()=>{
+             loading.dismiss();
+               const alert = await this.alertController.create({
+                 header: 'Success',
+                 message: 'Deleted successfully!',
+                 buttons: ['OK']
+               });
+             
+               await alert.present();
+
+            })
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+   }
+
+   async editSubcat(item){
+    const modal = await this.modalController.create({
+      component: UpdatesupplierPage,
+      componentProps: { firelink: `boq/boq/materialscat/${this.CatID}/subcat/${item.id}`}
+      });
+    
+      await modal.present();
+   }
+
+   async delSubcat(item){
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      message: '<strong>Are you sure you want to delete this Subcategory?</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: async () => {
+              const loading = await this.loadingController.create({
+                message: 'Deleting',
+                duration: 2000,
+                spinner: 'bubbles'
+              });
+              await loading.present();
+  
+              this.afs.doc(`boq/boq/materialscat/${this.CatID}/subcat/${item.id}`).delete().then(async()=>{
              loading.dismiss();
                const alert = await this.alertController.create({
                  header: 'Success',

@@ -144,7 +144,7 @@
                 <ion-item>
                   <ion-label>Unit</ion-label>
                   <ion-select [(ngModel)]="unit" placeholder="Select item unit">
-                    <ion-select-option *ngFor="let item of units" [value]="item">{{ item }}</ion-select-option>
+                    <ion-select-option *ngFor="let item of units | async" [value]="item.payload.doc.data().name">{{ item.payload.doc.data().name }}</ion-select-option>
                   </ion-select>
                 </ion-item>
               </ion-col>

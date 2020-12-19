@@ -15,6 +15,7 @@ import { FinalqtytablePage } from '../../finalqtytable/finalqtytable.page';
 import * as XLSX from 'xlsx';
 import { CalculatorPage } from '../../calculator/calculator.page';
 import { TypespicPage } from '../../typespic/typespic.page';
+import { ShapeCalculatorPage } from '../../shape-calculator/shape-calculator.page';
 declare var google: any;
 
 @Component({
@@ -146,6 +147,8 @@ export class ProjDetailsPage implements OnInit {
   Unit_length = 0;
   Unit_height = 0;
   No_of_units = 0;
+  areaShape = 0;
+  parameterShape = 0;
   R = 0;
   RO = 0;
   L1 = 0;
@@ -798,6 +801,299 @@ f37 = 0;
 f39 = 0;
 f41 = 0;
 f43 = 0;
+
+
+p1_1 = 0;
+p1_2 = 0;
+p1_3 = 0;
+p1_4 = 0;
+p1_5 = 0;
+p1_6 = 0;
+p1_7 = 0;
+p1_8 = 0;
+p1_9 = 0;
+p1_10 = 0;
+p1_11 = 0;
+p1_12 = 0;
+p1_13 = 0;
+p1_14 = 0;
+p1_15 = 0;
+p1_16 = 0;
+p1_17 = 0;
+p1_18 = 0;
+p1_19 = 0;
+p1_20 = 0;
+p1_21 = 0;
+p1_22 = 0;
+p1_23 = 0;
+p1_24 = 0;
+p1_25 = 0;
+p2_1 = 0;
+p2_2 = 0;
+p2_3 = 0;
+p2_4 = 0;
+p2_5 = 0;
+p2_6 = 0;
+p2_7 = 0;
+p2_8 = 0;
+p2_9 = 0;
+p2_10 = 0;
+p2_11 = 0;
+p2_12 = 0;
+p2_13 = 0;
+p2_14 = 0;
+p2_15 = 0;
+p2_16 = 0;
+p2_17 = 0;
+p2_18 = 0;
+p2_19 = 0;
+p2_20 = 0;
+p2_21 = 0;
+p2_22 = 0;
+p2_23 = 0;
+p2_24 = 0;
+p2_25 = 0;
+SteelringatcenterI19 = 0;
+SteelringatcenterJ19 = 0;
+SteelringatcenterK19 = 0;
+SteelringatcenterL19 = 0;
+SteelringatcenterM19 = 0;
+SteelringatcenterN19 = 0;
+SteelringatcenterO19 = 0;
+SteelringatcenterP19 = 0;
+SteelringatcenterQ19 = 0;
+SteelringatcenterR19 = 0;
+SteelringatcenterS19 = 0;
+SteelringatcenterT19 = 0;
+SteelringatcenterU19 = 0;
+SteelringatthirdI21 = 0;
+SteelringatthirdJ21 = 0;
+SteelringatthirdK21 = 0;
+SteelringatthirdL21 = 0;
+SteelringatthirdM21 = 0;
+SteelringatthirdN21 = 0;
+SteelringatthirdO21 = 0;
+SteelringatthirdP21 = 0;
+SteelringatthirdQ21 = 0;
+SteelringatthirdR21 = 0;
+SteelringatthirdS21 = 0;
+SteelringatthirdT21 = 0;
+SteelringatthirdU21 = 0;
+presumSteelringI = 0;
+presumSteelringJ = 0;
+presumSteelringK = 0;
+presumSteelringL = 0;
+presumSteelringM = 0;
+presumSteelringN = 0;
+presumSteelringO = 0;
+presumSteelringP = 0;
+presumSteelringQ = 0;
+presumSteelringR = 0;
+presumSteelringS = 0;
+presumSteelringT = 0;
+presumSteelringU = 0;
+sumSteelring = 0;
+pre6 = 0;
+pre8 = 0;
+pre10 = 0;
+pre12 = 0;
+pre14 = 0;
+pre16 = 0;
+pre18 = 0;
+pre20 = 0;
+pre22 = 0;
+pre25 = 0;
+pre28 = 0;
+pre32 = 0;
+pre40 = 0;
+type1 = 0;
+type2 = 0;
+type3 = 0;
+type4 = 0;
+type1_6 = 0;
+type1_8 = 0;
+type1_10 = 0;
+type1_12 = 0;
+type1_14 = 0;
+type1_16 = 0;
+type1_18 = 0;
+type1_20 = 0;
+type1_22 = 0;
+type1_25 = 0;
+type1_28 = 0;
+type1_32 = 0;
+type1_40 = 0;
+type2_6 = 0;
+type2_8 = 0;
+type2_10 = 0;
+type2_12 = 0;
+type2_14 = 0;
+type2_16 = 0;
+type2_18 = 0;
+type2_20 = 0;
+type2_22 = 0;
+type2_25 = 0;
+type2_28 = 0;
+type2_32 = 0;
+type2_40 = 0;
+type3_6 = 0;
+type3_8 = 0;
+type3_10 = 0;
+type3_12 = 0;
+type3_14 = 0;
+type3_16 = 0;
+type3_18 = 0;
+type3_20 = 0;
+type3_22 = 0;
+type3_25 = 0;
+type3_28 = 0;
+type3_32 = 0;
+type3_40 = 0;
+type4_6 = 0;
+type4_8 = 0;
+type4_10 = 0;
+type4_12 = 0;
+type4_14 = 0;
+type4_16 = 0;
+type4_18 = 0;
+type4_20 = 0;
+type4_22 = 0;
+type4_25 = 0;
+type4_28 = 0;
+type4_32 = 0;
+type4_40 = 0;
+ExtraI = 0;
+ExtraJ = 0;
+ExtraK = 0;
+ExtraL = 0;
+ExtraM = 0;
+ExtraN = 0;
+ExtraO = 0;
+ExtraP = 0;
+ExtraQ = 0;
+ExtraR = 0;
+ExtraS = 0;
+ExtraT = 0;
+ExtraU = 0;
+part2_type1_6 = 0;
+part2_type1_8 = 0;
+part2_type1_10 = 0;
+part2_type1_12 = 0;
+part2_type1_14 = 0;
+part2_type1_16 = 0;
+part2_type1_18 = 0;
+part2_type1_20 = 0;
+part2_type1_22 = 0;
+part2_type1_25 = 0;
+part2_type1_28 = 0;
+part2_type1_32 = 0;
+part2_type1_40 = 0;
+part2_type2_6 = 0;
+part2_type2_8 = 0;
+part2_type2_10 = 0;
+part2_type2_12 = 0;
+part2_type2_14 = 0;
+part2_type2_16 = 0;
+part2_type2_18 = 0;
+part2_type2_20 = 0;
+part2_type2_22 = 0;
+part2_type2_25 = 0;
+part2_type2_28 = 0;
+part2_type2_32 = 0;
+part2_type2_40 = 0;
+part2_type3_6 = 0;
+part2_type3_8 = 0;
+part2_type3_10 = 0;
+part2_type3_12 = 0;
+part2_type3_14 = 0;
+part2_type3_16 = 0;
+part2_type3_18 = 0;
+part2_type3_20 = 0;
+part2_type3_22 = 0;
+part2_type3_25 = 0;
+part2_type3_28 = 0;
+part2_type3_32 = 0;
+part2_type3_40 = 0;
+part2_type4_6 = 0;
+part2_type4_8 = 0;
+part2_type4_10 = 0;
+part2_type4_12 = 0;
+part2_type4_14 = 0;
+part2_type4_16 = 0;
+part2_type4_18 = 0;
+part2_type4_20 = 0;
+part2_type4_22 = 0;
+part2_type4_25 = 0;
+part2_type4_28 = 0;
+part2_type4_32 = 0;
+part2_type4_40 = 0;
+ExtraY = 0;
+ExtraZ = 0;
+ExtraAA = 0;
+ExtraAB = 0;
+ExtraAC = 0;
+ExtraAD = 0;
+ExtraAE = 0;
+ExtraAF = 0;
+ExtraAG = 0;
+ExtraAH = 0;
+ExtraAI = 0;
+ExtraAJ = 0;
+ExtraAK = 0;
+
+pt1_ringSum = 0;
+mainsteelI = 0;
+mainsteelJ = 0;
+mainsteelK = 0;
+mainsteelL = 0;
+mainsteelM = 0;
+mainsteelN = 0;
+mainsteelO = 0;
+mainsteelP = 0;
+mainsteelQ = 0;
+mainsteelR = 0;
+mainsteelS = 0;
+mainsteelT = 0;
+mainsteelU = 0;
+mainsteelY = 0;
+mainsteelZ = 0;
+mainsteelAA = 0;
+mainsteelAB = 0;
+mainsteelAC = 0;
+mainsteelAD = 0;
+mainsteelAE = 0;
+mainsteelAF = 0;
+mainsteelAG = 0;
+mainsteelAH = 0;
+mainsteelAI = 0;
+mainsteelAJ = 0;
+mainsteelAK = 0;
+orderI = 0;
+orderJ = 0;
+orderK = 0;
+orderL = 0;
+orderM = 0;
+orderN = 0;
+orderO = 0;
+orderP = 0;
+orderQ = 0;
+orderR = 0;
+orderS = 0;
+orderT = 0;
+orderU = 0;
+orderY  = 0;
+orderZ  = 0;
+orderAA = 0;
+orderAB = 0;
+orderAC = 0;
+orderAD = 0;
+orderAE = 0;
+orderAF = 0;
+orderAG = 0;
+orderAH = 0;
+orderAI = 0;
+orderAJ = 0;
+orderAK = 0;
 
 ConcQtym3 = 0;
 SteelAllkg = 0;
@@ -2317,6 +2613,8 @@ async addareatoproj(){
                 Unit_length : this.Unit_length,
                 Unit_height : this.Unit_height,
                 No_of_units : this.No_of_units,
+                area : this.areaShape,
+                parameter : this.parameterShape,
                 R : this.R,
                 RO : this.RO,
                 L1 : this.L1,
@@ -2374,6 +2672,14 @@ async addareatoproj(){
                 Y28 : this.Y28,
                 Y32 : this.Y32,
                 Y40 : this.Y40,
+                totalfinalorderinKg : this.totalfinalorderinKg,
+                totalfinalorderinTon : this.totalfinalorderinTon,
+                ConcQtym3 : this.ConcQtym3,
+                Steelringonlykg  : this.Steelringonlykg,
+                Mainsteelonlykg  : this.Mainsteelonlykg,
+                persteelkgm3  : this.persteelkgm3,
+                persteelringkgm3  : this.persteelringkgm3,
+                permainsteelkgm3  : this.permainsteelkgm3,
                 extraworkqqty : this.extraworkqqty,
                 extraexpansionjointqty : this.extraexpansionjointqty,
                 extrablkqty : this.extrablkqty,
@@ -6388,20 +6694,19 @@ editexcelItem(item){
   
 }
 
-async opencalculator(variable){
+async opencalculator(){
   const modal = await this.modalController.create({
-  component: CalculatorPage,
-  componentProps: { usedvar: variable }
+  component: ShapeCalculatorPage,
+  cssClass: 'halfscreen',
   });
 
   await modal.present();
 
   const data = await modal.onDidDismiss();
   console.log(data)
-  if(data.data.value != 0){
-    if(data.data.variable == "Unit_width"){
-      this.Unit_width = data.data.value
-    }
+  if(data.data){
+this.areaShape = data.data.area;
+this.parameterShape = data.data.para;
   }
 }
 
@@ -6425,6 +6730,7 @@ async openRingShapePics(){
 }
 
 calculationFloorBeam(){
+  console.log(this.ch1D+this.ch1D)
   var shape1 = 0;
   var shape2 = 0;
   var shape3 = 0;
@@ -6794,37 +7100,37 @@ calculationFloorBeam(){
    c19=0.395
   }
   else if(this.ch1D == 10){
-    c19=0.617
+    c19=0.616
    }
    else if(this.ch1D == 12){
-    c19=0.858
+    c19=0.888
    }
    else if(this.ch1D == 14){
-    c19=1.209
+    c19=1.208
    }
    else if(this.ch1D == 16){
     c19=1.579
    }
    else if(this.ch1D == 18){
-    c19=1.998
+    c19=1.997
    }
    else if(this.ch1D == 20){
-    c19=2.467
+    c19=2.466
    } 
    else if(this.ch1D == 22){
-    c19=2.985
+    c19=2.984
    }
    else if(this.ch1D == 25){
-    c19=3.855
+    c19=3.854
    }
    else if(this.ch1D == 28){
-    c19=4.836
+    c19=4.833
    }
    else if(this.ch1D == 32){
-    c19=6.316
+    c19=6.313
    }
    else if(this.ch1D == 40){
-    c19=9.869
+    c19=9.864
    }
 
      // ##############C21#############
@@ -6835,37 +7141,37 @@ calculationFloorBeam(){
    c21=0.395
   }
   else if(this.ch1F == 10){
-    c21=0.617
+    c21=0.616
    }
    else if(this.ch1F == 12){
-    c21=0.858
+    c21=0.888
    }
    else if(this.ch1F == 14){
-    c21=1.209
+    c21=1.208
    }
    else if(this.ch1F == 16){
     c21=1.579
    }
    else if(this.ch1F == 18){
-    c21=1.998
+    c21=1.997
    }
    else if(this.ch1F == 20){
-    c21=2.467
+    c21=2.466
    } 
    else if(this.ch1F == 22){
-    c21=2.985
+    c21=2.984
    }
    else if(this.ch1F == 25){
-    c21=3.855
+    c21=3.854
    }
    else if(this.ch1F == 28){
-    c21=4.836
+    c21=4.833
    }
    else if(this.ch1F == 32){
-    c21=6.316
+    c21=6.313
    }
    else if(this.ch1F == 40){
-    c21=9.869
+    c21=9.864
    }
 
 
@@ -6877,37 +7183,37 @@ calculationFloorBeam(){
    c27=0.395
   }
   else if(this.ch1L == 10){
-    c27=0.617
+    c27=0.616
    }
    else if(this.ch1L == 12){
-    c27=0.858
+    c27=0.888
    }
    else if(this.ch1L == 14){
-    c27=1.209
+    c27=1.208
    }
    else if(this.ch1L == 16){
     c27=1.579
    }
    else if(this.ch1L == 18){
-    c27=1.998
+    c27=1.997
    }
    else if(this.ch1L == 20){
-    c27=2.467
+    c27=2.466
    } 
    else if(this.ch1L == 22){
-    c27=2.985
+    c27=2.984
    }
    else if(this.ch1L == 25){
-    c27=3.855
+    c27=3.854
    }
    else if(this.ch1L == 28){
-    c27=4.836
+    c27=4.833
    }
    else if(this.ch1L == 32){
-    c27=6.316
+    c27=6.313
    }
    else if(this.ch1L == 40){
-    c27=9.869
+    c27=9.864
    }
 
    // ##############C29#############
@@ -6918,37 +7224,37 @@ calculationFloorBeam(){
    c29=0.395
   }
   else if(this.ch1N == 10){
-    c29=0.617
+    c29=0.616
    }
    else if(this.ch1N == 12){
-    c29=0.858
+    c29=0.888
    }
    else if(this.ch1N == 14){
-    c29=1.209
+    c29=1.208
    }
    else if(this.ch1N == 16){
     c29=1.579
    }
    else if(this.ch1N == 18){
-    c29=1.998
+    c29=1.997
    }
    else if(this.ch1N == 20){
-    c29=2.467
+    c29=2.466
    } 
    else if(this.ch1N == 22){
-    c29=2.985
+    c29=2.984
    }
    else if(this.ch1N == 25){
-    c29=3.855
+    c29=3.854
    }
    else if(this.ch1N == 28){
-    c29=4.836
+    c29=4.833
    }
    else if(this.ch1N == 32){
-    c29=6.316
+    c29=6.313
    }
    else if(this.ch1N == 40){
-    c29=9.869
+    c29=9.864
    }
 
       // ##############C31#############
@@ -6959,37 +7265,37 @@ calculationFloorBeam(){
    c31=0.395
   }
   else if(this.ch1P == 10){
-    c31=0.617
+    c31=0.616
    }
    else if(this.ch1P == 12){
-    c31=0.858
+    c31=0.888
    }
    else if(this.ch1P == 14){
-    c31=1.209
+    c31=1.208
    }
    else if(this.ch1P == 16){
     c31=1.579
    }
    else if(this.ch1P == 18){
-    c31=1.998
+    c31=1.997
    }
    else if(this.ch1P == 20){
-    c31=2.467
+    c31=2.466
    } 
    else if(this.ch1P == 22){
-    c31=2.985
+    c31=2.984
    }
    else if(this.ch1P == 25){
-    c31=3.855
+    c31=3.854
    }
    else if(this.ch1P == 28){
-    c31=4.836
+    c31=4.833
    }
    else if(this.ch1P == 32){
-    c31=6.316
+    c31=6.313
    }
    else if(this.ch1P == 40){
-    c31=9.869
+    c31=9.864
    }
 
    // ##############C33#############
@@ -7000,37 +7306,37 @@ calculationFloorBeam(){
    c33=0.395
   }
   else if(this.ch1R == 10){
-    c33=0.617
+    c33=0.616
    }
    else if(this.ch1R == 12){
-    c33=0.858
+    c33=0.888
    }
    else if(this.ch1R == 14){
-    c33=1.209
+    c33=1.208
    }
    else if(this.ch1R == 16){
     c33=1.579
    }
    else if(this.ch1R == 18){
-    c33=1.998
+    c33=1.997
    }
    else if(this.ch1R == 20){
-    c33=2.467
+    c33=2.466
    } 
    else if(this.ch1R == 22){
-    c33=2.985
+    c33=2.984
    }
    else if(this.ch1R == 25){
-    c33=3.855
+    c33=3.854
    }
    else if(this.ch1R == 28){
-    c33=4.836
+    c33=4.833
    }
    else if(this.ch1R == 32){
-    c33=6.316
+    c33=6.313
    }
    else if(this.ch1R == 40){
-    c33=9.869
+    c33=9.864
    }
 
       // ##############C35#############
@@ -7041,37 +7347,37 @@ calculationFloorBeam(){
    c35=0.395
   }
   else if(this.ch1T == 10){
-    c35=0.617
+    c35=0.616
    }
    else if(this.ch1T == 12){
-    c35=0.858
+    c35=0.888
    }
    else if(this.ch1T == 14){
-    c35=1.209
+    c35=1.208
    }
    else if(this.ch1T == 16){
     c35=1.579
    }
    else if(this.ch1T == 18){
-    c35=1.998
+    c35=1.997
    }
    else if(this.ch1T == 20){
-    c35=2.467
+    c35=2.466
    } 
    else if(this.ch1T == 22){
-    c35=2.985
+    c35=2.984
    }
    else if(this.ch1T == 25){
-    c35=3.855
+    c35=3.854
    }
    else if(this.ch1T == 28){
-    c35=4.836
+    c35=4.833
    }
    else if(this.ch1T == 32){
-    c35=6.316
+    c35=6.313
    }
    else if(this.ch1T == 40){
-    c35=9.869
+    c35=9.864
    }
 
 // ##############C37#############
@@ -7082,37 +7388,37 @@ else if(this.ch1V == 8){
  c37=0.395
 }
 else if(this.ch1V == 10){
-  c37=0.617
+  c37=0.616
  }
  else if(this.ch1V == 12){
-  c37=0.858
+  c37=0.888
  }
  else if(this.ch1V == 14){
-  c37=1.209
+  c37=1.208
  }
  else if(this.ch1V == 16){
   c37=1.579
  }
  else if(this.ch1V == 18){
-  c37=1.998
+  c37=1.997
  }
  else if(this.ch1V == 20){
-  c37=2.467
+  c37=2.466
  } 
  else if(this.ch1V == 22){
-  c37=2.985
+  c37=2.984
  }
  else if(this.ch1V == 25){
-  c37=3.855
+  c37=3.854
  }
  else if(this.ch1V == 28){
-  c37=4.836
+  c37=4.833
  }
  else if(this.ch1V == 32){
-  c37=6.316
+  c37=6.313
  }
  else if(this.ch1V == 40){
-  c37=9.869
+  c37=9.864
  }
 
  // ##############C39#############
@@ -7123,37 +7429,37 @@ else if(this.ch1X == 8){
  c39=0.395
 }
 else if(this.ch1X == 10){
-  c39=0.617
+  c39=0.616
  }
  else if(this.ch1X == 12){
-  c39=0.858
+  c39=0.888
  }
  else if(this.ch1X == 14){
-  c39=1.209
+  c39=1.208
  }
  else if(this.ch1X == 16){
   c39=1.579
  }
  else if(this.ch1X == 18){
-  c39=1.998
+  c39=1.997
  }
  else if(this.ch1X == 20){
-  c39=2.467
+  c39=2.466
  } 
  else if(this.ch1X == 22){
-  c39=2.985
+  c39=2.984
  }
  else if(this.ch1X == 25){
-  c39=3.855
+  c39=3.854
  }
  else if(this.ch1X == 28){
-  c39=4.836
+  c39=4.833
  }
  else if(this.ch1X == 32){
-  c39=6.316
+  c39=6.313
  }
  else if(this.ch1X == 40){
-  c39=9.869
+  c39=9.864
  }
 
  // ##############C41#############
@@ -7164,37 +7470,37 @@ else if(this.ch1Z == 8){
  c41=0.395
 }
 else if(this.ch1Z == 10){
-  c41=0.617
+  c41=0.616
  }
  else if(this.ch1Z == 12){
-  c41=0.858
+  c41=0.888
  }
  else if(this.ch1Z == 14){
-  c41=1.209
+  c41=1.208
  }
  else if(this.ch1Z == 16){
   c41=1.579
  }
  else if(this.ch1Z == 18){
-  c41=1.998
+  c41=1.997
  }
  else if(this.ch1Z == 20){
-  c41=2.467
+  c41=2.466
  } 
  else if(this.ch1Z == 22){
-  c41=2.985
+  c41=2.984
  }
  else if(this.ch1Z == 25){
-  c41=3.855
+  c41=3.854
  }
  else if(this.ch1Z == 28){
-  c41=4.836
+  c41=4.833
  }
  else if(this.ch1Z == 32){
-  c41=6.316
+  c41=6.313
  }
  else if(this.ch1Z == 40){
-  c41=9.869
+  c41=9.864
  }
 
  // ##############C43#############
@@ -7205,37 +7511,37 @@ else if(this.ch1AB == 8){
  c43=0.395
 }
 else if(this.ch1AB == 10){
-  c43=0.617
+  c43=0.616
  }
  else if(this.ch1AB == 12){
-  c43=0.858
+  c43=0.888
  }
  else if(this.ch1AB == 14){
-  c43=1.209
+  c43=1.208
  }
  else if(this.ch1AB == 16){
   c43=1.579
  }
  else if(this.ch1AB == 18){
-  c43=1.998
+  c43=1.997
  }
  else if(this.ch1AB == 20){
-  c43=2.467
+  c43=2.466
  } 
  else if(this.ch1AB == 22){
-  c43=2.985
+  c43=2.984
  }
  else if(this.ch1AB == 25){
-  c43=3.855
+  c43=3.854
  }
  else if(this.ch1AB == 28){
-  c43=4.836
+  c43=4.833
  }
  else if(this.ch1AB == 32){
-  c43=6.316
+  c43=6.313
  }
  else if(this.ch1AB == 40){
-  c43=9.869
+  c43=9.864
  }
 
 
@@ -7247,37 +7553,37 @@ else if(this.ch1AB == 10){
    f27=0.395
   }
   else if(this.ch2A == 10){
-    f27=0.617
+    f27=0.616
    }
    else if(this.ch2A == 12){
-    f27=0.858
+    f27=0.888
    }
    else if(this.ch2A == 14){
-    f27=1.209
+    f27=1.208
    }
    else if(this.ch2A == 16){
     f27=1.579
    }
    else if(this.ch2A == 18){
-    f27=1.998
+    f27=1.997
    }
    else if(this.ch2A == 20){
-    f27=2.467
+    f27=2.466
    } 
    else if(this.ch2A == 22){
-    f27=2.985
+    f27=2.984
    }
    else if(this.ch2A == 25){
-    f27=3.855
+    f27=3.854
    }
    else if(this.ch2A == 28){
-    f27=4.836
+    f27=4.833
    }
    else if(this.ch2A == 32){
-    f27=6.316
+    f27=6.313
    }
    else if(this.ch2A == 40){
-    f27=9.869
+    f27=9.864
    }
 
    // ##############C29#############
@@ -7288,37 +7594,37 @@ else if(this.ch1AB == 10){
    f29=0.395
   }
   else if(this.ch2C == 10){
-    f29=0.617
+    f29=0.616
    }
    else if(this.ch2C == 12){
-    f29=0.858
+    f29=0.888
    }
    else if(this.ch2C == 14){
-    f29=1.209
+    f29=1.208
    }
    else if(this.ch2C == 16){
     f29=1.579
    }
    else if(this.ch2C == 18){
-    f29=1.998
+    f29=1.997
    }
    else if(this.ch2C == 20){
-    f29=2.467
+    f29=2.466
    } 
    else if(this.ch2C == 22){
-    f29=2.985
+    f29=2.984
    }
    else if(this.ch2C == 25){
-    f29=3.855
+    f29=3.854
    }
    else if(this.ch2C == 28){
-    f29=4.836
+    f29=4.833
    }
    else if(this.ch2C == 32){
-    f29=6.316
+    f29=6.313
    }
    else if(this.ch2C == 40){
-    f29=9.869
+    f29=9.864
    }
 
       // ##############C31#############
@@ -7329,37 +7635,37 @@ else if(this.ch1AB == 10){
    f31=0.395
   }
   else if(this.ch2E == 10){
-    f31=0.617
+    f31=0.616
    }
    else if(this.ch2E == 12){
-    f31=0.858
+    f31=0.888
    }
    else if(this.ch2E == 14){
-    f31=1.209
+    f31=1.208
    }
    else if(this.ch2E == 16){
     f31=1.579
    }
    else if(this.ch2E == 18){
-    f31=1.998
+    f31=1.997
    }
    else if(this.ch2E == 20){
-    f31=2.467
+    f31=2.466
    } 
    else if(this.ch2E == 22){
-    f31=2.985
+    f31=2.984
    }
    else if(this.ch2E == 25){
-    f31=3.855
+    f31=3.854
    }
    else if(this.ch2E == 28){
-    f31=4.836
+    f31=4.833
    }
    else if(this.ch2E == 32){
-    f31=6.316
+    f31=6.313
    }
    else if(this.ch2E == 40){
-    f31=9.869
+    f31=9.864
    }
 
    // ##############C33#############
@@ -7370,37 +7676,37 @@ else if(this.ch1AB == 10){
    f33=0.395
   }
   else if(this.ch2G == 10){
-    f33=0.617
+    f33=0.616
    }
    else if(this.ch2G == 12){
-    f33=0.858
+    f33=0.888
    }
    else if(this.ch2G == 14){
-    f33=1.209
+    f33=1.208
    }
    else if(this.ch2G == 16){
     f33=1.579
    }
    else if(this.ch2G == 18){
-    f33=1.998
+    f33=1.997
    }
    else if(this.ch2G == 20){
-    f33=2.467
+    f33=2.466
    } 
    else if(this.ch2G == 22){
-    f33=2.985
+    f33=2.984
    }
    else if(this.ch2G == 25){
-    f33=3.855
+    f33=3.854
    }
    else if(this.ch2G == 28){
-    f33=4.836
+    f33=4.833
    }
    else if(this.ch2G == 32){
-    f33=6.316
+    f33=6.313
    }
    else if(this.ch2G == 40){
-    f33=9.869
+    f33=9.864
    }
 
       // ##############C35#############
@@ -7411,37 +7717,37 @@ else if(this.ch1AB == 10){
    f35=0.395
   }
   else if(this.ch2I == 10){
-    f35=0.617
+    f35=0.616
    }
    else if(this.ch2I == 12){
-    f35=0.858
+    f35=0.888
    }
    else if(this.ch2I == 14){
-    f35=1.209
+    f35=1.208
    }
    else if(this.ch2I == 16){
     f35=1.579
    }
    else if(this.ch2I == 18){
-    f35=1.998
+    f35=1.997
    }
    else if(this.ch2I == 20){
-    f35=2.467
+    f35=2.466
    } 
    else if(this.ch2I == 22){
-    f35=2.985
+    f35=2.984
    }
    else if(this.ch2I == 25){
-    f35=3.855
+    f35=3.854
    }
    else if(this.ch2I == 28){
-    f35=4.836
+    f35=4.833
    }
    else if(this.ch2I == 32){
-    f35=6.316
+    f35=6.313
    }
    else if(this.ch2I == 40){
-    f35=9.869
+    f35=9.864
    }
 
 // ##############C37#############
@@ -7452,37 +7758,37 @@ else if(this.ch2K == 8){
  f37=0.395
 }
 else if(this.ch2K == 10){
-  f37=0.617
+  f37=0.616
  }
  else if(this.ch2K == 12){
-  f37=0.858
+  f37=0.888
  }
  else if(this.ch2K == 14){
-  f37=1.209
+  f37=1.208
  }
  else if(this.ch2K == 16){
   f37=1.579
  }
  else if(this.ch2K == 18){
-  f37=1.998
+  f37=1.997
  }
  else if(this.ch2K == 20){
-  f37=2.467
+  f37=2.466
  } 
  else if(this.ch2K == 22){
-  f37=2.985
+  f37=2.984
  }
  else if(this.ch2K == 25){
-  f37=3.855
+  f37=3.854
  }
  else if(this.ch2K == 28){
-  f37=4.836
+  f37=4.833
  }
  else if(this.ch2K == 32){
-  f37=6.316
+  f37=6.313
  }
  else if(this.ch2K == 40){
-  f37=9.869
+  f37=9.864
  }
 
  // ##############C39#############
@@ -7493,37 +7799,37 @@ else if(this.ch2M == 8){
  f39=0.395
 }
 else if(this.ch2M == 10){
-  f39=0.617
+  f39=0.616
  }
  else if(this.ch2M == 12){
-  f39=0.858
+  f39=0.888
  }
  else if(this.ch2M == 14){
-  f39=1.209
+  f39=1.208
  }
  else if(this.ch2M == 16){
   f39=1.579
  }
  else if(this.ch2M == 18){
-  f39=1.998
+  f39=1.997
  }
  else if(this.ch2M == 20){
-  f39=2.467
+  f39=2.466
  } 
  else if(this.ch2M == 22){
-  f39=2.985
+  f39=2.984
  }
  else if(this.ch2M == 25){
-  f39=3.855
+  f39=3.854
  }
  else if(this.ch2M == 28){
-  f39=4.836
+  f39=4.833
  }
  else if(this.ch2M == 32){
-  f39=6.316
+  f39=6.313
  }
  else if(this.ch2M == 40){
-  f39=9.869
+  f39=9.864
  }
 
  // ##############C41#############
@@ -7534,37 +7840,37 @@ else if(this.ch2O == 8){
  f41=0.395
 }
 else if(this.ch2O == 10){
-  f41=0.617
+  f41=0.616
  }
  else if(this.ch2O == 12){
-  f41=0.858
+  f41=0.888
  }
  else if(this.ch2O == 14){
-  f41=1.209
+  f41=1.208
  }
  else if(this.ch2O == 16){
   f41=1.579
  }
  else if(this.ch2O == 18){
-  f41=1.998
+  f41=1.997
  }
  else if(this.ch2O == 20){
-  f41=2.467
+  f41=2.466
  } 
  else if(this.ch2O == 22){
-  f41=2.985
+  f41=2.984
  }
  else if(this.ch2O == 25){
-  f41=3.855
+  f41=3.854
  }
  else if(this.ch2O == 28){
-  f41=4.836
+  f41=4.833
  }
  else if(this.ch2O == 32){
-  f41=6.316
+  f41=6.313
  }
  else if(this.ch2O == 40){
-  f41=9.869
+  f41=9.864
  }
 
  // ##############C43#############
@@ -7575,37 +7881,37 @@ else if(this.ch2Q == 8){
  f43=0.395
 }
 else if(this.ch2Q == 10){
-  f43=0.617
+  f43=0.616
  }
  else if(this.ch2Q == 12){
-  f43=0.858
+  f43=0.888
  }
  else if(this.ch2Q == 14){
-  f43=1.209
+  f43=1.208
  }
  else if(this.ch2Q == 16){
   f43=1.579
  }
  else if(this.ch2Q == 18){
-  f43=1.998
+  f43=1.997
  }
  else if(this.ch2Q == 20){
-  f43=2.467
+  f43=2.466
  } 
  else if(this.ch2Q == 22){
-  f43=2.985
+  f43=2.984
  }
  else if(this.ch2Q == 25){
-  f43=3.855
+  f43=3.854
  }
  else if(this.ch2Q == 28){
-  f43=4.836
+  f43=4.833
  }
  else if(this.ch2Q == 32){
-  f43=6.316
+  f43=6.313
  }
  else if(this.ch2Q == 40){
-  f43=9.869
+  f43=9.864
  }
 
  p1_1 = (0.33*this.Unit_length+this.ch1A+this.Unit_height+0.35)* this.ch1M*c27;
@@ -10839,6 +11145,7 @@ else if(this.ch2Q == 10){
   let mainsteelJ = ((type1_8+type2_8+type3_8+type4_8)*(1+this.ch1AD))*this.No_of_units;
   let mainsteelK = ((type1_10+type2_10+type3_10+type4_10)*(1+this.ch1AD))*this.No_of_units;
   let mainsteelL = ((type1_12+type2_12+type3_12+type4_12)*(1+this.ch1AD))*this.No_of_units;
+  console.log(((type1_12+"+"+type2_12+"+"+type3_12+"+"+type4_12)+"*"+(1+"+"+this.ch1AD))+"*"+this.No_of_units)
   let mainsteelM = ((type1_14+type2_14+type3_14+type4_14)*(1+this.ch1AD))*this.No_of_units;
   let mainsteelN = ((type1_16+type2_16+type3_16+type4_16)*(1+this.ch1AD))*this.No_of_units;
   let mainsteelO = ((type1_18+type2_18+type3_18+type4_18)*(1+this.ch1AD))*this.No_of_units;
@@ -10914,12 +11221,362 @@ else if(this.ch2Q == 10){
     this.Steelringonlykg = pt1_ringSum;
     this.Mainsteelonlykg = this.totalfinalorderinKg-this.Steelringonlykg;
     if(this.ConcQtym3 > 0){
-      this.persteelkgm3 = this.totalfinalorderinKg-this.ConcQtym3;
+      this.persteelkgm3 = this.totalfinalorderinKg/this.ConcQtym3;
     }
     if(Totallengthofrings>0){
-      this.persteelringkgm3 = this.Steelringonlykg-this.ConcQtym3;
+      this.persteelringkgm3 = this.Steelringonlykg/this.ConcQtym3;
     }   
     this.permainsteelkgm3 = this.Mainsteelonlykg/this.ConcQtym3;
+
+
+  this.shape1 = shape1 ;
+  this.shape2 = shape2 ;
+  this.shape3 = shape3 ;
+  this.shape4 = shape4 ;
+  this.shape5 = shape5 ;
+  this.shape6 = shape6 ;
+  this.shape7 = shape7 ;
+  this.shape8 = shape8 ;
+  this.Totallengthofrings = Totallengthofrings ;
+  this.NoofringsMIDDLETHIRD = NoofringsMIDDLETHIRD ;
+  this.NoofringsOTHERTHIRDRIGHTLEFT = NoofringsOTHERTHIRDRIGHTLEFT ;
+  this.c19 = c19 ;
+  this.c21 = c21 ;
+  this.c27 = c27 ;
+  this.c29 = c29 ;
+  this.c31 = c31 ;
+  this.c33 = c33 ;
+  this.c35 = c35 ;
+  this.c37 = c37 ;
+  this.c39 = c39 ;
+  this.c41 = c41 ;
+  this.c43 = c43 ;
+  this.f27 = f27 ;
+  this.f29 = f29 ;
+  this.f31 = f31 ;
+  this.f33 = f33 ;
+  this.f35 = f35 ;
+  this.f37 = f37 ;
+  this.f39 = f39 ;
+  this.f41 = f41 ;
+  this.f43 = f43 ;
+  this.p1_1 = p1_1;
+  this.p1_2 = p1_2;
+  this.p1_3 = p1_3;
+  this.p1_4 = p1_4;
+  this.p1_5 = p1_5;
+  this.p1_6 = p1_6;
+  this.p1_7 = p1_7;
+  this.p1_8 = p1_8;
+  this.p1_9 = p1_9;
+  this.p1_10 = p1_10;
+  this.p1_11 = p1_11;
+  this.p1_12 = p1_12;
+  this.p1_13 = p1_13;
+  this.p1_14 = p1_14;
+  this.p1_15 = p1_15;
+  this.p1_16 = p1_16;
+  this.p1_17 = p1_17;
+  this.p1_18 = p1_18;
+  this.p1_19 = p1_19;
+  this.p1_20 = p1_20;
+  this.p1_21 = p1_21;
+  this.p1_22 = p1_22;
+  this.p1_23 = p1_23;
+  this.p1_24 = p1_24;
+  this.p1_25 = p1_25;
+
+  this.p2_1 = p2_1;
+  this.p2_2 = p2_2;
+  this.p2_3 = p2_3;
+  this.p2_4 = p2_4;
+  this.p2_5 = p2_5;
+  this.p2_6 = p2_6;
+  this.p2_7 = p2_7;
+  this.p2_8 = p2_8;
+  this.p2_9 = p2_9;
+  this.p2_10 = p2_10;
+  this.p2_11 = p2_11;
+  this.p2_12 = p2_12;
+  this.p2_13 = p2_13;
+  this.p2_14 = p2_14;
+  this.p2_15 = p2_15;
+  this.p2_16 = p2_16;
+  this.p2_17 = p2_17;
+  this.p2_18 = p2_18;
+  this.p2_19 = p2_19;
+  this.p2_20 = p2_20;
+  this.p2_21 = p2_21;
+  this.p2_22 = p2_22;
+  this.p2_23 = p2_23;
+  this.p2_24 = p2_24;
+  this.p2_25 = p2_25;
+
+  this.SteelringatcenterI19 = SteelringatcenterI19;
+  this.SteelringatcenterJ19 = SteelringatcenterJ19;
+  this.SteelringatcenterK19 = SteelringatcenterK19;
+  this.SteelringatcenterL19 = SteelringatcenterL19;
+  this.SteelringatcenterM19 = SteelringatcenterM19;
+  this.SteelringatcenterN19 = SteelringatcenterN19;
+  this.SteelringatcenterO19 = SteelringatcenterO19;
+  this.SteelringatcenterP19 = SteelringatcenterP19;
+  this.SteelringatcenterQ19 = SteelringatcenterQ19;
+  this.SteelringatcenterR19 = SteelringatcenterR19;
+  this.SteelringatcenterS19 = SteelringatcenterS19;
+  this.SteelringatcenterT19 = SteelringatcenterT19;
+  this.SteelringatcenterU19 = SteelringatcenterU19;
+
+  this.SteelringatthirdI21 = SteelringatthirdI21;
+  this.SteelringatthirdJ21 = SteelringatthirdJ21;
+  this.SteelringatthirdK21 = SteelringatthirdK21;
+  this.SteelringatthirdL21 = SteelringatthirdL21;
+  this.SteelringatthirdM21 = SteelringatthirdM21;
+  this.SteelringatthirdN21 = SteelringatthirdN21;
+  this.SteelringatthirdO21 = SteelringatthirdO21;
+  this.SteelringatthirdP21 = SteelringatthirdP21;
+  this.SteelringatthirdQ21 = SteelringatthirdQ21;
+  this.SteelringatthirdR21 = SteelringatthirdR21;
+  this.SteelringatthirdS21 = SteelringatthirdS21;
+  this.SteelringatthirdT21 = SteelringatthirdT21;
+  this.SteelringatthirdU21 = SteelringatthirdU21;
+
+  this.presumSteelringI = presumSteelringI;
+  this.presumSteelringJ = presumSteelringJ;
+  this.presumSteelringK = presumSteelringK;
+  this.presumSteelringL = presumSteelringL;
+  this.presumSteelringM = presumSteelringM;
+  this.presumSteelringN = presumSteelringN;
+  this.presumSteelringO = presumSteelringO;
+  this.presumSteelringP = presumSteelringP;
+  this.presumSteelringQ = presumSteelringQ;
+  this.presumSteelringR = presumSteelringR;
+  this.presumSteelringS = presumSteelringS;
+  this.presumSteelringT = presumSteelringT;
+  this.presumSteelringU = presumSteelringU;
+  this.sumSteelring = sumSteelring;
+
+  this.pre6 = pre6;
+  this.pre8 = pre8;
+  this.pre10 = pre10;
+  this.pre12 = pre12;
+  this.pre14 = pre14;
+  this.pre16 = pre16;
+  this.pre18 = pre18;
+  this.pre20 = pre20;
+  this.pre22 = pre22;
+  this.pre25 = pre25;
+  this.pre28 = pre28;
+  this.pre32 = pre32;
+  this.pre40 = pre40;
+
+  this.type1 = type1;
+  this.type2 = type2;
+  this.type3 = type3;
+  this.type4 = type4;
+
+  this.type1_6 = type1_6;
+  this.type1_8 = type1_8;
+  this.type1_10 = type1_10;
+  this.type1_12 = type1_12;
+  this.type1_14 = type1_14;
+  this.type1_16 = type1_16;
+  this.type1_18 = type1_18;
+  this.type1_20 = type1_20;
+  this.type1_22 = type1_22;
+  this.type1_25 = type1_25;
+  this.type1_28 = type1_28;
+  this.type1_32 = type1_32;
+  this.type1_40 = type1_40;
+
+  this.type2_6 = type2_6;
+  this.type2_8 = type2_8;
+  this.type2_10 = type2_10;
+  this.type2_12 = type2_12;
+  this.type2_14 = type2_14;
+  this.type2_16 = type2_16;
+  this.type2_18 = type2_18;
+  this.type2_20 = type2_20;
+  this.type2_22 = type2_22;
+  this.type2_25 = type2_25;
+  this.type2_28 = type2_28;
+  this.type2_32 = type2_32;
+  this.type2_40 = type2_40;
+
+  this.type3_6 = type3_6;
+  this.type3_8 = type3_8;
+  this.type3_10 = type3_10;
+  this.type3_12 = type3_12;
+  this.type3_14 = type3_14;
+  this.type3_16 = type3_16;
+  this.type3_18 = type3_18;
+  this.type3_20 = type3_20;
+  this.type3_22 = type3_22;
+  this.type3_25 = type3_25;
+  this.type3_28 = type3_28;
+  this.type3_32 = type3_32;
+  this.type3_40 = type3_40;
+
+  this.type4_6 = type4_6;
+  this.type4_8 = type4_8;
+  this.type4_10 = type4_10;
+  this.type4_12 = type4_12;
+  this.type4_14 = type4_14;
+  this.type4_16 = type4_16;
+  this.type4_18 = type4_18;
+  this.type4_20 = type4_20;
+  this.type4_22 = type4_22;
+  this.type4_25 = type4_25;
+  this.type4_28 = type4_28;
+  this.type4_32 = type4_32;
+  this.type4_40 = type4_40;
+
+
+
+  this.ExtraI = ExtraI;
+  this.ExtraJ = ExtraJ;
+  this.ExtraK = ExtraK;
+  this.ExtraL = ExtraL;
+  this.ExtraM = ExtraM;
+  this.ExtraN = ExtraN;
+  this.ExtraO = ExtraO;
+  this.ExtraP = ExtraP;
+  this.ExtraQ = ExtraQ;
+  this.ExtraR = ExtraR;
+  this.ExtraS = ExtraS;
+  this.ExtraT = ExtraT;
+  this.ExtraU = ExtraU;
+
+
+  this.part2_type1_6 = part2_type1_6;
+  this.part2_type1_8 = part2_type1_8;
+  this.part2_type1_10 = part2_type1_10;
+  this.part2_type1_12 = part2_type1_12;
+  this.part2_type1_14 = part2_type1_14;
+  this.part2_type1_16 = part2_type1_16;
+  this.part2_type1_18 = part2_type1_18;
+  this.part2_type1_20 = part2_type1_20;
+  this.part2_type1_22 = part2_type1_22;
+  this.part2_type1_25 = part2_type1_25;
+  this.part2_type1_28 = part2_type1_28;
+  this.part2_type1_32 = part2_type1_32;
+  this.part2_type1_40 = part2_type1_40;
+
+  this.part2_type2_6 = part2_type2_6;
+  this.part2_type2_8 = part2_type2_8;
+  this.part2_type2_10 = part2_type2_10;
+  this.part2_type2_12 = part2_type2_12;
+  this.part2_type2_14 = part2_type2_14;
+  this.part2_type2_16 = part2_type2_16;
+  this.part2_type2_18 = part2_type2_18;
+  this.part2_type2_20 = part2_type2_20;
+  this.part2_type2_22 = part2_type2_22;
+  this.part2_type2_25 = part2_type2_25;
+  this.part2_type2_28 = part2_type2_28;
+  this.part2_type2_32 = part2_type2_32;
+  this.part2_type2_40 = part2_type2_40;
+
+  this.part2_type3_6 = part2_type3_6;
+  this.part2_type3_8 = part2_type3_8;
+  this.part2_type3_10 = part2_type3_10;
+  this.part2_type3_12 = part2_type3_12;
+  this.part2_type3_14 = part2_type3_14;
+  this.part2_type3_16 = part2_type3_16;
+  this.part2_type3_18 = part2_type3_18;
+  this.part2_type3_20 = part2_type3_20;
+  this.part2_type3_22 = part2_type3_22;
+  this.part2_type3_25 = part2_type3_25;
+  this.part2_type3_28 = part2_type3_28;
+  this.part2_type3_32 = part2_type3_32;
+  this.part2_type3_40 = part2_type3_40;
+
+  this.part2_type4_6 = part2_type4_6;
+  this.part2_type4_8 = part2_type4_8;
+  this.part2_type4_10 = part2_type4_10;
+  this.part2_type4_12 = part2_type4_12;
+  this.part2_type4_14 = part2_type4_14;
+  this.part2_type4_16 = part2_type4_16;
+  this.part2_type4_18 = part2_type4_18;
+  this.part2_type4_20 = part2_type4_20;
+  this.part2_type4_22 = part2_type4_22;
+  this.part2_type4_25 = part2_type4_25;
+  this.part2_type4_28 = part2_type4_28;
+  this.part2_type4_32 = part2_type4_32;
+  this.part2_type4_40 = part2_type4_40;
+
+
+
+  this.ExtraY = ExtraY;
+  this.ExtraZ = ExtraZ;
+  this.ExtraAA = ExtraAA;
+  this.ExtraAB = ExtraAB;
+  this.ExtraAC = ExtraAC;
+  this.ExtraAD = ExtraAD;
+  this.ExtraAE = ExtraAE;
+  this.ExtraAF = ExtraAF;
+  this.ExtraAG = ExtraAG;
+  this.ExtraAH = ExtraAH;
+  this.ExtraAI = ExtraAI;
+  this.ExtraAJ = ExtraAJ;
+  this.ExtraAK = ExtraAK;
+
+this.pt1_ringSum = pt1_ringSum;
+this.mainsteelI = mainsteelI;
+this.mainsteelJ = mainsteelJ;
+this.mainsteelK = mainsteelK;
+this.mainsteelL = mainsteelL;
+this.mainsteelM = mainsteelM;
+this.mainsteelN = mainsteelN;
+this.mainsteelO = mainsteelO;
+this.mainsteelP = mainsteelP;
+this.mainsteelQ = mainsteelQ;
+this.mainsteelR = mainsteelR;
+this.mainsteelS = mainsteelS;
+this.mainsteelT = mainsteelT;
+this.mainsteelU = mainsteelU;
+
+
+this.mainsteelY = mainsteelY;
+this.mainsteelZ = mainsteelZ;
+this.mainsteelAA = mainsteelAA;
+this.mainsteelAB = mainsteelAB;
+this.mainsteelAC = mainsteelAC;
+this.mainsteelAD = mainsteelAD;
+this.mainsteelAE = mainsteelAE;
+this.mainsteelAF = mainsteelAF;
+this.mainsteelAG = mainsteelAG;
+this.mainsteelAH = mainsteelAH;
+this.mainsteelAI = mainsteelAI;
+this.mainsteelAJ = mainsteelAJ;
+this.mainsteelAK = mainsteelAK;
+
+this.orderI = orderI;
+this.orderJ = orderJ;
+this.orderK = orderK;
+this.orderL = orderL;
+this.orderM = orderM;
+this.orderN = orderN;
+this.orderO = orderO;
+this.orderP = orderP;
+this.orderQ = orderQ;
+this.orderR = orderR;
+this.orderS = orderS;
+this.orderT = orderT;
+this.orderU = orderU;
+
+
+this.orderY  = orderY ;
+this.orderZ  = orderZ ;
+this.orderAA = orderAA;
+this.orderAB = orderAB;
+this.orderAC = orderAC;
+this.orderAD = orderAD;
+this.orderAE = orderAE;
+this.orderAF = orderAF;
+this.orderAG = orderAG;
+this.orderAH = orderAH;
+this.orderAI = orderAI;
+this.orderAJ = orderAJ;
+this.orderAK = orderAK;
 
 }
 

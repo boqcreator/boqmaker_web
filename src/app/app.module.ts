@@ -84,6 +84,11 @@ import { ManageboqPageModule } from './pages/manageboq/manageboq.module';
 import { EditmaterialPageModule } from './pages/editmaterial/editmaterial.module';
 import { TypespicPageModule } from './pages/typespic/typespic.module';
 import { EditsuppliermatPageModule } from './pages/editsuppliermat/editsuppliermat.module';
+import { UpdatesupplierPageModule } from './pages/updatesupplier/updatesupplier.module';
+import { UnitPageModule } from './pages/unit/unit.module';
+import { ConsultantPageModule } from './pages/consultant/consultant.module';
+import { EditcontractorPageModule } from './pages/editcontractor/editcontractor.module';
+
 
 
 @NgModule({
@@ -159,7 +164,12 @@ import { EditsuppliermatPageModule } from './pages/editsuppliermat/editsupplierm
     ManageboqPageModule,
     EditmaterialPageModule,
     TypespicPageModule,
-    EditsuppliermatPageModule
+    EditsuppliermatPageModule,
+    UpdatesupplierPageModule,
+    UnitPageModule,
+    ConsultantPageModule,
+    EditcontractorPageModule
+
     
   ],
   providers: [

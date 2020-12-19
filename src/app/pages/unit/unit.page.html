@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Measuring Units</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()" color="secondary">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-input [(ngModel)]="toAdd" type="text" placeholder="Enter here to add" ></ion-input>
+    <ion-button (click)="add()" >
+      Add
+    </ion-button>
+  </ion-item>
+  <ion-item-divider>
+    <ion-label>Units List</ion-label>
+  </ion-item-divider>
+  <ion-item *ngFor="let unit of listOfUnits | async" >
+    <ion-label>
+      <h2> {{ unit.payload.doc.data().name }} </h2>
+    </ion-label>
+    <ion-button (click)="delete(unit.payload.doc)" fill="default" >
+     <ion-icon slot="end" color="danger" name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+
+</ion-content>
